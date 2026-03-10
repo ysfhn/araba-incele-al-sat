@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180">
+  <g fill="#00BCD4">
+    <polygon points="100,5 190,70 100,45"/>
+    <polygon points="100,5 10,70 100,45"/>
+    <polygon points="100,135 190,70 100,95"/>
+    <polygon points="100,135 10,70 100,95"/>
+  </g>
+  <text x="100" y="172" text-anchor="middle" font-family="Arial, sans-serif" font-weight="400" font-size="48" fill="#1a1a1a" letter-spacing="2">Togg</text>
+</svg>

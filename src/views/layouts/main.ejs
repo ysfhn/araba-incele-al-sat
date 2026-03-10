@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#1775d3",
+        "background-light": "#f6f7f8",
+        "background-dark": "#111921",
+        "charcoal": "#1a1c1e"
+      },
+      fontFamily: { "display": ["Inter", "sans-serif"] },
+      borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+    },
+  },
+}
+</script>
+<title><%= typeof title !== 'undefined' ? title : 'Araba İncele Al Sat' %></title>
+</head>
+<body class="bg-background-light font-display text-slate-900">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<%- include('../partials/flash') %>
+<%- include('../partials/navbar') %>
+<%- body %>
+<%- include('../partials/footer') %>
+</div>
+</div>
+<script src="/js/app.js"></script>
+</body>
+</html>

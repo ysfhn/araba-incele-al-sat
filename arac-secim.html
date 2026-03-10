@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#1775d3",
+                    "background-light": "#f6f7f8",
+                    "background-dark": "#111921",
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"]
+                },
+                borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            },
+        },
+    }
+</script>
+<title>Araç Seçim Sihirbazı - Araba İncele Al Sat</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 bg-white px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<a href="index.html" class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">directions_car</span>
+<h2 class="text-slate-900 text-lg font-bold leading-tight tracking-tight">Araba İncele Al Sat</h2>
+</a>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="ilan-arama.html">İlanlar</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="servis-rehberi.html">Servisler</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="forum.html">Forum</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="nasil-calisir.html">Kurumsal</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<a href="giris-kayit.html" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all"><span>Giriş Yap</span></a>
+</div>
+</header>
+<!-- Main Content -->
+<main class="container mx-auto px-6 lg:px-12 py-8">
+<!-- Progress Bar -->
+<div class="max-w-3xl mx-auto mb-8">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-bold text-primary">Adım 1/4</span>
+<span class="text-sm text-slate-400">Marka Seçimi</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-primary rounded-full h-2" style="width: 25%"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Sol: Model Grid -->
+<div class="lg:col-span-2">
+<div class="bg-white rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm">
+<h2 class="text-2xl font-bold text-slate-900 mb-2">Hangi markayı tercih edersiniz?</h2>
+<p class="text-slate-500 mb-6">Birden fazla marka seçebilirsiniz.</p>
+<!-- Search -->
+<div class="flex items-center bg-slate-50 rounded-xl px-4 py-3 mb-6 border border-slate-200">
+<span class="material-symbols-outlined text-slate-400 mr-3">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full placeholder:text-slate-400 text-sm" placeholder="Marka ara..."/>
+</div>
+<!-- Brand Grid -->
+<div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-primary bg-primary/5 transition-all hover:shadow-md">
+<div class="size-14 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl text-slate-600">directions_car</span>
+</div>
+<span class="text-xs font-bold text-primary">BMW</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-transparent hover:border-primary/30 bg-white transition-all hover:shadow-md">
+<div class="size-14 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl text-slate-600">directions_car</span>
+</div>
+<span class="text-xs font-bold text-slate-700">Mercedes</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-transparent hover:border-primary/30 bg-white transition-all hover:shadow-md">
+<div class="size-14 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl text-slate-600">directions_car</span>
+</div>
+<span class="text-xs font-bold text-slate-700">Audi</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-transparent hover:border-primary/30 bg-white transition-all hover:shadow-md">
+<div class="size-14 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl text-slate-600">directions_car</span>
+</div>
+<span class="text-xs font-bold text-slate-700">Volkswagen</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-transparent hover:border-primary/30 bg-white transition-all hover:shadow-md">
+<div class="size-14 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl text-slate-600">directions_car</span>
+</div>
+<span class="text-xs font-bold text-slate-700">Toyota</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-transparent hover:border-primary/30 bg-white transition-all hover:shadow-md">
+<div class="size-14 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl text-slate-600">directions_car</span>
+</div>
+<span class="text-xs font-bold text-slate-700">Honda</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-transparent hover:border-primary/30 bg-white transition-all hover:shadow-md">
+<div class="size-14 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl text-slate-600">directions_car</span>
+</div>
+<span class="text-xs font-bold text-slate-700">Volvo</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-transparent hover:border-primary/30 bg-white transition-all hover:shadow-md">
+<div class="size-14 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl text-slate-600">directions_car</span>
+</div>
+<span class="text-xs font-bold text-slate-700">Togg</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-transparent hover:border-primary/30 bg-white transition-all hover:shadow-md">
+<div class="size-14 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl text-slate-600">directions_car</span>
+</div>
+<span class="text-xs font-bold text-slate-700">Renault</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-transparent hover:border-primary/30 bg-white transition-all hover:shadow-md">
+<div class="size-14 bg-slate-100 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl text-slate-600">directions_car</span>
+</div>
+<span class="text-xs font-bold text-slate-700">Fiat</span>
+</button>
+</div>
+<!-- Navigation Buttons -->
+<div class="flex justify-between mt-8 pt-6 border-t border-slate-100">
+<button class="flex items-center gap-2 text-slate-400 font-bold text-sm" disabled>
+<span class="material-symbols-outlined">arrow_back</span> Geri
+</button>
+<button class="flex items-center gap-2 bg-primary text-white font-bold py-3 px-8 rounded-xl hover:bg-primary/90 transition-all text-sm">
+Devam Et <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sağ: Sidebar -->
+<div class="space-y-6">
+<!-- Seçim Özeti -->
+<div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+<h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">checklist</span> Seçim Özetiniz
+</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between py-2 border-b border-slate-50">
+<span class="text-sm text-slate-500">Marka</span>
+<span class="text-sm font-bold text-primary">BMW</span>
+</div>
+<div class="flex items-center justify-between py-2 border-b border-slate-50">
+<span class="text-sm text-slate-500">Model</span>
+<span class="text-sm text-slate-300">Seçilmedi</span>
+</div>
+<div class="flex items-center justify-between py-2 border-b border-slate-50">
+<span class="text-sm text-slate-500">Yıl Aralığı</span>
+<span class="text-sm text-slate-300">Seçilmedi</span>
+</div>
+<div class="flex items-center justify-between py-2">
+<span class="text-sm text-slate-500">Bütçe</span>
+<span class="text-sm text-slate-300">Seçilmedi</span>
+</div>
+</div>
+<button class="text-xs text-red-500 font-bold mt-4 hover:underline">Seçimleri Sıfırla</button>
+</div>
+<!-- Yardım Kutusu -->
+<div class="bg-primary/5 rounded-2xl p-6 border border-primary/10">
+<h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">help</span> Yardıma mı ihtiyacınız var?
+</h4>
+<p class="text-slate-500 text-sm mb-4">
+Hangi aracı seçeceğinizden emin değilseniz, bütçe ve ihtiyaç bazlı önerimizi deneyin.
+</p>
+<button class="w-full bg-primary text-white font-bold py-3 rounded-xl text-sm hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-base">auto_awesome</span>
+Bana Öner
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-white border-t border-slate-200 pt-12 pb-8 mt-auto">
+<div class="container mx-auto px-6 lg:px-12">
+<div class="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-400 text-xs">© 2024 Araba İncele Al Sat Platformu. Tüm hakları saklıdır.</p>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,369 @@
+<main class="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+<div class="container mx-auto px-6 py-12 max-w-4xl">
+
+<!-- Header -->
+<div class="text-center mb-10">
+  <span class="material-symbols-outlined text-5xl text-primary mb-3 block">commute</span>
+  <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">Araç Seçim Sihirbazı</h1>
+  <p class="text-lg text-slate-500">Adım adım aracınızı bulun — tür, marka, model, yıl ve yakıt türü seçin.</p>
+</div>
+
+<!-- Progress Steps -->
+<div class="flex items-center justify-center gap-2 mb-10" id="progressBar">
+  <div class="step-indicator active flex items-center gap-1.5 text-sm font-bold" data-step="1">
+    <span class="size-7 rounded-full bg-primary text-white flex items-center justify-center text-xs">1</span>
+    <span class="hidden sm:inline">Tür</span>
+  </div>
+  <div class="w-8 h-0.5 bg-slate-200 step-line" data-line="1"></div>
+  <div class="step-indicator flex items-center gap-1.5 text-sm font-bold text-slate-400" data-step="2">
+    <span class="size-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-xs">2</span>
+    <span class="hidden sm:inline">Marka</span>
+  </div>
+  <div class="w-8 h-0.5 bg-slate-200 step-line" data-line="2"></div>
+  <div class="step-indicator flex items-center gap-1.5 text-sm font-bold text-slate-400" data-step="3">
+    <span class="size-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-xs">3</span>
+    <span class="hidden sm:inline">Model</span>
+  </div>
+  <div class="w-8 h-0.5 bg-slate-200 step-line" data-line="3"></div>
+  <div class="step-indicator flex items-center gap-1.5 text-sm font-bold text-slate-400" data-step="4">
+    <span class="size-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-xs">4</span>
+    <span class="hidden sm:inline">Yıl</span>
+  </div>
+  <div class="w-8 h-0.5 bg-slate-200 step-line" data-line="4"></div>
+  <div class="step-indicator flex items-center gap-1.5 text-sm font-bold text-slate-400" data-step="5">
+    <span class="size-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-xs">5</span>
+    <span class="hidden sm:inline">Yakıt</span>
+  </div>
+</div>
+
+<!-- Step 1: Araç Türü -->
+<div id="step1" class="step-panel">
+  <div class="bg-white rounded-2xl border border-slate-100 p-8 shadow-sm">
+    <h2 class="text-xl font-bold text-slate-900 mb-2">Araç Türünü Seçin</h2>
+    <p class="text-sm text-slate-500 mb-6">Hangi tip araç arıyorsunuz?</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="typeGrid">
+      <button type="button" data-type="sedan" class="type-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">directions_car</span>
+        <p class="font-bold text-sm text-slate-800">Sedan</p>
+      </button>
+      <button type="button" data-type="suv" class="type-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">airport_shuttle</span>
+        <p class="font-bold text-sm text-slate-800">SUV</p>
+      </button>
+      <button type="button" data-type="hatchback" class="type-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">electric_car</span>
+        <p class="font-bold text-sm text-slate-800">Hatchback</p>
+      </button>
+      <button type="button" data-type="crossover" class="type-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">drive_eta</span>
+        <p class="font-bold text-sm text-slate-800">Crossover</p>
+      </button>
+      <button type="button" data-type="station_wagon" class="type-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">local_shipping</span>
+        <p class="font-bold text-sm text-slate-800">Station Wagon</p>
+      </button>
+      <button type="button" data-type="coupe" class="type-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">sports_motorsports</span>
+        <p class="font-bold text-sm text-slate-800">Coupe</p>
+      </button>
+      <button type="button" data-type="cabrio" class="type-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">wb_sunny</span>
+        <p class="font-bold text-sm text-slate-800">Cabrio</p>
+      </button>
+      <button type="button" data-type="minivan" class="type-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">rv_hookup</span>
+        <p class="font-bold text-sm text-slate-800">Minivan</p>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2: Marka -->
+<div id="step2" class="step-panel hidden">
+  <div class="bg-white rounded-2xl border border-slate-100 p-8 shadow-sm">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900 mb-1">Marka Seçin</h2>
+        <p class="text-sm text-slate-500">Seçtiğiniz türdeki markalar listeleniyor</p>
+      </div>
+      <button onclick="goToStep(1)" class="text-sm text-primary font-bold flex items-center gap-1 hover:underline"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
+    </div>
+    <!-- Search Box -->
+    <div class="mb-4">
+      <div class="flex items-center bg-slate-50 rounded-xl px-4 py-2.5 border border-slate-200">
+        <span class="material-symbols-outlined text-slate-400 mr-2">search</span>
+        <input id="brandSearch" type="text" placeholder="Marka ara..." class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-slate-400 outline-none" autocomplete="off"/>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3" id="brandGrid">
+      <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Step 3: Model -->
+<div id="step3" class="step-panel hidden">
+  <div class="bg-white rounded-2xl border border-slate-100 p-8 shadow-sm">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900 mb-1">Model Seçin</h2>
+        <p class="text-sm text-slate-500" id="modelSubtitle">Modeller listeleniyor</p>
+      </div>
+      <button onclick="goToStep(2)" class="text-sm text-primary font-bold flex items-center gap-1 hover:underline"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="modelGrid">
+      <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Step 4: Yıl -->
+<div id="step4" class="step-panel hidden">
+  <div class="bg-white rounded-2xl border border-slate-100 p-8 shadow-sm">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900 mb-1">Yıl Seçin</h2>
+        <p class="text-sm text-slate-500" id="yearSubtitle">Hangi yıl model arıyorsunuz?</p>
+      </div>
+      <button onclick="goToStep(3)" class="text-sm text-primary font-bold flex items-center gap-1 hover:underline"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
+    </div>
+    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3" id="yearGrid"></div>
+  </div>
+</div>
+
+<!-- Step 5: Yakıt Türü -->
+<div id="step5" class="step-panel hidden">
+  <div class="bg-white rounded-2xl border border-slate-100 p-8 shadow-sm">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900 mb-1">Yakıt Türü Seçin</h2>
+        <p class="text-sm text-slate-500" id="fuelSubtitle">Son adım!</p>
+      </div>
+      <button onclick="goToStep(4)" class="text-sm text-primary font-bold flex items-center gap-1 hover:underline"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4" id="fuelGrid">
+      <button type="button" data-fuel="benzin" class="fuel-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">local_gas_station</span>
+        <p class="font-bold text-sm text-slate-800">Benzin</p>
+      </button>
+      <button type="button" data-fuel="dizel" class="fuel-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">oil_barrel</span>
+        <p class="font-bold text-sm text-slate-800">Dizel</p>
+      </button>
+      <button type="button" data-fuel="hibrit" class="fuel-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">eco</span>
+        <p class="font-bold text-sm text-slate-800">Hibrit</p>
+      </button>
+      <button type="button" data-fuel="elektrik" class="fuel-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">ev_station</span>
+        <p class="font-bold text-sm text-slate-800">Elektrik</p>
+      </button>
+      <button type="button" data-fuel="lpg" class="fuel-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-2xl p-5 text-center transition-all">
+        <span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary mb-2 block">propane_tank</span>
+        <p class="font-bold text-sm text-slate-800">LPG</p>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Seçim Özeti -->
+<div id="selectionSummary" class="mt-8 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+  <h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary">checklist</span> Seçimleriniz</h3>
+  <div class="flex flex-wrap gap-3" id="selectionTags">
+    <span class="text-sm text-slate-400 italic">Henüz seçim yapılmadı</span>
+  </div>
+</div>
+
+<!-- Hızlı Geçiş -->
+<div class="mt-8 bg-primary/5 rounded-2xl p-8 border border-primary/10 text-center">
+  <h3 class="text-lg font-bold text-slate-900 mb-3">Doğrudan İlan Aramak mı İstiyorsunuz?</h3>
+  <p class="text-slate-500 mb-6">Detaylı filtreleme seçenekleriyle tüm ilanları keşfedin.</p>
+  <a href="/ilan" class="inline-block bg-primary text-white font-bold py-3 px-8 rounded-xl hover:bg-primary/90 transition-all">Tüm İlanları Gör</a>
+</div>
+
+</div>
+</main>
+
+<script>
+const state = { type: null, typeName: '', brandId: null, brandSlug: '', brandName: '', modelId: null, modelSlug: '', modelName: '', year: null, fuel: null, fuelName: '' };
+const allBrands = <%- JSON.stringify(brands) %>;
+
+function goToStep(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.add('hidden'));
+  document.getElementById('step' + n).classList.remove('hidden');
+  updateProgress(n);
+}
+
+function updateProgress(current) {
+  document.querySelectorAll('.step-indicator').forEach(ind => {
+    const s = parseInt(ind.dataset.step);
+    const circle = ind.querySelector('span:first-child');
+    if (s < current) {
+      circle.className = 'size-7 rounded-full bg-green-500 text-white flex items-center justify-center text-xs';
+      circle.innerHTML = '<span class="material-symbols-outlined text-sm">check</span>';
+      ind.classList.remove('text-slate-400'); ind.classList.add('text-green-600');
+    } else if (s === current) {
+      circle.className = 'size-7 rounded-full bg-primary text-white flex items-center justify-center text-xs';
+      circle.textContent = s;
+      ind.classList.remove('text-slate-400'); ind.classList.add('text-primary');
+    } else {
+      circle.className = 'size-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-xs';
+      circle.textContent = s;
+      ind.classList.add('text-slate-400'); ind.classList.remove('text-primary', 'text-green-600');
+    }
+  });
+  document.querySelectorAll('.step-line').forEach(line => {
+    const l = parseInt(line.dataset.line);
+    line.className = 'w-8 h-0.5 step-line ' + (l < current ? 'bg-green-500' : 'bg-slate-200');
+  });
+}
+
+function updateSummary() {
+  const tags = [];
+  if (state.typeName) tags.push({ label: state.typeName, icon: 'directions_car' });
+  if (state.brandName) tags.push({ label: state.brandName, icon: 'star' });
+  if (state.modelName) tags.push({ label: state.modelName, icon: 'commute' });
+  if (state.year) tags.push({ label: state.year + ' Model', icon: 'calendar_today' });
+  if (state.fuelName) tags.push({ label: state.fuelName, icon: 'local_gas_station' });
+  const container = document.getElementById('selectionTags');
+  if (tags.length === 0) {
+    container.innerHTML = '<span class="text-sm text-slate-400 italic">Henüz seçim yapılmadı</span>';
+  } else {
+    container.innerHTML = tags.map(t =>
+      '<span class="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-sm font-bold px-3 py-1.5 rounded-full"><span class="material-symbols-outlined text-sm">' + t.icon + '</span>' + t.label + '</span>'
+    ).join('');
+  }
+}
+
+// Step 1: Tür seçimi
+document.querySelectorAll('.type-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('border-primary', 'bg-primary/10'));
+    this.classList.add('border-primary', 'bg-primary/10');
+    state.type = this.dataset.type;
+    state.typeName = this.querySelector('p').textContent;
+    state.brandId = null; state.brandSlug = ''; state.brandName = '';
+    state.modelId = null; state.modelSlug = ''; state.modelName = '';
+    state.year = null; state.fuel = null; state.fuelName = '';
+    updateSummary();
+    setTimeout(() => { loadBrands(); goToStep(2); }, 300);
+  });
+});
+
+function loadBrands() {
+  const grid = document.getElementById('brandGrid');
+  const renderBrands = (list) => {
+    if (list.length === 0) {
+      grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Marka bulunamadı.</p>';
+      return;
+    }
+    grid.innerHTML = list.map(b => {
+      const logoHtml = b.logo
+        ? '<img src="' + b.logo + '" alt="' + b.name + '" class="size-10 object-contain mx-auto mb-2" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'" /><span class="material-symbols-outlined text-xl text-slate-500 group-hover:text-primary hidden items-center justify-center" style="display:none">directions_car</span>'
+        : '<span class="material-symbols-outlined text-xl text-slate-500 group-hover:text-primary">directions_car</span>';
+      return '<button type="button" data-brand-id="' + b.id + '" data-brand-slug="' + b.slug + '" class="brand-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-xl p-4 text-center transition-all">' +
+        '<div class="size-12 mx-auto flex items-center justify-center mb-2">' + logoHtml + '</div>' +
+        '<p class="font-semibold text-sm text-slate-800">' + b.name + '</p></button>';
+    }).join('');
+    grid.querySelectorAll('.brand-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        grid.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('border-primary', 'bg-primary/10'));
+        this.classList.add('border-primary', 'bg-primary/10');
+        state.brandId = this.dataset.brandId;
+        state.brandSlug = this.dataset.brandSlug;
+        state.brandName = this.querySelector('p').textContent;
+        state.modelId = null; state.modelSlug = ''; state.modelName = '';
+        state.year = null; state.fuel = null; state.fuelName = '';
+        updateSummary();
+        setTimeout(() => { loadModels(); goToStep(3); }, 300);
+      });
+    });
+  };
+  renderBrands(allBrands);
+
+  // Arama filtresi
+  const searchInput = document.getElementById('brandSearch');
+  if (searchInput) {
+    searchInput.value = '';
+    searchInput.addEventListener('input', function() {
+      const q = this.value.toLowerCase().trim();
+      const filtered = q ? allBrands.filter(b => b.name.toLowerCase().includes(q)) : allBrands;
+      renderBrands(filtered);
+    });
+  }
+}
+
+async function loadModels() {
+  const grid = document.getElementById('modelGrid');
+  document.getElementById('modelSubtitle').textContent = state.brandName + ' modelleri';
+  grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
+  try {
+    const res = await fetch('/api/models/' + state.brandId);
+    let models = await res.json();
+    if (state.type) {
+      const filtered = models.filter(m => m.body_type === state.type);
+      if (filtered.length > 0) models = filtered;
+    }
+    if (models.length === 0) {
+      grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Bu markada seçtiğiniz türde model bulunamadı.</p>';
+      return;
+    }
+    grid.innerHTML = models.map(m =>
+      '<button type="button" data-model-id="' + m.id + '" data-model-slug="' + m.slug + '" class="model-btn group bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-xl p-4 text-center transition-all">' +
+      '<span class="material-symbols-outlined text-2xl text-slate-400 group-hover:text-primary mb-2 block">commute</span>' +
+      '<p class="font-semibold text-sm text-slate-800">' + m.name + '</p>' +
+      (m.body_type ? '<p class="text-xs text-slate-400 mt-0.5 capitalize">' + m.body_type + '</p>' : '') +
+      '</button>'
+    ).join('');
+    grid.querySelectorAll('.model-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        grid.querySelectorAll('.model-btn').forEach(b => b.classList.remove('border-primary', 'bg-primary/10'));
+        this.classList.add('border-primary', 'bg-primary/10');
+        state.modelId = this.dataset.modelId;
+        state.modelSlug = this.dataset.modelSlug;
+        state.modelName = this.querySelector('p').textContent;
+        state.year = null; state.fuel = null; state.fuelName = '';
+        updateSummary();
+        setTimeout(() => { loadYears(); goToStep(4); }, 300);
+      });
+    });
+  } catch(e) {
+    grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-8">Hata oluştu, tekrar deneyin.</p>';
+  }
+}
+
+function loadYears() {
+  const grid = document.getElementById('yearGrid');
+  document.getElementById('yearSubtitle').textContent = state.brandName + ' ' + state.modelName + ' — yıl seçin';
+  const currentYear = new Date().getFullYear();
+  const years = [];
+  for (let y = currentYear + 1; y >= currentYear - 15; y--) years.push(y);
+  grid.innerHTML = years.map(y =>
+    '<button type="button" data-year="' + y + '" class="year-btn bg-slate-50 hover:bg-primary/10 hover:border-primary/40 border-2 border-transparent rounded-xl p-4 text-center font-bold text-slate-800 transition-all">' + y + '</button>'
+  ).join('');
+  grid.querySelectorAll('.year-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      grid.querySelectorAll('.year-btn').forEach(b => b.classList.remove('border-primary', 'bg-primary/10'));
+      this.classList.add('border-primary', 'bg-primary/10');
+      state.year = parseInt(this.dataset.year);
+      state.fuel = null; state.fuelName = '';
+      updateSummary();
+      setTimeout(() => { goToStep(5); }, 300);
+    });
+  });
+}
+
+// Step 5: Yakıt türü
+document.querySelectorAll('.fuel-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.fuel-btn').forEach(b => b.classList.remove('border-primary', 'bg-primary/10'));
+    this.classList.add('border-primary', 'bg-primary/10');
+    state.fuel = this.dataset.fuel;
+    state.fuelName = this.querySelector('p').textContent;
+    updateSummary();
+    setTimeout(() => {
+      window.location.href = '/arac/' + state.brandSlug + '/' + state.modelSlug + '?yil=' + state.year + '&yakit=' + state.fuel;
+    }, 500);
+  });
+});
+</script>

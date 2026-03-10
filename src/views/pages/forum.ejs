@@ -1,0 +1,86 @@
+<main class="container mx-auto px-6 py-8">
+<div class="flex items-center text-sm text-slate-500 mb-6 gap-1">
+<a href="/" class="hover:text-primary">Ana Sayfa</a><span>/</span><span class="text-slate-800 font-medium">Forum</span>
+</div>
+
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Sol: Konular -->
+<div class="flex-1">
+<div class="flex justify-between items-center mb-6">
+<h1 class="text-3xl font-bold text-slate-900">Forum</h1>
+</div>
+
+<!-- Kategoriler -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-8">
+<% categories.forEach(cat => { %>
+<div class="bg-white rounded-xl border border-slate-100 p-4 hover:border-primary/30 transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg flex items-center justify-center text-white" style="background:<%= cat.color || '#6366f1' %>">
+<span class="material-symbols-outlined text-xl"><%= cat.icon || 'forum' %></span>
+</div>
+<div>
+<h3 class="font-bold text-sm text-slate-800"><%= cat.name %></h3>
+<p class="text-xs text-slate-400"><%= cat.description || '' %></p>
+</div>
+</div>
+</div>
+<% }) %>
+</div>
+
+<!-- Son Konular -->
+<h2 class="text-xl font-bold text-slate-900 mb-4">Son Konular</h2>
+<div class="space-y-3">
+<% recentTopics.forEach(t => { %>
+<a href="/forum/konu/<%= t.slug %>" class="bg-white rounded-xl border border-slate-100 p-5 flex gap-4 items-start hover:border-primary/30 transition-colors block">
+<div class="flex-shrink-0 flex flex-col items-center bg-slate-50 rounded-lg p-2 min-w-14 text-center">
+<span class="material-symbols-outlined text-slate-400 text-sm">chat_bubble</span>
+<span class="font-bold text-slate-700"><%= t.reply_count %></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<% if (t.is_pinned) { %><span class="bg-yellow-100 text-yellow-700 text-[10px] px-2 py-0.5 rounded-full font-bold">SABİT</span><% } %>
+<% if (t.is_locked) { %><span class="bg-red-100 text-red-700 text-[10px] px-2 py-0.5 rounded-full font-bold">KİLİTLİ</span><% } %>
+<span class="text-[10px] px-2 py-0.5 rounded-full font-bold text-white" style="background:<%= t.category_color || '#6366f1' %>"><%= t.category_name %></span>
+</div>
+<h3 class="font-bold text-slate-800 mt-1 truncate"><%= t.title %></h3>
+<div class="flex items-center gap-3 mt-2 text-xs text-slate-400">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">person</span> <%= t.author_name %></span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">visibility</span> <%= t.view_count %></span>
+<% if (t.last_reply_name) { %><span>Son yanıt: <%= t.last_reply_name %></span><% } %>
+</div>
+</div>
+</a>
+<% }) %>
+</div>
+</div>
+
+<!-- Sağ: İstatistikler & Popüler -->
+<aside class="lg:w-72 shrink-0 space-y-6">
+<!-- İstatistikler -->
+<div class="bg-white rounded-2xl border border-slate-100 p-6">
+<h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary">analytics</span> Forum İstatistikleri</h3>
+<div class="space-y-3 text-sm">
+<div class="flex justify-between"><span class="text-slate-500">Toplam Konu</span><span class="font-bold text-slate-800"><%= stats.topics %></span></div>
+<div class="flex justify-between"><span class="text-slate-500">Toplam Yanıt</span><span class="font-bold text-slate-800"><%= stats.replies %></span></div>
+<div class="flex justify-between"><span class="text-slate-500">Kayıtlı Üye</span><span class="font-bold text-slate-800"><%= stats.users %></span></div>
+</div>
+</div>
+
+<!-- Popüler Konular -->
+<div class="bg-white rounded-2xl border border-slate-100 p-6">
+<h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary">trending_up</span> Popüler Konular</h3>
+<div class="space-y-3">
+<% popularTopics.forEach(t => { %>
+<a href="/forum/konu/<%= t.slug %>" class="flex items-start gap-3 hover:bg-slate-50 rounded-lg p-2 transition-colors block">
+<span class="text-sm text-slate-400 mt-0.5"><%= t.view_count %> 👁</span>
+<div>
+<p class="text-sm font-semibold text-slate-800 leading-tight"><%= t.title %></p>
+<p class="text-xs text-slate-400 mt-1"><%= t.author_name %></p>
+</div>
+</a>
+<% }) %>
+</div>
+</div>
+</aside>
+</div>
+</main>

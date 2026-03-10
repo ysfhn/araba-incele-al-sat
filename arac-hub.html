@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#1775d3","background-light":"#f6f7f8","background-dark":"#111921"},fontFamily:{"display":["Inter","sans-serif"]},borderRadius:{"DEFAULT":"0.5rem","lg":"1rem","xl":"1.5rem","full":"9999px"}}}}</script>
+<title>Toyota Corolla Araç Hub - Araba İncele Al Sat</title>
+</head>
+<body class="bg-background-light font-display text-slate-900">
+<!-- Navbar -->
+<nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+<a href="index.html" class="flex items-center gap-2 text-primary"><span class="material-symbols-outlined text-2xl font-bold">directions_car</span><span class="font-bold text-lg text-slate-900">Araba İncele Al Sat</span></a>
+<div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+<a href="ilan-arama.html" class="hover:text-primary transition-colors">İlanlar</a>
+<a href="forum.html" class="hover:text-primary transition-colors">Forum</a>
+<a href="servis-rehberi.html" class="hover:text-primary transition-colors">Servis Rehberi</a>
+<a href="nasil-calisir.html" class="hover:text-primary transition-colors">Nasıl Çalışır</a>
+</div>
+<div class="flex items-center gap-3">
+<a href="ilan-ver.html" class="bg-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-primary/90 transition-all">İlan Ver</a>
+<a href="giris-kayit.html" class="text-sm font-bold text-slate-600 hover:text-primary transition-colors">Giriş Yap</a>
+</div>
+</div>
+</nav>
+
+<div class="max-w-7xl mx-auto px-6 py-6 flex gap-8">
+<!-- Sticky Sidebar -->
+<aside class="hidden lg:block w-56 shrink-0">
+<div class="sticky top-24 space-y-1">
+<a href="#genel-bakis" class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-primary/10 text-primary font-bold text-sm"><span class="material-symbols-outlined text-lg">dashboard</span> Genel Bakış</a>
+<a href="#teknik" class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 font-medium text-sm"><span class="material-symbols-outlined text-lg">build</span> Teknik Özellikler</a>
+<a href="#videolar" class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 font-medium text-sm"><span class="material-symbols-outlined text-lg">play_circle</span> Video İncelemeleri</a>
+<a href="#editor" class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 font-medium text-sm"><span class="material-symbols-outlined text-lg">rate_review</span> Editör Değerlendirmesi</a>
+<a href="#ilanlar" class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 font-medium text-sm"><span class="material-symbols-outlined text-lg">sell</span> Satılık İlanlar</a>
+<a href="#forum" class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 font-medium text-sm"><span class="material-symbols-outlined text-lg">forum</span> Forum Konuları</a>
+<a href="#servisler" class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 font-medium text-sm"><span class="material-symbols-outlined text-lg">home_repair_service</span> Yakın Servisler</a>
+<a href="#parcalar" class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 font-medium text-sm"><span class="material-symbols-outlined text-lg">settings</span> Yedek Parça</a>
+<a href="#belgeler" class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 font-medium text-sm"><span class="material-symbols-outlined text-lg">description</span> Belgeler</a>
+</div>
+</aside>
+
+<!-- Main Content -->
+<main class="flex-1 min-w-0 space-y-8">
+<!-- Breadcrumb -->
+<div class="flex items-center gap-2 text-sm text-slate-500">
+<a href="index.html" class="hover:text-primary">Ana Sayfa</a><span>/</span>
+<a href="#" class="hover:text-primary">Toyota</a><span>/</span>
+<span class="text-slate-900 font-medium">Corolla</span>
+</div>
+
+<!-- Hero -->
+<section id="genel-bakis" class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+<div class="relative h-72 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-9xl text-slate-300">directions_car</span>
+<div class="absolute bottom-4 right-4 flex gap-2">
+<span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Popüler</span>
+<span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">2024 Model</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex items-start justify-between mb-4">
+<div>
+<h1 class="text-2xl font-bold">Toyota Corolla</h1>
+<p class="text-slate-500 mt-1">1.8 Hybrid Dream e-CVT | 2024</p>
+</div>
+<div class="text-right">
+<p class="text-2xl font-bold text-primary">₺1.250.000</p>
+<p class="text-xs text-slate-400">Ortalama Fiyat</p>
+</div>
+</div>
+<!-- Quick Specs -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
+<div class="bg-slate-50 rounded-xl p-4 text-center"><span class="material-symbols-outlined text-primary mb-1">local_gas_station</span><p class="text-xs text-slate-500">Yakıt</p><p class="text-sm font-bold">Hybrid</p></div>
+<div class="bg-slate-50 rounded-xl p-4 text-center"><span class="material-symbols-outlined text-primary mb-1">speed</span><p class="text-xs text-slate-500">Motor</p><p class="text-sm font-bold">1.8L 140HP</p></div>
+<div class="bg-slate-50 rounded-xl p-4 text-center"><span class="material-symbols-outlined text-primary mb-1">settings</span><p class="text-xs text-slate-500">Vites</p><p class="text-sm font-bold">e-CVT</p></div>
+<div class="bg-slate-50 rounded-xl p-4 text-center"><span class="material-symbols-outlined text-primary mb-1">eco</span><p class="text-xs text-slate-500">Tüketim</p><p class="text-sm font-bold">4.5L/100km</p></div>
+</div>
+</div>
+</section>
+
+<!-- Teknik Özellikler -->
+<section id="teknik" class="bg-white rounded-2xl border border-slate-200 p-6">
+<h2 class="text-lg font-bold mb-5 flex items-center gap-2"><span class="material-symbols-outlined text-primary">build</span> Teknik Özellikler</h2>
+<div class="grid md:grid-cols-2 gap-6">
+<div>
+<h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">Motor & Performans</h3>
+<table class="w-full text-sm">
+<tr class="border-b border-slate-100"><td class="py-2.5 text-slate-500">Motor Tipi</td><td class="py-2.5 text-right font-medium">1.8L 4 Silindirli Hybrid</td></tr>
+<tr class="border-b border-slate-100"><td class="py-2.5 text-slate-500">Beygir Gücü</td><td class="py-2.5 text-right font-medium">140 HP</td></tr>
+<tr class="border-b border-slate-100"><td class="py-2.5 text-slate-500">Tork</td><td class="py-2.5 text-right font-medium">185 Nm</td></tr>
+<tr class="border-b border-slate-100"><td class="py-2.5 text-slate-500">0-100 km/s</td><td class="py-2.5 text-right font-medium">9.4 saniye</td></tr>
+<tr><td class="py-2.5 text-slate-500">Maks. Hız</td><td class="py-2.5 text-right font-medium">180 km/s</td></tr>
+</table>
+</div>
+<div>
+<h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">Boyutlar & Ağırlık</h3>
+<table class="w-full text-sm">
+<tr class="border-b border-slate-100"><td class="py-2.5 text-slate-500">Uzunluk</td><td class="py-2.5 text-right font-medium">4.630 mm</td></tr>
+<tr class="border-b border-slate-100"><td class="py-2.5 text-slate-500">Genişlik</td><td class="py-2.5 text-right font-medium">1.780 mm</td></tr>
+<tr class="border-b border-slate-100"><td class="py-2.5 text-slate-500">Yükseklik</td><td class="py-2.5 text-right font-medium">1.435 mm</td></tr>
+<tr class="border-b border-slate-100"><td class="py-2.5 text-slate-500">Dingil Mesafesi</td><td class="py-2.5 text-right font-medium">2.700 mm</td></tr>
+<tr><td class="py-2.5 text-slate-500">Ağırlık</td><td class="py-2.5 text-right font-medium">1.370 kg</td></tr>
+</table>
+</div>
+</div>
+</section>
+
+<!-- Video İncelemeleri -->
+<section id="videolar" class="bg-white rounded-2xl border border-slate-200 p-6">
+<h2 class="text-lg font-bold mb-5 flex items-center gap-2"><span class="material-symbols-outlined text-primary">play_circle</span> Video İncelemeleri</h2>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="group cursor-pointer">
+<div class="relative bg-slate-100 rounded-xl aspect-video flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-6xl text-slate-300">smart_display</span>
+<div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-white text-5xl">play_arrow</span></div>
+</div>
+<p class="font-bold text-sm mt-2">2024 Toyota Corolla Hybrid - Detaylı İnceleme</p>
+<p class="text-xs text-slate-500 mt-0.5">OtoTrend • 245K görüntülenme</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative bg-slate-100 rounded-xl aspect-video flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-6xl text-slate-300">smart_display</span>
+<div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-white text-5xl">play_arrow</span></div>
+</div>
+<p class="font-bold text-sm mt-2">Corolla vs Civic - Hangisi Daha İyi?</p>
+<p class="text-xs text-slate-500 mt-0.5">Araba Dünyası • 189K görüntülenme</p>
+</div>
+</div>
+</section>
+
+<!-- Editör Değerlendirmesi -->
+<section id="editor" class="bg-white rounded-2xl border border-slate-200 p-6">
+<h2 class="text-lg font-bold mb-5 flex items-center gap-2"><span class="material-symbols-outlined text-primary">rate_review</span> Editör Değerlendirmesi</h2>
+<div class="flex items-center gap-4 mb-6">
+<div class="size-14 bg-primary/10 rounded-full flex items-center justify-center"><span class="text-primary text-xl font-bold">8.5</span></div>
+<div><p class="font-bold">Çok İyi</p><p class="text-sm text-slate-500">Editör Puanı (10 üzerinden)</p></div>
+</div>
+<p class="text-sm text-slate-600 leading-relaxed mb-6">2024 model Toyota Corolla Hybrid, sınıfının en verimli araçlarından biri olmaya devam ediyor. Düşük yakıt tüketimi, yüksek donanım seviyesi ve Toyota'nın güvenilirlik itibarı ile öne çıkıyor. Hibrit sistem günlük kullanımda son derece sessiz ve konforlu bir deneyim sunuyor. Sürüş dinamikleri belki segment liderliğini Honda Civic'e bırakıyor olsa da, toplam sahip olma maliyeti açısından rakiplerine fark atıyor.</p>
+<div class="grid md:grid-cols-2 gap-6">
+<div>
+<h3 class="flex items-center gap-2 text-sm font-bold text-green-700 mb-3"><span class="material-symbols-outlined text-lg">thumb_up</span> Artılar</h3>
+<ul class="space-y-2">
+<li class="flex items-start gap-2 text-sm text-slate-600"><span class="material-symbols-outlined text-green-500 text-base mt-0.5">check_circle</span>Sınıfının en düşük yakıt tüketimi (4.5L/100km)</li>
+<li class="flex items-start gap-2 text-sm text-slate-600"><span class="material-symbols-outlined text-green-500 text-base mt-0.5">check_circle</span>Zengin güvenlik donanımı (Toyota Safety Sense 3.0)</li>
+<li class="flex items-start gap-2 text-sm text-slate-600"><span class="material-symbols-outlined text-green-500 text-base mt-0.5">check_circle</span>Güvenilir ve düşük bakım maliyetli</li>
+<li class="flex items-start gap-2 text-sm text-slate-600"><span class="material-symbols-outlined text-green-500 text-base mt-0.5">check_circle</span>Konforlu şehir içi sürüş deneyimi</li>
+<li class="flex items-start gap-2 text-sm text-slate-600"><span class="material-symbols-outlined text-green-500 text-base mt-0.5">check_circle</span>Yüksek ikinci el değeri</li>
+</ul>
+</div>
+<div>
+<h3 class="flex items-center gap-2 text-sm font-bold text-red-700 mb-3"><span class="material-symbols-outlined text-lg">thumb_down</span> Eksiler</h3>
+<ul class="space-y-2">
+<li class="flex items-start gap-2 text-sm text-slate-600"><span class="material-symbols-outlined text-red-500 text-base mt-0.5">cancel</span>CVT vites kutusu yüksek devirlerde gürültülü</li>
+<li class="flex items-start gap-2 text-sm text-slate-600"><span class="material-symbols-outlined text-red-500 text-base mt-0.5">cancel</span>Sürüş dinamikleri rakiplere göre zayıf</li>
+<li class="flex items-start gap-2 text-sm text-slate-600"><span class="material-symbols-outlined text-red-500 text-base mt-0.5">cancel</span>Bagaj hacmi hybrid batarya sebebiyle küçük</li>
+<li class="flex items-start gap-2 text-sm text-slate-600"><span class="material-symbols-outlined text-red-500 text-base mt-0.5">cancel</span>İç mekan malzeme kalitesi ortalama</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- Satılık İlanlar -->
+<section id="ilanlar" class="bg-white rounded-2xl border border-slate-200 p-6">
+<div class="flex items-center justify-between mb-5">
+<h2 class="text-lg font-bold flex items-center gap-2"><span class="material-symbols-outlined text-primary">sell</span> Satılık İlanlar</h2>
+<a href="ilan-arama.html" class="text-sm text-primary font-bold hover:underline flex items-center gap-1">Tümünü Gör <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+</div>
+<div class="grid md:grid-cols-3 gap-4">
+<!-- İlan 1 -->
+<a href="ilan-detay.html" class="group border border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+<div class="aspect-[4/3] bg-slate-100 flex items-center justify-center"><span class="material-symbols-outlined text-5xl text-slate-300">directions_car</span></div>
+<div class="p-4">
+<p class="font-bold text-sm group-hover:text-primary transition-colors">2024 Toyota Corolla 1.8 Hybrid Dream</p>
+<p class="text-xs text-slate-500 mt-1">0 km • Otomatik • Hybrid • İstanbul</p>
+<p class="text-primary font-bold mt-2">₺1.285.000</p>
+</div>
+</a>
+<!-- İlan 2 -->
+<a href="ilan-detay.html" class="group border border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+<div class="aspect-[4/3] bg-slate-100 flex items-center justify-center"><span class="material-symbols-outlined text-5xl text-slate-300">directions_car</span></div>
+<div class="p-4">
+<p class="font-bold text-sm group-hover:text-primary transition-colors">2023 Toyota Corolla 1.8 Hybrid Flame X-Pack</p>
+<p class="text-xs text-slate-500 mt-1">18.500 km • Otomatik • Hybrid • Ankara</p>
+<p class="text-primary font-bold mt-2">₺1.190.000</p>
+</div>
+</a>
+<!-- İlan 3 -->
+<a href="ilan-detay.html" class="group border border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+<div class="aspect-[4/3] bg-slate-100 flex items-center justify-center"><span class="material-symbols-outlined text-5xl text-slate-300">directions_car</span></div>
+<div class="p-4">
+<p class="font-bold text-sm group-hover:text-primary transition-colors">2022 Toyota Corolla 1.8 Hybrid Vision</p>
+<p class="text-xs text-slate-500 mt-1">42.000 km • Otomatik • Hybrid • İzmir</p>
+<p class="text-primary font-bold mt-2">₺1.050.000</p>
+</div>
+</a>
+</div>
+</section>
+
+<!-- Forum Konuları -->
+<section id="forum" class="bg-white rounded-2xl border border-slate-200 p-6">
+<div class="flex items-center justify-between mb-5">
+<h2 class="text-lg font-bold flex items-center gap-2"><span class="material-symbols-outlined text-primary">forum</span> Forum Konuları</h2>
+<a href="forum.html" class="text-sm text-primary font-bold hover:underline flex items-center gap-1">Foruma Git <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+</div>
+<div class="divide-y divide-slate-100">
+<a href="forum-konu.html" class="flex items-center gap-4 py-3 hover:bg-slate-50 rounded-lg px-3 -mx-3 transition-colors">
+<div class="size-10 bg-primary/10 rounded-full flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-lg">chat</span></div>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-sm truncate">Corolla Hybrid 60.000 km bakım maliyeti ne kadar?</p>
+<p class="text-xs text-slate-500 mt-0.5">12 yanıt • Son cevap 2 saat önce</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</a>
+<a href="forum-konu.html" class="flex items-center gap-4 py-3 hover:bg-slate-50 rounded-lg px-3 -mx-3 transition-colors">
+<div class="size-10 bg-primary/10 rounded-full flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-lg">chat</span></div>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-sm truncate">Dream vs Flame X-Pack karşılaştırma</p>
+<p class="text-xs text-slate-500 mt-0.5">28 yanıt • Son cevap 5 saat önce</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</a>
+<a href="forum-konu.html" class="flex items-center gap-4 py-3 hover:bg-slate-50 rounded-lg px-3 -mx-3 transition-colors">
+<div class="size-10 bg-primary/10 rounded-full flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-lg">chat</span></div>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-sm truncate">Hybrid batarya ömrü ve garanti süresi</p>
+<p class="text-xs text-slate-500 mt-0.5">45 yanıt • Son cevap 1 gün önce</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</a>
+</div>
+</section>
+
+<!-- Yakın Servisler -->
+<section id="servisler" class="bg-white rounded-2xl border border-slate-200 p-6">
+<div class="flex items-center justify-between mb-5">
+<h2 class="text-lg font-bold flex items-center gap-2"><span class="material-symbols-outlined text-primary">home_repair_service</span> Yakın Toyota Servisleri</h2>
+<a href="servis-rehberi.html" class="text-sm text-primary font-bold hover:underline flex items-center gap-1">Tümünü Gör <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+</div>
+<div class="grid md:grid-cols-3 gap-4">
+<a href="isletme-profili.html" class="border border-slate-200 rounded-xl p-4 hover:shadow-lg transition-all">
+<div class="flex items-center gap-3 mb-3">
+<div class="size-12 bg-red-50 rounded-xl flex items-center justify-center"><span class="material-symbols-outlined text-red-500">build</span></div>
+<div><p class="font-bold text-sm">Toyota Plaza Kocaeli</p><p class="text-xs text-slate-500">Yetkili Servis</p></div>
+</div>
+<div class="flex items-center gap-1 text-xs text-amber-500 mb-2"><span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span> 4.8 <span class="text-slate-400">(324 değerlendirme)</span></div>
+<p class="text-xs text-slate-500 flex items-center gap-1"><span class="material-symbols-outlined text-xs">location_on</span> 2.3 km uzaklıkta</p>
+</a>
+<a href="isletme-profili.html" class="border border-slate-200 rounded-xl p-4 hover:shadow-lg transition-all">
+<div class="flex items-center gap-3 mb-3">
+<div class="size-12 bg-blue-50 rounded-xl flex items-center justify-center"><span class="material-symbols-outlined text-blue-500">build</span></div>
+<div><p class="font-bold text-sm">Oto Master Hybrid</p><p class="text-xs text-slate-500">Özel Servis</p></div>
+</div>
+<div class="flex items-center gap-1 text-xs text-amber-500 mb-2"><span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span> 4.6 <span class="text-slate-400">(156 değerlendirme)</span></div>
+<p class="text-xs text-slate-500 flex items-center gap-1"><span class="material-symbols-outlined text-xs">location_on</span> 4.1 km uzaklıkta</p>
+</a>
+<a href="isletme-profili.html" class="border border-slate-200 rounded-xl p-4 hover:shadow-lg transition-all">
+<div class="flex items-center gap-3 mb-3">
+<div class="size-12 bg-green-50 rounded-xl flex items-center justify-center"><span class="material-symbols-outlined text-green-500">build</span></div>
+<div><p class="font-bold text-sm">Murat Oto Elektrik</p><p class="text-xs text-slate-500">Elektrik & Hybrid</p></div>
+</div>
+<div class="flex items-center gap-1 text-xs text-amber-500 mb-2"><span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">star</span> 4.5 <span class="text-slate-400">(98 değerlendirme)</span></div>
+<p class="text-xs text-slate-500 flex items-center gap-1"><span class="material-symbols-outlined text-xs">location_on</span> 5.7 km uzaklıkta</p>
+</a>
+</div>
+</section>
+
+<!-- Yedek Parça -->
+<section id="parcalar" class="bg-white rounded-2xl border border-slate-200 p-6">
+<h2 class="text-lg font-bold mb-5 flex items-center gap-2"><span class="material-symbols-outlined text-primary">settings</span> Yedek Parça Fiyatları</h2>
+<div class="grid md:grid-cols-2 gap-3">
+<div class="flex items-center justify-between border border-slate-100 rounded-xl p-4">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-slate-50 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-slate-500 text-lg">oil_barrel</span></div>
+<div><p class="font-bold text-sm">Motor Yağı + Filtre</p><p class="text-xs text-slate-500">Periyodik Bakım</p></div>
+</div>
+<p class="font-bold text-sm">₺1.200 - ₺2.500</p>
+</div>
+<div class="flex items-center justify-between border border-slate-100 rounded-xl p-4">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-slate-50 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-slate-500 text-lg">tire_repair</span></div>
+<div><p class="font-bold text-sm">Fren Balatası (Ön)</p><p class="text-xs text-slate-500">Aşınma Parçası</p></div>
+</div>
+<p class="font-bold text-sm">₺800 - ₺1.800</p>
+</div>
+<div class="flex items-center justify-between border border-slate-100 rounded-xl p-4">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-slate-50 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-slate-500 text-lg">air</span></div>
+<div><p class="font-bold text-sm">Hava Filtresi</p><p class="text-xs text-slate-500">Periyodik Bakım</p></div>
+</div>
+<p class="font-bold text-sm">₺350 - ₺750</p>
+</div>
+<div class="flex items-center justify-between border border-slate-100 rounded-xl p-4">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-slate-50 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-slate-500 text-lg">battery_charging_full</span></div>
+<div><p class="font-bold text-sm">Akü (Start-Stop)</p><p class="text-xs text-slate-500">Elektrik</p></div>
+</div>
+<p class="font-bold text-sm">₺3.500 - ₺6.000</p>
+</div>
+</div>
+</section>
+
+<!-- Belgeler -->
+<section id="belgeler" class="bg-white rounded-2xl border border-slate-200 p-6">
+<h2 class="text-lg font-bold mb-5 flex items-center gap-2"><span class="material-symbols-outlined text-primary">description</span> Belgeler & Kaynaklar</h2>
+<div class="grid md:grid-cols-2 gap-3">
+<a href="#" class="flex items-center gap-3 border border-slate-200 rounded-xl p-4 hover:bg-slate-50 transition-colors">
+<div class="size-10 bg-red-50 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-red-500 text-lg">picture_as_pdf</span></div>
+<div><p class="font-bold text-sm">Kullanım Kılavuzu</p><p class="text-xs text-slate-500">PDF • 12.4 MB</p></div>
+<span class="material-symbols-outlined text-slate-400 ml-auto">download</span>
+</a>
+<a href="#" class="flex items-center gap-3 border border-slate-200 rounded-xl p-4 hover:bg-slate-50 transition-colors">
+<div class="size-10 bg-blue-50 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-blue-500 text-lg">picture_as_pdf</span></div>
+<div><p class="font-bold text-sm">Teknik Şartname</p><p class="text-xs text-slate-500">PDF • 3.8 MB</p></div>
+<span class="material-symbols-outlined text-slate-400 ml-auto">download</span>
+</a>
+<a href="#" class="flex items-center gap-3 border border-slate-200 rounded-xl p-4 hover:bg-slate-50 transition-colors">
+<div class="size-10 bg-green-50 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-green-500 text-lg">picture_as_pdf</span></div>
+<div><p class="font-bold text-sm">Garanti Koşulları</p><p class="text-xs text-slate-500">PDF • 1.2 MB</p></div>
+<span class="material-symbols-outlined text-slate-400 ml-auto">download</span>
+</a>
+<a href="#" class="flex items-center gap-3 border border-slate-200 rounded-xl p-4 hover:bg-slate-50 transition-colors">
+<div class="size-10 bg-amber-50 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-amber-500 text-lg">picture_as_pdf</span></div>
+<div><p class="font-bold text-sm">Bakım Planı</p><p class="text-xs text-slate-500">PDF • 2.1 MB</p></div>
+<span class="material-symbols-outlined text-slate-400 ml-auto">download</span>
+</a>
+</div>
+</section>
+</main>
+</div>
+
+<!-- Footer -->
+<footer class="bg-white border-t border-slate-200 mt-12">
+<div class="max-w-7xl mx-auto px-6 py-12">
+<div class="grid md:grid-cols-4 gap-8">
+<div>
+<a href="index.html" class="flex items-center gap-2 text-primary mb-3"><span class="material-symbols-outlined text-xl font-bold">directions_car</span><span class="font-bold text-slate-900">Araba İncele Al Sat</span></a>
+<p class="text-sm text-slate-500">Türkiye'nin en modern araç alım-satım ve bilgi platformu.</p>
+</div>
+<div><h4 class="font-bold text-sm mb-3">Platform</h4><div class="space-y-2 text-sm text-slate-500"><a href="ilan-arama.html" class="block hover:text-primary">İlanlar</a><a href="forum.html" class="block hover:text-primary">Forum</a><a href="servis-rehberi.html" class="block hover:text-primary">Servis Rehberi</a></div></div>
+<div><h4 class="font-bold text-sm mb-3">Destek</h4><div class="space-y-2 text-sm text-slate-500"><a href="nasil-calisir.html" class="block hover:text-primary">Nasıl Çalışır</a><a href="#" class="block hover:text-primary">SSS</a><a href="#" class="block hover:text-primary">İletişim</a></div></div>
+<div><h4 class="font-bold text-sm mb-3">Yasal</h4><div class="space-y-2 text-sm text-slate-500"><a href="#" class="block hover:text-primary">Gizlilik Politikası</a><a href="#" class="block hover:text-primary">Kullanım Koşulları</a><a href="#" class="block hover:text-primary">KVKK</a></div></div>
+</div>
+<div class="border-t border-slate-100 mt-8 pt-8 text-center text-xs text-slate-400">© 2025 Araba İncele Al Sat. Tüm hakları saklıdır.</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#1775d3","background-light":"#f6f7f8","background-dark":"#111921"},fontFamily:{"display":["Inter","sans-serif"]},borderRadius:{"DEFAULT":"0.5rem","lg":"1rem","xl":"1.5rem","full":"9999px"}}}}</script>
+<title>Kullanıcı Paneli - Araba İncele Al Sat</title>
+</head>
+<body class="bg-background-light font-display text-slate-900">
+<div class="flex min-h-screen">
+<!-- Sidebar -->
+<aside class="hidden lg:flex flex-col w-64 bg-white border-r border-slate-200 fixed h-full z-40">
+<div class="p-6 border-b border-slate-100">
+<a href="index.html" class="flex items-center gap-2 text-primary"><span class="material-symbols-outlined text-2xl font-bold">directions_car</span><span class="text-slate-900 text-sm font-bold">Araba İncele Al Sat</span></a>
+</div>
+<nav class="flex-1 p-4 space-y-1">
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-bold text-sm"><span class="material-symbols-outlined text-lg">dashboard</span> Genel Bakış</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 font-medium text-sm"><span class="material-symbols-outlined text-lg">favorite</span> Favorilerim</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 font-medium text-sm"><span class="material-symbols-outlined text-lg">list_alt</span> İlanlarım</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 font-medium text-sm"><span class="material-symbols-outlined text-lg">chat</span> Mesajlar <span class="bg-primary text-white text-[10px] px-2 py-0.5 rounded-full ml-auto">3</span></a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 font-medium text-sm"><span class="material-symbols-outlined text-lg">forum</span> Forum Aktivitem</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 font-medium text-sm"><span class="material-symbols-outlined text-lg">notifications</span> Bildirimler</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 font-medium text-sm"><span class="material-symbols-outlined text-lg">settings</span> Ayarlar</a>
+</nav>
+<div class="p-4 border-t border-slate-100">
+<div class="flex items-center gap-3 px-4 py-3">
+<div class="size-9 rounded-full bg-slate-200 flex items-center justify-center"><span class="material-symbols-outlined text-slate-400 text-sm">person</span></div>
+<div><p class="text-sm font-bold">Ahmet Y.</p><p class="text-[10px] text-slate-400">ahmet@email.com</p></div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<div class="flex-1 lg:ml-64">
+<header class="bg-white border-b border-slate-200 px-6 md:px-8 py-4 sticky top-0 z-30 flex justify-between items-center">
+<h1 class="text-xl font-bold text-slate-900">Genel Bakış</h1>
+<div class="flex items-center gap-3">
+<button class="relative"><span class="material-symbols-outlined text-slate-400">notifications</span><span class="absolute -top-1 -right-1 size-4 bg-red-500 text-white text-[8px] rounded-full flex items-center justify-center">5</span></button>
+<div class="size-9 rounded-full bg-slate-200 flex items-center justify-center"><span class="material-symbols-outlined text-slate-400 text-sm">person</span></div>
+</div>
+</header>
+<main class="p-6 md:p-8 space-y-8">
+<!-- Stats -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white rounded-2xl p-6 border border-slate-100"><div class="flex items-center gap-3 mb-3"><span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-xl">list_alt</span><span class="text-sm text-slate-500">Aktif İlanlar</span></div><p class="text-3xl font-bold text-slate-900">3</p></div>
+<div class="bg-white rounded-2xl p-6 border border-slate-100"><div class="flex items-center gap-3 mb-3"><span class="material-symbols-outlined text-green-500 bg-green-50 p-2 rounded-xl">favorite</span><span class="text-sm text-slate-500">Favori Araçlar</span></div><p class="text-3xl font-bold text-slate-900">12</p></div>
+<div class="bg-white rounded-2xl p-6 border border-slate-100"><div class="flex items-center gap-3 mb-3"><span class="material-symbols-outlined text-orange-500 bg-orange-50 p-2 rounded-xl">chat</span><span class="text-sm text-slate-500">Okunmamış Mesaj</span></div><p class="text-3xl font-bold text-slate-900">3</p></div>
+<div class="bg-white rounded-2xl p-6 border border-slate-100"><div class="flex items-center gap-3 mb-3"><span class="material-symbols-outlined text-purple-500 bg-purple-50 p-2 rounded-xl">forum</span><span class="text-sm text-slate-500">Forum Yanıtları</span></div><p class="text-3xl font-bold text-slate-900">28</p></div>
+</div>
+<!-- Son Görüntülenen -->
+<div class="bg-white rounded-2xl p-6 border border-slate-100">
+<h2 class="font-bold text-lg text-slate-900 mb-4">Son Görüntülenen Araçlar</h2>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="flex gap-4 items-center"><div class="size-20 rounded-xl bg-cover bg-center flex-shrink-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAABtaobEkwyb_wHO5ssnxJ2hQ1-XK8RgOfEgRJbVDomrRMUynWvYAuxwgq7db2PGPl6lq1vcg2utAvIOtPZ5-OZhW9FHpYLvpVYDpuvqJvVW5i1EzxMhZDYBmeVl8v6TpKzKui7d7G-FNgS6e6cLl5SupMRoTbC2NJ3Mj3nbK2L4SrmKtCf-a3livjBArdcFINlSunt9XqwEHU4AT84DHZHYeyHdJPNIkZU9JU4H0UNu7Mrtt4wf3RfKvkJo6CYf82uASRyButrFBG');"></div><div><h4 class="font-bold text-sm">BMW 320i</h4><p class="text-primary font-bold text-sm">2.450.000 TL</p><p class="text-xs text-slate-400">2021 • 45K km</p></div></div>
+<div class="flex gap-4 items-center"><div class="size-20 rounded-xl bg-cover bg-center flex-shrink-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDxu9qJz91sbeQOxgh8-OfSo5fr23BNuD2HKRIfj_9jY9rYW_x26Rlyf_HexD48MVu7xfJjl825wS7D9hLfxpUnCpmatljR3RqUHsrFSn8uAEhJxwrZfdRCXS8VzYmgZig0-u1m0sH7jPqJ1bX0HZ4DxanlN1nWhnKkBq-OQgjIeQwYwFAdwg2AggZJGXyN_TbQNCjQSpSg9nwPbGPxl2ullDcEXcXH4JTfFApfN4fGJ5NKByi5pUBfj06gYeXo6uHLn5fsUY33_VxM');"></div><div><h4 class="font-bold text-sm">Audi A4 Quattro</h4><p class="text-primary font-bold text-sm">2.150.000 TL</p><p class="text-xs text-slate-400">2020 • 62K km</p></div></div>
+<div class="flex gap-4 items-center"><div class="size-20 rounded-xl bg-cover bg-center flex-shrink-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDCh69iVJbXwZeMHYw30vE_QlhaBpqBBI7We_8Kc0P0zXI6hbzPN_2_XVnHIq4frQfVq3QxGYmT_O4MsHqvMACui6G3tQ3f2Rl8A720VaXI5ivIzT-Vhe3c-PHCQsB8lCFzN6XQgTA4iphzobbnRPmDw2h045bZYL7XBFrfAyFJ2hfntytzRZ7-s4J_lpcHuw-nGCEdMbjO-NDo5AyTC_sp03ONroQ_76EecUbwRlSAeLYdhwU-TGHqsJfahMbHmeP-3GRhtZQiwQUp');"></div><div><h4 class="font-bold text-sm">VW Golf 1.5 eTSI</h4><p class="text-primary font-bold text-sm">1.650.000 TL</p><p class="text-xs text-slate-400">2023 • 15K km</p></div></div>
+</div>
+</div>
+<!-- Forum & Mesajlar -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="bg-white rounded-2xl p-6 border border-slate-100">
+<h2 class="font-bold text-lg text-slate-900 mb-4">Son Forum Yanıtlarım</h2>
+<div class="space-y-3">
+<div class="flex gap-3 items-start"><div class="bg-primary/10 rounded-lg p-1.5"><span class="material-symbols-outlined text-primary text-sm">forum</span></div><div><p class="text-sm font-medium text-slate-800">DSG Şanzıman Bakım İpuçları</p><p class="text-xs text-slate-400">Yanıtın: "Bende de aynı sorun oldu..." • 3 saat önce</p></div></div>
+<div class="flex gap-3 items-start"><div class="bg-primary/10 rounded-lg p-1.5"><span class="material-symbols-outlined text-primary text-sm">forum</span></div><div><p class="text-sm font-medium text-slate-800">500K-1M TL Arası En İyi Araç</p><p class="text-xs text-slate-400">Yanıtın: "Honda Civic kesinlikle..." • Dün</p></div></div>
+</div>
+</div>
+<div class="bg-white rounded-2xl p-6 border border-slate-100">
+<h2 class="font-bold text-lg text-slate-900 mb-4">Son Mesajlar</h2>
+<div class="space-y-3">
+<div class="flex gap-3 items-center"><div class="size-9 rounded-full bg-slate-200 flex items-center justify-center"><span class="material-symbols-outlined text-slate-400 text-sm">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-bold text-slate-800">Mehmet K.</p><p class="text-xs text-slate-500 truncate">BMW 320i için teklif gönderdim...</p></div><span class="text-[10px] text-slate-400 whitespace-nowrap">15 dk</span></div>
+<div class="flex gap-3 items-center"><div class="size-9 rounded-full bg-slate-200 flex items-center justify-center"><span class="material-symbols-outlined text-slate-400 text-sm">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-bold text-slate-800">Servis Master</p><p class="text-xs text-slate-500 truncate">Randevunuz onaylandı. 15 Ocak...</p></div><span class="text-[10px] text-slate-400 whitespace-nowrap">2 saat</span></div>
+</div>
+</div>
+</div>
+<!-- Profil Tamamlama -->
+<div class="bg-primary/5 rounded-2xl p-6 border border-primary/10">
+<div class="flex items-center justify-between mb-4"><h3 class="font-bold text-slate-900">Profil Tamamlama</h3><span class="text-sm font-bold text-primary">%75</span></div>
+<div class="w-full bg-slate-200 rounded-full h-2 mb-4"><div class="bg-primary rounded-full h-2" style="width:75%"></div></div>
+<div class="flex flex-wrap gap-3">
+<span class="flex items-center gap-1 text-xs text-green-600 bg-green-50 px-3 py-1 rounded-full"><span class="material-symbols-outlined text-xs">check_circle</span> E-posta</span>
+<span class="flex items-center gap-1 text-xs text-green-600 bg-green-50 px-3 py-1 rounded-full"><span class="material-symbols-outlined text-xs">check_circle</span> Telefon</span>
+<span class="flex items-center gap-1 text-xs text-slate-400 bg-slate-100 px-3 py-1 rounded-full"><span class="material-symbols-outlined text-xs">radio_button_unchecked</span> Kimlik Doğrulama</span>
+<span class="flex items-center gap-1 text-xs text-slate-400 bg-slate-100 px-3 py-1 rounded-full"><span class="material-symbols-outlined text-xs">radio_button_unchecked</span> Profil Fotoğrafı</span>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

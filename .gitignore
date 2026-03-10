@@ -1,0 +1,6 @@
+node_modules/
+src/db/database.sqlite
+src/db/sessions.sqlite
+*.sqlite
+.env
+.DS_Store

@@ -1,0 +1,16 @@
+<% if (typeof success !== 'undefined' && success && success.length > 0) { %>
+  <div class="fixed top-4 right-4 z-[100] animate-pulse">
+    <div class="bg-green-500 text-white px-6 py-3 rounded-xl shadow-xl flex items-center gap-2 text-sm font-bold flash-message">
+      <span class="material-symbols-outlined text-lg">check_circle</span>
+      <%= success %>
+    </div>
+  </div>
+<% } %>
+<% if (typeof error !== 'undefined' && error && error.length > 0) { %>
+  <div class="fixed top-4 right-4 z-[100] animate-pulse">
+    <div class="bg-red-500 text-white px-6 py-3 rounded-xl shadow-xl flex items-center gap-2 text-sm font-bold flash-message">
+      <span class="material-symbols-outlined text-lg">error</span>
+      <%= error %>
+    </div>
+  </div>
+<% } %>

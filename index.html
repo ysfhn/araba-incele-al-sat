@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#1775d3",
+                    "background-light": "#f6f7f8",
+                    "background-dark": "#111921",
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"]
+                },
+                borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            },
+        },
+    }
+</script>
+<title>Araba İncele Al Sat - Türkiye'nin Otomobil Platformu</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 bg-white px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">directions_car</span>
+<h2 class="text-slate-900 text-lg font-bold leading-tight tracking-tight">Araba İncele Al Sat</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="ilan-arama.html">İlanlar</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="servis-rehberi.html">Servisler</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="forum.html">Forum</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="nasil-calisir.html">Kurumsal</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<div class="hidden md:flex items-center bg-slate-100 rounded-xl px-3 py-1.5 border border-slate-200">
+<span class="material-symbols-outlined text-slate-500 text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 placeholder:text-slate-400" placeholder="Hızlı ara..."/>
+</div>
+<div class="flex gap-2">
+<a href="giris-kayit.html" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
+<span>Giriş Yap</span>
+</a>
+<a href="ilan-ver.html" class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-slate-100 text-slate-900 text-sm font-bold border border-slate-200 hover:bg-slate-200 transition-all">
+<span>İlan Ver</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative h-[560px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-slate-900/40 z-10"></div>
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCfTcn3rvxyK2odP_JqZDtIw5mGFlnv8Ye8xKOSads7PfQFFDjWXhKgGd7F_Uv-j2eJpTtTlSr_tRDb6OoLfYDebSy1T-90kTg5Rrl0rnM1Ek8xlSa-Hw67v8Kx4qBcIkHvcT-otB_-lhEcbNL2ja0qSx8DtN01-F24H-5HZsK9uzuTBSdqmshUKphLzSfeD_zDVqoyWV0cY5DvgLvtJZcpgLRoWpkSi3mBWP-uIxhLNSMHCCJOXwekZhCVyPCNhdTTyZrGvFDdnZhD');"></div>
+<div class="relative z-20 container mx-auto px-6 text-center max-w-4xl">
+<h1 class="text-white text-4xl md:text-6xl font-black leading-tight tracking-tight mb-6">
+Hayalinizdeki Aracı İnceleyin, <span class="text-primary">Güvenle Alın ve Satın</span>
+</h1>
+<p class="text-slate-200 text-lg md:text-xl font-normal mb-10">
+Türkiye'nin en kapsamlı araç platformunda binlerce ilan, yetkili servis ve uzman topluluk sizi bekliyor.
+</p>
+<div class="bg-white p-2 rounded-2xl shadow-2xl max-w-3xl mx-auto flex flex-col md:flex-row gap-2">
+<div class="flex-1 flex items-center px-4 gap-3 border-b md:border-b-0 md:border-r border-slate-100 py-2">
+<span class="material-symbols-outlined text-primary">search</span>
+<input class="w-full border-none focus:ring-0 text-slate-700 placeholder:text-slate-400" placeholder="Marka, model veya kelime ara..."/>
+</div>
+<div class="flex-1 flex items-center px-4 gap-3 py-2">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<input class="w-full border-none focus:ring-0 text-slate-700 placeholder:text-slate-400" placeholder="Şehir seçin"/>
+</div>
+<button class="bg-primary text-white font-bold py-4 px-8 rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
+<span>Ara</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Main Content Container -->
+<main class="container mx-auto px-6 lg:px-12 py-12">
+<!-- Öne Çıkan Araçlar -->
+<div class="mb-16">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="text-3xl font-bold text-slate-900">Öne Çıkan Araç İlanları</h2>
+<p class="text-slate-500 mt-2">Editörlerimiz tarafından seçilen haftanın en iyi fırsatları</p>
+</div>
+<a class="text-primary font-bold flex items-center gap-1 hover:underline" href="ilan-arama.html">
+Tümünü Gör <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100">
+<div class="h-48 bg-cover bg-center relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAABtaobEkwyb_wHO5ssnxJ2hQ1-XK8RgOfEgRJbVDomrRMUynWvYAuxwgq7db2PGPl6lq1vcg2utAvIOtPZ5-OZhW9FHpYLvpVYDpuvqJvVW5i1EzxMhZDYBmeVl8v6TpKzKui7d7G-FNgS6e6cLl5SupMRoTbC2NJ3Mj3nbK2L4SrmKtCf-a3livjBArdcFINlSunt9XqwEHU4AT84DHZHYeyHdJPNIkZU9JU4H0UNu7Mrtt4wf3RfKvkJo6CYf82uASRyButrFBG');">
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur rounded-full p-1.5 cursor-pointer">
+<span class="material-symbols-outlined text-slate-600">favorite</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-bold text-lg text-slate-900">BMW 320i Sedan</h3>
+<p class="text-primary font-bold text-xl mt-1">2.450.000 TL</p>
+<div class="flex items-center gap-3 mt-4 text-slate-500 text-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">speed</span> 45.000 km</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">calendar_today</span> 2021</span>
+</div>
+<a href="ilan-detay.html" class="block w-full mt-5 py-2.5 rounded-xl bg-slate-50 text-slate-900 font-bold text-sm border border-slate-200 hover:bg-slate-100 transition-all text-center">İncele</a>
+</div>
+</div>
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100">
+<div class="h-48 bg-cover bg-center relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDxu9qJz91sbeQOxgh8-OfSo5fr23BNuD2HKRIfj_9jY9rYW_x26Rlyf_HexD48MVu7xfJjl825wS7D9hLfxpUnCpmatljR3RqUHsrFSn8uAEhJxwrZfdRCXS8VzYmgZig0-u1m0sH7jPqJ1bX0HZ4DxanlN1nWhnKkBq-OQgjIeQwYwFAdwg2AggZJGXyN_TbQNCjQSpSg9nwPbGPxl2ullDcEXcXH4JTfFApfN4fGJ5NKByi5pUBfj06gYeXo6uHLn5fsUY33_VxM');">
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur rounded-full p-1.5 cursor-pointer">
+<span class="material-symbols-outlined text-slate-600">favorite</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-bold text-lg text-slate-900">Audi A4 Quattro</h3>
+<p class="text-primary font-bold text-xl mt-1">2.150.000 TL</p>
+<div class="flex items-center gap-3 mt-4 text-slate-500 text-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">speed</span> 62.000 km</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">calendar_today</span> 2020</span>
+</div>
+<a href="ilan-detay.html" class="block w-full mt-5 py-2.5 rounded-xl bg-slate-50 text-slate-900 font-bold text-sm border border-slate-200 hover:bg-slate-100 transition-all text-center">İncele</a>
+</div>
+</div>
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100">
+<div class="h-48 bg-cover bg-center relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDCh69iVJbXwZeMHYw30vE_QlhaBpqBBI7We_8Kc0P0zXI6hbzPN_2_XVnHIq4frQfVq3QxGYmT_O4MsHqvMACui6G3tQ3f2Rl8A720VaXI5ivIzT-Vhe3c-PHCQsB8lCFzN6XQgTA4iphzobbnRPmDw2h045bZYL7XBFrfAyFJ2hfntytzRZ7-s4J_lpcHuw-nGCEdMbjO-NDo5AyTC_sp03ONroQ_76EecUbwRlSAeLYdhwU-TGHqsJfahMbHmeP-3GRhtZQiwQUp');">
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur rounded-full p-1.5 cursor-pointer">
+<span class="material-symbols-outlined text-slate-600">favorite</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-bold text-lg text-slate-900">VW Golf 1.5 eTSI</h3>
+<p class="text-primary font-bold text-xl mt-1">1.650.000 TL</p>
+<div class="flex items-center gap-3 mt-4 text-slate-500 text-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">speed</span> 15.000 km</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">calendar_today</span> 2023</span>
+</div>
+<a href="ilan-detay.html" class="block w-full mt-5 py-2.5 rounded-xl bg-slate-50 text-slate-900 font-bold text-sm border border-slate-200 hover:bg-slate-100 transition-all text-center">İncele</a>
+</div>
+</div>
+<div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100">
+<div class="h-48 bg-cover bg-center relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDSj5hlQOWYzkadX1GgBht04QKBNFHkhCwrX1bdP6jdSKLeLL_TeNz54glToI30ha5yAJ6_kql_0-lmQjapFMwkFt9KunK2gYNrUVkDihXhAYds6Cq30bfQnGTJUL61HGtcAJ8iL9VlxWVcVZMQvNxTZtXbHp9ryF2YXq__sSY3jiRG5wtKKbDdq3GNq_SmNpTAcA-Ks2wpnQjGAeivK_udoJW2Hx-U7ZH5JMuS25QA7xGeBdyoFLV3pCeUQaqg2Zp20amTOFmzreTa');">
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur rounded-full p-1.5 cursor-pointer">
+<span class="material-symbols-outlined text-slate-600">favorite</span>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-bold text-lg text-slate-900">Mercedes-Benz C200</h3>
+<p class="text-primary font-bold text-xl mt-1">2.800.000 TL</p>
+<div class="flex items-center gap-3 mt-4 text-slate-500 text-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">speed</span> 28.000 km</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-base">calendar_today</span> 2022</span>
+</div>
+<a href="ilan-detay.html" class="block w-full mt-5 py-2.5 rounded-xl bg-slate-50 text-slate-900 font-bold text-sm border border-slate-200 hover:bg-slate-100 transition-all text-center">İncele</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Popüler Segmentleri Keşfedin -->
+<div class="mb-20">
+<div class="mb-8">
+<h2 class="text-3xl font-bold text-slate-900">Popüler Segmentleri Keşfedin</h2>
+<p class="text-slate-500 mt-2">İhtiyacınıza en uygun kasa tipini seçerek aramaya başlayın</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<a class="group relative h-48 rounded-2xl overflow-hidden shadow-sm" href="ilan-arama.html">
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent group-hover:from-slate-900/90 transition-all duration-300 z-10"></div>
+<img alt="SUV" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXpRSFscEJ_Krh-1Zmc18taNIH5HhbrcawFiZiZ22prlcuXnMekXiv8bgoQfZWsDJlas3lz7nEBzrSF260cDwfBxkgEPQFC7kWQhEcsnQhoZiS6x6v-j2VM7BGw8E425N4EKtCVrKOE0s1h2q9nN6hu0VmX7mQc6WD9OG4oyfBxI_0Kfn_wArwpweQhOKJ2dR8jSCDUrrF3iTUEOjC1AsSQQeuC7o3fVtDd_5UQDSHQomK8snq3a4q9tpK4bjLWPgZA-_4qJdOGUl7"/>
+<div class="absolute inset-0 z-20 flex flex-col justify-end p-6">
+<h4 class="text-white font-bold text-xl">SUV</h4>
+<p class="text-white/80 text-xs">12.450 İlan</p>
+</div>
+</a>
+<a class="group relative h-48 rounded-2xl overflow-hidden shadow-sm" href="ilan-arama.html">
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent group-hover:from-slate-900/90 transition-all duration-300 z-10"></div>
+<img alt="Elektrikli" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN2NuTw0lS-ff5qcxtNtAHwzof7F_rtOiX_gbBEEDHFtFFTDZVPz6JyXqmrw6bXElX7kY0-gdT8FPqsK7khpIRGxtc-8vCDZOV0-VIgSRNvn1RaY4nwjZ26k139wGloaN1_cTOmQUu5d3Uj2FDxwMPieiXXguRRSxF-q2VUgJ4sk1ILJ_eAXOEp7s1cPERyD3CTFyKFjR2MhPDw-FmkARezzAJCCr0-yGNgIVxU8UpmaVcHDJTqiFPzcxfmY-zjTmCc4BNUmYzN1-B"/>
+<div class="absolute inset-0 z-20 flex flex-col justify-end p-6">
+<h4 class="text-white font-bold text-xl">Elektrikli</h4>
+<p class="text-white/80 text-xs">3.120 İlan</p>
+</div>
+</a>
+<a class="group relative h-48 rounded-2xl overflow-hidden shadow-sm" href="ilan-arama.html">
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent group-hover:from-slate-900/90 transition-all duration-300 z-10"></div>
+<img alt="Sedan" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3Zw3noLMeRgcRSyHqL5OnCNWfpC5jxnlEQhnB8TKPVPN_IV8ir7jGVwUxQjeYwEbaj_PRwdmk_VCQb6xM8r1AbahALHSM1KPbYdoeBy3zo2zS8QKRPO1liVbZM1qGz2rMBp-179xRrLqbhZa_6faH46kIQVzCPoF7JgK3Q7vMjX5SRR2ATO0gJVtILMKCqKH3exC6E0eKb7kMBFt041m4xxJzTjX7bl82zN00wUUzT2IJffrwxJgDGZzY-3wtORKlDzacLYS2xN9u"/>
+<div class="absolute inset-0 z-20 flex flex-col justify-end p-6">
+<h4 class="text-white font-bold text-xl">Sedan</h4>
+<p class="text-white/80 text-xs">18.900 İlan</p>
+</div>
+</a>
+<a class="group relative h-48 rounded-2xl overflow-hidden shadow-sm" href="ilan-arama.html">
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent group-hover:from-slate-900/90 transition-all duration-300 z-10"></div>
+<img alt="Spor" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2ysZEsgVirXr_Cj7emUx1tNacoyhj4V2WNo6Uy_2_mlQXQbBCoiat6ELFAGtyAATUN85qAcz9zJbVAGqWee9MkPFggWtQ65ZqAXMdr565xxWEt2Vg7LSDJy_87Y9Ujy-JOH87fGYqJJDh0szoz6lDAyiZ72m8yRluX2jVCsyGYsuNiD9whQ-SLCAgdLXZXUwZvlSeFfCs_Q98I1E-HMluWxSSvAnQY-Slyt8Uf2-INQft5yj5TkZgfA5XR_C_4_j0qWVwGnW37qSl"/>
+<div class="absolute inset-0 z-20 flex flex-col justify-end p-6">
+<h4 class="text-white font-bold text-xl">Spor</h4>
+<p class="text-white/80 text-xs">1.250 İlan</p>
+</div>
+</a>
+</div>
+</div>
+<!-- Nasıl Çalışır -->
+<div class="mb-20 bg-primary/5 rounded-3xl p-8 md:p-12 border border-primary/10">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-slate-900">Platform Nasıl Çalışır?</h2>
+<p class="text-slate-500 mt-2">Hayalinizdeki araca giden en kısa yol</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+<div class="flex flex-col items-center text-center">
+<div class="size-16 rounded-2xl bg-primary text-white flex items-center justify-center mb-4 shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-3xl">pageview</span>
+</div>
+<h4 class="font-bold text-lg">Keşfet &amp; Karşılaştır</h4>
+<p class="text-slate-500 mt-2 text-sm">Detaylı incelemeler ve ilanlar arasından size en uygun olanı bulun.</p>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="size-16 rounded-2xl bg-primary text-white flex items-center justify-center mb-4 shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-3xl">verified_user</span>
+</div>
+<h4 class="font-bold text-lg">Ekspertiz &amp; Güven</h4>
+<p class="text-slate-500 mt-2 text-sm">Bağımsız servislerimizde aracın durumunu onaylatın.</p>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="size-16 rounded-2xl bg-primary text-white flex items-center justify-center mb-4 shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-3xl">handshake</span>
+</div>
+<h4 class="font-bold text-lg">Güvenli Satın Al</h4>
+<p class="text-slate-500 mt-2 text-sm">Ödeme ve devir işlemlerini platform güvencesiyle tamamlayın.</p>
+</div>
+</div>
+</div>
+<!-- Forum & Servisler Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+<div>
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">forum</span> Popüler Forum Tartışmaları
+</h2>
+<a class="text-primary text-sm font-bold" href="forum.html">Forum'a Git</a>
+</div>
+<div class="space-y-4">
+<div class="bg-white p-4 rounded-xl border border-slate-100 hover:border-primary/30 transition-colors flex gap-4 items-start cursor-pointer">
+<div class="bg-slate-100 rounded-lg p-2 flex flex-col items-center min-w-12">
+<span class="material-symbols-outlined text-slate-400 text-sm">keyboard_arrow_up</span>
+<span class="font-bold text-slate-700">128</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-800 hover:text-primary">2024 Elektrikli Araç Karşılaştırması: Tesla vs Togg</h4>
+<p class="text-xs text-slate-400 mt-1">2 saat önce • Otomobil Dünyası • 42 Yanıt</p>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-slate-100 hover:border-primary/30 transition-colors flex gap-4 items-start cursor-pointer">
+<div class="bg-slate-100 rounded-lg p-2 flex flex-col items-center min-w-12">
+<span class="material-symbols-outlined text-slate-400 text-sm">keyboard_arrow_up</span>
+<span class="font-bold text-slate-700">85</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-800 hover:text-primary">DSG Şanzıman Bakım İpuçları ve Kronik Sorunlar</h4>
+<p class="text-xs text-slate-400 mt-1">5 saat önce • Teknik Destek • 118 Yanıt</p>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-slate-100 hover:border-primary/30 transition-colors flex gap-4 items-start cursor-pointer">
+<div class="bg-slate-100 rounded-lg p-2 flex flex-col items-center min-w-12">
+<span class="material-symbols-outlined text-slate-400 text-sm">keyboard_arrow_up</span>
+<span class="font-bold text-slate-700">54</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-800 hover:text-primary">İstanbul'da Güvenilir Boyasız Göçük Onarım Servisi Önerisi?</h4>
+<p class="text-xs text-slate-400 mt-1">Dün • Servis Tavsiyeleri • 15 Yanıt</p>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">build</span> Öne Çıkan Servisler
+</h2>
+<a class="text-primary text-sm font-bold" href="servis-rehberi.html">Servis Bul</a>
+</div>
+<div class="space-y-4">
+<div class="bg-white p-4 rounded-xl border border-slate-100 flex items-center gap-4">
+<div class="size-16 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-3xl">home_repair_service</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<h4 class="font-bold text-slate-800">Master Bosch Service</h4>
+<span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-bold">ONAYLI</span>
+</div>
+<div class="flex items-center gap-1 mt-1 text-yellow-500">
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="text-xs text-slate-400 ml-1">(4.9 - 120 Değerlendirme)</span>
+</div>
+<p class="text-xs text-slate-500 mt-1">Maslak, İstanbul • Motor &amp; Mekanik</p>
+</div>
+<button class="text-primary border border-primary/20 hover:bg-primary/5 p-2 rounded-lg">
+<span class="material-symbols-outlined">calendar_month</span>
+</button>
+</div>
+<div class="bg-white p-4 rounded-xl border border-slate-100 flex items-center gap-4">
+<div class="size-16 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-3xl">car_repair</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<h4 class="font-bold text-slate-800">Elite Detailing &amp; Seramik</h4>
+<span class="bg-blue-100 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-bold">PREMİUM</span>
+</div>
+<div class="flex items-center gap-1 mt-1 text-yellow-500">
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm fill-current">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="text-xs text-slate-400 ml-1">(4.7 - 85 Değerlendirme)</span>
+</div>
+<p class="text-xs text-slate-500 mt-1">Çankaya, Ankara • Estetik &amp; Koruma</p>
+</div>
+<button class="text-primary border border-primary/20 hover:bg-primary/5 p-2 rounded-lg">
+<span class="material-symbols-outlined">calendar_month</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Kurumsal Çözümler CTA -->
+<div class="relative overflow-hidden bg-slate-900 rounded-3xl p-8 md:p-16">
+<div class="absolute top-0 right-0 -mr-20 -mt-20 size-80 bg-primary opacity-20 rounded-full blur-3xl"></div>
+<div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+<div class="max-w-xl text-center md:text-left">
+<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">İşletmenizi Platformumuza Taşıyın</h2>
+<p class="text-slate-400 text-lg mb-8">
+Yetkili servisler, mekanik ustaları ve yedek parça tedarikçileri için kurumsal çözümlerimizle binlerce araç sahibine ulaşın.
+</p>
+<div class="flex flex-wrap gap-4 justify-center md:justify-start">
+<div class="flex items-center gap-2 text-slate-300">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span class="text-sm">Randevu Yönetimi</span>
+</div>
+<div class="flex items-center gap-2 text-slate-300">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span class="text-sm">Online Ödeme</span>
+</div>
+<div class="flex items-center gap-2 text-slate-300">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span class="text-sm">Sadakat Programı</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4 w-full md:w-auto">
+<button class="bg-primary text-white font-bold py-5 px-10 rounded-2xl hover:bg-primary/90 transition-all text-center whitespace-nowrap">
+İşletme Hesabı Aç
+</button>
+<p class="text-slate-500 text-xs text-center">İlk 3 ay boyunca tüm komisyonlar %0!</p>
+</div>
+</div>
+</div>
+<!-- Topluluk -->
+<div class="mt-20 bg-primary rounded-3xl p-10 md:p-16 text-white flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="max-w-2xl text-center md:text-left">
+<h2 class="text-3xl md:text-4xl font-bold mb-4">50.000'den fazla otomobil tutkununa katılın</h2>
+<p class="text-white/80 text-lg">En güncel ilanlardan haberdar olun, forumdaki tartışmalara katılın ve aracınızı en hızlı şekilde satın.</p>
+</div>
+<div class="flex flex-col items-center gap-4">
+<a href="giris-kayit.html" class="bg-white text-primary font-bold py-4 px-10 rounded-2xl hover:bg-slate-50 transition-all shadow-xl">
+Ücretsiz Katıl
+</a>
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-primary bg-slate-300"></div>
+<div class="size-8 rounded-full border-2 border-primary bg-slate-400"></div>
+<div class="size-8 rounded-full border-2 border-primary bg-slate-500"></div>
+<div class="size-8 rounded-full border-2 border-primary bg-primary-dark flex items-center justify-center text-[10px] font-bold">+50k</div>
+</div>
+</div>
+</div>
+<!-- Güven Sinyalleri -->
+<div class="py-16 grid grid-cols-2 md:grid-cols-4 gap-8">
+<div class="flex flex-col items-center gap-2 opacity-60">
+<span class="material-symbols-outlined text-4xl">verified</span>
+<span class="font-bold text-sm">%100 Onaylı İlanlar</span>
+</div>
+<div class="flex flex-col items-center gap-2 opacity-60">
+<span class="material-symbols-outlined text-4xl">shield_locked</span>
+<span class="font-bold text-sm">Güvenli Ödeme Sistemi</span>
+</div>
+<div class="flex flex-col items-center gap-2 opacity-60">
+<span class="material-symbols-outlined text-4xl">support_agent</span>
+<span class="font-bold text-sm">7/24 Teknik Destek</span>
+</div>
+<div class="flex flex-col items-center gap-2 opacity-60">
+<span class="material-symbols-outlined text-4xl">partner_exchange</span>
+<span class="font-bold text-sm">Şeffaf Ekspertiz Süreci</span>
+</div>
+</div>
+</main>
+<!-- Çözüm Ortakları -->
+<div class="bg-white border-t border-slate-100 py-16">
+<div class="container mx-auto px-6 lg:px-12">
+<div class="text-center mb-10">
+<h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest">Güvenilir Çözüm Ortaklarımız</h3>
+</div>
+<div class="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-40 grayscale">
+<span class="material-symbols-outlined text-5xl">factory</span>
+<span class="material-symbols-outlined text-5xl">precision_manufacturing</span>
+<span class="material-symbols-outlined text-5xl">electric_car</span>
+<span class="material-symbols-outlined text-5xl">minor_crash</span>
+<span class="material-symbols-outlined text-5xl">tire_repair</span>
+<span class="material-symbols-outlined text-5xl">car_repair</span>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="bg-white border-t border-slate-200 pt-16 pb-8">
+<div class="container mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+<div class="space-y-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">directions_car</span>
+<h2 class="text-slate-900 text-lg font-bold">Araba İncele Al Sat</h2>
+</div>
+<p class="text-slate-500 text-sm leading-relaxed">
+Türkiye'nin en modern ve güvenilir otomobil platformu. Alırken incele, satarken değerinde sat, servisinde güvenle bakım yaptır.
+</p>
+<div class="flex gap-4">
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">language</span></a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">video_library</span></a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 mb-6">Platform</h4>
+<ul class="space-y-4 text-slate-500 text-sm">
+<li><a class="hover:text-primary transition-colors" href="ilan-arama.html">Araç İlanları</a></li>
+<li><a class="hover:text-primary transition-colors" href="servis-rehberi.html">Servis Rehberi</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Fiyat Tahmini</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Ekspertiz Noktaları</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 mb-6">Topluluk</h4>
+<ul class="space-y-4 text-slate-500 text-sm">
+<li><a class="hover:text-primary transition-colors" href="forum.html">Forum Tartışmaları</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sıkça Sorulan Sorular</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Blog &amp; Haberler</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Kullanım Koşulları</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 mb-6">Bülten</h4>
+<p class="text-slate-500 text-sm mb-4">Haftalık otomobil haberlerini ve fırsatları kaçırmayın.</p>
+<div class="flex gap-2">
+<input class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm w-full focus:ring-primary focus:border-primary" placeholder="E-posta adresiniz"/>
+<button class="bg-primary text-white p-2 rounded-xl">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-400 text-xs">© 2024 Araba İncele Al Sat Platformu. Tüm hakları saklıdır.</p>
+<div class="flex gap-6">
+<a class="text-slate-400 text-xs hover:text-primary" href="#">KVKK Aydınlatma Metni</a>
+<a class="text-slate-400 text-xs hover:text-primary" href="#">Çerez Politikası</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

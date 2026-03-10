@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <g fill="#95652e">
+    <path d="M100 10 L145 75 L100 60 Z"/>
+    <path d="M100 10 L55 75 L100 60 Z"/>
+    <path d="M145 75 L100 120 L100 60 Z"/>
+    <path d="M55 75 L100 120 L100 60 Z"/>
+    <path d="M145 75 L175 80 L100 120 Z"/>
+    <path d="M55 75 L25 80 L100 120 Z"/>
+  </g>
+  <text x="100" y="168" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="32" fill="#95652e" letter-spacing="8">CUPRA</text>
+</svg>

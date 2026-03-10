@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#1775d3","background-light":"#f6f7f8","background-dark":"#111921"},fontFamily:{"display":["Inter","sans-serif"]},borderRadius:{"DEFAULT":"0.5rem","lg":"1rem","xl":"1.5rem","full":"9999px"}}}}</script>
+<title>İlan Ver - Araba İncele Al Sat</title>
+</head>
+<body class="bg-background-light font-display text-slate-900">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Nav -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 bg-white px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<a href="index.html" class="flex items-center gap-2 text-primary"><span class="material-symbols-outlined text-3xl font-bold">directions_car</span><h2 class="text-slate-900 text-lg font-bold">Araba İncele Al Sat</h2></a>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<a href="ilan-arama.html" class="text-slate-600 hover:text-primary text-sm font-medium">İlanları Gör</a>
+</div>
+</header>
+<!-- Main -->
+<main class="container mx-auto px-6 lg:px-12 py-8">
+<!-- Step Progress -->
+<div class="max-w-3xl mx-auto mb-10">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-bold text-primary">Adım 1/5</span>
+<span class="text-sm text-slate-400">Araç Bilgileri</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-primary rounded-full h-2" style="width: 20%"></div>
+</div>
+<div class="flex justify-between mt-2 text-[10px] text-slate-400">
+<span class="text-primary font-bold">Araç Bilgileri</span>
+<span>Detaylar</span>
+<span>Fotoğraflar</span>
+<span>Fiyat</span>
+<span>Yayınla</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Form -->
+<div class="lg:col-span-2">
+<div class="bg-white rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm">
+<h2 class="text-2xl font-bold text-slate-900 mb-2">Araç Bilgilerini Girin</h2>
+<p class="text-slate-500 mb-6">İlanınız için temel araç bilgilerini doldurun.</p>
+<div class="space-y-5">
+<!-- Marka -->
+<div>
+<label class="block text-sm font-bold text-slate-700 mb-2">Marka *</label>
+<select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary">
+<option>Marka seçin</option><option>BMW</option><option>Mercedes-Benz</option><option>Audi</option><option>Volkswagen</option><option>Toyota</option><option>Honda</option><option>Volvo</option><option>Togg</option><option>Renault</option><option>Fiat</option>
+</select>
+</div>
+<!-- Model -->
+<div>
+<label class="block text-sm font-bold text-slate-700 mb-2">Model *</label>
+<select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary">
+<option>Önce marka seçin</option>
+</select>
+</div>
+<!-- Yıl & Yakıt -->
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-bold text-slate-700 mb-2">Model Yılı *</label>
+<select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary">
+<option>Yıl seçin</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-bold text-slate-700 mb-2">Yakıt Tipi *</label>
+<select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary">
+<option>Seçin</option><option>Benzin</option><option>Dizel</option><option>Elektrik</option><option>Hibrit</option><option>LPG</option>
+</select>
+</div>
+</div>
+<!-- Vites & Km -->
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-bold text-slate-700 mb-2">Vites Tipi *</label>
+<select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary">
+<option>Seçin</option><option>Otomatik</option><option>Manuel</option><option>Yarı Otomatik</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-bold text-slate-700 mb-2">Kilometre *</label>
+<input type="number" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="ör: 45000"/>
+</div>
+</div>
+<!-- Motor Gücü & Renk -->
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-bold text-slate-700 mb-2">Motor Gücü (HP)</label>
+<input type="number" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="ör: 170"/>
+</div>
+<div>
+<label class="block text-sm font-bold text-slate-700 mb-2">Renk</label>
+<select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-primary focus:border-primary">
+<option>Seçin</option><option>Beyaz</option><option>Siyah</option><option>Gri</option><option>Lacivert</option><option>Kırmızı</option>
+</select>
+</div>
+</div>
+<!-- Buttons -->
+<div class="flex justify-between pt-6 border-t border-slate-100">
+<button class="flex items-center gap-2 text-slate-400 font-bold text-sm" disabled>
+<span class="material-symbols-outlined">arrow_back</span> Geri
+</button>
+<button class="flex items-center gap-2 bg-primary text-white font-bold py-3 px-8 rounded-xl hover:bg-primary/90 transition-all text-sm">
+Devam Et <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar -->
+<div class="space-y-6">
+<div class="bg-primary/5 rounded-2xl p-6 border border-primary/10">
+<h4 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">tips_and_updates</span> İpuçları
+</h4>
+<ul class="space-y-3 text-sm text-slate-600">
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm mt-0.5">lightbulb</span> Doğru bilgiler ilanınızın daha hızlı satılmasını sağlar.</li>
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm mt-0.5">lightbulb</span> Detaylı açıklama ve kaliteli fotoğraflar ilgi çeker.</li>
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm mt-0.5">lightbulb</span> Piyasaya uygun fiyat belirleyin.</li>
+</ul>
+</div>
+<div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+<h4 class="font-bold text-slate-900 mb-3">İlan Paketleri</h4>
+<div class="space-y-3">
+<div class="p-3 rounded-xl border-2 border-primary bg-primary/5">
+<div class="flex justify-between items-center"><span class="font-bold text-sm text-primary">Ücretsiz</span><span class="text-xs text-slate-400">30 gün</span></div>
+<p class="text-xs text-slate-500 mt-1">Standart listeleme</p>
+</div>
+<div class="p-3 rounded-xl border border-slate-200">
+<div class="flex justify-between items-center"><span class="font-bold text-sm text-slate-900">Premium</span><span class="text-xs font-bold text-primary">₺299</span></div>
+<p class="text-xs text-slate-500 mt-1">Öne çıkan + 60 gün</p>
+</div>
+<div class="p-3 rounded-xl border border-slate-200">
+<div class="flex justify-between items-center"><span class="font-bold text-sm text-slate-900">VIP</span><span class="text-xs font-bold text-primary">₺599</span></div>
+<p class="text-xs text-slate-500 mt-1">Max görünürlük + 90 gün</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-white border-t border-slate-200 pt-12 pb-8 mt-auto">
+<div class="container mx-auto px-6 lg:px-12"><div class="border-t border-slate-100 pt-8 flex justify-between items-center"><p class="text-slate-400 text-xs">© 2024 Araba İncele Al Sat Platformu.</p></div></div>
+</footer>
+</div>
+</div>
+</body></html>

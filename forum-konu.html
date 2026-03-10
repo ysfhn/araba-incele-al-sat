@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: { extend: { colors: { "primary": "#1775d3", "background-light": "#f6f7f8", "background-dark": "#111921" }, fontFamily: { "display": ["Inter", "sans-serif"] }, borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"} } }
+    }
+</script>
+<title>Forum Konusu - Araba İncele Al Sat</title>
+</head>
+<body class="bg-background-light font-display text-slate-900">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Nav -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 bg-white px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<a href="index.html" class="flex items-center gap-2 text-primary"><span class="material-symbols-outlined text-3xl font-bold">directions_car</span><h2 class="text-slate-900 text-lg font-bold">Araba İncele Al Sat</h2></a>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-slate-600 hover:text-primary text-sm font-medium" href="ilan-arama.html">İlanlar</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium" href="servis-rehberi.html">Servisler</a>
+<a class="text-primary text-sm font-bold" href="forum.html">Forum</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium" href="nasil-calisir.html">Kurumsal</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<a href="giris-kayit.html" class="flex min-w-[84px] items-center justify-center rounded-xl h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90"><span>Giriş Yap</span></a>
+</div>
+</header>
+<!-- Breadcrumb -->
+<div class="container mx-auto px-6 lg:px-12 py-4">
+<div class="flex items-center gap-2 text-sm text-slate-400">
+<a href="index.html" class="hover:text-primary">Ana Sayfa</a><span class="material-symbols-outlined text-xs">chevron_right</span>
+<a href="forum.html" class="hover:text-primary">Forum</a><span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-slate-600 font-medium">Otomobil Dünyası</span>
+</div>
+</div>
+<!-- Main -->
+<main class="container mx-auto px-6 lg:px-12 pb-12">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-6">
+<!-- Original Post -->
+<div class="bg-white rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm">
+<div class="flex items-center gap-2 mb-4">
+<span class="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold">Otomobil Dünyası</span>
+<span class="text-[10px] bg-red-50 text-red-500 px-2 py-0.5 rounded-full font-bold">🔥 Sıcak</span>
+</div>
+<h1 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">2024 Elektrikli Araç Karşılaştırması: Tesla Model 3 vs Togg T10X</h1>
+<div class="flex items-center gap-4 mb-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 flex items-center justify-center"><span class="material-symbols-outlined text-slate-400">person</span></div>
+<div>
+<p class="font-bold text-sm text-slate-900">MehmetK</p>
+<p class="text-xs text-slate-400">Forum Uzmanı • 2 saat önce</p>
+</div>
+</div>
+</div>
+<div class="text-slate-600 text-sm leading-relaxed space-y-4">
+<p>Merhaba arkadaşlar,</p>
+<p>Elektrikli araç almayı düşünenler için kapsamlı bir karşılaştırma hazırladım. İki popüler modeli pek çok açıdan karşılaştırdım:</p>
+<p><strong>Menzil:</strong> Tesla Model 3 Long Range modelinde 614 km, Togg T10X uzun menzil versiyonunda ise 523 km menzil sunuyor. Günlük kullanımda her ikisi de fazlasıyla yeterli.</p>
+<p><strong>Performans:</strong> Tesla 0-100 km/h'de 4.4 saniye ile oldukça hızlı. Togg ise 7.6 saniye ile yeterli bir performans sunuyor ancak konfor odaklı sürüş deneyimi öne çıkıyor.</p>
+<p><strong>Şarj Altyapısı:</strong> Tesla'nın Supercharger ağı Türkiye'de hızla büyüyor. Togg ise trugo şarj ağı ile yerli altyapı avantajına sahip.</p>
+<p>Sizin deneyimleriniz nedir? Hangi modeli tercih edersiniz?</p>
+</div>
+<div class="flex items-center gap-4 mt-6 pt-6 border-t border-slate-100">
+<button class="flex items-center gap-1 text-sm text-slate-500 hover:text-primary"><span class="material-symbols-outlined text-base">thumb_up</span> 128</button>
+<button class="flex items-center gap-1 text-sm text-slate-500 hover:text-primary"><span class="material-symbols-outlined text-base">thumb_down</span> 5</button>
+<button class="flex items-center gap-1 text-sm text-slate-500 hover:text-primary"><span class="material-symbols-outlined text-base">bookmark</span> Kaydet</button>
+<button class="flex items-center gap-1 text-sm text-slate-500 hover:text-primary"><span class="material-symbols-outlined text-base">share</span> Paylaş</button>
+<button class="flex items-center gap-1 text-sm text-slate-500 hover:text-red-500 ml-auto"><span class="material-symbols-outlined text-base">flag</span> Bildir</button>
+</div>
+</div>
+<!-- Yanıtlar -->
+<div>
+<h3 class="font-bold text-lg text-slate-900 mb-4">42 Yanıt</h3>
+<!-- Reply 1 -->
+<div class="bg-white rounded-2xl p-6 border border-slate-100 mb-3">
+<div class="flex items-center gap-3 mb-3">
+<div class="size-9 rounded-full bg-slate-200 flex items-center justify-center"><span class="material-symbols-outlined text-slate-400 text-sm">person</span></div>
+<div><p class="font-bold text-sm text-slate-900">AutoMaster</p><p class="text-xs text-slate-400">1 saat önce</p></div>
+<span class="bg-yellow-100 text-yellow-700 text-[10px] px-2 py-0.5 rounded-full font-bold ml-auto">🏆 Uzman</span>
+</div>
+<p class="text-sm text-slate-600 leading-relaxed">Harika bir karşılaştırma olmuş! Ben her iki aracı da test ettim. Tesla'nın yazılım ekosistemine Togg henüz yetişememiş durumda ancak Togg'un sürüş konforu gerçekten etkileyici. Yerli servis ağı avantajını da unutmamak gerek.</p>
+<div class="flex items-center gap-4 mt-4 text-xs text-slate-400">
+<button class="flex items-center gap-1 hover:text-primary"><span class="material-symbols-outlined text-sm">thumb_up</span> 45</button>
+<button class="flex items-center gap-1 hover:text-primary"><span class="material-symbols-outlined text-sm">chat_bubble</span> Yanıtla</button>
+</div>
+<!-- Nested Reply -->
+<div class="ml-8 mt-4 pl-4 border-l-2 border-slate-100">
+<div class="flex items-center gap-3 mb-2">
+<div class="size-7 rounded-full bg-slate-200 flex items-center justify-center"><span class="material-symbols-outlined text-slate-400 text-xs">person</span></div>
+<div><p class="font-bold text-xs text-slate-900">MehmetK</p><p class="text-[10px] text-slate-400">45 dk önce</p></div>
+</div>
+<p class="text-xs text-slate-600">Katılıyorum, özellikle yerli servis ağı konusu çok önemli. Teşekkürler!</p>
+</div>
+</div>
+<!-- Reply 2 -->
+<div class="bg-white rounded-2xl p-6 border border-slate-100 mb-3">
+<div class="flex items-center gap-3 mb-3">
+<div class="size-9 rounded-full bg-slate-200 flex items-center justify-center"><span class="material-symbols-outlined text-slate-400 text-sm">person</span></div>
+<div><p class="font-bold text-sm text-slate-900">ElektrikçiCan</p><p class="text-xs text-slate-400">45 dk önce</p></div>
+</div>
+<p class="text-sm text-slate-600 leading-relaxed">Tesla Model 3 sahibi olarak söylüyorum: Supercharger ağı gerçekten büyük avantaj. Uzun yol seyahatlerinde şarj planlaması yapmak zorunda kalmıyorsunuz. Ama Togg'un fiyat avantajı da göz ardı edilemez.</p>
+<div class="flex items-center gap-4 mt-4 text-xs text-slate-400">
+<button class="flex items-center gap-1 hover:text-primary"><span class="material-symbols-outlined text-sm">thumb_up</span> 28</button>
+<button class="flex items-center gap-1 hover:text-primary"><span class="material-symbols-outlined text-sm">chat_bubble</span> Yanıtla</button>
+</div>
+</div>
+</div>
+<!-- Quick Reply -->
+<div class="bg-white rounded-2xl p-6 border border-slate-100">
+<h4 class="font-bold text-slate-900 mb-3">Yanıt Yaz</h4>
+<textarea class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm min-h-[120px] focus:ring-primary focus:border-primary" placeholder="Düşüncelerinizi paylaşın..."></textarea>
+<div class="flex justify-between items-center mt-3">
+<div class="flex gap-2">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-xl">image</span></button>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-xl">link</span></button>
+</div>
+<button class="bg-primary text-white font-bold py-2.5 px-6 rounded-xl text-sm hover:bg-primary/90 transition-all">Yanıtla</button>
+</div>
+</div>
+</div>
+<!-- Sağ Sidebar -->
+<aside class="space-y-6">
+<div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+<h3 class="font-bold text-slate-900 mb-4">İlgili Konular</h3>
+<div class="space-y-3">
+<a href="#" class="block text-sm text-slate-600 hover:text-primary font-medium">Togg T10X Uzun Dönem Kullanıcı Deneyimi</a>
+<a href="#" class="block text-sm text-slate-600 hover:text-primary font-medium">Tesla Model Y vs BMW iX3 Karşılaştırması</a>
+<a href="#" class="block text-sm text-slate-600 hover:text-primary font-medium">Elektrikli Araçlarda Kış Performansı</a>
+</div>
+</div>
+<div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+<h3 class="font-bold text-slate-900 mb-4">Popüler Kullanıcılar</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-3"><div class="size-8 rounded-full bg-slate-200"></div><div><p class="text-sm font-bold">AutoMaster</p><p class="text-xs text-slate-400">325 yanıt</p></div></div>
+<div class="flex items-center gap-3"><div class="size-8 rounded-full bg-slate-200"></div><div><p class="text-sm font-bold">MehmetK</p><p class="text-xs text-slate-400">280 yanıt</p></div></div>
+</div>
+</div>
+<div class="bg-primary/5 rounded-2xl p-6 border border-primary/10">
+<h4 class="font-bold text-slate-900 mb-2">📧 Bülten</h4>
+<p class="text-sm text-slate-500 mb-4">Haftalık en iyi tartışmaları kaçırmayın.</p>
+<div class="flex gap-2">
+<input class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm w-full" placeholder="E-posta"/>
+<button class="bg-primary text-white p-2 rounded-xl"><span class="material-symbols-outlined text-sm">send</span></button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<footer class="bg-white border-t border-slate-200 pt-12 pb-8">
+<div class="container mx-auto px-6 lg:px-12"><div class="border-t border-slate-100 pt-8 flex justify-between items-center"><p class="text-slate-400 text-xs">© 2024 Araba İncele Al Sat Platformu.</p></div></div>
+</footer>
+</div>
+</div>
+</body></html>

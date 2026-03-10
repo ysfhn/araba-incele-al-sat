@@ -1,0 +1,1253 @@
+<%
+  const currentPage = typeof adminPage !== 'undefined' ? adminPage : 'dashboard';
+  const data = typeof adminData !== 'undefined' ? adminData : {};
+  function timeAgo(date) {
+    const diff = Date.now() - new Date(date).getTime();
+    const mins = Math.floor(diff/60000);
+    if (mins < 1) return 'Az önce';
+    if (mins < 60) return mins + ' dk önce';
+    const hours = Math.floor(mins/60);
+    if (hours < 24) return hours + ' saat önce';
+    const days = Math.floor(hours/24);
+    if (days < 30) return days + ' gün önce';
+    return new Date(date).toLocaleDateString('tr-TR');
+  }
+  function formatPrice(p) { return p ? Number(p).toLocaleString('tr-TR') + ' ₺' : '-'; }
+  const menuItems = [
+    { key: 'dashboard', label: 'Dashboard', icon: 'dashboard', href: '/admin/panel' },
+    { key: 'kullanicilar', label: 'Kullanıcılar', icon: 'people', href: '/admin/kullanicilar' },
+    { key: 'ilanlar', label: 'İlanlar', icon: 'directions_car', href: '/admin/ilanlar' },
+    { key: 'isletmeler', label: 'İşletmeler', icon: 'business', href: '/admin/isletmeler' },
+    { key: 'randevular', label: 'Randevular', icon: 'calendar_month', href: '/admin/randevular' },
+    { key: 'teklifler', label: 'Teklifler', icon: 'request_quote', href: '/admin/teklifler' },
+    { key: 'degerlendirmeler', label: 'Değerlendirmeler', icon: 'reviews', href: '/admin/degerlendirmeler' },
+    { key: 'hublar', label: 'Araç Hub', icon: 'hub', href: '/admin/hublar' },
+    { key: 'markalar', label: 'Markalar/Modeller', icon: 'category', href: '/admin/markalar' },
+    { key: 'forum', label: 'Forum', icon: 'forum', href: '/admin/forum' },
+    { key: 'moderasyon', label: 'Moderasyon', icon: 'shield', href: '/admin/moderasyon' },
+  ];
+%>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<style>
+  .admin-layout { display: flex; min-height: calc(100vh - 70px); background: #f0f2f5; }
+  .admin-sidebar {
+    width: 260px; background: linear-gradient(180deg, #1a1f36 0%, #252b48 100%); color: #fff;
+    padding: 1.5rem 0; flex-shrink: 0; position: sticky; top: 70px; height: calc(100vh - 70px); overflow-y: auto;
+  }
+  .admin-sidebar .sidebar-brand { padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.1); margin-bottom: 1rem; }
+  .admin-sidebar .sidebar-brand h3 { font-size: 1.1rem; margin: 0; font-weight: 700; letter-spacing: 0.5px; }
+  .admin-sidebar .sidebar-brand small { color: rgba(255,255,255,.5); font-size: 0.75rem; }
+  .sidebar-menu { list-style: none; padding: 0; margin: 0; }
+  .sidebar-menu li a {
+    display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.5rem; color: rgba(255,255,255,.7);
+    text-decoration: none; font-size: 0.9rem; transition: all .2s; border-left: 3px solid transparent;
+  }
+  .sidebar-menu li a:hover { background: rgba(255,255,255,.08); color: #fff; }
+  .sidebar-menu li a.active { background: rgba(255,255,255,.12); color: #fff; border-left-color: #4f8cff; font-weight: 600; }
+  .sidebar-menu li a .material-icons { font-size: 1.25rem; opacity: .8; }
+  .sidebar-menu li a .badge-count {
+    margin-left: auto; background: #ff4757; color: #fff; font-size: 0.7rem; padding: 2px 7px;
+    border-radius: 10px; font-weight: 700;
+  }
+
+  .admin-content { flex: 1; padding: 2rem; overflow-x: auto; }
+  .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+  .admin-header h1 { font-size: 1.5rem; font-weight: 700; color: #1a1f36; margin: 0; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .stat-card {
+    background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .stat-card .stat-icon {
+    width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+  }
+  .stat-card .stat-icon.blue { background: #e8f0fe; color: #1a73e8; }
+  .stat-card .stat-icon.green { background: #e6f4ea; color: #1e8e3e; }
+  .stat-card .stat-icon.orange { background: #fef3e0; color: #e8710a; }
+  .stat-card .stat-icon.red { background: #fce8e6; color: #d93025; }
+  .stat-card .stat-icon.purple { background: #f3e8fd; color: #9334e6; }
+  .stat-card .stat-info h3 { font-size: 1.5rem; margin: 0; font-weight: 700; color: #1a1f36; }
+  .stat-card .stat-info p { margin: 0; font-size: 0.8rem; color: #666; }
+
+  .admin-card {
+    background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,.06); margin-bottom: 1.5rem;
+  }
+  .admin-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: .5rem; }
+  .admin-card-header h2 { font-size: 1.15rem; font-weight: 700; color: #1a1f36; margin: 0; }
+
+  .admin-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .admin-table th { background: #f8f9fa; padding: 0.75rem; text-align: left; font-weight: 600; color: #555; border-bottom: 2px solid #eee; white-space: nowrap; }
+  .admin-table td { padding: 0.75rem; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+  .admin-table tr:hover { background: #f8f9ff; }
+
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  }
+  .badge-success { background: #e6f4ea; color: #1e8e3e; }
+  .badge-warning { background: #fef3e0; color: #e8710a; }
+  .badge-danger { background: #fce8e6; color: #d93025; }
+  .badge-info { background: #e8f0fe; color: #1a73e8; }
+  .badge-secondary { background: #eee; color: #666; }
+
+  .btn-sm {
+    padding: 5px 12px; font-size: 0.75rem; border: none; border-radius: 6px; cursor: pointer;
+    font-weight: 600; transition: all .2s; display: inline-flex; align-items: center; gap: 4px;
+  }
+  .btn-sm .material-icons { font-size: 0.9rem; }
+  .btn-primary { background: #1a73e8; color: #fff; }
+  .btn-primary:hover { background: #1557b0; }
+  .btn-success { background: #1e8e3e; color: #fff; }
+  .btn-success:hover { background: #167c34; }
+  .btn-warning { background: #e8710a; color: #fff; }
+  .btn-warning:hover { background: #c96008; }
+  .btn-danger { background: #d93025; color: #fff; }
+  .btn-danger:hover { background: #b7271e; }
+  .btn-outline { background: transparent; border: 1px solid #ddd; color: #555; }
+  .btn-outline:hover { background: #f5f5f5; }
+
+  .filter-bar { display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; }
+  .filter-bar input, .filter-bar select {
+    padding: 8px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.85rem; background: #fff;
+  }
+  .filter-bar input:focus, .filter-bar select:focus { outline: none; border-color: #4f8cff; box-shadow: 0 0 0 3px rgba(79,140,255,.15); }
+
+  .activity-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; }
+  .activity-item:last-child { border: none; }
+  .activity-icon {
+    width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .activity-item .activity-text { flex: 1; font-size: 0.85rem; color: #333; }
+  .activity-item .activity-time { font-size: 0.75rem; color: #999; white-space: nowrap; }
+
+  .pagination { display: flex; gap: 0.5rem; justify-content: center; margin-top: 1.5rem; }
+  .pagination a {
+    padding: 6px 14px; border: 1px solid #ddd; border-radius: 6px; text-decoration: none; color: #555; font-size: 0.85rem;
+  }
+  .pagination a.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
+  .pagination a:hover:not(.active) { background: #f5f5f5; }
+
+  .action-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+
+  .admin-modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 9999;
+    justify-content: center; align-items: center;
+  }
+  .admin-modal-overlay.show { display: flex; }
+  .admin-modal {
+    background: #fff; border-radius: 16px; padding: 2rem; width: 90%; max-width: 600px; max-height: 85vh;
+    overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.2); position: relative;
+  }
+  .admin-modal h3 { margin: 0 0 1.5rem; font-size: 1.2rem; font-weight: 700; color: #1a1f36; }
+  .admin-modal .form-group { margin-bottom: 1rem; }
+  .admin-modal label { display: block; font-size: 0.8rem; font-weight: 600; color: #555; margin-bottom: 4px; }
+  .admin-modal input, .admin-modal select, .admin-modal textarea {
+    width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9rem; box-sizing: border-box;
+  }
+  .admin-modal textarea { min-height: 80px; resize: vertical; }
+  .admin-modal .modal-actions { display: flex; gap: .75rem; justify-content: flex-end; margin-top: 1.5rem; }
+  .admin-modal .close-modal {
+    position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  @media (max-width: 768px) {
+    .admin-layout { flex-direction: column; }
+    .admin-sidebar { width: 100%; height: auto; position: static; padding: 1rem 0; }
+    .sidebar-menu { display: flex; overflow-x: auto; gap: 0; padding: 0 .5rem; }
+    .sidebar-menu li a { padding: .6rem 1rem; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; font-size: .8rem; }
+    .sidebar-menu li a.active { border-bottom-color: #4f8cff; }
+    .admin-content { padding: 1rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="admin-layout">
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+      <h3>🔧 Admin Paneli</h3>
+      <small>Araba İncele Al Sat</small>
+    </div>
+    <ul class="sidebar-menu">
+      <% menuItems.forEach(item => { %>
+        <li>
+          <a href="<%= item.href %>" class="<%= currentPage === item.key ? 'active' : '' %>">
+            <span class="material-icons"><%= item.icon %></span>
+            <%= item.label %>
+            <% if (item.key === 'moderasyon' && typeof stats !== 'undefined' && stats.pendingModeration > 0) { %>
+              <span class="badge-count"><%= stats.pendingModeration %></span>
+            <% } %>
+          </a>
+        </li>
+      <% }) %>
+    </ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="admin-content">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  DASHBOARD                                  -->
+    <!-- ═══════════════════════════════════════════ -->
+    <% if (currentPage === 'dashboard') { %>
+      <div class="admin-header"><h1>📊 Dashboard</h1></div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue"><span class="material-icons">people</span></div>
+          <div class="stat-info"><h3><%= stats.totalUsers %></h3><p>Toplam Kullanıcı</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><span class="material-icons">directions_car</span></div>
+          <div class="stat-info"><h3><%= stats.activeListings %></h3><p>Aktif İlan</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><span class="material-icons">pending_actions</span></div>
+          <div class="stat-info"><h3><%= stats.pendingListings %></h3><p>Onay Bekleyen İlan</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple"><span class="material-icons">business</span></div>
+          <div class="stat-info"><h3><%= stats.businesses %></h3><p>İşletme (<%= stats.verifiedBusinesses %> onaylı)</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red"><span class="material-icons">shield</span></div>
+          <div class="stat-info"><h3><%= stats.pendingModeration %></h3><p>Moderasyon Bekleyen</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue"><span class="material-icons">forum</span></div>
+          <div class="stat-info"><h3><%= stats.forumTopics %></h3><p>Forum Konusu</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><span class="material-icons">email</span></div>
+          <div class="stat-info"><h3><%= stats.totalMessages %></h3><p>Mesaj</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><span class="material-icons">event</span></div>
+          <div class="stat-info"><h3><%= stats.totalAppointments %></h3><p>Randevu</p></div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+        <div class="admin-card">
+          <div class="admin-card-header"><h2>Son Aktiviteler</h2></div>
+          <% recentActivity.forEach(a => { %>
+            <div class="activity-item">
+              <div class="activity-icon" style="background:<%= a.type==='user'?'#e8f0fe':a.type==='listing'?'#e6f4ea':'#f3e8fd' %>;color:<%= a.type==='user'?'#1a73e8':a.type==='listing'?'#1e8e3e':'#9334e6' %>">
+                <span class="material-icons"><%= a.type==='user'?'person_add':a.type==='listing'?'directions_car':'store' %></span>
+              </div>
+              <span class="activity-text">
+                <strong><%= a.type==='user'?'Yeni kullanıcı':a.type==='listing'?'Yeni ilan':'Yeni işletme' %>:</strong> <%= a.detail %>
+              </span>
+              <span class="activity-time"><%= timeAgo(a.created_at) %></span>
+            </div>
+          <% }) %>
+          <% if (recentActivity.length === 0) { %>
+            <p style="color:#999;text-align:center;padding:1rem;">Henüz aktivite yok</p>
+          <% } %>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h2>Moderasyon Kuyruğu</h2>
+            <a href="/admin/moderasyon" class="btn-sm btn-outline">Tümünü Gör</a>
+          </div>
+          <% moderationQueue.forEach(mq => { %>
+            <div class="activity-item">
+              <div class="activity-icon" style="background:#fce8e6;color:#d93025;">
+                <span class="material-icons">report</span>
+              </div>
+              <span class="activity-text">
+                <strong><%= mq.type %>:</strong> <%= mq.item_detail || 'İçerik #' + mq.item_id %>
+                <% if (mq.reason) { %><br><small style="color:#999"><%= mq.reason %></small><% } %>
+              </span>
+              <div class="action-btns">
+                <button class="btn-sm btn-success" data-moderation-action="approved" data-id="<%= mq.id %>">
+                  <span class="material-icons">check</span>
+                </button>
+                <button class="btn-sm btn-danger" data-moderation-action="rejected" data-id="<%= mq.id %>">
+                  <span class="material-icons">close</span>
+                </button>
+              </div>
+            </div>
+          <% }) %>
+          <% if (moderationQueue.length === 0) { %>
+            <p style="color:#999;text-align:center;padding:1rem;">Bekleyen moderasyon yok ✅</p>
+          <% } %>
+        </div>
+      </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  KULLANICILAR                               -->
+    <!-- ═══════════════════════════════════════════ -->
+    <% } else if (currentPage === 'kullanicilar') { %>
+      <div class="admin-header"><h1>👥 Kullanıcı Yönetimi</h1></div>
+
+      <div class="admin-card">
+        <form class="filter-bar" method="GET" action="/admin/kullanicilar">
+          <input type="text" name="arama" placeholder="İsim veya e-posta ara..." value="<%= data.filters?.arama || '' %>">
+          <select name="rol">
+            <option value="">Tüm Roller</option>
+            <option value="bireysel" <%= data.filters?.rol==='bireysel'?'selected':'' %>>Bireysel</option>
+            <option value="kurumsal" <%= data.filters?.rol==='kurumsal'?'selected':'' %>>Kurumsal</option>
+            <option value="admin" <%= data.filters?.rol==='admin'?'selected':'' %>>Admin</option>
+          </select>
+          <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Ara</button>
+        </form>
+
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>İsim</th><th>E-posta</th><th>Rol</th><th>Onay</th><th>Kayıt</th><th>İşlemler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% (data.users || []).forEach(u => { %>
+                <tr>
+                  <td>#<%= u.id %></td>
+                  <td><strong><%= u.name %></strong></td>
+                  <td><%= u.email %></td>
+                  <td>
+                    <select class="btn-sm btn-outline" data-admin-user-role data-user-id="<%= u.id %>" style="font-size:.75rem;">
+                      <option value="bireysel" <%= u.role==='bireysel'?'selected':'' %>>Bireysel</option>
+                      <option value="kurumsal" <%= u.role==='kurumsal'?'selected':'' %>>Kurumsal</option>
+                      <option value="admin" <%= u.role==='admin'?'selected':'' %>>Admin</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn-sm <%= u.is_verified ? 'btn-success' : 'btn-outline' %>" data-admin-verify-user data-user-id="<%= u.id %>" data-verified="<%= u.is_verified %>">
+                      <span class="material-icons"><%= u.is_verified ? 'verified' : 'cancel' %></span>
+                    </button>
+                  </td>
+                  <td><%= timeAgo(u.created_at) %></td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="btn-sm btn-danger" data-admin-delete-user data-user-id="<%= u.id %>" title="Sil">
+                        <span class="material-icons">delete</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <% if (data.totalPages > 1) { %>
+          <div class="pagination">
+            <% for (let i = 1; i <= data.totalPages; i++) { %>
+              <a href="/admin/kullanicilar?sayfa=<%= i %>&arama=<%= data.filters?.arama||'' %>&rol=<%= data.filters?.rol||'' %>" class="<%= data.page === i ? 'active' : '' %>"><%= i %></a>
+            <% } %>
+          </div>
+        <% } %>
+        <p style="font-size:.8rem;color:#999;margin-top:.5rem;text-align:center;">Toplam <%= data.totalCount %> kullanıcı</p>
+      </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  İLANLAR                                    -->
+    <!-- ═══════════════════════════════════════════ -->
+    <% } else if (currentPage === 'ilanlar') { %>
+      <div class="admin-header"><h1>🚗 İlan Yönetimi</h1></div>
+
+      <div class="admin-card">
+        <form class="filter-bar" method="GET" action="/admin/ilanlar">
+          <input type="text" name="arama" placeholder="İlan veya marka ara..." value="<%= data.filters?.arama || '' %>">
+          <select name="durum">
+            <option value="">Tüm Durumlar</option>
+            <option value="active" <%= data.filters?.durum==='active'?'selected':'' %>>Aktif</option>
+            <option value="pending" <%= data.filters?.durum==='pending'?'selected':'' %>>Beklemede</option>
+            <option value="rejected" <%= data.filters?.durum==='rejected'?'selected':'' %>>Reddedildi</option>
+            <option value="sold" <%= data.filters?.durum==='sold'?'selected':'' %>>Satıldı</option>
+          </select>
+          <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Ara</button>
+        </form>
+
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>İlan Başlığı</th><th>Marka/Model</th><th>Fiyat</th><th>Satıcı</th><th>Durum</th><th>Öne Çıkan</th><th>Tarih</th><th>İşlemler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% (data.listings || []).forEach(l => { %>
+                <tr>
+                  <td>#<%= l.id %></td>
+                  <td><a href="/ilan/<%= l.id %>" target="_blank" style="color:#1a73e8;text-decoration:none;font-weight:600;"><%= l.title %></a></td>
+                  <td><%= l.brand_name %> <%= l.model_name %></td>
+                  <td style="font-weight:700;color:#1e8e3e;"><%= formatPrice(l.price) %></td>
+                  <td><%= l.seller_name %></td>
+                  <td>
+                    <% if (l.status === 'active') { %><span class="badge badge-success">Aktif</span>
+                    <% } else if (l.status === 'pending') { %><span class="badge badge-warning">Beklemede</span>
+                    <% } else if (l.status === 'rejected') { %><span class="badge badge-danger">Reddedildi</span>
+                    <% } else { %><span class="badge badge-secondary"><%= l.status %></span><% } %>
+                  </td>
+                  <td>
+                    <button class="btn-sm <%= l.is_featured ? 'btn-warning' : 'btn-outline' %>" data-admin-feature data-listing-id="<%= l.id %>" data-featured="<%= l.is_featured %>">
+                      <span class="material-icons"><%= l.is_featured ? 'star' : 'star_border' %></span>
+                    </button>
+                  </td>
+                  <td><%= timeAgo(l.created_at) %></td>
+                  <td>
+                    <div class="action-btns">
+                      <% if (l.status === 'pending') { %>
+                        <button class="btn-sm btn-success" data-admin-listing-status="active" data-listing-id="<%= l.id %>" title="Onayla">
+                          <span class="material-icons">check_circle</span>
+                        </button>
+                        <button class="btn-sm btn-danger" data-admin-listing-status="rejected" data-listing-id="<%= l.id %>" title="Reddet">
+                          <span class="material-icons">block</span>
+                        </button>
+                      <% } else if (l.status === 'active') { %>
+                        <button class="btn-sm btn-warning" data-admin-listing-status="pending" data-listing-id="<%= l.id %>" title="Askıya Al">
+                          <span class="material-icons">pause_circle</span>
+                        </button>
+                      <% } else { %>
+                        <button class="btn-sm btn-success" data-admin-listing-status="active" data-listing-id="<%= l.id %>" title="Aktifleştir">
+                          <span class="material-icons">check_circle</span>
+                        </button>
+                      <% } %>
+                      <button class="btn-sm btn-danger" data-admin-delete-listing data-listing-id="<%= l.id %>" title="Sil">
+                        <span class="material-icons">delete</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <% if (data.totalPages > 1) { %>
+          <div class="pagination">
+            <% for (let i = 1; i <= data.totalPages; i++) { %>
+              <a href="/admin/ilanlar?sayfa=<%= i %>&arama=<%= data.filters?.arama||'' %>&durum=<%= data.filters?.durum||'' %>" class="<%= data.page === i ? 'active' : '' %>"><%= i %></a>
+            <% } %>
+          </div>
+        <% } %>
+        <p style="font-size:.8rem;color:#999;margin-top:.5rem;text-align:center;">Toplam <%= data.totalCount %> ilan</p>
+      </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  İŞLETMELER                                 -->
+    <!-- ═══════════════════════════════════════════ -->
+    <% } else if (currentPage === 'isletmeler') { %>
+      <div class="admin-header"><h1>🏢 İşletme Yönetimi</h1></div>
+
+      <div class="admin-card">
+        <form class="filter-bar" method="GET" action="/admin/isletmeler">
+          <input type="text" name="arama" placeholder="İşletme veya sahip adı ara..." value="<%= data.filters?.arama || '' %>">
+          <select name="tur">
+            <option value="">Tüm Türler</option>
+            <option value="servis" <%= data.filters?.tur==='servis'?'selected':'' %>>Servis</option>
+            <option value="galeri" <%= data.filters?.tur==='galeri'?'selected':'' %>>Galeri</option>
+            <option value="yedek_parca" <%= data.filters?.tur==='yedek_parca'?'selected':'' %>>Yedek Parça</option>
+            <option value="ekspertiz" <%= data.filters?.tur==='ekspertiz'?'selected':'' %>>Ekspertiz</option>
+          </select>
+          <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Ara</button>
+        </form>
+
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>İşletme Adı</th><th>Tür</th><th>Sahip</th><th>Onay</th><th>Premium</th><th>Puan</th><th>Tarih</th><th>İşlemler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% (data.businesses || []).forEach(b => { %>
+                <tr>
+                  <td>#<%= b.id %></td>
+                  <td><a href="/servis/<%= b.slug || b.id %>" target="_blank" style="color:#1a73e8;text-decoration:none;font-weight:600;"><%= b.name %></a></td>
+                  <td><%= ({servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',ekspertiz:'Ekspertiz'})[b.type] || b.type %></td>
+                  <td><%= b.owner_name %><br><small style="color:#999"><%= b.owner_email %></small></td>
+                  <td>
+                    <button class="btn-sm <%= b.is_verified ? 'btn-success' : 'btn-outline' %>" data-admin-verify-business data-business-id="<%= b.id %>" data-verified="<%= b.is_verified %>">
+                      <span class="material-icons"><%= b.is_verified ? 'verified' : 'cancel' %></span>
+                      <%= b.is_verified ? 'Onaylı' : 'Onaysız' %>
+                    </button>
+                  </td>
+                  <td>
+                    <button class="btn-sm <%= b.is_premium ? 'btn-warning' : 'btn-outline' %>" data-admin-premium-business data-business-id="<%= b.id %>" data-premium="<%= b.is_premium %>">
+                      <span class="material-icons"><%= b.is_premium ? 'workspace_premium' : 'star_border' %></span>
+                    </button>
+                  </td>
+                  <td><%= b.rating ? Number(b.rating).toFixed(1) + ' ⭐' : '-' %></td>
+                  <td><%= timeAgo(b.created_at) %></td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="btn-sm btn-danger" data-admin-delete-business data-business-id="<%= b.id %>" title="Sil">
+                        <span class="material-icons">delete</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <% if (data.totalPages > 1) { %>
+        <div class="pagination">
+          <% for (let p = 1; p <= data.totalPages; p++) { %>
+            <a href="/admin/isletmeler?sayfa=<%= p %>&arama=<%= data.filters?.arama || '' %>&tur=<%= data.filters?.tur || '' %>" class="<%= p === data.page ? 'active' : '' %>"><%= p %></a>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  RANDEVULAR (Admin)                          -->
+    <!-- ═══════════════════════════════════════════ -->
+    <% } else if (currentPage === 'randevular') { %>
+      <div class="admin-header"><h1>📅 Randevu Yönetimi</h1></div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon orange"><span class="material-icons">pending</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts?.pending || 0 %></h3><p>Bekleyen</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue"><span class="material-icons">check_circle</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts?.confirmed || 0 %></h3><p>Onaylanan</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><span class="material-icons">task_alt</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts?.completed || 0 %></h3><p>Tamamlanan</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red"><span class="material-icons">cancel</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts?.cancelled || 0 %></h3><p>İptal</p></div>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <form class="filter-bar" method="GET" action="/admin/randevular">
+          <input type="text" name="arama" placeholder="İşletme veya kullanıcı ara..." value="<%= data.filters?.arama || '' %>">
+          <select name="durum">
+            <option value="">Tüm Durumlar</option>
+            <option value="pending" <%= data.filters?.durum==='pending'?'selected':'' %>>Bekleyen</option>
+            <option value="confirmed" <%= data.filters?.durum==='confirmed'?'selected':'' %>>Onaylanan</option>
+            <option value="completed" <%= data.filters?.durum==='completed'?'selected':'' %>>Tamamlanan</option>
+            <option value="cancelled" <%= data.filters?.durum==='cancelled'?'selected':'' %>>İptal</option>
+          </select>
+          <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Ara</button>
+        </form>
+
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>İşletme</th><th>Müşteri</th><th>Tarih</th><th>Saat</th><th>Açıklama</th><th>Durum</th><th>Oluşturma</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% (data.appointments || []).forEach(a => { %>
+              <tr>
+                <td>#<%= a.id %></td>
+                <td><strong><%= a.business_name %></strong></td>
+                <td><%= a.user_name %><br><small style="color:#999"><%= a.user_email %></small></td>
+                <td><%= a.appointment_date || '-' %></td>
+                <td><%= a.appointment_time || '-' %></td>
+                <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= a.description || '-' %></td>
+                <td>
+                  <% const apStat = {pending:'Bekleyen',confirmed:'Onaylı',completed:'Tamamlandı',cancelled:'İptal'}; %>
+                  <% const apBadge = {pending:'badge-warning',confirmed:'badge-info',completed:'badge-success',cancelled:'badge-danger'}; %>
+                  <span class="badge <%= apBadge[a.status] || 'badge-secondary' %>"><%= apStat[a.status] || a.status %></span>
+                </td>
+                <td><%= timeAgo(a.created_at) %></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <% if (data.totalPages > 1) { %>
+        <div class="pagination">
+          <% for (let p = 1; p <= data.totalPages; p++) { %>
+            <a href="/admin/randevular?sayfa=<%= p %>&durum=<%= data.filters?.durum || '' %>&arama=<%= data.filters?.arama || '' %>" class="<%= p === data.page ? 'active' : '' %>"><%= p %></a>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  TEKLİFLER (Admin)                           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <% } else if (currentPage === 'teklifler') { %>
+      <div class="admin-header"><h1>📋 Teklif Yönetimi</h1></div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon orange"><span class="material-icons">pending</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts?.pending || 0 %></h3><p>Bekleyen</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><span class="material-icons">reply</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts?.responded || 0 %></h3><p>Yanıtlanan</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red"><span class="material-icons">close</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts?.closed || 0 %></h3><p>Kapatılan</p></div>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <form class="filter-bar" method="GET" action="/admin/teklifler">
+          <input type="text" name="arama" placeholder="İşletme veya kullanıcı ara..." value="<%= data.filters?.arama || '' %>">
+          <select name="durum">
+            <option value="">Tüm Durumlar</option>
+            <option value="pending" <%= data.filters?.durum==='pending'?'selected':'' %>>Bekleyen</option>
+            <option value="responded" <%= data.filters?.durum==='responded'?'selected':'' %>>Yanıtlanan</option>
+            <option value="closed" <%= data.filters?.durum==='closed'?'selected':'' %>>Kapatılan</option>
+          </select>
+          <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Ara</button>
+        </form>
+
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>İşletme</th><th>Müşteri</th><th>Araç/Açıklama</th><th>Durum</th><th>Yanıt</th><th>Tarih</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% (data.quotes || []).forEach(q => { %>
+              <tr>
+                <td>#<%= q.id %></td>
+                <td><strong><%= q.business_name %></strong></td>
+                <td><%= q.user_name %><br><small style="color:#999"><%= q.user_email %></small></td>
+                <td style="max-width:200px;">
+                  <% if (q.vehicle_info) { %><strong><%= q.vehicle_info %></strong><br><% } %>
+                  <small style="color:#666"><%= (q.description || '').substring(0, 80) %></small>
+                </td>
+                <td>
+                  <% const qStat = {pending:'Bekleyen',responded:'Yanıtlandı',closed:'Kapatıldı'}; %>
+                  <% const qBadge = {pending:'badge-warning',responded:'badge-success',closed:'badge-secondary'}; %>
+                  <span class="badge <%= qBadge[q.status] || 'badge-secondary' %>"><%= qStat[q.status] || q.status %></span>
+                </td>
+                <td style="max-width:180px;"><%= q.response ? q.response.substring(0, 60) + '...' : '-' %></td>
+                <td><%= timeAgo(q.created_at) %></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <% if (data.totalPages > 1) { %>
+        <div class="pagination">
+          <% for (let p = 1; p <= data.totalPages; p++) { %>
+            <a href="/admin/teklifler?sayfa=<%= p %>&durum=<%= data.filters?.durum || '' %>&arama=<%= data.filters?.arama || '' %>" class="<%= p === data.page ? 'active' : '' %>"><%= p %></a>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  DEĞERLENDİRMELER (Admin)                    -->
+    <!-- ═══════════════════════════════════════════ -->
+    <% } else if (currentPage === 'degerlendirmeler') { %>
+      <div class="admin-header"><h1>⭐ Değerlendirme Yönetimi</h1></div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon purple"><span class="material-icons">reviews</span></div>
+          <div class="stat-info"><h3><%= data.totalCount %></h3><p>Toplam Değerlendirme</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><span class="material-icons">star</span></div>
+          <div class="stat-info"><h3><%= data.avgRating %></h3><p>Ortalama Puan</p></div>
+        </div>
+        <% for (let s = 5; s >= 1; s--) { %>
+        <div class="stat-card">
+          <div class="stat-icon blue"><span class="material-icons">star</span></div>
+          <div class="stat-info"><h3><%= data.ratingDist?.[s] || 0 %></h3><p><%= s %> Yıldız</p></div>
+        </div>
+        <% } %>
+      </div>
+
+      <div class="admin-card">
+        <form class="filter-bar" method="GET" action="/admin/degerlendirmeler">
+          <input type="text" name="arama" placeholder="İşletme, kullanıcı veya yorum ara..." value="<%= data.filters?.arama || '' %>">
+          <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Ara</button>
+        </form>
+
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>İşletme</th><th>Kullanıcı</th><th>Puan</th><th>Yorum</th><th>Tarih</th><th>İşlemler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% (data.reviews || []).forEach(r => { %>
+              <tr>
+                <td>#<%= r.id %></td>
+                <td><strong><%= r.business_name %></strong></td>
+                <td><%= r.reviewer_name %><br><small style="color:#999"><%= r.reviewer_email %></small></td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:2px;">
+                    <% for(let i=0;i<5;i++){%><span class="material-icons" style="font-size:14px;color:<%= i < r.rating ? '#f59e0b' : '#ddd' %>">star</span><%}%>
+                  </div>
+                </td>
+                <td style="max-width:250px;"><%= (r.comment || '').substring(0, 100) %></td>
+                <td><%= timeAgo(r.created_at) %></td>
+                <td>
+                  <div class="action-btns">
+                    <button class="btn-sm btn-danger" data-admin-delete-review data-review-id="<%= r.id %>" title="Sil">
+                      <span class="material-icons">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <% if (data.totalPages > 1) { %>
+        <div class="pagination">
+          <% for (let p = 1; p <= data.totalPages; p++) { %>
+            <a href="/admin/degerlendirmeler?sayfa=<%= p %>&arama=<%= data.filters?.arama || '' %>" class="<%= p === data.page ? 'active' : '' %>"><%= p %></a>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  ARAÇ HUB                                   -->
+    <!-- ═══════════════════════════════════════════ -->
+    <% } else if (currentPage === 'hublar') { %>
+      <div class="admin-header">
+        <h1>🔧 Araç Hub Yönetimi</h1>
+        <button class="btn-sm btn-primary" onclick="openHubModal()"><span class="material-icons">add</span> Yeni Hub</button>
+      </div>
+
+      <div class="admin-card">
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Marka</th><th>Model</th><th>Yıl</th><th>Yakıt</th><th>Motor</th><th>HP</th><th>Ort. Fiyat</th><th>Editör Puanı</th><th>İşlemler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% (data.hubs || []).forEach(h => { %>
+                <tr>
+                  <td>#<%= h.id %></td>
+                  <td><%= h.brand_name %></td>
+                  <td><%= h.model_name %></td>
+                  <td><%= h.year || '-' %></td>
+                  <td><%= h.fuel_type || '-' %></td>
+                  <td><%= h.engine || '-' %></td>
+                  <td><%= h.hp || '-' %></td>
+                  <td style="font-weight:700;"><%= formatPrice(h.avg_price) %></td>
+                  <td><%= h.editor_rating ? h.editor_rating + '/10' : '-' %></td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="btn-sm btn-primary" onclick='openHubModal(<%- JSON.stringify(h) %>)' title="Düzenle">
+                        <span class="material-icons">edit</span>
+                      </button>
+                      <button class="btn-sm btn-danger" data-admin-delete-hub data-hub-id="<%= h.id %>" title="Sil">
+                        <span class="material-icons">delete</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <% if (!data.hubs || data.hubs.length === 0) { %>
+          <p style="color:#999;text-align:center;padding:2rem;">Henüz araç hub kaydı yok.</p>
+        <% } %>
+      </div>
+
+      <!-- HUB MODAL -->
+      <div class="admin-modal-overlay" id="hubModal">
+        <div class="admin-modal">
+          <button class="close-modal" onclick="closeHubModal()">&times;</button>
+          <h3 id="hubModalTitle">Yeni Araç Hub</h3>
+          <form id="hubForm">
+            <input type="hidden" id="hub_id">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Marka *</label>
+                <select id="hub_brand_id" required>
+                  <option value="">Seçin...</option>
+                  <% (data.brands || []).forEach(b => { %>
+                    <option value="<%= b.id %>"><%= b.name %></option>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Model *</label>
+                <select id="hub_model_id" required>
+                  <option value="">Önce marka seçin...</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Yıl</label><input type="number" id="hub_year" min="1990" max="2030"></div>
+              <div class="form-group"><label>Ortalama Fiyat (₺)</label><input type="number" id="hub_avg_price"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Yakıt Tipi</label>
+                <select id="hub_fuel_type"><option value="">Seçin</option><option value="Benzin">Benzin</option><option value="Dizel">Dizel</option><option value="Benzin & LPG">Benzin & LPG</option><option value="Hibrit">Hibrit</option><option value="Elektrik">Elektrik</option></select>
+              </div>
+              <div class="form-group"><label>Motor</label><input type="text" id="hub_engine" placeholder="ör: 1.6 TDI"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>HP</label><input type="number" id="hub_hp"></div>
+              <div class="form-group"><label>Tork (Nm)</label><input type="number" id="hub_torque"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Şanzıman</label>
+                <select id="hub_transmission"><option value="">Seçin</option><option value="Manuel">Manuel</option><option value="Otomatik">Otomatik</option><option value="Yarı Otomatik">Yarı Otomatik</option></select>
+              </div>
+              <div class="form-group"><label>0-100 km/s (sn)</label><input type="number" step="0.1" id="hub_acceleration"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Maks. Hız (km/s)</label><input type="number" id="hub_top_speed"></div>
+              <div class="form-group"><label>Yakıt Tüketimi (L/100km)</label><input type="number" step="0.1" id="hub_fuel_consumption"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Uzunluk (mm)</label><input type="number" id="hub_length"></div>
+              <div class="form-group"><label>Genişlik (mm)</label><input type="number" id="hub_width"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Yükseklik (mm)</label><input type="number" id="hub_height"></div>
+              <div class="form-group"><label>Dingil Mesafesi (mm)</label><input type="number" id="hub_wheelbase"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Ağırlık (kg)</label><input type="number" id="hub_weight"></div>
+              <div class="form-group"><label>Editör Puanı (1-10)</label><input type="number" id="hub_editor_rating" min="1" max="10" step="0.1"></div>
+            </div>
+            <div class="form-group"><label>Editör Yorumu</label><textarea id="hub_editor_review" rows="3"></textarea></div>
+            <div class="form-row">
+              <div class="form-group"><label>Artılar (virgülle ayırın)</label><textarea id="hub_pros" rows="2"></textarea></div>
+              <div class="form-group"><label>Eksiler (virgülle ayırın)</label><textarea id="hub_cons" rows="2"></textarea></div>
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="btn-sm btn-outline" onclick="closeHubModal()">İptal</button>
+              <button type="submit" class="btn-sm btn-primary" id="hubSubmitBtn">Kaydet</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  MARKALAR / MODELLER                        -->
+    <!-- ═══════════════════════════════════════════ -->
+    <% } else if (currentPage === 'markalar') { %>
+      <div class="admin-header">
+        <h1>🏷️ Marka & Model Yönetimi</h1>
+        <div style="display:flex;gap:.5rem;">
+          <button class="btn-sm btn-primary" onclick="openBrandModal()"><span class="material-icons">add</span> Marka Ekle</button>
+          <button class="btn-sm btn-success" onclick="openModelModal()"><span class="material-icons">add</span> Model Ekle</button>
+        </div>
+      </div>
+
+      <!-- Markalar -->
+      <div class="admin-card">
+        <div class="admin-card-header"><h2>Markalar (<%= (data.brands||[]).length %>)</h2></div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead><tr><th>ID</th><th>Marka Adı</th><th>Slug</th><th>Model Sayısı</th><th>İlan Sayısı</th><th>İşlemler</th></tr></thead>
+            <tbody>
+              <% (data.brands || []).forEach(b => { %>
+                <tr>
+                  <td>#<%= b.id %></td>
+                  <td><strong><%= b.name %></strong></td>
+                  <td><code><%= b.slug %></code></td>
+                  <td><%= b.model_count %></td>
+                  <td><%= b.listing_count %></td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="btn-sm btn-primary" onclick='openBrandModal(<%- JSON.stringify({id:b.id,name:b.name}) %>)' title="Düzenle"><span class="material-icons">edit</span></button>
+                      <button class="btn-sm btn-danger" data-admin-delete-brand data-brand-id="<%= b.id %>" title="Sil"><span class="material-icons">delete</span></button>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Modeller -->
+      <div class="admin-card">
+        <div class="admin-card-header"><h2>Modeller (<%= (data.models||[]).length %>)</h2></div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead><tr><th>ID</th><th>Marka</th><th>Model Adı</th><th>Slug</th><th>Gövde Tipi</th><th>İlan Sayısı</th><th>İşlemler</th></tr></thead>
+            <tbody>
+              <% (data.models || []).forEach(m => { %>
+                <tr>
+                  <td>#<%= m.id %></td>
+                  <td><%= m.brand_name %></td>
+                  <td><strong><%= m.name %></strong></td>
+                  <td><code><%= m.slug %></code></td>
+                  <td><%= m.body_type || '-' %></td>
+                  <td><%= m.listing_count %></td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="btn-sm btn-primary" onclick='openModelModal(<%- JSON.stringify({id:m.id,brand_id:m.brand_id,name:m.name,body_type:m.body_type}) %>)' title="Düzenle"><span class="material-icons">edit</span></button>
+                      <button class="btn-sm btn-danger" data-admin-delete-model data-model-id="<%= m.id %>" title="Sil"><span class="material-icons">delete</span></button>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MARKA MODAL -->
+      <div class="admin-modal-overlay" id="brandModal">
+        <div class="admin-modal">
+          <button class="close-modal" onclick="closeBrandModal()">&times;</button>
+          <h3 id="brandModalTitle">Yeni Marka</h3>
+          <form id="brandForm">
+            <input type="hidden" id="brand_edit_id">
+            <div class="form-group"><label>Marka Adı *</label><input type="text" id="brand_name" required placeholder="ör: Toyota"></div>
+            <div class="modal-actions">
+              <button type="button" class="btn-sm btn-outline" onclick="closeBrandModal()">İptal</button>
+              <button type="submit" class="btn-sm btn-primary">Kaydet</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- MODEL MODAL -->
+      <div class="admin-modal-overlay" id="modelModal">
+        <div class="admin-modal">
+          <button class="close-modal" onclick="closeModelModal()">&times;</button>
+          <h3 id="modelModalTitle">Yeni Model</h3>
+          <form id="modelForm">
+            <input type="hidden" id="model_edit_id">
+            <div class="form-group">
+              <label>Marka *</label>
+              <select id="model_brand_id" required>
+                <option value="">Seçin...</option>
+                <% (data.brands || []).forEach(b => { %>
+                  <option value="<%= b.id %>"><%= b.name %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="form-group"><label>Model Adı *</label><input type="text" id="model_name" required placeholder="ör: Corolla"></div>
+            <div class="form-group">
+              <label>Gövde Tipi</label>
+              <select id="model_body_type">
+                <option value="">Seçin</option>
+                <option value="Sedan">Sedan</option><option value="HB">HB</option><option value="SUV">SUV</option>
+                <option value="Coupe">Coupe</option><option value="Cabrio">Cabrio</option><option value="Station Wagon">Station Wagon</option>
+                <option value="MPV">MPV</option><option value="Pick-up">Pick-up</option><option value="Van">Van</option>
+              </select>
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="btn-sm btn-outline" onclick="closeModelModal()">İptal</button>
+              <button type="submit" class="btn-sm btn-primary">Kaydet</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  FORUM                                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <% } else if (currentPage === 'forum') { %>
+      <div class="admin-header">
+        <h1>💬 Forum Yönetimi</h1>
+        <button class="btn-sm btn-primary" onclick="openCategoryModal()"><span class="material-icons">add</span> Kategori Ekle</button>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-header"><h2>Forum Konuları</h2></div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr><th>ID</th><th>Başlık</th><th>Kategori</th><th>Yazar</th><th>Yanıt</th><th>Sabitlenmiş</th><th>Kilitli</th><th>Tarih</th><th>İşlemler</th></tr>
+            </thead>
+            <tbody>
+              <% (data.topics || []).forEach(t => { %>
+                <tr>
+                  <td>#<%= t.id %></td>
+                  <td><a href="/forum/<%= t.slug || t.id %>" target="_blank" style="color:#1a73e8;text-decoration:none;font-weight:600;"><%= t.title %></a></td>
+                  <td><span class="badge badge-info"><%= t.category_name %></span></td>
+                  <td><%= t.author_name %></td>
+                  <td><%= t.reply_count || 0 %></td>
+                  <td>
+                    <button class="btn-sm <%= t.is_pinned ? 'btn-warning' : 'btn-outline' %>" data-admin-pin-topic data-topic-id="<%= t.id %>" data-pinned="<%= t.is_pinned %>">
+                      <span class="material-icons">push_pin</span>
+                    </button>
+                  </td>
+                  <td>
+                    <button class="btn-sm <%= t.is_locked ? 'btn-danger' : 'btn-outline' %>" data-admin-lock-topic data-topic-id="<%= t.id %>" data-locked="<%= t.is_locked %>">
+                      <span class="material-icons"><%= t.is_locked ? 'lock' : 'lock_open' %></span>
+                    </button>
+                  </td>
+                  <td><%= timeAgo(t.created_at) %></td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="btn-sm btn-danger" data-admin-delete-topic data-topic-id="<%= t.id %>" title="Sil">
+                        <span class="material-icons">delete</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FORUM KATEGORİ MODAL -->
+      <div class="admin-modal-overlay" id="categoryModal">
+        <div class="admin-modal">
+          <button class="close-modal" onclick="closeCategoryModal()">&times;</button>
+          <h3 id="categoryModalTitle">Yeni Forum Kategorisi</h3>
+          <form id="categoryForm">
+            <input type="hidden" id="category_edit_id">
+            <div class="form-group"><label>Kategori Adı *</label><input type="text" id="category_name" required placeholder="ör: Genel Tartışma"></div>
+            <div class="form-group"><label>Açıklama</label><textarea id="category_description" rows="2"></textarea></div>
+            <div class="form-row">
+              <div class="form-group"><label>İkon</label><input type="text" id="category_icon" placeholder="ör: forum" value="forum"></div>
+              <div class="form-group"><label>Renk</label><input type="color" id="category_color" value="#1775d3"></div>
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="btn-sm btn-outline" onclick="closeCategoryModal()">İptal</button>
+              <button type="submit" class="btn-sm btn-primary">Kaydet</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  MODERASYON                                 -->
+    <!-- ═══════════════════════════════════════════ -->
+    <% } else if (currentPage === 'moderasyon') { %>
+      <div class="admin-header"><h1>🛡️ Moderasyon</h1></div>
+
+      <div class="admin-card">
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr><th>ID</th><th>Tür</th><th>İçerik</th><th>Neden</th><th>Bildiren</th><th>Durum</th><th>Tarih</th><th>İşlemler</th></tr>
+            </thead>
+            <tbody>
+              <% (data.queue || []).forEach(mq => { %>
+                <tr style="<%= mq.status==='pending'?'background:#fffbe6':'opacity:.6' %>">
+                  <td>#<%= mq.id %></td>
+                  <td>
+                    <% if (mq.type==='listing') { %><span class="badge badge-info">İlan</span>
+                    <% } else if (mq.type==='business') { %><span class="badge badge-info">İşletme</span>
+                    <% } else if (mq.type==='forum_topic') { %><span class="badge badge-info">Konu</span>
+                    <% } else if (mq.type==='forum_reply') { %><span class="badge badge-info">Yanıt</span>
+                    <% } else if (mq.type==='review') { %><span class="badge badge-info">Yorum</span>
+                    <% } else { %><span class="badge badge-secondary"><%= mq.type %></span><% } %>
+                  </td>
+                  <td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%= mq.item_detail || 'İçerik #' + mq.item_id %></td>
+                  <td style="max-width:200px;"><%= mq.reason || '-' %></td>
+                  <td><%= mq.reported_by_name || '-' %></td>
+                  <td>
+                    <% if (mq.status==='pending') { %><span class="badge badge-warning">Beklemede</span>
+                    <% } else if (mq.status==='approved') { %><span class="badge badge-success">Onaylandı</span>
+                    <% } else { %><span class="badge badge-danger">Reddedildi</span><% } %>
+                  </td>
+                  <td><%= timeAgo(mq.created_at) %></td>
+                  <td>
+                    <% if (mq.status === 'pending') { %>
+                      <div class="action-btns">
+                        <button class="btn-sm btn-success" data-moderation-action="approved" data-id="<%= mq.id %>" title="Onayla">
+                          <span class="material-icons">check_circle</span>
+                        </button>
+                        <button class="btn-sm btn-danger" data-moderation-action="rejected" data-id="<%= mq.id %>" title="Reddet">
+                          <span class="material-icons">block</span>
+                        </button>
+                      </div>
+                    <% } else { %>
+                      <span style="font-size:.75rem;color:#999;">İşlendi</span>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <% if (!data.queue || data.queue.length === 0) { %>
+          <p style="color:#999;text-align:center;padding:2rem;">Moderasyon kuyruğu boş ✅</p>
+        <% } %>
+      </div>
+
+    <% } %>
+  </main>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  Hub modelleri filtrele
+// ═══════════════════════════════════════════════
+const allModels = <%- JSON.stringify(typeof data !== 'undefined' && data.models ? data.models : []) %>;
+
+function filterModels(brandId, selectEl, selectedModelId) {
+  if (!selectEl) return;
+  selectEl.innerHTML = '<option value="">Model seçin...</option>';
+  allModels.filter(m => String(m.brand_id) === String(brandId)).forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m.id; opt.textContent = m.name;
+    if (selectedModelId && String(m.id) === String(selectedModelId)) opt.selected = true;
+    selectEl.appendChild(opt);
+  });
+}
+
+const hubBrandSel = document.getElementById('hub_brand_id');
+if (hubBrandSel) hubBrandSel.addEventListener('change', () => filterModels(hubBrandSel.value, document.getElementById('hub_model_id')));
+
+// ═══════════════════════════════════════════════
+//  Modal: Hub
+// ═══════════════════════════════════════════════
+function openHubModal(hub) {
+  const modal = document.getElementById('hubModal');
+  if (!modal) return;
+  modal.classList.add('show');
+  const fields = ['id','year','avg_price','fuel_type','engine','hp','torque','transmission','acceleration','top_speed','fuel_consumption','length','width','height','wheelbase','weight','editor_rating','editor_review','pros','cons'];
+  if (hub) {
+    document.getElementById('hubModalTitle').textContent = 'Hub Düzenle: ' + (hub.brand_name||'') + ' ' + (hub.model_name||'');
+    document.getElementById('hub_id').value = hub.id;
+    document.getElementById('hub_brand_id').value = hub.brand_id;
+    filterModels(hub.brand_id, document.getElementById('hub_model_id'), hub.model_id);
+    fields.forEach(f => { const el = document.getElementById('hub_'+f); if (el && hub[f] != null) el.value = hub[f]; });
+  } else {
+    document.getElementById('hubModalTitle').textContent = 'Yeni Araç Hub';
+    document.getElementById('hubForm').reset();
+    document.getElementById('hub_id').value = '';
+  }
+}
+function closeHubModal() { const m = document.getElementById('hubModal'); if(m) m.classList.remove('show'); }
+
+document.getElementById('hubForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('hub_id').value;
+  const body = {};
+  ['brand_id','model_id','year','avg_price','fuel_type','engine','hp','torque','transmission','acceleration','top_speed','fuel_consumption','length','width','height','wheelbase','weight','editor_rating','editor_review','pros','cons'].forEach(f => {
+    const el = document.getElementById('hub_'+f);
+    if (el) body[f] = el.value || null;
+  });
+  const url = id ? '/api/admin/hubs/' + id : '/api/admin/hubs';
+  const method = id ? 'PUT' : 'POST';
+  try {
+    const res = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const d = await res.json();
+    if (d.success || d.id) { location.reload(); } else { alert(d.error || 'Hata oluştu'); }
+  } catch(err) { alert('Bağlantı hatası'); }
+});
+
+// ═══════════════════════════════════════════════
+//  Modal: Marka
+// ═══════════════════════════════════════════════
+function openBrandModal(brand) {
+  const modal = document.getElementById('brandModal');
+  if (!modal) return;
+  modal.classList.add('show');
+  if (brand) {
+    document.getElementById('brandModalTitle').textContent = 'Marka Düzenle';
+    document.getElementById('brand_edit_id').value = brand.id;
+    document.getElementById('brand_name').value = brand.name;
+  } else {
+    document.getElementById('brandModalTitle').textContent = 'Yeni Marka';
+    document.getElementById('brandForm').reset();
+    document.getElementById('brand_edit_id').value = '';
+  }
+}
+function closeBrandModal() { const m = document.getElementById('brandModal'); if(m) m.classList.remove('show'); }
+
+document.getElementById('brandForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('brand_edit_id').value;
+  const name = document.getElementById('brand_name').value;
+  const url = id ? '/api/admin/brands/' + id : '/api/admin/brands';
+  const method = id ? 'PUT' : 'POST';
+  try {
+    const res = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify({ name }) });
+    const d = await res.json();
+    if (d.success || d.id) { location.reload(); } else { alert(d.error || 'Hata oluştu'); }
+  } catch(err) { alert('Bağlantı hatası'); }
+});
+
+// ═══════════════════════════════════════════════
+//  Modal: Model
+// ═══════════════════════════════════════════════
+function openModelModal(model) {
+  const modal = document.getElementById('modelModal');
+  if (!modal) return;
+  modal.classList.add('show');
+  if (model) {
+    document.getElementById('modelModalTitle').textContent = 'Model Düzenle';
+    document.getElementById('model_edit_id').value = model.id;
+    document.getElementById('model_brand_id').value = model.brand_id;
+    document.getElementById('model_name').value = model.name;
+    document.getElementById('model_body_type').value = model.body_type || '';
+  } else {
+    document.getElementById('modelModalTitle').textContent = 'Yeni Model';
+    document.getElementById('modelForm').reset();
+    document.getElementById('model_edit_id').value = '';
+  }
+}
+function closeModelModal() { const m = document.getElementById('modelModal'); if(m) m.classList.remove('show'); }
+
+document.getElementById('modelForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('model_edit_id').value;
+  const body = { brand_id: document.getElementById('model_brand_id').value, name: document.getElementById('model_name').value, body_type: document.getElementById('model_body_type').value || null };
+  const url = id ? '/api/admin/models/' + id : '/api/admin/models';
+  const method = id ? 'PUT' : 'POST';
+  try {
+    const res = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const d = await res.json();
+    if (d.success || d.id) { location.reload(); } else { alert(d.error || 'Hata oluştu'); }
+  } catch(err) { alert('Bağlantı hatası'); }
+});
+
+// ═══════════════════════════════════════════════
+//  Modal: Forum Kategorisi
+// ═══════════════════════════════════════════════
+function openCategoryModal(cat) {
+  const modal = document.getElementById('categoryModal');
+  if (!modal) return;
+  modal.classList.add('show');
+  if (cat) {
+    document.getElementById('categoryModalTitle').textContent = 'Kategori Düzenle';
+    document.getElementById('category_edit_id').value = cat.id;
+    document.getElementById('category_name').value = cat.name;
+    document.getElementById('category_description').value = cat.description || '';
+    document.getElementById('category_icon').value = cat.icon || 'forum';
+    document.getElementById('category_color').value = cat.color || '#1775d3';
+  } else {
+    document.getElementById('categoryModalTitle').textContent = 'Yeni Forum Kategorisi';
+    document.getElementById('categoryForm').reset();
+    document.getElementById('category_edit_id').value = '';
+  }
+}
+function closeCategoryModal() { const m = document.getElementById('categoryModal'); if(m) m.classList.remove('show'); }
+
+document.getElementById('categoryForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('category_edit_id').value;
+  const body = { name: document.getElementById('category_name').value, description: document.getElementById('category_description').value, icon: document.getElementById('category_icon').value, color: document.getElementById('category_color').value };
+  const url = id ? '/api/admin/forum/categories/' + id : '/api/admin/forum/categories';
+  const method = id ? 'PUT' : 'POST';
+  try {
+    const res = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const d = await res.json();
+    if (d.success || d.id) { location.reload(); } else { alert(d.error || 'Hata oluştu'); }
+  } catch(err) { alert('Bağlantı hatası'); }
+});
+</script>

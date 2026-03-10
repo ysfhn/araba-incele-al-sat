@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#1775d3","charcoal":"#1a1c1e","background-light":"#f6f7f8","background-dark":"#111921"},fontFamily:{"display":["Inter","sans-serif"]},borderRadius:{"DEFAULT":"0.5rem","lg":"1rem","xl":"1.5rem","full":"9999px"}}}}</script>
+<title>Admin Paneli - Araba İncele Al Sat</title>
+</head>
+<body class="bg-background-light font-display text-slate-900">
+<div class="flex min-h-screen">
+<!-- Sidebar -->
+<aside class="hidden lg:flex flex-col w-64 bg-charcoal text-white fixed h-full z-40">
+<div class="p-6 border-b border-white/10">
+<a href="index.html" class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-2xl font-bold">directions_car</span><span class="text-white text-sm font-bold">Admin Paneli</span></a>
+</div>
+<nav class="flex-1 p-4 space-y-1">
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-bold text-sm"><span class="material-symbols-outlined text-lg">dashboard</span> Dashboard</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 font-medium text-sm"><span class="material-symbols-outlined text-lg">people</span> Kullanıcılar</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 font-medium text-sm"><span class="material-symbols-outlined text-lg">list_alt</span> İlanlar</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 font-medium text-sm"><span class="material-symbols-outlined text-lg">store</span> İşletmeler</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 font-medium text-sm"><span class="material-symbols-outlined text-lg">forum</span> Forum</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 font-medium text-sm"><span class="material-symbols-outlined text-lg">gavel</span> Moderasyon <span class="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full ml-auto">12</span></a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 font-medium text-sm"><span class="material-symbols-outlined text-lg">payments</span> Finans</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 font-medium text-sm"><span class="material-symbols-outlined text-lg">bar_chart</span> Raporlar</a>
+<a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 font-medium text-sm"><span class="material-symbols-outlined text-lg">settings</span> Ayarlar</a>
+</nav>
+<div class="p-4 border-t border-white/10">
+<div class="flex items-center gap-3 px-4 py-3"><div class="size-9 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold">A</div><div><p class="text-sm font-bold text-white">Admin</p><p class="text-[10px] text-slate-400">Süper Yönetici</p></div></div>
+</div>
+</aside>
+<!-- Main -->
+<div class="flex-1 lg:ml-64">
+<header class="bg-white border-b border-slate-200 px-6 md:px-8 py-4 sticky top-0 z-30 flex justify-between items-center">
+<h1 class="text-xl font-bold text-slate-900">Admin Dashboard</h1>
+<div class="flex items-center gap-3"><span class="text-xs text-slate-400">Son güncelleme: 2 dk önce</span>
+<button class="relative"><span class="material-symbols-outlined text-slate-400">notifications</span><span class="absolute -top-1 -right-1 size-4 bg-red-500 text-white text-[8px] rounded-full flex items-center justify-center">12</span></button></div>
+</header>
+<main class="p-6 md:p-8 space-y-8">
+<!-- Metric Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white rounded-2xl p-6 border border-slate-100"><div class="flex items-center gap-3 mb-3"><span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-xl">people</span><span class="text-sm text-slate-500">Toplam Kullanıcı</span></div><p class="text-3xl font-bold text-slate-900">52.340</p><p class="text-xs text-green-500 mt-1">↑ +340 bu hafta</p></div>
+<div class="bg-white rounded-2xl p-6 border border-slate-100"><div class="flex items-center gap-3 mb-3"><span class="material-symbols-outlined text-green-500 bg-green-50 p-2 rounded-xl">list_alt</span><span class="text-sm text-slate-500">Aktif İlan</span></div><p class="text-3xl font-bold text-slate-900">12.850</p><p class="text-xs text-green-500 mt-1">↑ +128 bugün</p></div>
+<div class="bg-white rounded-2xl p-6 border border-slate-100"><div class="flex items-center gap-3 mb-3"><span class="material-symbols-outlined text-orange-500 bg-orange-50 p-2 rounded-xl">store</span><span class="text-sm text-slate-500">Kayıtlı İşletme</span></div><p class="text-3xl font-bold text-slate-900">1.245</p><p class="text-xs text-green-500 mt-1">↑ +15 bu ay</p></div>
+<div class="bg-white rounded-2xl p-6 border border-slate-100"><div class="flex items-center gap-3 mb-3"><span class="material-symbols-outlined text-purple-500 bg-purple-50 p-2 rounded-xl">payments</span><span class="text-sm text-slate-500">Aylık Gelir</span></div><p class="text-3xl font-bold text-slate-900">₺1.2M</p><p class="text-xs text-green-500 mt-1">↑ %18 geçen aya göre</p></div>
+</div>
+<!-- Revenue Chart -->
+<div class="bg-white rounded-2xl p-6 border border-slate-100">
+<h2 class="font-bold text-lg text-slate-900 mb-4">Gelir Trendi (Son 6 Ay)</h2>
+<svg viewBox="0 0 600 200" class="w-full">
+<polyline points="50,170 130,150 210,130 290,110 370,80 450,60" fill="none" stroke="#1775d3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="50,170 130,150 210,130 290,110 370,80 450,60 450,190 50,190" fill="url(#adminGrad)" stroke="none"/>
+<defs><linearGradient id="adminGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1775d3" stop-opacity="0.15"/><stop offset="100%" stop-color="#1775d3" stop-opacity="0"/></linearGradient></defs>
+<text x="50" y="195" fill="#94a3b8" font-size="10">Ağu</text><text x="130" y="195" fill="#94a3b8" font-size="10">Eyl</text><text x="210" y="195" fill="#94a3b8" font-size="10">Eki</text><text x="290" y="195" fill="#94a3b8" font-size="10">Kas</text><text x="370" y="195" fill="#94a3b8" font-size="10">Ara</text><text x="450" y="195" fill="#94a3b8" font-size="10">Oca</text>
+</svg>
+</div>
+<!-- Activity & Moderation -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Son Aktiviteler -->
+<div class="bg-white rounded-2xl p-6 border border-slate-100">
+<h2 class="font-bold text-lg text-slate-900 mb-4">Son Aktiviteler</h2>
+<div class="space-y-3">
+<div class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-green-500 text-lg">person_add</span><div><p class="text-slate-800">Yeni kullanıcı: <strong>Zeynep A.</strong></p><p class="text-xs text-slate-400">5 dk önce</p></div></div>
+<div class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-lg">add_circle</span><div><p class="text-slate-800">Yeni ilan: <strong>BMW 520i 2022</strong></p><p class="text-xs text-slate-400">15 dk önce</p></div></div>
+<div class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-orange-500 text-lg">store</span><div><p class="text-slate-800">Yeni işletme başvurusu: <strong>Elite Auto</strong></p><p class="text-xs text-slate-400">30 dk önce</p></div></div>
+<div class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-red-500 text-lg">flag</span><div><p class="text-slate-800">İlan şikayeti: <strong>#45231</strong></p><p class="text-xs text-slate-400">1 saat önce</p></div></div>
+</div>
+</div>
+<!-- Moderasyon Kuyruğu -->
+<div class="bg-white rounded-2xl p-6 border border-slate-100">
+<div class="flex justify-between items-center mb-4"><h2 class="font-bold text-lg text-slate-900">Moderasyon Kuyruğu</h2><span class="bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full font-bold">12 Bekliyor</span></div>
+<div class="overflow-x-auto">
+<table class="w-full text-sm">
+<thead><tr class="text-left text-xs text-slate-400 border-b border-slate-100"><th class="pb-3 font-medium">Tür</th><th class="pb-3 font-medium">İçerik</th><th class="pb-3 font-medium">Tarih</th><th class="pb-3 font-medium">İşlem</th></tr></thead>
+<tbody>
+<tr class="border-b border-slate-50"><td class="py-3"><span class="bg-red-50 text-red-500 text-[10px] px-2 py-0.5 rounded-full font-bold">Şikayet</span></td><td class="py-3 text-slate-700">Sahte ilan şikayeti #45231</td><td class="py-3 text-slate-400">1 saat</td><td class="py-3"><button class="text-primary text-xs font-bold hover:underline">İncele</button></td></tr>
+<tr class="border-b border-slate-50"><td class="py-3"><span class="bg-orange-50 text-orange-500 text-[10px] px-2 py-0.5 rounded-full font-bold">İlan Onay</span></td><td class="py-3 text-slate-700">Mercedes E200 - Onay bekliyor</td><td class="py-3 text-slate-400">2 saat</td><td class="py-3"><button class="text-primary text-xs font-bold hover:underline">İncele</button></td></tr>
+<tr class="border-b border-slate-50"><td class="py-3"><span class="bg-purple-50 text-purple-500 text-[10px] px-2 py-0.5 rounded-full font-bold">İşletme</span></td><td class="py-3 text-slate-700">Elite Auto - Başvuru onayı</td><td class="py-3 text-slate-400">3 saat</td><td class="py-3"><button class="text-primary text-xs font-bold hover:underline">İncele</button></td></tr>
+<tr><td class="py-3"><span class="bg-yellow-50 text-yellow-600 text-[10px] px-2 py-0.5 rounded-full font-bold">Forum</span></td><td class="py-3 text-slate-700">Uygunsuz yorum bildirimi</td><td class="py-3 text-slate-400">5 saat</td><td class="py-3"><button class="text-primary text-xs font-bold hover:underline">İncele</button></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

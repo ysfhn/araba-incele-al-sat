@@ -1,0 +1,63 @@
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 bg-white px-6 md:px-10 py-3 sticky top-0 z-50">
+  <div class="flex items-center gap-8">
+    <a href="/" class="flex items-center gap-2 text-primary">
+      <span class="material-symbols-outlined text-3xl font-bold">directions_car</span>
+      <h2 class="text-slate-900 text-lg font-bold leading-tight tracking-tight">Araba İncele Al Sat</h2>
+    </a>
+    <nav class="hidden lg:flex items-center gap-8">
+      <a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors <%= currentPath.startsWith('/ilan') ? 'text-primary' : '' %>" href="/ilan">İlanlar</a>
+      <a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors <%= currentPath.startsWith('/servis') ? 'text-primary' : '' %>" href="/servis">Servisler</a>
+      <a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors <%= currentPath.startsWith('/forum') ? 'text-primary' : '' %>" href="/forum">Forum</a>
+      <a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors <%= currentPath.startsWith('/arac') ? 'text-primary' : '' %>" href="/arac-secim">Araç Hub</a>
+      <a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="/nasil-calisir">Nasıl Çalışır</a>
+    </nav>
+  </div>
+  <div class="flex flex-1 justify-end gap-4 items-center">
+    <div class="hidden md:flex items-center bg-slate-100 rounded-xl px-3 py-1.5 border border-slate-200">
+      <span class="material-symbols-outlined text-slate-500 text-xl">search</span>
+      <input id="globalSearch" class="bg-transparent border-none focus:ring-0 text-sm w-48 placeholder:text-slate-400" placeholder="Hızlı ara..." autocomplete="off"/>
+    </div>
+    <div id="searchResults" class="hidden absolute top-full right-0 mt-1 w-96 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-96 overflow-y-auto"></div>
+    <div class="flex gap-2">
+      <% if (currentUser) { %>
+        <a href="/ilan/ver" class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-slate-100 text-slate-900 text-sm font-bold border border-slate-200 hover:bg-slate-200 transition-all">
+          <span class="material-symbols-outlined text-sm mr-1">add</span> İlan Ver
+        </a>
+        <!-- Bildirimler -->
+        <div class="relative">
+          <button id="notificationBtn" class="flex items-center justify-center rounded-xl h-10 w-10 bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 transition-all relative">
+            <span class="material-symbols-outlined text-sm">notifications</span>
+            <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center hidden">0</span>
+          </button>
+          <div id="notificationDropdown" class="hidden absolute right-0 top-full mt-2 w-80 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-96 overflow-y-auto"></div>
+        </div>
+        <!-- Mesajlar -->
+        <a href="/kullanici/mesajlar" class="flex items-center justify-center rounded-xl h-10 w-10 bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 transition-all relative">
+          <span class="material-symbols-outlined text-sm">chat</span>
+          <span id="unreadMessageBadge" class="absolute -top-1 -right-1 bg-blue-500 text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center hidden">0</span>
+        </a>
+        <% if (currentUser.role === 'admin') { %>
+          <a href="/admin" class="flex items-center justify-center rounded-xl h-10 px-4 bg-slate-100 text-slate-900 text-sm font-bold border border-slate-200 hover:bg-slate-200">
+            <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
+          </a>
+        <% } else if (currentUser.role === 'kurumsal') { %>
+          <a href="/isletme" class="flex items-center justify-center rounded-xl h-10 px-4 bg-slate-100 text-slate-900 text-sm font-bold border border-slate-200 hover:bg-slate-200">
+            <span class="material-symbols-outlined text-sm">store</span>
+          </a>
+        <% } else { %>
+          <a href="/kullanici/panel" class="flex items-center justify-center rounded-xl h-10 px-4 bg-slate-100 text-slate-900 text-sm font-bold border border-slate-200 hover:bg-slate-200">
+            <span class="material-symbols-outlined text-sm">person</span>
+          </a>
+        <% } %>
+        <a href="/auth/cikis" class="flex items-center justify-center rounded-xl h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
+          <span class="material-symbols-outlined text-sm mr-1">logout</span> Çıkış
+        </a>
+      <% } else { %>
+        <a href="/giris" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">Giriş Yap</a>
+        <a href="/ilan/ver" class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-slate-100 text-slate-900 text-sm font-bold border border-slate-200 hover:bg-slate-200 transition-all">
+          <span class="material-symbols-outlined text-sm mr-1">add</span> İlan Ver
+        </a>
+      <% } %>
+    </div>
+  </div>
+</header>

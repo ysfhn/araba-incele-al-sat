@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: { extend: { colors: { "primary": "#1775d3", "background-light": "#f6f7f8", "background-dark": "#111921" }, fontFamily: { "display": ["Inter", "sans-serif"] }, borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"} } }
+    }
+</script>
+<title>Servis Rehberi - Araba İncele Al Sat</title>
+</head>
+<body class="bg-background-light font-display text-slate-900">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Nav -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 bg-white px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<a href="index.html" class="flex items-center gap-2 text-primary"><span class="material-symbols-outlined text-3xl font-bold">directions_car</span><h2 class="text-slate-900 text-lg font-bold">Araba İncele Al Sat</h2></a>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-slate-600 hover:text-primary text-sm font-medium" href="ilan-arama.html">İlanlar</a>
+<a class="text-primary text-sm font-bold" href="servis-rehberi.html">Servisler</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium" href="forum.html">Forum</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium" href="nasil-calisir.html">Kurumsal</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<a href="giris-kayit.html" class="flex min-w-[84px] items-center justify-center rounded-xl h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90"><span>Giriş Yap</span></a>
+</div>
+</header>
+<!-- Main -->
+<main class="container mx-auto px-6 lg:px-12 py-8">
+<!-- Segmented Control -->
+<div class="flex flex-wrap gap-2 mb-8 bg-white p-2 rounded-2xl shadow-sm max-w-2xl border border-slate-100">
+<button class="flex-1 py-3 px-4 rounded-xl bg-primary text-white font-bold text-sm">Tüm Servisler</button>
+<button class="flex-1 py-3 px-4 rounded-xl text-slate-600 font-bold text-sm hover:bg-slate-50">Motor & Mekanik</button>
+<button class="flex-1 py-3 px-4 rounded-xl text-slate-600 font-bold text-sm hover:bg-slate-50">Estetik & Koruma</button>
+<button class="flex-1 py-3 px-4 rounded-xl text-slate-600 font-bold text-sm hover:bg-slate-50">Elektrik</button>
+<button class="flex-1 py-3 px-4 rounded-xl text-slate-600 font-bold text-sm hover:bg-slate-50">Lastik</button>
+</div>
+<!-- Filter Bar -->
+<div class="flex flex-wrap gap-4 mb-8 items-center">
+<div class="flex items-center bg-white rounded-xl px-4 py-2.5 border border-slate-200 flex-1 max-w-md">
+<span class="material-symbols-outlined text-slate-400 mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-sm placeholder:text-slate-400" placeholder="Servis adı veya hizmet ara..."/>
+</div>
+<div class="flex items-center bg-white rounded-xl px-4 py-2.5 border border-slate-200 gap-2">
+<span class="material-symbols-outlined text-slate-400 text-sm">location_on</span>
+<select class="bg-transparent border-none focus:ring-0 text-sm font-medium text-slate-600"><option>Tüm Şehirler</option><option>İstanbul</option><option>Ankara</option><option>İzmir</option></select>
+</div>
+<select class="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-medium">
+<option>Sırala: Puan</option><option>Sırala: Yakınlık</option><option>Sırala: Fiyat</option>
+</select>
+</div>
+<!-- Service Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- Card 1 -->
+<a href="isletme-profili.html" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 block">
+<div class="h-40 bg-cover bg-center relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBXpRSFscEJ_Krh-1Zmc18taNIH5HhbrcawFiZiZ22prlcuXnMekXiv8bgoQfZWsDJlas3lz7nEBzrSF260cDwfBxkgEPQFC7kWQhEcsnQhoZiS6x6v-j2VM7BGw8E425N4EKtCVrKOE0s1h2q9nN6hu0VmX7mQc6WD9OG4oyfBxI_0Kfn_wArwpweQhOKJ2dR8jSCDUrrF3iTUEOjC1AsSQQeuC7o3fVtDd_5UQDSHQomK8snq3a4q9tpK4bjLWPgZA-_4qJdOGUl7');">
+<span class="absolute top-3 left-3 bg-green-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">ONAYLI</span>
+</div>
+<div class="p-4">
+<h3 class="font-bold text-slate-900">Master Bosch Service</h3>
+<div class="flex items-center gap-1 mt-1 text-yellow-500">
+<span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star</span>
+<span class="text-xs text-slate-400 ml-1">4.9 (120)</span>
+</div>
+<p class="text-xs text-slate-500 mt-2">Maslak, İstanbul</p>
+<p class="text-xs text-slate-400 mt-1">Motor & Mekanik • Periyodik Bakım</p>
+</div>
+</a>
+<!-- Card 2 -->
+<a href="isletme-profili.html" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 block">
+<div class="h-40 bg-cover bg-center relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCN2NuTw0lS-ff5qcxtNtAHwzof7F_rtOiX_gbBEEDHFtFFTDZVPz6JyXqmrw6bXElX7kY0-gdT8FPqsK7khpIRGxtc-8vCDZOV0-VIgSRNvn1RaY4nwjZ26k139wGloaN1_cTOmQUu5d3Uj2FDxwMPieiXXguRRSxF-q2VUgJ4sk1ILJ_eAXOEp7s1cPERyD3CTFyKFjR2MhPDw-FmkARezzAJCCr0-yGNgIVxU8UpmaVcHDJTqiFPzcxfmY-zjTmCc4BNUmYzN1-B');">
+<span class="absolute top-3 left-3 bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">PREMİUM</span>
+</div>
+<div class="p-4">
+<h3 class="font-bold text-slate-900">Elite Detailing & Seramik</h3>
+<div class="flex items-center gap-1 mt-1 text-yellow-500">
+<span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star_half</span>
+<span class="text-xs text-slate-400 ml-1">4.7 (85)</span>
+</div>
+<p class="text-xs text-slate-500 mt-2">Çankaya, Ankara</p>
+<p class="text-xs text-slate-400 mt-1">Estetik & Koruma • Seramik Kaplama</p>
+</div>
+</a>
+<!-- Card 3 -->
+<a href="isletme-profili.html" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 block">
+<div class="h-40 bg-cover bg-center relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2ysZEsgVirXr_Cj7emUx1tNacoyhj4V2WNo6Uy_2_mlQXQbBCoiat6ELFAGtyAATUN85qAcz9zJbVAGqWee9MkPFggWtQ65ZqAXMdr565xxWEt2Vg7LSDJy_87Y9Ujy-JOH87fGYqJJDh0szoz6lDAyiZ72m8yRluX2jVCsyGYsuNiD9whQ-SLCAgdLXZXUwZvlSeFfCs_Q98I1E-HMluWxSSvAnQY-Slyt8Uf2-INQft5yj5TkZgfA5XR_C_4_j0qWVwGnW37qSl');">
+<span class="absolute top-3 left-3 bg-green-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">ONAYLI</span>
+</div>
+<div class="p-4">
+<h3 class="font-bold text-slate-900">Pro-Tech Oto Elektrik</h3>
+<div class="flex items-center gap-1 mt-1 text-yellow-500">
+<span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star</span><span class="material-symbols-outlined text-sm">star</span>
+<span class="text-xs text-slate-400 ml-1">4.8 (64)</span>
+</div>
+<p class="text-xs text-slate-500 mt-2">Bornova, İzmir</p>
+<p class="text-xs text-slate-400 mt-1">Oto Elektrik • Arıza Tespiti</p>
+</div>
+</a>
+<!-- Card 4 (Map CTA) -->
+<div class="bg-primary/5 rounded-2xl border border-primary/10 flex flex-col items-center justify-center p-8 text-center">
+<span class="material-symbols-outlined text-primary text-5xl mb-4">map</span>
+<h4 class="font-bold text-slate-900 mb-2">Haritada Gör</h4>
+<p class="text-sm text-slate-500 mb-4">Yakınındaki tüm servisleri haritada keşfet.</p>
+<button class="bg-primary text-white font-bold py-2.5 px-6 rounded-xl text-sm hover:bg-primary/90 transition-all">Haritayı Aç</button>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center items-center gap-2 mt-8">
+<button class="size-10 rounded-xl bg-primary text-white font-bold text-sm">1</button>
+<button class="size-10 rounded-xl bg-white text-slate-600 font-bold text-sm border border-slate-200 hover:bg-slate-50">2</button>
+<button class="size-10 rounded-xl bg-white text-slate-600 font-bold text-sm border border-slate-200 hover:bg-slate-50">3</button>
+<span class="text-slate-400">...</span>
+<button class="size-10 rounded-xl bg-white text-slate-600 font-bold text-sm border border-slate-200 hover:bg-slate-50">8</button>
+<button class="size-10 rounded-xl bg-white text-slate-600 font-bold text-sm border border-slate-200 hover:bg-slate-50"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</main>
+<footer class="bg-white border-t border-slate-200 pt-12 pb-8 mt-8">
+<div class="container mx-auto px-6 lg:px-12"><div class="border-t border-slate-100 pt-8 flex justify-between items-center"><p class="text-slate-400 text-xs">© 2024 Araba İncele Al Sat Platformu.</p></div></div>
+</footer>
+</div>
+</div>
+</body></html>
