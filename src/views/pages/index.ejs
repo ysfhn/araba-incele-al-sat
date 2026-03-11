@@ -12,8 +12,10 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
   <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80');"></div>
   <div class="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/80 to-slate-950/95 z-10"></div>
   <div class="relative z-20 w-full max-w-[1200px] mx-auto px-4 sm:px-6">
-    <div class="py-10 sm:py-16 md:py-24">
-      <div class="text-center mb-5 sm:mb-8">
+    <div class="py-10 sm:py-16 md:py-20">
+
+      <!-- Başlık -->
+      <div class="text-center mb-6 sm:mb-10">
         <h1 class="text-white text-2xl sm:text-4xl md:text-5xl lg:text-[3.4rem] font-black leading-tight tracking-tight mb-2 sm:mb-4">
           Hayalinizdeki Aracı<br/>
           <span class="bg-gradient-to-r from-primary via-blue-400 to-cyan-400 bg-clip-text text-transparent">Keşfedin</span>
@@ -22,6 +24,30 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
           Binlerce araç ilanı, güvenilir servisler ve Türkiye'nin en büyük otomobil topluluğu tek platformda.
         </p>
       </div>
+
+      <!-- Araç Hub CTA -->
+      <div class="max-w-2xl mx-auto mb-6 sm:mb-10">
+        <a href="/arac-secim" class="group block">
+          <div class="bg-white/[0.07] backdrop-blur-md border border-white/[0.12] rounded-2xl p-4 sm:p-5 hover:bg-white/[0.12] hover:border-white/[0.2] transition-all">
+            <div class="flex items-center gap-3 sm:gap-4">
+              <div class="size-11 sm:size-14 rounded-xl bg-gradient-to-br from-primary to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary/30">
+                <span class="material-symbols-outlined text-white" style="font-size:24px">commute</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-0.5">
+                  <h2 class="text-white text-sm sm:text-lg font-bold">Araç Hub</h2>
+                  <span class="bg-primary/20 text-primary text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full border border-primary/30">306+ Model</span>
+                </div>
+                <p class="text-white/45 text-[11px] sm:text-sm leading-snug">Detaylı teknik özellikler, editör puanları, video incelemeler ve satılık ilanlar</p>
+              </div>
+              <div class="size-9 sm:size-10 rounded-xl bg-white/10 group-hover:bg-primary flex items-center justify-center flex-shrink-0 transition-all">
+                <span class="material-symbols-outlined text-white" style="font-size:20px">arrow_forward</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
       <!-- İstatistikler -->
       <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
         <div class="flex items-center gap-1.5 text-white/50 text-[11px] sm:text-xs font-medium">
@@ -37,6 +63,7 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
           <span><%= stats.users %>+ üye</span>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -71,14 +98,9 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
         </a>
         <% }) %>
       </div>
-      <a href="/arac-secim" class="flex items-center justify-center gap-2 w-full mt-2 bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-sm">
-        <span class="material-symbols-outlined" style="font-size:16px">commute</span>
-        306+ Model · Araç Hub'a Git
-        <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
-      </a>
     </div>
 
-    <!-- Desktop: 12 marka grid + Araç Hub butonu -->
+    <!-- Desktop: 12 marka grid -->
     <div class="hidden sm:block">
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-2">
@@ -101,11 +123,9 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
         </a>
         <% }) %>
       </div>
-      <div class="text-center mt-3">
-        <a href="/arac-secim" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 px-6 rounded-xl text-xs transition-all shadow-sm">
-          <span class="material-symbols-outlined" style="font-size:16px">commute</span>
-          306+ Model · Araç Hub'a Git
-          <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
+      <div class="text-center mt-2.5">
+        <a href="/arac-secim" class="inline-flex items-center gap-1 text-primary text-xs font-bold hover:underline">
+          Tüm markalar <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
         </a>
       </div>
     </div>
