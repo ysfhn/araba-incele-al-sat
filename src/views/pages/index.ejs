@@ -204,39 +204,36 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
 
 <!-- ▸▸▸ MOBİL HUB (sm altı) ▸▸▸ -->
 <section class="block sm:hidden mb-10 -mx-4">
-  <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4 py-6">
-    <div class="flex items-start gap-3 mb-5">
-      <div class="size-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-        <span class="material-symbols-outlined text-primary" style="font-size:20px">auto_awesome</span>
+  <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4 py-5">
+    <!-- Başlık -->
+    <div class="text-center mb-4">
+      <div class="inline-flex items-center gap-1.5 bg-primary/20 text-primary text-[10px] font-bold px-2.5 py-1 rounded-full mb-2">
+        <span class="material-symbols-outlined" style="font-size:12px">auto_awesome</span> Araç Hub
       </div>
-      <div>
-        <h2 class="text-lg font-black text-white leading-snug">Aracınızı Tanıyın, <span class="text-primary">Doğru Kararı Verin</span></h2>
-        <p class="text-slate-400 text-xs mt-1 leading-relaxed">306+ model, teknik detaylar ve editör değerlendirmeleri.</p>
-      </div>
+      <h2 class="text-base font-black text-white leading-snug">Aracınızı Tanıyın</h2>
+      <p class="text-slate-400 text-[11px] mt-0.5">306+ model · Teknik detaylar · Editör puanları</p>
     </div>
 
-    <!-- Mobil: 2 satır, 3'lü yatay scroll -->
-    <div class="overflow-x-auto -mx-4 px-4 pb-2 scrollbar-hide">
-      <div class="grid grid-rows-2 grid-flow-col auto-cols-[60px] gap-2">
-        <% const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsche','volvo','honda','hyundai','kia','ford'];
-           hubBrands.forEach(slug => {
-             const b = brands.find(br => br.slug === slug);
-             if (!b) return;
-        %>
-        <a href="/ilan?marka=<%= b.slug %>" class="flex flex-col items-center justify-center gap-0.5 py-2 bg-white/[0.07] border border-white/[0.06] rounded-lg w-[60px]">
-          <% if (b.logo) { %>
-            <img src="<%= b.logo %>" alt="<%= b.name %>" class="size-5 object-contain opacity-60" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
-            <span class="material-symbols-outlined text-white/40 text-sm hidden">directions_car</span>
-          <% } else { %>
-            <span class="material-symbols-outlined text-white/40 text-sm">directions_car</span>
-          <% } %>
-          <span class="text-white/50 text-[8px] font-semibold leading-none"><%= b.name.split('-')[0].split(' ')[0] %></span>
-        </a>
-        <% }) %>
-      </div>
+    <!-- Mobil: 4 sütun wrapping grid — taşma yok -->
+    <div class="grid grid-cols-4 gap-2 mb-4">
+      <% const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsche','volvo','honda','hyundai','kia','ford'];
+         hubBrands.forEach(slug => {
+           const b = brands.find(br => br.slug === slug);
+           if (!b) return;
+      %>
+      <a href="/ilan?marka=<%= b.slug %>" class="flex flex-col items-center justify-center gap-1 py-2.5 bg-white/[0.07] border border-white/[0.06] rounded-xl">
+        <% if (b.logo) { %>
+          <img src="<%= b.logo %>" alt="<%= b.name %>" class="size-6 object-contain opacity-70" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+          <span class="material-symbols-outlined text-white/40 text-base hidden">directions_car</span>
+        <% } else { %>
+          <span class="material-symbols-outlined text-white/40 text-base">directions_car</span>
+        <% } %>
+        <span class="text-white/60 text-[9px] font-semibold leading-none truncate max-w-full px-0.5"><%= b.name.split('-')[0].split(' ')[0] %></span>
+      </a>
+      <% }) %>
     </div>
 
-    <a href="/arac-secim" class="mt-4 w-full flex items-center justify-center gap-2 bg-primary text-white font-bold py-2.5 rounded-xl text-sm">
+    <a href="/arac-secim" class="w-full flex items-center justify-center gap-2 bg-primary text-white font-bold py-2.5 rounded-xl text-sm shadow-lg shadow-primary/25">
       <span class="material-symbols-outlined" style="font-size:16px">commute</span>
       Araç Hub'a Git
       <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
