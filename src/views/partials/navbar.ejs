@@ -59,15 +59,15 @@
 
       <!-- Desktop Nav Links -->
       <nav class="nav-links">
-        <a class="nav-link <%= currentPath.startsWith('/ilan') ? 'active' : '' %>" href="/ilan">
-          <span class="material-symbols-outlined" style="font-size:16px; vertical-align:-3px; margin-right:3px;">directions_car</span>İlanlar
+        <a class="nav-link <%= currentPath.startsWith('/arac') ? 'active' : '' %>" href="/arac-secim">
+          <span class="material-symbols-outlined" style="font-size:16px; vertical-align:-3px; margin-right:3px;">hub</span>Araç Hub
         </a>
-        <a class="nav-link <%= currentPath.startsWith('/servis') ? 'active' : '' %>" href="/servis">Servisler</a>
-        <a class="nav-link <%= currentPath.startsWith('/forum') ? 'active' : '' %>" href="/forum">Forum</a>
-        <a class="nav-link <%= currentPath.startsWith('/arac') ? 'active' : '' %>" href="/arac-secim">Araç Hub</a>
         <a class="nav-link <%= currentPath === '/akilli-oneri' ? 'active' : '' %>" href="/akilli-oneri" style="display:inline-flex;align-items:center;gap:3px;">
           <span class="material-symbols-outlined" style="font-size:14px;">auto_awesome</span>Akıllı Öneri
         </a>
+        <a class="nav-link <%= currentPath.startsWith('/ilan') ? 'active' : '' %>" href="/ilan">İlanlar</a>
+        <a class="nav-link <%= currentPath.startsWith('/forum') ? 'active' : '' %>" href="/forum">Forum</a>
+        <a class="nav-link <%= currentPath.startsWith('/servis') ? 'active' : '' %>" href="/servis">Servisler</a>
         <a class="nav-link <%= currentPath === '/nasil-calisir' ? 'active' : '' %>" href="/nasil-calisir">Nasıl Çalışır</a>
       </nav>
     </div>
@@ -149,20 +149,20 @@
       <input placeholder="Araç, marka veya model ara..." autocomplete="off" oninput="document.getElementById('globalSearch').value=this.value; document.getElementById('globalSearch').dispatchEvent(new Event('input'));"/>
     </div>
 
-    <a class="nav-mobile-link <%= currentPath.startsWith('/ilan') && !currentPath.startsWith('/ilan/ver') ? 'active' : '' %>" href="/ilan">
-      <span class="material-symbols-outlined">directions_car</span> İlanlar
-    </a>
-    <a class="nav-mobile-link <%= currentPath.startsWith('/servis') ? 'active' : '' %>" href="/servis">
-      <span class="material-symbols-outlined">build</span> Servisler
-    </a>
-    <a class="nav-mobile-link <%= currentPath.startsWith('/forum') ? 'active' : '' %>" href="/forum">
-      <span class="material-symbols-outlined">forum</span> Forum
-    </a>
     <a class="nav-mobile-link <%= currentPath.startsWith('/arac') ? 'active' : '' %>" href="/arac-secim">
       <span class="material-symbols-outlined">hub</span> Araç Hub
     </a>
     <a class="nav-mobile-link <%= currentPath === '/akilli-oneri' ? 'active' : '' %>" href="/akilli-oneri">
       <span class="material-symbols-outlined">auto_awesome</span> Akıllı Öneri
+    </a>
+    <a class="nav-mobile-link <%= currentPath.startsWith('/ilan') && !currentPath.startsWith('/ilan/ver') ? 'active' : '' %>" href="/ilan">
+      <span class="material-symbols-outlined">directions_car</span> İlanlar
+    </a>
+    <a class="nav-mobile-link <%= currentPath.startsWith('/forum') ? 'active' : '' %>" href="/forum">
+      <span class="material-symbols-outlined">forum</span> Forum
+    </a>
+    <a class="nav-mobile-link <%= currentPath.startsWith('/servis') ? 'active' : '' %>" href="/servis">
+      <span class="material-symbols-outlined">build</span> Servisler
     </a>
     <a class="nav-mobile-link <%= currentPath === '/nasil-calisir' ? 'active' : '' %>" href="/nasil-calisir">
       <span class="material-symbols-outlined">help</span> Nasıl Çalışır
