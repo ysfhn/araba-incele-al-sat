@@ -14,109 +14,147 @@
     { key: 'ilanlarim', label: 'İlanlarım', icon: 'directions_car', href: '/kullanici/ilanlarim' },
     { key: 'favorilerim', label: 'Favorilerim', icon: 'favorite', href: '/kullanici/favorilerim' },
     { key: 'mesajlar', label: 'Mesajlar', icon: 'mail', href: '/kullanici/mesajlar' },
-    { key: 'randevular', label: 'Randevularım', icon: 'calendar_month', href: '/kullanici/randevular' },
+    { key: 'randevular', label: 'Randevular', icon: 'calendar_month', href: '/kullanici/randevular' },
     { key: 'bildirimler', label: 'Bildirimler', icon: 'notifications', href: '/kullanici/bildirimler' },
     { key: 'profil', label: 'Profil', icon: 'person', href: '/kullanici/profil' },
   ];
 %>
 
 <style>
-  .up-layout { display: flex; min-height: calc(100vh - 70px); background: #f8fafc; }
+  .up-layout { display:flex; min-height:calc(100vh - 70px); background:#f8fafc; }
+
+  /* ── SIDEBAR ── */
   .up-sidebar {
-    width: 260px; background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); color: #fff;
-    padding: 1.5rem 0; flex-shrink: 0; position: sticky; top: 70px; height: calc(100vh - 70px); overflow-y: auto;
+    width:240px; background:linear-gradient(180deg,#0f172a 0%,#1e293b 100%); color:#fff;
+    padding:1.25rem 0; flex-shrink:0; position:sticky; top:56px; height:calc(100vh - 56px); overflow-y:auto;
   }
-  .up-sidebar .sidebar-brand { padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.1); margin-bottom: 1rem; }
-  .up-sidebar .sidebar-brand h3 { font-size: 1.1rem; margin: 0; font-weight: 700; }
-  .up-sidebar .sidebar-brand small { color: rgba(255,255,255,.5); font-size: .75rem; }
-  .up-menu { list-style: none; padding: 0; margin: 0; }
+  .up-sidebar .sidebar-brand { padding:0 1.25rem 1.25rem; border-bottom:1px solid rgba(255,255,255,.1); margin-bottom:.75rem; }
+  .up-sidebar .sidebar-brand h3 { font-size:1rem; margin:0; font-weight:700; }
+  .up-sidebar .sidebar-brand small { color:rgba(255,255,255,.5); font-size:.72rem; display:block; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .up-menu { list-style:none; padding:0; margin:0; }
   .up-menu li a {
-    display: flex; align-items: center; gap: .75rem; padding: .75rem 1.5rem; color: rgba(255,255,255,.7);
-    text-decoration: none; font-size: .9rem; transition: all .2s; border-left: 3px solid transparent;
+    display:flex; align-items:center; gap:.6rem; padding:.65rem 1.25rem; color:rgba(255,255,255,.65);
+    text-decoration:none; font-size:.82rem; transition:all .15s; border-left:3px solid transparent;
   }
-  .up-menu li a:hover { background: rgba(255,255,255,.08); color: #fff; }
-  .up-menu li a.active { background: rgba(255,255,255,.12); color: #fff; border-left-color: #3b82f6; font-weight: 600; }
-  .up-menu li a .material-symbols-outlined { font-size: 1.25rem; opacity: .8; }
-  .up-menu li a .badge-cnt { margin-left: auto; background: #ef4444; color: #fff; font-size: .65rem; padding: 2px 7px; border-radius: 10px; font-weight: 700; }
+  .up-menu li a:hover { background:rgba(255,255,255,.07); color:#fff; }
+  .up-menu li a.active { background:rgba(255,255,255,.1); color:#fff; border-left-color:#3b82f6; font-weight:600; }
+  .up-menu li a .material-symbols-outlined { font-size:1.15rem; opacity:.75; }
+  .up-menu li a .badge-cnt { margin-left:auto; background:#ef4444; color:#fff; font-size:.6rem; padding:2px 6px; border-radius:10px; font-weight:700; }
 
-  .up-content { flex: 1; padding: 2rem; overflow-x: auto; }
-  .up-header { margin-bottom: 1.5rem; }
-  .up-header h1 { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin: 0; }
+  /* ── CONTENT ── */
+  .up-content { flex:1; padding:1.5rem; min-width:0; }
+  .up-header { margin-bottom:1.25rem; }
+  .up-header h1 { font-size:1.25rem; font-weight:700; color:#0f172a; margin:0; }
 
-  .up-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  /* ── STAT CARDS ── */
+  .up-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:.75rem; margin-bottom:1.25rem; }
   .up-stat {
-    background: #fff; border-radius: 16px; padding: 1.25rem; border: 1px solid #e2e8f0;
-    display: flex; align-items: center; gap: 1rem;
+    background:#fff; border-radius:14px; padding:1rem; border:1px solid #e2e8f0;
+    display:flex; align-items:center; gap:.75rem;
   }
-  .up-stat .icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
-  .up-stat .icon.blue { background: #dbeafe; color: #2563eb; }
-  .up-stat .icon.red { background: #fee2e2; color: #dc2626; }
-  .up-stat .icon.green { background: #dcfce7; color: #16a34a; }
-  .up-stat .icon.orange { background: #ffedd5; color: #ea580c; }
-  .up-stat .icon.purple { background: #f3e8ff; color: #9333ea; }
-  .up-stat .info h3 { font-size: 1.5rem; margin: 0; font-weight: 700; color: #0f172a; }
-  .up-stat .info p { margin: 0; font-size: .8rem; color: #64748b; }
+  .up-stat .icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .up-stat .icon .material-symbols-outlined { font-size:1.15rem; }
+  .up-stat .icon.blue { background:#dbeafe; color:#2563eb; }
+  .up-stat .icon.red { background:#fee2e2; color:#dc2626; }
+  .up-stat .icon.green { background:#dcfce7; color:#16a34a; }
+  .up-stat .icon.orange { background:#ffedd5; color:#ea580c; }
+  .up-stat .icon.purple { background:#f3e8ff; color:#9333ea; }
+  .up-stat .info { min-width:0; }
+  .up-stat .info h3 { font-size:1.25rem; margin:0; font-weight:700; color:#0f172a; }
+  .up-stat .info p { margin:0; font-size:.72rem; color:#64748b; }
 
-  .up-card { background: #fff; border-radius: 16px; padding: 1.5rem; border: 1px solid #e2e8f0; margin-bottom: 1.5rem; }
-  .up-card-h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: .5rem; }
-  .up-card-h h2 { font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0; }
+  /* ── CARD ── */
+  .up-card { background:#fff; border-radius:14px; padding:1.25rem; border:1px solid #e2e8f0; margin-bottom:1rem; }
+  .up-card-h { display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem; flex-wrap:wrap; gap:.5rem; }
+  .up-card-h h2 { font-size:1rem; font-weight:700; color:#0f172a; margin:0; }
 
-  .up-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
-  .up-table th { background: #f8fafc; padding: .75rem; text-align: left; font-weight: 600; color: #64748b; border-bottom: 2px solid #e2e8f0; white-space: nowrap; }
-  .up-table td { padding: .75rem; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
-  .up-table tr:hover { background: #f8fafc; }
+  /* ── TABLE ── */
+  .up-table { width:100%; border-collapse:collapse; font-size:.8rem; }
+  .up-table th { background:#f8fafc; padding:.6rem; text-align:left; font-weight:600; color:#64748b; border-bottom:2px solid #e2e8f0; white-space:nowrap; }
+  .up-table td { padding:.6rem; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
+  .up-table tr:hover { background:#f8fafc; }
 
-  .up-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: .7rem; font-weight: 700; }
-  .up-badge.success { background: #dcfce7; color: #16a34a; }
-  .up-badge.warning { background: #fef3c7; color: #d97706; }
-  .up-badge.danger { background: #fee2e2; color: #dc2626; }
-  .up-badge.info { background: #dbeafe; color: #2563eb; }
-  .up-badge.secondary { background: #f1f5f9; color: #64748b; }
+  /* ── BADGE ── */
+  .up-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:.65rem; font-weight:700; }
+  .up-badge.success { background:#dcfce7; color:#16a34a; }
+  .up-badge.warning { background:#fef3c7; color:#d97706; }
+  .up-badge.danger { background:#fee2e2; color:#dc2626; }
+  .up-badge.info { background:#dbeafe; color:#2563eb; }
+  .up-badge.secondary { background:#f1f5f9; color:#64748b; }
 
+  /* ── BUTTON ── */
   .up-btn {
-    padding: 6px 14px; font-size: .8rem; border: none; border-radius: 8px; cursor: pointer;
-    font-weight: 600; transition: all .2s; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;
+    padding:6px 12px; font-size:.78rem; border:none; border-radius:8px; cursor:pointer;
+    font-weight:600; transition:all .15s; display:inline-flex; align-items:center; gap:4px; text-decoration:none;
   }
-  .up-btn.primary { background: #2563eb; color: #fff; }
-  .up-btn.primary:hover { background: #1d4ed8; }
-  .up-btn.danger { background: #dc2626; color: #fff; }
-  .up-btn.danger:hover { background: #b91c1c; }
-  .up-btn.outline { background: transparent; border: 1px solid #e2e8f0; color: #64748b; }
-  .up-btn.outline:hover { background: #f8fafc; }
-  .up-btn.success { background: #16a34a; color: #fff; }
-  .up-btn.success:hover { background: #15803d; }
-  .up-btn.sm { padding: 4px 10px; font-size: .75rem; }
+  .up-btn.primary { background:#2563eb; color:#fff; }
+  .up-btn.primary:hover { background:#1d4ed8; }
+  .up-btn.danger { background:#dc2626; color:#fff; }
+  .up-btn.danger:hover { background:#b91c1c; }
+  .up-btn.outline { background:transparent; border:1px solid #e2e8f0; color:#64748b; }
+  .up-btn.outline:hover { background:#f8fafc; }
+  .up-btn.success { background:#16a34a; color:#fff; }
+  .up-btn.sm { padding:4px 8px; font-size:.7rem; }
 
-  .up-form label { display: block; font-size: .8rem; font-weight: 600; color: #475569; margin-bottom: 4px; }
+  /* ── FORM ── */
+  .up-form label { display:block; font-size:.78rem; font-weight:600; color:#475569; margin-bottom:4px; }
   .up-form input, .up-form select, .up-form textarea {
-    width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: .9rem; box-sizing: border-box;
-    transition: border-color .2s, box-shadow .2s;
+    width:100%; padding:9px 12px; border:1px solid #e2e8f0; border-radius:10px; font-size:.85rem; box-sizing:border-box;
+    transition:border-color .2s, box-shadow .2s;
   }
-  .up-form input:focus, .up-form select:focus, .up-form textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.15); }
-  .up-form .form-group { margin-bottom: 1rem; }
-  .up-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .up-form textarea { min-height: 80px; resize: vertical; }
+  .up-form input:focus, .up-form select:focus, .up-form textarea:focus { outline:none; border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,.15); }
+  .up-form .form-group { margin-bottom:.85rem; }
+  .up-form textarea { min-height:70px; resize:vertical; }
 
-  .up-empty { text-align: center; padding: 3rem 1rem; color: #94a3b8; }
-  .up-empty .material-symbols-outlined { font-size: 3rem; margin-bottom: .5rem; display: block; }
+  /* ── MISC ── */
+  .up-empty { text-align:center; padding:2rem 1rem; color:#94a3b8; }
+  .up-empty .material-symbols-outlined { font-size:2.5rem; margin-bottom:.35rem; display:block; }
+  .up-empty p { margin:0; font-size:.85rem; }
 
-  .msg-bubble { max-width: 75%; padding: .75rem 1rem; border-radius: 16px; font-size: .9rem; line-height: 1.5; }
-  .msg-bubble.sent { background: #2563eb; color: #fff; border-bottom-right-radius: 4px; margin-left: auto; }
-  .msg-bubble.received { background: #f1f5f9; color: #1e293b; border-bottom-left-radius: 4px; }
+  .msg-bubble { max-width:80%; padding:.65rem .9rem; border-radius:14px; font-size:.85rem; line-height:1.45; word-break:break-word; }
+  .msg-bubble.sent { background:#2563eb; color:#fff; border-bottom-right-radius:4px; margin-left:auto; }
+  .msg-bubble.received { background:#f1f5f9; color:#1e293b; border-bottom-left-radius:4px; }
 
-  @media (max-width: 768px) {
-    .up-layout { flex-direction: column; }
-    .up-sidebar { width: 100%; height: auto; position: static; padding: 1rem 0; }
-    .up-menu { display: flex; overflow-x: auto; gap: 0; padding: 0 .5rem; }
-    .up-menu li a { padding: .6rem 1rem; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; font-size: .8rem; }
-    .up-menu li a.active { border-bottom-color: #3b82f6; }
-    .up-content { padding: 1rem; }
-    .up-form .form-row { grid-template-columns: 1fr; }
+  .up-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .up-grid-main { display:grid; grid-template-columns:1.6fr 1fr; gap:1rem; }
+
+  /* ── MOBILE CARDS (tablo yerine) ── */
+  .up-mcard { display:none; }
+
+  /* ═══════ RESPONSIVE ═══════ */
+  @media (min-width:640px) {
+    .up-stats { grid-template-columns:repeat(4,1fr); }
+  }
+  @media (min-width:1024px) {
+    .up-content { padding:2rem; }
+    .up-stat .icon { width:46px; height:46px; }
+    .up-stat .info h3 { font-size:1.4rem; }
+  }
+
+  @media (max-width:768px) {
+    .up-layout { flex-direction:column; }
+    .up-sidebar { width:100%; height:auto; position:static; padding:.75rem 0; }
+    .up-sidebar .sidebar-brand { display:none; }
+    .up-menu { display:flex; overflow-x:auto; gap:0; padding:0 .5rem; -webkit-overflow-scrolling:touch; }
+    .up-menu::-webkit-scrollbar { display:none; }
+    .up-menu { -ms-overflow-style:none; scrollbar-width:none; }
+    .up-menu li a { padding:.5rem .75rem; white-space:nowrap; border-left:none; border-bottom:3px solid transparent; font-size:.72rem; flex-direction:column; gap:2px; text-align:center; }
+    .up-menu li a .material-symbols-outlined { font-size:1rem; }
+    .up-menu li a.active { border-bottom-color:#3b82f6; border-left:none; }
+    .up-menu li a .badge-cnt { position:absolute; top:-2px; right:-4px; margin:0; }
+    .up-menu li { position:relative; }
+    .up-content { padding:.75rem; }
+    .up-header h1 { font-size:1.1rem; }
+    .up-grid-2, .up-grid-main { grid-template-columns:1fr; }
+    .up-form .form-row { grid-template-columns:1fr; }
+    /* Mobilde tablo gizle, kartları göster */
+    .up-table-wrap { display:none; }
+    .up-mcard { display:block; }
   }
 </style>
 
 <div class="up-layout">
-  <!-- SIDEBAR -->
+  <!-- ═══════ SIDEBAR ═══════ -->
   <aside class="up-sidebar">
     <div class="sidebar-brand">
       <h3>👤 Hesabım</h3>
@@ -125,9 +163,9 @@
     <ul class="up-menu">
       <% menuItems.forEach(item => { %>
       <li>
-        <a href="<%= item.href %>" class="<%= currentPage === item.key ? 'active' : '' %>">
+        <a href="<%= item.href %>" class="<%= currentPage === item.key || (currentPage === 'mesaj-detay' && item.key === 'mesajlar') ? 'active' : '' %>">
           <span class="material-symbols-outlined"><%= item.icon %></span>
-          <%= item.label %>
+          <span><%= item.label %></span>
           <% if (item.key === 'mesajlar' && typeof stats !== 'undefined' && stats.unreadMessages > 0) { %>
             <span class="badge-cnt"><%= stats.unreadMessages %></span>
           <% } %>
@@ -137,438 +175,568 @@
     </ul>
   </aside>
 
-  <!-- MAIN -->
+  <!-- ═══════ MAIN CONTENT ═══════ -->
   <main class="up-content">
 
-    <!-- ═══════════════ DASHBOARD ═══════════════ -->
-    <% if (currentPage === 'dashboard') { %>
-      <div class="up-header"><h1>📊 Dashboard</h1></div>
 
-      <div class="up-stats">
-        <div class="up-stat"><div class="icon blue"><span class="material-symbols-outlined">directions_car</span></div><div class="info"><h3><%= stats.activeListings %></h3><p>Aktif İlan</p></div></div>
-        <div class="up-stat"><div class="icon red"><span class="material-symbols-outlined">favorite</span></div><div class="info"><h3><%= stats.favorites %></h3><p>Favori</p></div></div>
-        <div class="up-stat"><div class="icon green"><span class="material-symbols-outlined">mail</span></div><div class="info"><h3><%= stats.unreadMessages %></h3><p>Okunmamış Mesaj</p></div></div>
-        <div class="up-stat"><div class="icon purple"><span class="material-symbols-outlined">forum</span></div><div class="info"><h3><%= stats.forumReplies %></h3><p>Forum Yanıtı</p></div></div>
-      </div>
+<!-- ╔══════════════════════════════════════╗
+     ║           DASHBOARD                  ║
+     ╚══════════════════════════════════════╝ -->
+<% if (currentPage === 'dashboard') { %>
+  <div class="up-header"><h1>📊 Dashboard</h1></div>
 
-      <div style="display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;">
-        <!-- İlanlarım -->
-        <div>
-          <div class="up-card">
-            <div class="up-card-h">
-              <h2>🚗 Son İlanlarım</h2>
-              <a href="/ilan/ver" class="up-btn primary sm"><span class="material-symbols-outlined" style="font-size:1rem">add</span> Yeni İlan</a>
-            </div>
-            <% if (recentListings.length === 0) { %>
-              <div class="up-empty"><span class="material-symbols-outlined">directions_car</span><p>Henüz ilanınız yok</p></div>
-            <% } else { %>
-              <% recentListings.forEach(l => { %>
-              <a href="/ilan/<%= l.slug %>" style="display:flex;align-items:center;gap:1rem;padding:.75rem;border-radius:12px;text-decoration:none;color:inherit;transition:background .2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
-                <div style="width:72px;height:50px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                  <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.5rem;">directions_car</span>
-                </div>
-                <div style="flex:1;min-width:0;">
-                  <p style="font-weight:600;font-size:.9rem;color:#0f172a;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= l.brand_name %> <%= l.model_name %></p>
-                  <p style="font-weight:700;font-size:.85rem;color:#2563eb;margin:2px 0 0;"><%= formatPrice(l.price) %></p>
-                </div>
-                <span class="up-badge <%= l.status==='active'?'success':l.status==='pending'?'warning':'secondary' %>"><%= l.status==='active'?'Aktif':l.status==='pending'?'Beklemede':l.status==='sold'?'Satıldı':'Taslak' %></span>
-              </a>
-              <% }) %>
-            <% } %>
-          </div>
+  <div class="up-stats">
+    <div class="up-stat"><div class="icon blue"><span class="material-symbols-outlined">directions_car</span></div><div class="info"><h3><%= stats.activeListings %></h3><p>Aktif İlan</p></div></div>
+    <div class="up-stat"><div class="icon red"><span class="material-symbols-outlined">favorite</span></div><div class="info"><h3><%= stats.favorites %></h3><p>Favori</p></div></div>
+    <div class="up-stat"><div class="icon green"><span class="material-symbols-outlined">mail</span></div><div class="info"><h3><%= stats.unreadMessages %></h3><p>Okunmamış Mesaj</p></div></div>
+    <div class="up-stat"><div class="icon purple"><span class="material-symbols-outlined">forum</span></div><div class="info"><h3><%= stats.forumReplies %></h3><p>Forum Yanıtı</p></div></div>
+  </div>
 
-          <div class="up-card">
-            <div class="up-card-h"><h2>❤️ Favorilerim</h2><a href="/kullanici/favorilerim" class="up-btn outline sm">Tümünü Gör</a></div>
-            <% if (recentFavorites.length === 0) { %>
-              <div class="up-empty"><span class="material-symbols-outlined">favorite_border</span><p>Favori ilanınız yok</p></div>
-            <% } else { %>
-              <% recentFavorites.forEach(l => { %>
-              <a href="/ilan/<%= l.slug %>" style="display:flex;align-items:center;gap:1rem;padding:.75rem;border-radius:12px;text-decoration:none;color:inherit;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
-                <div style="width:72px;height:50px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                  <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.5rem;">directions_car</span>
-                </div>
-                <div style="flex:1;min-width:0;">
-                  <p style="font-weight:600;font-size:.9rem;color:#0f172a;margin:0;"><%= l.brand_name %> <%= l.model_name %></p>
-                  <p style="font-weight:700;font-size:.85rem;color:#2563eb;margin:2px 0 0;"><%= formatPrice(l.price) %></p>
-                </div>
-              </a>
-              <% }) %>
-            <% } %>
-          </div>
-        </div>
-
-        <!-- Sağ: Mesajlar + Bildirimler -->
-        <div>
-          <div class="up-card">
-            <div class="up-card-h"><h2>✉️ Son Mesajlar</h2><a href="/kullanici/mesajlar" class="up-btn outline sm">Tümü</a></div>
-            <% if (messages.length === 0) { %>
-              <div class="up-empty" style="padding:1.5rem;"><span class="material-symbols-outlined">mail</span><p style="font-size:.85rem;">Mesaj yok</p></div>
-            <% } else { %>
-              <% messages.slice(0,4).forEach(m => { %>
-              <div style="display:flex;align-items:start;gap:.75rem;padding:.5rem 0;border-bottom:1px solid #f1f5f9;">
-                <div style="width:36px;height:36px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;color:#2563eb;font-weight:700;font-size:.8rem;flex-shrink:0;"><%= m.sender_name.charAt(0).toUpperCase() %></div>
-                <div style="min-width:0;flex:1;">
-                  <p style="font-weight:600;font-size:.8rem;color:#0f172a;margin:0;"><%= m.sender_name %></p>
-                  <p style="font-size:.75rem;color:#64748b;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= m.content %></p>
-                  <p style="font-size:.65rem;color:#94a3b8;margin:0;"><%= timeAgo(m.created_at) %></p>
-                </div>
-              </div>
-              <% }) %>
-            <% } %>
-          </div>
-
-          <div class="up-card">
-            <div class="up-card-h"><h2>🔔 Bildirimler</h2><a href="/kullanici/bildirimler" class="up-btn outline sm">Tümü</a></div>
-            <% if (notifications.length === 0) { %>
-              <div class="up-empty" style="padding:1.5rem;"><span class="material-symbols-outlined">notifications</span><p style="font-size:.85rem;">Bildirim yok</p></div>
-            <% } else { %>
-              <% notifications.slice(0,4).forEach(n => { %>
-              <div style="display:flex;align-items:start;gap:.5rem;padding:.5rem 0;border-bottom:1px solid #f1f5f9;<%= n.is_read?'':'background:#fefce8;border-radius:8px;padding:.5rem;' %>">
-                <span class="material-symbols-outlined" style="font-size:1.1rem;color:#3b82f6;margin-top:2px;">notifications</span>
-                <div>
-                  <p style="font-size:.8rem;color:#1e293b;margin:0;"><%= n.message %></p>
-                  <p style="font-size:.65rem;color:#94a3b8;margin:2px 0 0;"><%= timeAgo(n.created_at) %></p>
-                </div>
-              </div>
-              <% }) %>
-            <% } %>
-          </div>
-
-          <div class="up-card">
-            <div class="up-card-h"><h2>💬 Forum Aktivitesi</h2></div>
-            <% if (forumActivity.length === 0) { %>
-              <div class="up-empty" style="padding:1.5rem;"><span class="material-symbols-outlined">forum</span><p style="font-size:.85rem;">Aktivite yok</p></div>
-            <% } else { %>
-              <% forumActivity.forEach(fa => { %>
-              <a href="/forum/konu/<%= fa.topic_slug %>" style="display:block;padding:.5rem 0;border-bottom:1px solid #f1f5f9;text-decoration:none;">
-                <p style="font-size:.8rem;font-weight:600;color:#2563eb;margin:0;"><%= fa.topic_title %></p>
-                <p style="font-size:.75rem;color:#64748b;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= fa.content %></p>
-                <p style="font-size:.65rem;color:#94a3b8;margin:0;"><%= timeAgo(fa.created_at) %></p>
-              </a>
-              <% }) %>
-            <% } %>
-          </div>
-        </div>
-      </div>
-
-    <!-- ═══════════════ İLANLARIM ═══════════════ -->
-    <% } else if (currentPage === 'ilanlarim') { %>
-      <div class="up-header"><h1>🚗 İlanlarım</h1></div>
-
-      <div class="up-stats">
-        <div class="up-stat"><div class="icon blue"><span class="material-symbols-outlined">list</span></div><div class="info"><h3><%= data.statusCounts?.all || 0 %></h3><p>Toplam</p></div></div>
-        <div class="up-stat"><div class="icon green"><span class="material-symbols-outlined">check_circle</span></div><div class="info"><h3><%= data.statusCounts?.active || 0 %></h3><p>Aktif</p></div></div>
-        <div class="up-stat"><div class="icon orange"><span class="material-symbols-outlined">pending</span></div><div class="info"><h3><%= data.statusCounts?.pending || 0 %></h3><p>Beklemede</p></div></div>
-        <div class="up-stat"><div class="icon purple"><span class="material-symbols-outlined">sell</span></div><div class="info"><h3><%= data.statusCounts?.sold || 0 %></h3><p>Satıldı</p></div></div>
-      </div>
-
+  <div class="up-grid-main">
+    <!-- Sol: İlanlar + Favoriler -->
+    <div>
       <div class="up-card">
         <div class="up-card-h">
-          <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-            <a href="/kullanici/ilanlarim" class="up-btn <%= !data.filters?.durum ? 'primary' : 'outline' %> sm">Tümü</a>
-            <a href="/kullanici/ilanlarim?durum=active" class="up-btn <%= data.filters?.durum==='active' ? 'primary' : 'outline' %> sm">Aktif</a>
-            <a href="/kullanici/ilanlarim?durum=pending" class="up-btn <%= data.filters?.durum==='pending' ? 'primary' : 'outline' %> sm">Beklemede</a>
-            <a href="/kullanici/ilanlarim?durum=sold" class="up-btn <%= data.filters?.durum==='sold' ? 'primary' : 'outline' %> sm">Satıldı</a>
-          </div>
-          <a href="/ilan/ver" class="up-btn primary sm"><span class="material-symbols-outlined" style="font-size:1rem">add</span> Yeni İlan</a>
+          <h2>🚗 Son İlanlarım</h2>
+          <a href="/ilan/ver" class="up-btn primary sm"><span class="material-symbols-outlined" style="font-size:.9rem">add</span> Yeni İlan</a>
         </div>
-
-        <% if ((data.listings || []).length === 0) { %>
-          <div class="up-empty"><span class="material-symbols-outlined">directions_car</span><p>İlan bulunamadı</p></div>
+        <% if (recentListings.length === 0) { %>
+          <div class="up-empty"><span class="material-symbols-outlined">directions_car</span><p>Henüz ilanınız yok</p></div>
         <% } else { %>
-          <div style="overflow-x:auto;">
-            <table class="up-table">
-              <thead><tr><th>İlan</th><th>Fiyat</th><th>Durum</th><th>Görüntülenme</th><th>Tarih</th><th>İşlemler</th></tr></thead>
-              <tbody>
-                <% data.listings.forEach(l => { %>
-                <tr>
-                  <td>
-                    <a href="/ilan/<%= l.slug %>" style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:.75rem;">
-                      <div style="width:64px;height:44px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                        <span class="material-symbols-outlined" style="color:#cbd5e1;">directions_car</span>
-                      </div>
-                      <div>
-                        <p style="font-weight:600;font-size:.85rem;margin:0;color:#0f172a;"><%= l.brand_name %> <%= l.model_name %></p>
-                        <p style="font-size:.75rem;color:#94a3b8;margin:0;"><%= l.year || '' %> • <%= l.fuel_type || '' %></p>
-                      </div>
-                    </a>
-                  </td>
-                  <td style="font-weight:700;color:#2563eb;"><%= formatPrice(l.price) %></td>
-                  <td><span class="up-badge <%= l.status==='active'?'success':l.status==='pending'?'warning':l.status==='sold'?'info':'secondary' %>"><%= l.status==='active'?'Aktif':l.status==='pending'?'Beklemede':l.status==='sold'?'Satıldı':'Taslak' %></span></td>
-                  <td><%= l.view_count || 0 %></td>
-                  <td style="white-space:nowrap;"><%= timeAgo(l.created_at) %></td>
-                  <td>
-                    <div style="display:flex;gap:4px;">
-                      <a href="/ilan/<%= l.slug %>" class="up-btn outline sm" title="Görüntüle"><span class="material-symbols-outlined" style="font-size:.9rem">visibility</span></a>
-                    </div>
-                  </td>
-                </tr>
-                <% }) %>
-              </tbody>
-            </table>
-          </div>
+          <% recentListings.forEach(l => { %>
+          <a href="/ilan/<%= l.slug %>" style="display:flex;align-items:center;gap:.75rem;padding:.6rem;border-radius:10px;text-decoration:none;color:inherit;transition:background .15s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+            <div style="width:56px;height:40px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.3rem;">directions_car</span>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <p style="font-weight:600;font-size:.82rem;color:#0f172a;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= l.brand_name %> <%= l.model_name %></p>
+              <p style="font-weight:700;font-size:.8rem;color:#2563eb;margin:2px 0 0;"><%= formatPrice(l.price) %></p>
+            </div>
+            <span class="up-badge <%= l.status==='active'?'success':l.status==='pending'?'warning':'secondary' %>"><%= l.status==='active'?'Aktif':l.status==='pending'?'Beklemede':l.status==='sold'?'Satıldı':'Taslak' %></span>
+          </a>
+          <% }) %>
+          <a href="/kullanici/ilanlarim" style="display:block;text-align:center;font-size:.78rem;color:#2563eb;font-weight:600;padding:.5rem;text-decoration:none;">Tüm İlanları Gör →</a>
         <% } %>
       </div>
 
-    <!-- ═══════════════ FAVORİLERİM ═══════════════ -->
-    <% } else if (currentPage === 'favorilerim') { %>
-      <div class="up-header"><h1>❤️ Favorilerim</h1></div>
-
-      <% if ((data.favorites || []).length === 0) { %>
-        <div class="up-card"><div class="up-empty"><span class="material-symbols-outlined">favorite_border</span><p>Favori ilanınız yok</p></div></div>
-      <% } else { %>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;">
-          <% data.favorites.forEach(l => { %>
-          <div class="up-card" style="margin:0;padding:0;overflow:hidden;">
-            <div style="height:140px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;">
-              <span class="material-symbols-outlined" style="font-size:3rem;color:#cbd5e1;">directions_car</span>
-            </div>
-            <div style="padding:1rem;">
-              <h3 style="font-size:1rem;font-weight:700;color:#0f172a;margin:0 0 .25rem;"><%= l.brand_name %> <%= l.model_name %></h3>
-              <p style="font-size:1.1rem;font-weight:800;color:#2563eb;margin:0 0 .5rem;"><%= formatPrice(l.price) %></p>
-              <p style="font-size:.75rem;color:#94a3b8;margin:0;"><%= l.year || '' %> • <%= l.fuel_type || '' %> • <%= l.transmission || '' %></p>
-              <div style="display:flex;gap:.5rem;margin-top:.75rem;">
-                <a href="/ilan/<%= l.slug %>" class="up-btn primary sm" style="flex:1;justify-content:center;">Detay</a>
-                <button class="up-btn danger sm" data-remove-favorite="<%= l.id %>" style="flex-shrink:0;" title="Favoriden Çıkar">
-                  <span class="material-symbols-outlined" style="font-size:1rem;">heart_broken</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <% }) %>
-        </div>
-      <% } %>
-
-    <!-- ═══════════════ MESAJLAR ═══════════════ -->
-    <% } else if (currentPage === 'mesajlar') { %>
-      <div class="up-header"><h1>✉️ Mesajlarım</h1></div>
-
       <div class="up-card">
-        <% if ((data.conversations || []).length === 0) { %>
-          <div class="up-empty"><span class="material-symbols-outlined">mail</span><p>Henüz mesajınız yok</p></div>
+        <div class="up-card-h"><h2>❤️ Favorilerim</h2><a href="/kullanici/favorilerim" class="up-btn outline sm">Tümünü Gör</a></div>
+        <% if (recentFavorites.length === 0) { %>
+          <div class="up-empty" style="padding:1.5rem;"><span class="material-symbols-outlined">favorite_border</span><p>Favori ilanınız yok</p></div>
         <% } else { %>
-          <% data.conversations.forEach(c => { %>
-          <a href="/kullanici/mesajlar/<%= c.otherUser.id %>" style="display:flex;align-items:center;gap:1rem;padding:.75rem;border-radius:12px;text-decoration:none;color:inherit;border-bottom:1px solid #f1f5f9;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
-            <div style="width:44px;height:44px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;color:#2563eb;font-weight:700;font-size:1rem;flex-shrink:0;"><%= c.otherUser.name.charAt(0).toUpperCase() %></div>
-            <div style="flex:1;min-width:0;">
-              <div style="display:flex;justify-content:space-between;align-items:center;">
-                <p style="font-weight:600;font-size:.9rem;color:#0f172a;margin:0;"><%= c.otherUser.name %></p>
-                <span style="font-size:.7rem;color:#94a3b8;"><%= timeAgo(c.lastMessage.created_at) %></span>
-              </div>
-              <p style="font-size:.8rem;color:#64748b;margin:2px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= c.lastMessage.content %></p>
+          <% recentFavorites.forEach(l => { %>
+          <a href="/ilan/<%= l.slug %>" style="display:flex;align-items:center;gap:.75rem;padding:.6rem;border-radius:10px;text-decoration:none;color:inherit;transition:background .15s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+            <div style="width:56px;height:40px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.3rem;">directions_car</span>
             </div>
-            <% if (c.unreadCount > 0) { %>
-            <span style="background:#2563eb;color:#fff;font-size:.7rem;padding:2px 8px;border-radius:10px;font-weight:700;"><%= c.unreadCount %></span>
-            <% } %>
+            <div style="flex:1;min-width:0;">
+              <p style="font-weight:600;font-size:.82rem;color:#0f172a;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= l.brand_name %> <%= l.model_name %></p>
+              <p style="font-weight:700;font-size:.8rem;color:#2563eb;margin:2px 0 0;"><%= formatPrice(l.price) %></p>
+            </div>
           </a>
           <% }) %>
         <% } %>
       </div>
+    </div>
 
-    <!-- ═══════════════ MESAJ DETAY ═══════════════ -->
-    <% } else if (currentPage === 'mesaj-detay') { %>
-      <div class="up-header" style="display:flex;align-items:center;gap:1rem;">
-        <a href="/kullanici/mesajlar" class="up-btn outline sm"><span class="material-symbols-outlined" style="font-size:1rem">arrow_back</span></a>
-        <h1><%= data.otherUser.name %> ile Mesajlar</h1>
-      </div>
-
-      <div class="up-card" style="max-height:500px;overflow-y:auto;display:flex;flex-direction:column;gap:.5rem;padding:1rem;" id="msgContainer">
-        <% if ((data.messages || []).length === 0) { %>
-          <div class="up-empty"><span class="material-symbols-outlined">chat_bubble_outline</span><p>Henüz mesaj yok</p></div>
+    <!-- Sağ: Mesajlar + Bildirimler + Forum -->
+    <div>
+      <div class="up-card">
+        <div class="up-card-h"><h2>✉️ Mesajlar</h2><a href="/kullanici/mesajlar" class="up-btn outline sm">Tümü</a></div>
+        <% if (messages.length === 0) { %>
+          <div class="up-empty" style="padding:1.25rem;"><span class="material-symbols-outlined">mail</span><p>Mesaj yok</p></div>
         <% } else { %>
-          <% data.messages.forEach(m => { %>
-          <div style="display:flex;flex-direction:column;align-items:<%= m.sender_id === userProfile.id ? 'flex-end' : 'flex-start' %>;">
-            <div class="msg-bubble <%= m.sender_id === userProfile.id ? 'sent' : 'received' %>">
-              <%= m.content %>
+          <% messages.slice(0,4).forEach(m => { %>
+          <div style="display:flex;align-items:start;gap:.6rem;padding:.45rem 0;border-bottom:1px solid #f1f5f9;">
+            <div style="width:30px;height:30px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;color:#2563eb;font-weight:700;font-size:.7rem;flex-shrink:0;"><%= m.sender_name.charAt(0).toUpperCase() %></div>
+            <div style="min-width:0;flex:1;">
+              <p style="font-weight:600;font-size:.75rem;color:#0f172a;margin:0;"><%= m.sender_name %></p>
+              <p style="font-size:.7rem;color:#64748b;margin:1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= m.content %></p>
+              <p style="font-size:.6rem;color:#94a3b8;margin:0;"><%= timeAgo(m.created_at) %></p>
             </div>
-            <span style="font-size:.65rem;color:#94a3b8;margin-top:2px;"><%= timeAgo(m.created_at) %></span>
           </div>
           <% }) %>
         <% } %>
       </div>
 
-      <div class="up-card" style="margin-top:0;">
-        <form method="POST" action="/kullanici/mesajlar/<%= data.otherUser.id %>" style="display:flex;gap:.75rem;">
-          <input type="text" name="content" placeholder="Mesajınızı yazın..." required style="flex:1;padding:10px 14px;border:1px solid #e2e8f0;border-radius:12px;font-size:.9rem;">
-          <button type="submit" class="up-btn primary" style="padding:10px 20px;">
-            <span class="material-symbols-outlined" style="font-size:1.1rem;">send</span> Gönder
+      <div class="up-card">
+        <div class="up-card-h"><h2>🔔 Bildirimler</h2><a href="/kullanici/bildirimler" class="up-btn outline sm">Tümü</a></div>
+        <% if (notifications.length === 0) { %>
+          <div class="up-empty" style="padding:1.25rem;"><span class="material-symbols-outlined">notifications</span><p>Bildirim yok</p></div>
+        <% } else { %>
+          <% notifications.slice(0,3).forEach(n => { %>
+          <div style="display:flex;align-items:start;gap:.5rem;padding:.45rem 0;border-bottom:1px solid #f1f5f9;<%= n.is_read?'':'background:#fefce8;border-radius:6px;padding:.45rem .5rem;' %>">
+            <span class="material-symbols-outlined" style="font-size:1rem;color:#3b82f6;margin-top:1px;">notifications</span>
+            <div style="min-width:0;flex:1;">
+              <p style="font-size:.75rem;color:#1e293b;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= n.message %></p>
+              <p style="font-size:.6rem;color:#94a3b8;margin:1px 0 0;"><%= timeAgo(n.created_at) %></p>
+            </div>
+          </div>
+          <% }) %>
+        <% } %>
+      </div>
+
+      <div class="up-card">
+        <div class="up-card-h"><h2>💬 Forum</h2></div>
+        <% if (forumActivity.length === 0) { %>
+          <div class="up-empty" style="padding:1.25rem;"><span class="material-symbols-outlined">forum</span><p>Aktivite yok</p></div>
+        <% } else { %>
+          <% forumActivity.forEach(fa => { %>
+          <a href="/forum/konu/<%= fa.topic_slug %>" style="display:block;padding:.4rem 0;border-bottom:1px solid #f1f5f9;text-decoration:none;">
+            <p style="font-size:.75rem;font-weight:600;color:#2563eb;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= fa.topic_title %></p>
+            <p style="font-size:.68rem;color:#64748b;margin:1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= fa.content %></p>
+            <p style="font-size:.6rem;color:#94a3b8;margin:0;"><%= timeAgo(fa.created_at) %></p>
+          </a>
+          <% }) %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+
+<!-- ╔══════════════════════════════════════╗
+     ║           İLANLARIM                  ║
+     ╚══════════════════════════════════════╝ -->
+<% } else if (currentPage === 'ilanlarim') { %>
+  <div class="up-header"><h1>🚗 İlanlarım</h1></div>
+
+  <div class="up-stats">
+    <div class="up-stat"><div class="icon blue"><span class="material-symbols-outlined">list</span></div><div class="info"><h3><%= data.statusCounts?.all || 0 %></h3><p>Toplam</p></div></div>
+    <div class="up-stat"><div class="icon green"><span class="material-symbols-outlined">check_circle</span></div><div class="info"><h3><%= data.statusCounts?.active || 0 %></h3><p>Aktif</p></div></div>
+    <div class="up-stat"><div class="icon orange"><span class="material-symbols-outlined">pending</span></div><div class="info"><h3><%= data.statusCounts?.pending || 0 %></h3><p>Beklemede</p></div></div>
+    <div class="up-stat"><div class="icon purple"><span class="material-symbols-outlined">sell</span></div><div class="info"><h3><%= data.statusCounts?.sold || 0 %></h3><p>Satıldı</p></div></div>
+  </div>
+
+  <div class="up-card">
+    <div class="up-card-h">
+      <div style="display:flex;gap:.35rem;flex-wrap:wrap;">
+        <a href="/kullanici/ilanlarim" class="up-btn <%= !data.filters?.durum ? 'primary' : 'outline' %> sm">Tümü</a>
+        <a href="/kullanici/ilanlarim?durum=active" class="up-btn <%= data.filters?.durum==='active' ? 'primary' : 'outline' %> sm">Aktif</a>
+        <a href="/kullanici/ilanlarim?durum=pending" class="up-btn <%= data.filters?.durum==='pending' ? 'primary' : 'outline' %> sm">Beklemede</a>
+        <a href="/kullanici/ilanlarim?durum=sold" class="up-btn <%= data.filters?.durum==='sold' ? 'primary' : 'outline' %> sm">Satıldı</a>
+      </div>
+      <a href="/ilan/ver" class="up-btn primary sm"><span class="material-symbols-outlined" style="font-size:.9rem">add</span> Yeni İlan</a>
+    </div>
+
+    <% if ((data.listings || []).length === 0) { %>
+      <div class="up-empty"><span class="material-symbols-outlined">directions_car</span><p>İlan bulunamadı</p></div>
+    <% } else { %>
+      <!-- Desktop tablo -->
+      <div class="up-table-wrap" style="overflow-x:auto;">
+        <table class="up-table">
+          <thead><tr><th>İlan</th><th>Fiyat</th><th>Durum</th><th>Görüntülenme</th><th>Tarih</th><th>İşlemler</th></tr></thead>
+          <tbody>
+            <% data.listings.forEach(l => { %>
+            <tr>
+              <td>
+                <a href="/ilan/<%= l.slug %>" style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:.6rem;">
+                  <div style="width:52px;height:36px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.1rem;">directions_car</span>
+                  </div>
+                  <div style="min-width:0;">
+                    <p style="font-weight:600;font-size:.8rem;margin:0;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= l.brand_name %> <%= l.model_name %></p>
+                    <p style="font-size:.68rem;color:#94a3b8;margin:0;"><%= l.year || '' %> · <%= l.fuel_type || '' %></p>
+                  </div>
+                </a>
+              </td>
+              <td style="font-weight:700;color:#2563eb;white-space:nowrap;"><%= formatPrice(l.price) %></td>
+              <td><span class="up-badge <%= l.status==='active'?'success':l.status==='pending'?'warning':l.status==='sold'?'info':'secondary' %>"><%= l.status==='active'?'Aktif':l.status==='pending'?'Beklemede':l.status==='sold'?'Satıldı':'Taslak' %></span></td>
+              <td><%= l.view_count || 0 %></td>
+              <td style="white-space:nowrap;font-size:.75rem;"><%= timeAgo(l.created_at) %></td>
+              <td>
+                <div style="display:flex;gap:3px;">
+                  <a href="/ilan/<%= l.slug %>" class="up-btn outline sm" title="Görüntüle"><span class="material-symbols-outlined" style="font-size:.85rem">visibility</span></a>
+                  <button class="up-btn danger sm" data-delete-listing="<%= l.id %>" title="Sil"><span class="material-symbols-outlined" style="font-size:.85rem">delete</span></button>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobil kartlar -->
+      <div class="up-mcard">
+        <% data.listings.forEach(l => { %>
+        <div style="display:flex;align-items:center;gap:.75rem;padding:.65rem 0;border-bottom:1px solid #f1f5f9;">
+          <div style="width:48px;height:34px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.1rem;">directions_car</span>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <a href="/ilan/<%= l.slug %>" style="text-decoration:none;">
+              <p style="font-weight:600;font-size:.78rem;color:#0f172a;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= l.brand_name %> <%= l.model_name %></p>
+            </a>
+            <div style="display:flex;align-items:center;gap:.5rem;margin-top:2px;">
+              <span style="font-weight:700;font-size:.75rem;color:#2563eb;"><%= formatPrice(l.price) %></span>
+              <span class="up-badge <%= l.status==='active'?'success':l.status==='pending'?'warning':l.status==='sold'?'info':'secondary' %>" style="font-size:.55rem;"><%= l.status==='active'?'Aktif':l.status==='pending'?'Bekle':l.status==='sold'?'Satıldı':'Taslak' %></span>
+            </div>
+            <p style="font-size:.62rem;color:#94a3b8;margin:1px 0 0;"><%= l.view_count || 0 %> görüntülenme · <%= timeAgo(l.created_at) %></p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:3px;flex-shrink:0;">
+            <a href="/ilan/<%= l.slug %>" class="up-btn outline sm" style="padding:3px 6px;"><span class="material-symbols-outlined" style="font-size:.8rem">visibility</span></a>
+            <button class="up-btn danger sm" data-delete-listing="<%= l.id %>" style="padding:3px 6px;"><span class="material-symbols-outlined" style="font-size:.8rem">delete</span></button>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+
+
+<!-- ╔══════════════════════════════════════╗
+     ║           FAVORİLERİM                ║
+     ╚══════════════════════════════════════╝ -->
+<% } else if (currentPage === 'favorilerim') { %>
+  <div class="up-header"><h1>❤️ Favorilerim</h1></div>
+
+  <% if ((data.favorites || []).length === 0) { %>
+    <div class="up-card"><div class="up-empty"><span class="material-symbols-outlined">favorite_border</span><p>Favori ilanınız yok</p></div></div>
+  <% } else { %>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:.75rem;">
+      <% data.favorites.forEach(l => { %>
+      <div class="up-card" style="margin:0;padding:0;overflow:hidden;">
+        <div style="height:120px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;">
+          <span class="material-symbols-outlined" style="font-size:2.5rem;color:#cbd5e1;">directions_car</span>
+        </div>
+        <div style="padding:.85rem;">
+          <h3 style="font-size:.88rem;font-weight:700;color:#0f172a;margin:0 0 .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= l.brand_name %> <%= l.model_name %></h3>
+          <p style="font-size:1rem;font-weight:800;color:#2563eb;margin:0 0 .35rem;"><%= formatPrice(l.price) %></p>
+          <p style="font-size:.7rem;color:#94a3b8;margin:0;"><%= l.year || '' %> · <%= l.fuel_type || '' %> · <%= l.transmission || '' %></p>
+          <div style="display:flex;gap:.4rem;margin-top:.6rem;">
+            <a href="/ilan/<%= l.slug %>" class="up-btn primary sm" style="flex:1;justify-content:center;">Detay</a>
+            <button class="up-btn danger sm" data-remove-favorite="<%= l.id %>" title="Çıkar">
+              <span class="material-symbols-outlined" style="font-size:.9rem;">heart_broken</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+
+<!-- ╔══════════════════════════════════════╗
+     ║           MESAJLAR                   ║
+     ╚══════════════════════════════════════╝ -->
+<% } else if (currentPage === 'mesajlar') { %>
+  <div class="up-header"><h1>✉️ Mesajlarım</h1></div>
+
+  <div class="up-card">
+    <% if ((data.conversations || []).length === 0) { %>
+      <div class="up-empty"><span class="material-symbols-outlined">mail</span><p>Henüz mesajınız yok</p></div>
+    <% } else { %>
+      <% data.conversations.forEach(c => { %>
+      <a href="/kullanici/mesajlar/<%= c.otherUser.id %>" style="display:flex;align-items:center;gap:.75rem;padding:.65rem .5rem;border-radius:10px;text-decoration:none;color:inherit;border-bottom:1px solid #f1f5f9;transition:background .15s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+        <div style="width:38px;height:38px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;color:#2563eb;font-weight:700;font-size:.85rem;flex-shrink:0;"><%= c.otherUser.name.charAt(0).toUpperCase() %></div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;">
+            <p style="font-weight:600;font-size:.82rem;color:#0f172a;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= c.otherUser.name %></p>
+            <span style="font-size:.62rem;color:#94a3b8;white-space:nowrap;flex-shrink:0;"><%= timeAgo(c.lastMessage.created_at) %></span>
+          </div>
+          <p style="font-size:.75rem;color:#64748b;margin:2px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= c.lastMessage.content %></p>
+        </div>
+        <% if (c.unreadCount > 0) { %>
+        <span style="background:#2563eb;color:#fff;font-size:.62rem;padding:2px 7px;border-radius:10px;font-weight:700;flex-shrink:0;"><%= c.unreadCount %></span>
+        <% } %>
+      </a>
+      <% }) %>
+    <% } %>
+  </div>
+
+
+<!-- ╔══════════════════════════════════════╗
+     ║           MESAJ DETAY                ║
+     ╚══════════════════════════════════════╝ -->
+<% } else if (currentPage === 'mesaj-detay') { %>
+  <div class="up-header" style="display:flex;align-items:center;gap:.75rem;">
+    <a href="/kullanici/mesajlar" class="up-btn outline sm"><span class="material-symbols-outlined" style="font-size:.9rem">arrow_back</span></a>
+    <h1 style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= data.otherUser.name %></h1>
+  </div>
+
+  <div class="up-card" style="max-height:450px;overflow-y:auto;display:flex;flex-direction:column;gap:.4rem;padding:1rem;" id="msgContainer">
+    <% if ((data.messages || []).length === 0) { %>
+      <div class="up-empty"><span class="material-symbols-outlined">chat_bubble_outline</span><p>Henüz mesaj yok. İlk mesajı gönderin!</p></div>
+    <% } else { %>
+      <% data.messages.forEach(m => { %>
+      <div style="display:flex;flex-direction:column;align-items:<%= m.sender_id === userProfile.id ? 'flex-end' : 'flex-start' %>;">
+        <div class="msg-bubble <%= m.sender_id === userProfile.id ? 'sent' : 'received' %>"><%= m.content %></div>
+        <span style="font-size:.58rem;color:#94a3b8;margin-top:2px;"><%= timeAgo(m.created_at) %></span>
+      </div>
+      <% }) %>
+    <% } %>
+  </div>
+
+  <div class="up-card" style="margin-top:0;padding:.75rem;">
+    <form method="POST" action="/kullanici/mesajlar/<%= data.otherUser.id %>" style="display:flex;gap:.5rem;align-items:center;">
+      <input type="text" name="content" placeholder="Mesajınızı yazın..." required style="flex:1;padding:8px 12px;border:1px solid #e2e8f0;border-radius:10px;font-size:.82rem;box-sizing:border-box;">
+      <button type="submit" class="up-btn primary" style="padding:8px 14px;flex-shrink:0;">
+        <span class="material-symbols-outlined" style="font-size:1rem;">send</span>
+      </button>
+    </form>
+  </div>
+
+
+<!-- ╔══════════════════════════════════════╗
+     ║           RANDEVULARIM               ║
+     ╚══════════════════════════════════════╝ -->
+<% } else if (currentPage === 'randevular') { %>
+  <div class="up-header"><h1>📅 Randevularım</h1></div>
+
+  <div class="up-card">
+    <% if ((data.appointments || []).length === 0) { %>
+      <div class="up-empty"><span class="material-symbols-outlined">calendar_month</span><p>Randevunuz bulunmuyor</p></div>
+    <% } else { %>
+      <!-- Desktop tablo -->
+      <div class="up-table-wrap" style="overflow-x:auto;">
+        <table class="up-table">
+          <thead><tr><th>İşletme</th><th>Tarih</th><th>Saat</th><th>Açıklama</th><th>Durum</th><th>İşlem</th></tr></thead>
+          <tbody>
+            <% data.appointments.forEach(a => { %>
+            <% const aStat={pending:'Bekleyen',confirmed:'Onaylı',completed:'Tamamlandı',cancelled:'İptal'}; %>
+            <% const aBadge={pending:'warning',confirmed:'info',completed:'success',cancelled:'danger'}; %>
+            <tr>
+              <td>
+                <a href="/servis/<%= a.business_slug %>" style="text-decoration:none;color:#2563eb;font-weight:600;font-size:.8rem;"><%= a.business_name %></a>
+                <% if (a.business_city) { %><br><small style="color:#94a3b8;font-size:.68rem;"><%= a.business_city %></small><% } %>
+              </td>
+              <td style="white-space:nowrap;font-size:.78rem;"><%= a.appointment_date || a.date || '-' %></td>
+              <td style="font-size:.78rem;"><%= a.appointment_time || a.time || '-' %></td>
+              <td style="max-width:160px;font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= a.description || a.notes || '-' %></td>
+              <td><span class="up-badge <%= aBadge[a.status] || 'secondary' %>"><%= aStat[a.status] || a.status %></span></td>
+              <td>
+                <div style="display:flex;gap:3px;">
+                  <% if (a.status === 'pending' || a.status === 'confirmed') { %>
+                  <button class="up-btn danger sm" data-cancel-appointment="<%= a.id %>">İptal</button>
+                  <% } %>
+                  <% if (a.business_phone) { %>
+                  <a href="tel:<%= a.business_phone %>" class="up-btn outline sm" title="Ara"><span class="material-symbols-outlined" style="font-size:.8rem;">call</span></a>
+                  <% } %>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobil kartlar -->
+      <div class="up-mcard">
+        <% data.appointments.forEach(a => { %>
+        <% const aStat2={pending:'Bekleyen',confirmed:'Onaylı',completed:'Tamamlandı',cancelled:'İptal'}; %>
+        <% const aBadge2={pending:'warning',confirmed:'info',completed:'success',cancelled:'danger'}; %>
+        <div style="padding:.65rem 0;border-bottom:1px solid #f1f5f9;">
+          <div style="display:flex;justify-content:space-between;align-items:start;gap:.5rem;">
+            <div style="min-width:0;flex:1;">
+              <a href="/servis/<%= a.business_slug %>" style="text-decoration:none;color:#2563eb;font-weight:600;font-size:.8rem;"><%= a.business_name %></a>
+              <p style="font-size:.7rem;color:#64748b;margin:2px 0;"><%= a.appointment_date || a.date || '-' %> · <%= a.appointment_time || a.time || '-' %></p>
+              <% if (a.description || a.notes) { %><p style="font-size:.68rem;color:#94a3b8;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= a.description || a.notes %></p><% } %>
+            </div>
+            <span class="up-badge <%= aBadge2[a.status] || 'secondary' %>"><%= aStat2[a.status] || a.status %></span>
+          </div>
+          <div style="display:flex;gap:.35rem;margin-top:.4rem;">
+            <% if (a.status === 'pending' || a.status === 'confirmed') { %>
+            <button class="up-btn danger sm" data-cancel-appointment="<%= a.id %>">İptal Et</button>
+            <% } %>
+            <% if (a.business_phone) { %>
+            <a href="tel:<%= a.business_phone %>" class="up-btn outline sm"><span class="material-symbols-outlined" style="font-size:.8rem;">call</span> Ara</a>
+            <% } %>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+
+
+<!-- ╔══════════════════════════════════════╗
+     ║           BİLDİRİMLER                ║
+     ╚══════════════════════════════════════╝ -->
+<% } else if (currentPage === 'bildirimler') { %>
+  <div class="up-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;">
+    <h1>🔔 Bildirimler</h1>
+    <% if ((data.notifications || []).length > 0 && data.unreadCount > 0) { %>
+    <button class="up-btn outline sm" id="markAllRead"><span class="material-symbols-outlined" style="font-size:.85rem;">done_all</span> Tümünü Okundu İşaretle</button>
+    <% } %>
+  </div>
+
+  <div class="up-card">
+    <% if ((data.notifications || []).length === 0) { %>
+      <div class="up-empty"><span class="material-symbols-outlined">notifications_off</span><p>Bildirim yok</p></div>
+    <% } else { %>
+      <% data.notifications.forEach(n => { %>
+      <div style="display:flex;align-items:start;gap:.6rem;padding:.6rem;border-bottom:1px solid #f1f5f9;border-radius:8px;<%= n.is_read ? '' : 'background:#fefce8;' %>" data-notification-id="<%= n.id %>">
+        <span class="material-symbols-outlined" style="color:<%= n.is_read ? '#94a3b8' : '#3b82f6' %>;margin-top:1px;font-size:1.1rem;flex-shrink:0;">
+          <%= n.type === 'message' ? 'mail' : n.type === 'appointment' ? 'calendar_month' : n.type === 'listing' ? 'directions_car' : 'notifications' %>
+        </span>
+        <div style="flex:1;min-width:0;">
+          <% if (n.title) { %><p style="font-weight:600;font-size:.8rem;color:#0f172a;margin:0;"><%= n.title %></p><% } %>
+          <p style="font-size:.8rem;color:#475569;margin:2px 0;"><%= n.message %></p>
+          <p style="font-size:.65rem;color:#94a3b8;margin:0;"><%= timeAgo(n.created_at) %></p>
+        </div>
+        <div style="display:flex;gap:3px;flex-shrink:0;">
+          <% if (!n.is_read) { %>
+          <button class="up-btn outline sm" data-mark-read="<%= n.id %>" title="Okundu"><span class="material-symbols-outlined" style="font-size:.8rem;">done</span></button>
+          <% } %>
+          <% if (n.link) { %>
+          <a href="<%= n.link %>" class="up-btn outline sm" title="Git"><span class="material-symbols-outlined" style="font-size:.8rem;">open_in_new</span></a>
+          <% } %>
+        </div>
+      </div>
+      <% }) %>
+    <% } %>
+  </div>
+
+
+<!-- ╔══════════════════════════════════════╗
+     ║           PROFİL                     ║
+     ╚══════════════════════════════════════╝ -->
+<% } else if (currentPage === 'profil') { %>
+  <div class="up-header"><h1>👤 Profil Düzenle</h1></div>
+
+  <div class="up-grid-2">
+    <!-- Kişisel Bilgiler -->
+    <div class="up-card">
+      <h2 style="font-size:1rem;font-weight:700;color:#0f172a;margin:0 0 1rem;">Kişisel Bilgiler</h2>
+      <form method="POST" action="/kullanici/profil" class="up-form">
+        <div class="form-group">
+          <label>Ad Soyad</label>
+          <input type="text" name="name" value="<%= data.user.name %>" required>
+        </div>
+        <div class="form-group">
+          <label>E-posta</label>
+          <input type="email" value="<%= data.user.email %>" disabled style="background:#f8fafc;color:#94a3b8;">
+          <small style="color:#94a3b8;font-size:.65rem;">E-posta değiştirilemez</small>
+        </div>
+        <div class="form-group">
+          <label>Telefon</label>
+          <input type="tel" name="phone" value="<%= data.user.phone || '' %>" placeholder="0555 123 4567">
+        </div>
+        <div class="form-group">
+          <label>Hesap Türü</label>
+          <input type="text" value="<%= data.user.role === 'bireysel' ? 'Bireysel' : data.user.role === 'kurumsal' ? 'Kurumsal' : 'Admin' %>" disabled style="background:#f8fafc;color:#94a3b8;">
+        </div>
+        <div class="form-group">
+          <label>Kayıt Tarihi</label>
+          <input type="text" value="<%= new Date(data.user.created_at).toLocaleDateString('tr-TR', {year:'numeric',month:'long',day:'numeric'}) %>" disabled style="background:#f8fafc;color:#94a3b8;">
+        </div>
+        <button type="submit" class="up-btn primary" style="margin-top:.35rem;">
+          <span class="material-symbols-outlined" style="font-size:.9rem;">save</span> Kaydet
+        </button>
+      </form>
+    </div>
+
+    <!-- Şifre + Hesap Özeti -->
+    <div>
+      <div class="up-card">
+        <h2 style="font-size:1rem;font-weight:700;color:#0f172a;margin:0 0 1rem;">🔒 Şifre Değiştir</h2>
+        <form method="POST" action="/kullanici/sifre" class="up-form">
+          <div class="form-group">
+            <label>Mevcut Şifre</label>
+            <input type="password" name="current_password" required placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label>Yeni Şifre</label>
+            <input type="password" name="new_password" required placeholder="En az 6 karakter" minlength="6">
+          </div>
+          <div class="form-group">
+            <label>Yeni Şifre (Tekrar)</label>
+            <input type="password" name="new_password_confirm" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="up-btn primary" style="margin-top:.35rem;">
+            <span class="material-symbols-outlined" style="font-size:.9rem;">lock_reset</span> Şifreyi Değiştir
           </button>
         </form>
       </div>
 
-    <!-- ═══════════════ RANDEVULARIM ═══════════════ -->
-    <% } else if (currentPage === 'randevular') { %>
-      <div class="up-header"><h1>📅 Randevularım</h1></div>
-
       <div class="up-card">
-        <% if ((data.appointments || []).length === 0) { %>
-          <div class="up-empty"><span class="material-symbols-outlined">calendar_month</span><p>Randevunuz bulunmuyor</p></div>
-        <% } else { %>
-          <div style="overflow-x:auto;">
-            <table class="up-table">
-              <thead><tr><th>İşletme</th><th>Tarih</th><th>Saat</th><th>Açıklama</th><th>Durum</th><th>İşlem</th></tr></thead>
-              <tbody>
-                <% data.appointments.forEach(a => { %>
-                <tr>
-                  <td>
-                    <a href="/servis/<%= a.business_slug %>" style="text-decoration:none;color:#2563eb;font-weight:600;"><%= a.business_name %></a>
-                    <% if (a.business_city) { %><br><small style="color:#94a3b8;"><%= a.business_city %></small><% } %>
-                  </td>
-                  <td style="white-space:nowrap;"><%= a.appointment_date || a.date || '-' %></td>
-                  <td><%= a.appointment_time || a.time || '-' %></td>
-                  <td style="max-width:200px;"><%= a.description || a.notes || '-' %></td>
-                  <td>
-                    <% const aStat = {pending:'Bekleyen',confirmed:'Onaylı',completed:'Tamamlandı',cancelled:'İptal'}; %>
-                    <% const aBadge = {pending:'warning',confirmed:'info',completed:'success',cancelled:'danger'}; %>
-                    <span class="up-badge <%= aBadge[a.status] || 'secondary' %>"><%= aStat[a.status] || a.status %></span>
-                  </td>
-                  <td>
-                    <% if (a.status === 'pending' || a.status === 'confirmed') { %>
-                    <button class="up-btn danger sm" data-cancel-appointment="<%= a.id %>">İptal Et</button>
-                    <% } %>
-                    <% if (a.business_phone) { %>
-                    <a href="tel:<%= a.business_phone %>" class="up-btn outline sm" title="Ara"><span class="material-symbols-outlined" style="font-size:.9rem;">call</span></a>
-                    <% } %>
-                  </td>
-                </tr>
-                <% }) %>
-              </tbody>
-            </table>
+        <h2 style="font-size:.9rem;font-weight:700;color:#0f172a;margin:0 0 .75rem;">📊 Hesap Özeti</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;">
+          <div style="background:#f8fafc;border-radius:10px;padding:.65rem;text-align:center;">
+            <p style="font-size:1.1rem;font-weight:800;color:#2563eb;margin:0;"><%= data.user.is_verified ? '✓' : '✗' %></p>
+            <p style="font-size:.68rem;color:#64748b;margin:0;">E-posta Onayı</p>
           </div>
-        <% } %>
-      </div>
-
-    <!-- ═══════════════ BİLDİRİMLER ═══════════════ -->
-    <% } else if (currentPage === 'bildirimler') { %>
-      <div class="up-header"><h1>🔔 Bildirimler</h1></div>
-
-      <div class="up-card">
-        <% if ((data.notifications || []).length === 0) { %>
-          <div class="up-empty"><span class="material-symbols-outlined">notifications_off</span><p>Bildirim yok</p></div>
-        <% } else { %>
-          <% data.notifications.forEach(n => { %>
-          <div style="display:flex;align-items:start;gap:.75rem;padding:.75rem;border-bottom:1px solid #f1f5f9;border-radius:8px;<%= n.is_read ? '' : 'background:#fefce8;' %>">
-            <span class="material-symbols-outlined" style="color:#3b82f6;margin-top:2px;">
-              <%= n.type === 'message' ? 'mail' : n.type === 'appointment' ? 'calendar_month' : n.type === 'listing' ? 'directions_car' : 'notifications' %>
-            </span>
-            <div style="flex:1;">
-              <% if (n.title) { %><p style="font-weight:600;font-size:.85rem;color:#0f172a;margin:0;"><%= n.title %></p><% } %>
-              <p style="font-size:.85rem;color:#475569;margin:2px 0;"><%= n.message %></p>
-              <p style="font-size:.7rem;color:#94a3b8;margin:0;"><%= timeAgo(n.created_at) %></p>
-            </div>
-            <% if (n.link) { %>
-            <a href="<%= n.link %>" class="up-btn outline sm">Görüntüle</a>
-            <% } %>
-          </div>
-          <% }) %>
-        <% } %>
-      </div>
-
-    <!-- ═══════════════ PROFİL ═══════════════ -->
-    <% } else if (currentPage === 'profil') { %>
-      <div class="up-header"><h1>👤 Profil Düzenle</h1></div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
-        <!-- Profil Bilgileri -->
-        <div class="up-card">
-          <h2 style="font-size:1.1rem;font-weight:700;color:#0f172a;margin:0 0 1.25rem;">Kişisel Bilgiler</h2>
-          <form method="POST" action="/kullanici/profil" class="up-form">
-            <div class="form-group">
-              <label>Ad Soyad</label>
-              <input type="text" name="name" value="<%= data.user.name %>" required>
-            </div>
-            <div class="form-group">
-              <label>E-posta</label>
-              <input type="email" value="<%= data.user.email %>" disabled style="background:#f8fafc;color:#94a3b8;">
-              <small style="color:#94a3b8;font-size:.7rem;">E-posta değiştirilemez</small>
-            </div>
-            <div class="form-group">
-              <label>Telefon</label>
-              <input type="tel" name="phone" value="<%= data.user.phone || '' %>" placeholder="0555 123 4567">
-            </div>
-            <div class="form-group">
-              <label>Hesap Türü</label>
-              <input type="text" value="<%= data.user.role === 'bireysel' ? 'Bireysel' : data.user.role === 'kurumsal' ? 'Kurumsal' : 'Admin' %>" disabled style="background:#f8fafc;color:#94a3b8;">
-            </div>
-            <div class="form-group">
-              <label>Kayıt Tarihi</label>
-              <input type="text" value="<%= new Date(data.user.created_at).toLocaleDateString('tr-TR', {year:'numeric',month:'long',day:'numeric'}) %>" disabled style="background:#f8fafc;color:#94a3b8;">
-            </div>
-            <button type="submit" class="up-btn primary" style="margin-top:.5rem;">
-              <span class="material-symbols-outlined" style="font-size:1rem;">save</span> Kaydet
-            </button>
-          </form>
-        </div>
-
-        <!-- Şifre Değiştir -->
-        <div class="up-card">
-          <h2 style="font-size:1.1rem;font-weight:700;color:#0f172a;margin:0 0 1.25rem;">🔒 Şifre Değiştir</h2>
-          <form method="POST" action="/kullanici/sifre" class="up-form">
-            <div class="form-group">
-              <label>Mevcut Şifre</label>
-              <input type="password" name="current_password" required placeholder="••••••••">
-            </div>
-            <div class="form-group">
-              <label>Yeni Şifre</label>
-              <input type="password" name="new_password" required placeholder="En az 6 karakter" minlength="6">
-            </div>
-            <div class="form-group">
-              <label>Yeni Şifre (Tekrar)</label>
-              <input type="password" name="new_password_confirm" required placeholder="••••••••">
-            </div>
-            <button type="submit" class="up-btn primary" style="margin-top:.5rem;">
-              <span class="material-symbols-outlined" style="font-size:1rem;">lock_reset</span> Şifreyi Değiştir
-            </button>
-          </form>
-
-          <!-- Hesap Özeti -->
-          <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid #e2e8f0;">
-            <h3 style="font-size:.95rem;font-weight:700;color:#0f172a;margin:0 0 1rem;">📊 Hesap Özeti</h3>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">
-              <div style="background:#f8fafc;border-radius:10px;padding:.75rem;text-align:center;">
-                <p style="font-size:1.25rem;font-weight:800;color:#2563eb;margin:0;"><%= data.user.is_verified ? '✓' : '✗' %></p>
-                <p style="font-size:.75rem;color:#64748b;margin:0;">E-posta Onayı</p>
-              </div>
-              <div style="background:#f8fafc;border-radius:10px;padding:.75rem;text-align:center;">
-                <p style="font-size:1.25rem;font-weight:800;color:#2563eb;margin:0;"><%= data.user.role === 'bireysel' ? 'Bireysel' : data.user.role === 'kurumsal' ? 'Kurumsal' : 'Admin' %></p>
-                <p style="font-size:.75rem;color:#64748b;margin:0;">Hesap Tipi</p>
-              </div>
-            </div>
+          <div style="background:#f8fafc;border-radius:10px;padding:.65rem;text-align:center;">
+            <p style="font-size:.85rem;font-weight:800;color:#2563eb;margin:0;"><%= data.user.role === 'bireysel' ? 'Bireysel' : data.user.role === 'kurumsal' ? 'Kurumsal' : 'Admin' %></p>
+            <p style="font-size:.68rem;color:#64748b;margin:0;">Hesap Tipi</p>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
-    <% } %>
+<% } %>
 
   </main>
 </div>
 
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
 <script>
-// Auto scroll mesaj container
-const mc = document.getElementById('msgContainer');
-if (mc) mc.scrollTop = mc.scrollHeight;
+(function(){
+  // Auto scroll mesaj container
+  var mc = document.getElementById('msgContainer');
+  if (mc) mc.scrollTop = mc.scrollHeight;
 
-// Cancel appointment
-document.querySelectorAll('[data-cancel-appointment]').forEach(btn => {
-  btn.addEventListener('click', async () => {
-    const id = btn.dataset.cancelAppointment;
-    if (!confirm('Randevuyu iptal etmek istiyor musunuz?')) return;
-    try {
-      const res = await fetch('/api/appointments/' + id + '/cancel', { method: 'PATCH' });
-      if (res.ok) { location.reload(); } else { alert('Hata oluştu'); }
-    } catch { alert('Bağlantı hatası'); }
+  // ── Randevu İptal ──
+  document.querySelectorAll('[data-cancel-appointment]').forEach(function(btn){
+    btn.addEventListener('click', async function(){
+      if (!confirm('Randevuyu iptal etmek istiyor musunuz?')) return;
+      btn.disabled = true; btn.textContent = '...';
+      try {
+        var res = await fetch('/api/appointments/' + btn.dataset.cancelAppointment + '/cancel', { method:'PATCH' });
+        if (res.ok) location.reload(); else { alert('Hata oluştu'); btn.disabled = false; }
+      } catch(e) { alert('Bağlantı hatası'); btn.disabled = false; }
+    });
   });
-});
 
-// Remove favorite
-document.querySelectorAll('[data-remove-favorite]').forEach(btn => {
-  btn.addEventListener('click', async () => {
-    const id = btn.dataset.removeFavorite;
-    if (!confirm('Favoriden çıkarmak istiyor musunuz?')) return;
-    try {
-      const res = await fetch('/api/favorites/' + id, { method: 'DELETE' });
-      if (res.ok) { location.reload(); } else { alert('Hata oluştu'); }
-    } catch { alert('Bağlantı hatası'); }
+  // ── Favori Çıkar ──
+  document.querySelectorAll('[data-remove-favorite]').forEach(function(btn){
+    btn.addEventListener('click', async function(){
+      if (!confirm('Favoriden çıkarmak istiyor musunuz?')) return;
+      btn.disabled = true;
+      try {
+        var res = await fetch('/api/favorites/' + btn.dataset.removeFavorite, { method:'DELETE' });
+        if (res.ok) location.reload(); else { alert('Hata oluştu'); btn.disabled = false; }
+      } catch(e) { alert('Bağlantı hatası'); btn.disabled = false; }
+    });
   });
-});
+
+  // ── İlan Sil ──
+  document.querySelectorAll('[data-delete-listing]').forEach(function(btn){
+    btn.addEventListener('click', async function(){
+      if (!confirm('Bu ilanı silmek istediğinize emin misiniz?')) return;
+      btn.disabled = true;
+      try {
+        var res = await fetch('/api/listings/' + btn.dataset.deleteListing, { method:'DELETE' });
+        if (res.ok) location.reload(); else { alert('İlan silinemedi'); btn.disabled = false; }
+      } catch(e) { alert('Bağlantı hatası'); btn.disabled = false; }
+    });
+  });
+
+  // ── Bildirim Okundu İşaretle ──
+  document.querySelectorAll('[data-mark-read]').forEach(function(btn){
+    btn.addEventListener('click', async function(){
+      btn.disabled = true;
+      try {
+        var res = await fetch('/api/notifications/' + btn.dataset.markRead + '/read', { method:'PATCH' });
+        if (res.ok) {
+          var row = document.querySelector('[data-notification-id="' + btn.dataset.markRead + '"]');
+          if (row) { row.style.background = 'transparent'; }
+          btn.remove();
+        } else { btn.disabled = false; }
+      } catch(e) { btn.disabled = false; }
+    });
+  });
+
+  // ── Tümünü Okundu İşaretle ──
+  var markAllBtn = document.getElementById('markAllRead');
+  if (markAllBtn) {
+    markAllBtn.addEventListener('click', async function(){
+      markAllBtn.disabled = true; markAllBtn.textContent = '...';
+      try {
+        var res = await fetch('/api/notifications/read-all', { method:'POST' });
+        if (res.ok) location.reload(); else { markAllBtn.disabled = false; markAllBtn.textContent = 'Tümünü Okundu İşaretle'; }
+      } catch(e) { markAllBtn.disabled = false; }
+    });
+  }
+})();
 </script>
