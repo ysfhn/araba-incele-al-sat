@@ -34,8 +34,9 @@ app.use(helmet({
 }));
 
 // CORS — API erişimi için
+const corsOrigin = (process.env.BASE_URL || 'http://localhost:3000').trim();
 app.use(cors({
-  origin: process.env.BASE_URL || 'http://localhost:3000',
+  origin: corsOrigin,
   credentials: true,
 }));
 
@@ -157,6 +158,12 @@ app.use((err, req, res, next) => {
       error: NODE_ENV === 'production' ? 'Sunucu hatası' : err.message,
     });
   }
+  // Ensure template locals exist even if middleware chain broke
+  if (!res.locals.currentPath) res.locals.currentPath = req.path;
+  if (!res.locals.currentUser) res.locals.currentUser = null;
+  if (!res.locals.success) res.locals.success = [];
+  if (!res.locals.error) res.locals.error = [];
+  if (!res.locals.NODE_ENV) res.locals.NODE_ENV = NODE_ENV;
   res.status(statusCode).render('pages/404', { title: 'Sunucu Hatası' });
 });
 

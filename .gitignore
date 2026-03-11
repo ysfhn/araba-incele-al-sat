@@ -7,3 +7,4 @@ src/db/sessions.sqlite
 .env
 .DS_Store
 cookies.txt
+.vercel
