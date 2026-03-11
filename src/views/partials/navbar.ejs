@@ -65,6 +65,9 @@
         <a class="nav-link <%= currentPath.startsWith('/servis') ? 'active' : '' %>" href="/servis">Servisler</a>
         <a class="nav-link <%= currentPath.startsWith('/forum') ? 'active' : '' %>" href="/forum">Forum</a>
         <a class="nav-link <%= currentPath.startsWith('/arac') ? 'active' : '' %>" href="/arac-secim">Araç Hub</a>
+        <a class="nav-link <%= currentPath === '/akilli-oneri' ? 'active' : '' %>" href="/akilli-oneri" style="display:inline-flex;align-items:center;gap:3px;">
+          <span class="material-symbols-outlined" style="font-size:14px;">auto_awesome</span>Akıllı Öneri
+        </a>
         <a class="nav-link <%= currentPath === '/nasil-calisir' ? 'active' : '' %>" href="/nasil-calisir">Nasıl Çalışır</a>
       </nav>
     </div>
@@ -157,6 +160,9 @@
     </a>
     <a class="nav-mobile-link <%= currentPath.startsWith('/arac') ? 'active' : '' %>" href="/arac-secim">
       <span class="material-symbols-outlined">hub</span> Araç Hub
+    </a>
+    <a class="nav-mobile-link <%= currentPath === '/akilli-oneri' ? 'active' : '' %>" href="/akilli-oneri">
+      <span class="material-symbols-outlined">auto_awesome</span> Akıllı Öneri
     </a>
     <a class="nav-mobile-link <%= currentPath === '/nasil-calisir' ? 'active' : '' %>" href="/nasil-calisir">
       <span class="material-symbols-outlined">help</span> Nasıl Çalışır

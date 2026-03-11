@@ -1624,4 +1624,80 @@ router.get('/admin/forum/topics', adminOnly, async (req, res) => {
 
 // Admin: İşletme sil — zaten var yukarıda
 
+// ═══════════════════════════════════════════════
+//  AKILLI ÖNERİ — AI Araç Asistanı
+// ═══════════════════════════════════════════════
+router.get('/akilli-oneri/search', async (req, res) => {
+  try {
+    const db = getDb();
+    const { yakit, vites, kasa, fiyat_max, yil_min, yil_max, amac } = req.query;
+
+    let where = "WHERE l.status = 'active'";
+    const params = [];
+
+    if (yakit) { where += ' AND l.fuel_type = ?'; params.push(yakit); }
+    if (vites) { where += ' AND l.transmission = ?'; params.push(vites); }
+    if (kasa) { where += ' AND m.body_type = ?'; params.push(kasa); }
+    if (fiyat_max) { where += ' AND l.price <= ?'; params.push(Number(fiyat_max)); }
+    if (yil_min) { where += ' AND l.year >= ?'; params.push(Number(yil_min)); }
+    if (yil_max) { where += ' AND l.year <= ?'; params.push(Number(yil_max)); }
+
+    // Purpose-based ordering
+    let orderBy = 'ORDER BY l.is_featured DESC, l.created_at DESC';
+    if (amac === 'economy') orderBy = 'ORDER BY l.price ASC';
+    else if (amac === 'performance') orderBy = 'ORDER BY COALESCE(l.hp, 0) DESC';
+    else if (amac === 'family') orderBy = 'ORDER BY CASE WHEN m.body_type = \'suv\' THEN 0 ELSE 1 END, l.price ASC';
+
+    const listings = await db.prepare(`
+      SELECT l.*, b.name as brand_name, b.slug as brand_slug,
+             m.name as model_name, m.slug as model_slug, m.body_type,
+             (SELECT url FROM listing_images WHERE listing_id = l.id AND is_primary = 1 LIMIT 1) as image
+      FROM listings l
+      JOIN brands b ON l.brand_id = b.id
+      JOIN models m ON l.model_id = m.id
+      ${where}
+      ${orderBy}
+      LIMIT 8
+    `).all(...params);
+
+    // Generate a smart summary
+    let summary = '';
+    if (listings.length > 0) {
+      const prices = listings.map(l => l.price);
+      const avgPrice = Math.round(prices.reduce((a,b) => a+b, 0) / prices.length);
+      const minPrice = Math.min(...prices);
+      const brands = [...new Set(listings.map(l => l.brand_name))];
+      summary = `Bulunan <b>${listings.length}</b> araçtan en uygun fiyatlı <b>${new Intl.NumberFormat('tr-TR').format(minPrice)} ₺</b>, ortalama fiyat <b>${new Intl.NumberFormat('tr-TR').format(avgPrice)} ₺</b>. `;
+      summary += `Markalar: ${brands.join(', ')}.`;
+    }
+
+    // If no results, try broader search (alternatives)
+    let alternatives = [];
+    if (listings.length === 0) {
+      // Remove body_type and fuel filters for broader search
+      let altWhere = "WHERE l.status = 'active'";
+      const altParams = [];
+      if (fiyat_max) { altWhere += ' AND l.price <= ?'; altParams.push(Number(fiyat_max) * 1.2); }
+      if (yil_min) { altWhere += ' AND l.year >= ?'; altParams.push(Number(yil_min) - 2); }
+
+      alternatives = await db.prepare(`
+        SELECT l.*, b.name as brand_name, b.slug as brand_slug,
+               m.name as model_name, m.slug as model_slug,
+               (SELECT url FROM listing_images WHERE listing_id = l.id AND is_primary = 1 LIMIT 1) as image
+        FROM listings l
+        JOIN brands b ON l.brand_id = b.id
+        JOIN models m ON l.model_id = m.id
+        ${altWhere}
+        ORDER BY l.created_at DESC
+        LIMIT 5
+      `).all(...altParams);
+    }
+
+    res.json({ listings, alternatives, summary });
+  } catch (err) {
+    console.error('Akıllı öneri arama hatası:', err);
+    res.status(500).json({ error: 'Arama yapılırken bir hata oluştu' });
+  }
+});
+
 module.exports = router;

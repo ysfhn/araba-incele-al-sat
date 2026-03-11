@@ -65,6 +65,11 @@ router.get('/arac-secim', async (req, res) => {
   res.render('pages/arac-secim', { title: 'Araç Seçim Sihirbazı - Araba İncele Al Sat', brands });
 });
 
+// Akıllı Öneri (AI Araç Asistanı)
+router.get('/akilli-oneri', async (req, res) => {
+  res.render('pages/akilli-oneri', { title: 'Akıllı Araç Asistanı - Araba İncele Al Sat' });
+});
+
 // Giriş / Kayıt
 router.get('/giris', async (req, res) => {
   if (req.session.user) return res.redirect('/');
