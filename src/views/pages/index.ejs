@@ -68,9 +68,10 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
               </div>
 
               <!-- Marka logoları band -->
+              <% const heroIconBrands = ['bmw','audi','toyota','volkswagen','tesla','porsche','volvo','honda']; %>
               <div class="flex items-center gap-3 sm:gap-4 mb-3.5 sm:mb-5 overflow-hidden">
                 <div class="flex items-center gap-2 sm:gap-2.5 flex-1 overflow-x-auto scrollbar-hide">
-                  <% hubBrands.slice(0,8).forEach(function(b) { %>
+                  <% heroIconBrands.forEach(function(b) { %>
                     <img src="https://cdn.simpleicons.org/<%= b %>/ffffff30" alt="" class="size-5 sm:size-6 flex-shrink-0 opacity-40" loading="lazy">
                   <% }); %>
                 </div>
