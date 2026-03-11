@@ -52,18 +52,30 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
               </div>
 
               <!-- Orta: Özellik kartları -->
-              <div class="grid grid-cols-3 gap-2 sm:gap-3 mb-3.5 sm:mb-5">
-                <div class="bg-white/[0.06] rounded-xl p-2.5 sm:p-3 text-center border border-white/[0.05]">
-                  <span class="material-symbols-outlined text-cyan-400 mb-1 block" style="font-size:18px">speed</span>
-                  <span class="text-white/70 text-[9px] sm:text-[11px] font-semibold leading-tight block">Teknik<br/>Özellikler</span>
+              <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 sm:gap-2 mb-3.5 sm:mb-5">
+                <div class="bg-white/[0.06] rounded-xl p-2 sm:p-2.5 text-center border border-white/[0.05]">
+                  <span class="material-symbols-outlined text-cyan-400 mb-0.5 block" style="font-size:16px">speed</span>
+                  <span class="text-white/70 text-[8px] sm:text-[10px] font-semibold leading-tight block">Teknik<br/>Özellikler</span>
                 </div>
-                <div class="bg-white/[0.06] rounded-xl p-2.5 sm:p-3 text-center border border-white/[0.05]">
-                  <span class="material-symbols-outlined text-amber-400 mb-1 block" style="font-size:18px">star</span>
-                  <span class="text-white/70 text-[9px] sm:text-[11px] font-semibold leading-tight block">Editör<br/>Puanları</span>
+                <div class="bg-white/[0.06] rounded-xl p-2 sm:p-2.5 text-center border border-white/[0.05]">
+                  <span class="material-symbols-outlined text-amber-400 mb-0.5 block" style="font-size:16px">star</span>
+                  <span class="text-white/70 text-[8px] sm:text-[10px] font-semibold leading-tight block">Editör<br/>Puanları</span>
                 </div>
-                <div class="bg-white/[0.06] rounded-xl p-2.5 sm:p-3 text-center border border-white/[0.05]">
-                  <span class="material-symbols-outlined text-rose-400 mb-1 block" style="font-size:18px">play_circle</span>
-                  <span class="text-white/70 text-[9px] sm:text-[11px] font-semibold leading-tight block">Video<br/>İncelemeler</span>
+                <div class="bg-white/[0.06] rounded-xl p-2 sm:p-2.5 text-center border border-white/[0.05]">
+                  <span class="material-symbols-outlined text-rose-400 mb-0.5 block" style="font-size:16px">play_circle</span>
+                  <span class="text-white/70 text-[8px] sm:text-[10px] font-semibold leading-tight block">Video<br/>İncelemeler</span>
+                </div>
+                <div class="bg-white/[0.06] rounded-xl p-2 sm:p-2.5 text-center border border-white/[0.05]">
+                  <span class="material-symbols-outlined text-green-400 mb-0.5 block" style="font-size:16px">forum</span>
+                  <span class="text-white/70 text-[8px] sm:text-[10px] font-semibold leading-tight block">Araç<br/>Forum</span>
+                </div>
+                <div class="bg-white/[0.06] rounded-xl p-2 sm:p-2.5 text-center border border-white/[0.05]">
+                  <span class="material-symbols-outlined text-violet-400 mb-0.5 block" style="font-size:16px">build</span>
+                  <span class="text-white/70 text-[8px] sm:text-[10px] font-semibold leading-tight block">Servis<br/>Rehberi</span>
+                </div>
+                <div class="bg-white/[0.06] rounded-xl p-2 sm:p-2.5 text-center border border-white/[0.05]">
+                  <span class="material-symbols-outlined text-orange-400 mb-0.5 block" style="font-size:16px">settings</span>
+                  <span class="text-white/70 text-[8px] sm:text-[10px] font-semibold leading-tight block">Yedek<br/>Parça</span>
                 </div>
               </div>
 
@@ -92,7 +104,7 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
       </div>
 
       <!-- İstatistikler -->
-      <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
+      <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mb-6 sm:mb-8">
         <div class="flex items-center gap-1.5 text-white/50 text-[11px] sm:text-xs font-medium">
           <span class="material-symbols-outlined text-green-400" style="font-size:14px">verified</span>
           <span><%= stats.businesses %>+ servis</span>
@@ -106,6 +118,36 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
           <span><%= stats.users %>+ üye</span>
         </div>
       </div>
+
+      <!-- Arama -->
+      <form action="/ilan" method="GET" class="max-w-2xl mx-auto" id="heroSearchForm">
+        <div class="flex flex-col sm:flex-row gap-1.5 sm:gap-2">
+          <div class="flex-1 relative">
+            <div class="flex items-center px-3 gap-2 h-11 sm:h-[50px] bg-white/10 backdrop-blur-md rounded-xl border border-white/[0.12] focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 transition-all">
+              <span class="material-symbols-outlined text-white/50" style="font-size:18px">directions_car</span>
+              <input type="text" id="heroMarka" name="marka" placeholder="Marka ara..." autocomplete="off" class="w-full bg-transparent border-none focus:ring-0 text-white placeholder:text-white/30 text-sm font-medium p-0"/>
+            </div>
+            <div id="heroMarkaDropdown" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-64 overflow-y-auto"></div>
+          </div>
+          <div class="flex-1 relative">
+            <div class="flex items-center px-3 gap-2 h-11 sm:h-[50px] bg-white/10 backdrop-blur-md rounded-xl border border-white/[0.12] focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 transition-all">
+              <span class="material-symbols-outlined text-white/50" style="font-size:18px">location_on</span>
+              <input type="text" id="heroSehir" name="sehir" placeholder="Şehir ara..." autocomplete="off" class="w-full bg-transparent border-none focus:ring-0 text-white placeholder:text-white/30 text-sm font-medium p-0"/>
+            </div>
+            <div id="heroSehirDropdown" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-64 overflow-y-auto"></div>
+          </div>
+          <button type="submit" class="h-11 sm:h-[50px] px-6 bg-primary text-white font-bold rounded-xl hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/25">
+            <span class="material-symbols-outlined" style="font-size:20px">search</span>
+            <span class="text-sm">Ara</span>
+          </button>
+        </div>
+        <div class="flex flex-wrap items-center gap-1 mt-2 px-1">
+          <span class="text-[10px] text-white/30 font-medium mr-0.5">Popüler:</span>
+          <% ['BMW','Mercedes-Benz','Audi','Toyota','Volkswagen','Tesla'].forEach(name => { %>
+            <button type="button" class="hero-quick-brand text-[10px] bg-white/10 hover:bg-primary hover:text-white text-white/50 font-semibold px-2 py-0.5 rounded-md transition-all" data-brand="<%= name %>"><%= name %></button>
+          <% }) %>
+        </div>
+      </form>
 
     </div>
   </div>
@@ -233,41 +275,6 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
       </div>
     </div>
 
-  </div>
-</section>
-
-
-<!-- ═══════════════════════ ARAMA ═══════════════════════ -->
-<section class="bg-white border-b border-slate-100 py-4 sm:py-6">
-  <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
-    <form action="/ilan" method="GET" class="max-w-2xl mx-auto" id="heroSearchForm">
-      <div class="flex flex-col sm:flex-row gap-1.5 sm:gap-2">
-        <div class="flex-1 relative">
-          <div class="flex items-center px-3 gap-2 h-11 sm:h-[50px] bg-slate-50 rounded-xl border border-slate-200 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-            <span class="material-symbols-outlined text-primary" style="font-size:18px">directions_car</span>
-            <input type="text" id="heroMarka" name="marka" placeholder="Marka ara..." autocomplete="off" class="w-full bg-transparent border-none focus:ring-0 text-slate-800 placeholder:text-slate-400 text-sm font-medium p-0"/>
-          </div>
-          <div id="heroMarkaDropdown" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-64 overflow-y-auto"></div>
-        </div>
-        <div class="flex-1 relative">
-          <div class="flex items-center px-3 gap-2 h-11 sm:h-[50px] bg-slate-50 rounded-xl border border-slate-200 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-            <span class="material-symbols-outlined text-primary" style="font-size:18px">location_on</span>
-            <input type="text" id="heroSehir" name="sehir" placeholder="Şehir ara..." autocomplete="off" class="w-full bg-transparent border-none focus:ring-0 text-slate-800 placeholder:text-slate-400 text-sm font-medium p-0"/>
-          </div>
-          <div id="heroSehirDropdown" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-64 overflow-y-auto"></div>
-        </div>
-        <button type="submit" class="h-11 sm:h-[50px] px-6 bg-primary text-white font-bold rounded-xl hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/25">
-          <span class="material-symbols-outlined" style="font-size:20px">search</span>
-          <span class="text-sm">Ara</span>
-        </button>
-      </div>
-      <div class="flex flex-wrap items-center gap-1 mt-2 px-1">
-        <span class="text-[10px] text-slate-400 font-medium mr-0.5">Popüler:</span>
-        <% ['BMW','Mercedes-Benz','Audi','Toyota','Volkswagen','Tesla'].forEach(name => { %>
-          <button type="button" class="hero-quick-brand text-[10px] bg-slate-100 hover:bg-primary hover:text-white text-slate-500 font-semibold px-2 py-0.5 rounded-md transition-all" data-brand="<%= name %>"><%= name %></button>
-        <% }) %>
-      </div>
-    </form>
   </div>
 </section>
 
