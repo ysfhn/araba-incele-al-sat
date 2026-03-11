@@ -52,7 +52,12 @@ function timeAgo(d) { const s=Math.floor((Date.now()-new Date(d))/1000); if(s<60
 
   .det-similar-card { border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; background:#fff; transition:all .2s; }
   .det-similar-card:hover { box-shadow:0 4px 20px rgba(0,0,0,0.06); border-color:#cbd5e1; }
-  .det-badge { position:absolute; top:10px; left:10px; background:#1e293b; color:#fff; font-size:10px; font-weight:700; padding:4px 10px; border-radius:6px; }
+  .det-badge { position:absolute; top:10px; left:10px; background:#1e293b; color:#fff; font-size:10px; font-weight:700; padding:4px 10px; border-radius:6px; z-index:5; }
+  .det-sold-banner { background:linear-gradient(135deg,#fef2f2,#fff1f2); border:1px solid #fecaca; border-radius:12px; padding:14px 18px; margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+  .det-sold-banner .icon { width:36px; height:36px; border-radius:50%; background:#ef4444; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .det-sold-banner .icon span { color:#fff; font-size:18px; }
+  .det-sold-banner .text h4 { font-size:.85rem; font-weight:700; color:#dc2626; margin:0; }
+  .det-sold-banner .text p { font-size:.72rem; color:#ef4444; margin:2px 0 0; opacity:.8; }
 </style>
 
 <main class="max-w-7xl mx-auto px-6 py-6">
@@ -80,6 +85,7 @@ function timeAgo(d) { const s=Math.floor((Date.now()-new Date(d))/1000); if(s<60
       <span class="material-symbols-outlined text-slate-300" style="font-size:96px">directions_car</span>
       <% } %>
       <% if (listing.is_featured) { %><span class="det-badge">ÖNE ÇIKAN</span><% } %>
+      <% if (listing.status === 'sold') { %><span class="det-badge" style="background:#ef4444;top:<%= listing.is_featured ? '40px' : '10px' %>;left:10px;">SATILDI</span><% } %>
     </div>
     <% if (images && images.length > 1) { %>
     <div class="det-gallery-thumbs">
@@ -94,12 +100,21 @@ function timeAgo(d) { const s=Math.floor((Date.now()-new Date(d))/1000); if(s<60
 
   <!-- Başlık + Fiyat -->
   <div class="det-section">
+    <% if (listing.status === 'sold') { %>
+    <div class="det-sold-banner">
+      <div class="icon"><span class="material-symbols-outlined">sell</span></div>
+      <div class="text">
+        <h4>Bu araç satılmıştır</h4>
+        <p>Bu ilan artık aktif değildir. Benzer araçlara aşağıdan göz atabilirsiniz.</p>
+      </div>
+    </div>
+    <% } %>
     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-5">
       <div>
         <h1 class="text-xl font-bold text-slate-800 leading-tight"><%= listing.title %></h1>
         <p class="text-sm text-slate-400 mt-1"><%= listing.brand_name %> <%= listing.model_name %> · <%= listing.year %></p>
       </div>
-      <p class="text-2xl font-black text-slate-900 whitespace-nowrap"><%= formatPrice(listing.price) %></p>
+      <p class="text-2xl font-black whitespace-nowrap <%= listing.status === 'sold' ? 'text-slate-400 line-through' : 'text-slate-900' %>"><%= formatPrice(listing.price) %></p>
     </div>
 
     <!-- Özet istatistikler -->

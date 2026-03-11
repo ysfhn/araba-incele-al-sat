@@ -368,7 +368,10 @@
               <td>
                 <div style="display:flex;gap:3px;">
                   <a href="/ilan/<%= l.slug %>" class="up-btn outline sm" title="Görüntüle"><span class="material-symbols-outlined" style="font-size:.85rem">visibility</span></a>
-                  <button class="up-btn danger sm" data-delete-listing="<%= l.id %>" title="Sil"><span class="material-symbols-outlined" style="font-size:.85rem">delete</span></button>
+                  <% if (l.status === 'sold') { %>
+                    <button class="up-btn outline sm" data-reactivate-listing="<%= l.id %>" title="Yeniden Yayınla" style="color:#16a34a;border-color:#16a34a;"><span class="material-symbols-outlined" style="font-size:.85rem">refresh</span></button>
+                  <% } %>
+                  <button class="up-btn danger sm" data-listing-action="<%= l.id %>" data-listing-title="<%= l.brand_name %> <%= l.model_name %>" data-listing-status="<%= l.status %>" title="Kaldır"><span class="material-symbols-outlined" style="font-size:.85rem"><%= l.status === 'sold' ? 'delete' : 'more_vert' %></span></button>
                 </div>
               </td>
             </tr>
@@ -400,7 +403,10 @@
           </div>
           <div style="display:flex;flex-direction:column;gap:3px;flex-shrink:0;">
             <a href="/ilan/<%= l.slug %>" class="up-btn outline sm" style="padding:3px 6px;"><span class="material-symbols-outlined" style="font-size:.8rem">visibility</span></a>
-            <button class="up-btn danger sm" data-delete-listing="<%= l.id %>" style="padding:3px 6px;"><span class="material-symbols-outlined" style="font-size:.8rem">delete</span></button>
+            <% if (l.status === 'sold') { %>
+              <button class="up-btn outline sm" data-reactivate-listing="<%= l.id %>" style="padding:3px 6px;color:#16a34a;border-color:#16a34a;"><span class="material-symbols-outlined" style="font-size:.8rem">refresh</span></button>
+            <% } %>
+            <button class="up-btn danger sm" data-listing-action="<%= l.id %>" data-listing-title="<%= l.brand_name %> <%= l.model_name %>" data-listing-status="<%= l.status %>" style="padding:3px 6px;"><span class="material-symbols-outlined" style="font-size:.8rem"><%= l.status === 'sold' ? 'delete' : 'more_vert' %></span></button>
           </div>
         </div>
         <% }) %>
@@ -730,14 +736,113 @@
     });
   });
 
-  // ── İlan Sil ──
-  document.querySelectorAll('[data-delete-listing]').forEach(function(btn){
+  // ── İlan İşlem Modal ──
+  var listingModal = document.createElement('div');
+  listingModal.id = 'listingActionModal';
+  listingModal.style.cssText = 'display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem;';
+  listingModal.innerHTML = `
+    <div style="background:#fff;border-radius:16px;padding:1.5rem;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.15);">
+      <div style="text-align:center;margin-bottom:1.25rem;">
+        <div style="width:48px;height:48px;border-radius:50%;background:#fef2f2;display:inline-flex;align-items:center;justify-content:center;margin-bottom:.75rem;">
+          <span class="material-symbols-outlined" style="color:#ef4444;font-size:24px;">warning</span>
+        </div>
+        <h3 style="font-size:1rem;font-weight:700;color:#0f172a;margin:0 0 4px;" id="modalTitle">İlan İşlemi</h3>
+        <p style="font-size:.78rem;color:#64748b;margin:0;" id="modalSubtitle"></p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;" id="modalActions"></div>
+      <button onclick="closeListingModal()" style="width:100%;margin-top:.75rem;padding:10px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;color:#64748b;font-size:.8rem;font-weight:600;cursor:pointer;">İptal</button>
+    </div>
+  `;
+  document.body.appendChild(listingModal);
+
+  var currentListingId = null;
+
+  function openListingModal(id, title, status) {
+    currentListingId = id;
+    document.getElementById('modalSubtitle').textContent = title;
+    var actionsDiv = document.getElementById('modalActions');
+    actionsDiv.innerHTML = '';
+
+    if (status !== 'sold') {
+      // Aktif/Beklemede/Taslak ilan → Satıldı + Sil seçeneği
+      document.getElementById('modalTitle').textContent = 'Bu ilanı ne yapmak istiyorsunuz?';
+      actionsDiv.innerHTML = `
+        <button onclick="markAsSold()" style="width:100%;padding:12px;border-radius:10px;background:#16a34a;color:#fff;font-size:.85rem;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;">
+          <span class="material-symbols-outlined" style="font-size:18px">sell</span>
+          Satıldı Olarak İşaretle
+        </button>
+        <button onclick="deleteListing()" style="width:100%;padding:12px;border-radius:10px;background:#fff;color:#ef4444;font-size:.85rem;font-weight:700;border:2px solid #fecaca;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;">
+          <span class="material-symbols-outlined" style="font-size:18px">delete_forever</span>
+          Kalıcı Olarak Sil
+        </button>
+        <p style="font-size:.65rem;color:#94a3b8;text-align:center;margin:4px 0 0;">💡 Satıldı işaretlerseniz ilan "Satıldı" olarak görünür, geri alabilirsiniz.</p>
+      `;
+    } else {
+      // Satıldı ilan → Sadece kalıcı sil seçeneği
+      document.getElementById('modalTitle').textContent = 'Bu satılmış ilanı silmek mi istiyorsunuz?';
+      actionsDiv.innerHTML = `
+        <button onclick="deleteListing()" style="width:100%;padding:12px;border-radius:10px;background:#ef4444;color:#fff;font-size:.85rem;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;">
+          <span class="material-symbols-outlined" style="font-size:18px">delete_forever</span>
+          Kalıcı Olarak Sil
+        </button>
+        <p style="font-size:.65rem;color:#94a3b8;text-align:center;margin:4px 0 0;">⚠️ Bu işlem geri alınamaz, ilan ve tüm verileri silinir.</p>
+      `;
+    }
+
+    listingModal.style.display = 'flex';
+  }
+
+  function closeListingModal() {
+    listingModal.style.display = 'none';
+    currentListingId = null;
+  }
+
+  listingModal.addEventListener('click', function(e) {
+    if (e.target === listingModal) closeListingModal();
+  });
+
+  async function markAsSold() {
+    if (!currentListingId) return;
+    try {
+      var res = await fetch('/api/listings/' + currentListingId + '/status', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'sold' })
+      });
+      if (res.ok) { closeListingModal(); location.reload(); }
+      else { alert('İşlem başarısız oldu'); }
+    } catch(e) { alert('Bağlantı hatası'); }
+  }
+
+  async function deleteListing() {
+    if (!currentListingId) return;
+    if (!confirm('Bu ilanı kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz!')) return;
+    try {
+      var res = await fetch('/api/listings/' + currentListingId, { method: 'DELETE' });
+      if (res.ok) { closeListingModal(); location.reload(); }
+      else { alert('İlan silinemedi'); }
+    } catch(e) { alert('Bağlantı hatası'); }
+  }
+
+  // Modal açma butonları
+  document.querySelectorAll('[data-listing-action]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      openListingModal(btn.dataset.listingAction, btn.dataset.listingTitle, btn.dataset.listingStatus);
+    });
+  });
+
+  // Yeniden Yayınla (satıldı → active)
+  document.querySelectorAll('[data-reactivate-listing]').forEach(function(btn){
     btn.addEventListener('click', async function(){
-      if (!confirm('Bu ilanı silmek istediğinize emin misiniz?')) return;
+      if (!confirm('Bu ilanı tekrar yayınlamak istiyor musunuz?')) return;
       btn.disabled = true;
       try {
-        var res = await fetch('/api/listings/' + btn.dataset.deleteListing, { method:'DELETE' });
-        if (res.ok) location.reload(); else { alert('İlan silinemedi'); btn.disabled = false; }
+        var res = await fetch('/api/listings/' + btn.dataset.reactivateListing + '/status', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'active' })
+        });
+        if (res.ok) location.reload(); else { alert('İşlem başarısız'); btn.disabled = false; }
       } catch(e) { alert('Bağlantı hatası'); btn.disabled = false; }
     });
   });

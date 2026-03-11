@@ -12,9 +12,7 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
   <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80');"></div>
   <div class="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/80 to-slate-950/95 z-10"></div>
   <div class="relative z-20 w-full max-w-[1200px] mx-auto px-4 sm:px-6">
-
-    <!-- Başlık -->
-    <div class="pt-8 sm:pt-14 md:pt-20">
+    <div class="py-10 sm:py-16 md:py-24">
       <div class="text-center mb-5 sm:mb-8">
         <h1 class="text-white text-2xl sm:text-4xl md:text-5xl lg:text-[3.4rem] font-black leading-tight tracking-tight mb-2 sm:mb-4">
           Hayalinizdeki Aracı<br/>
@@ -24,81 +22,8 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
           Binlerce araç ilanı, güvenilir servisler ve Türkiye'nin en büyük otomobil topluluğu tek platformda.
         </p>
       </div>
-    </div>
-
-    <!-- ARAÇ HUB — Marka Hızlı Erişim -->
-    <div class="pb-6 sm:pb-10 md:pb-14">
-      <div class="max-w-3xl mx-auto">
-
-        <!-- Mobil: 4x2 grid + belirgin buton -->
-        <div class="sm:hidden">
-          <div class="bg-white/[0.06] backdrop-blur-sm border border-white/[0.1] rounded-2xl p-3 mb-3">
-            <div class="flex items-center justify-between mb-2.5">
-              <div class="flex items-center gap-1.5">
-                <span class="material-symbols-outlined text-primary" style="font-size:16px">commute</span>
-                <span class="text-[11px] font-bold text-white/70">Araç Hub</span>
-              </div>
-              <span class="text-[9px] font-semibold text-white/30">306+ model</span>
-            </div>
-            <div class="grid grid-cols-4 gap-2 mb-3">
-              <% hubBrands.slice(0,8).forEach(slug => {
-                 const b = brands.find(br => br.slug === slug);
-                 if (!b) return; %>
-              <a href="/ilan?marka=<%= b.slug %>" class="flex flex-col items-center gap-1 group">
-                <div class="size-12 rounded-xl bg-white/[0.08] border border-white/[0.1] group-active:bg-white/[0.18] group-active:border-primary/40 flex items-center justify-center transition-all">
-                  <% if (b.logo) { %>
-                    <img src="<%= b.logo %>" alt="<%= b.name %>" class="size-6 object-contain opacity-70" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
-                    <span class="material-symbols-outlined text-white/40 hidden" style="font-size:18px">directions_car</span>
-                  <% } else { %>
-                    <span class="material-symbols-outlined text-white/40" style="font-size:18px">directions_car</span>
-                  <% } %>
-                </div>
-                <span class="text-[9px] font-semibold text-white/50 whitespace-nowrap"><%= b.name.split('-')[0].split(' ')[0] %></span>
-              </a>
-              <% }) %>
-            </div>
-            <a href="/arac-secim" class="flex items-center justify-center gap-2 w-full bg-primary/90 hover:bg-primary text-white font-bold py-2.5 rounded-xl text-xs transition-all">
-              <span class="material-symbols-outlined" style="font-size:16px">commute</span>
-              Araç Hub'a Git
-              <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Desktop: 12 marka grid -->
-        <div class="hidden sm:block">
-          <div class="flex items-center justify-center gap-2 mb-3 sm:mb-4">
-            <span class="material-symbols-outlined text-primary/80" style="font-size:16px">commute</span>
-            <span class="text-[10px] sm:text-xs font-bold text-white/50 uppercase tracking-widest">Popüler Markalar</span>
-          </div>
-          <div class="grid grid-cols-6 md:grid-cols-12 gap-2">
-            <% hubBrands.forEach(slug => {
-               const b = brands.find(br => br.slug === slug);
-               if (!b) return; %>
-            <a href="/ilan?marka=<%= b.slug %>" class="group flex flex-col items-center justify-center gap-1 py-2.5 bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] hover:border-primary/40 rounded-xl transition-all">
-              <% if (b.logo) { %>
-                <img src="<%= b.logo %>" alt="<%= b.name %>" class="size-6 object-contain opacity-50 group-hover:opacity-100 transition-opacity" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
-                <span class="material-symbols-outlined text-white/40 hidden" style="font-size:18px">directions_car</span>
-              <% } else { %>
-                <span class="material-symbols-outlined text-white/40 group-hover:text-primary" style="font-size:18px">directions_car</span>
-              <% } %>
-              <span class="text-[9px] font-semibold text-white/40 group-hover:text-white/90 whitespace-nowrap transition-colors"><%= b.name.split('-')[0].split(' ')[0] %></span>
-            </a>
-            <% }) %>
-          </div>
-          <div class="text-center mt-3">
-            <a href="/arac-secim" class="inline-flex items-center gap-1.5 text-primary/80 hover:text-primary text-xs font-bold transition-colors">
-              <span class="material-symbols-outlined" style="font-size:14px">commute</span>
-              306+ model · Araç Hub'ı Keşfet
-              <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
-            </a>
-          </div>
-        </div>
-
-      </div>
-
       <!-- İstatistikler -->
-      <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-6">
+      <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
         <div class="flex items-center gap-1.5 text-white/50 text-[11px] sm:text-xs font-medium">
           <span class="material-symbols-outlined text-green-400" style="font-size:14px">verified</span>
           <span><%= stats.businesses %>+ servis</span>
@@ -113,7 +38,97 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
         </div>
       </div>
     </div>
+  </div>
+</section>
 
+
+<!-- ═══════════════════════ MARKALAR ═══════════════════════ -->
+<section class="bg-slate-50 border-b border-slate-100 py-4 sm:py-5">
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+
+    <!-- Mobil: Yatay scroll markalar -->
+    <div class="sm:hidden">
+      <div class="flex items-center justify-between mb-2.5">
+        <div class="flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-primary" style="font-size:16px">commute</span>
+          <span class="text-[11px] font-bold text-slate-600">Popüler Markalar</span>
+        </div>
+        <a href="/arac-secim" class="flex items-center gap-0.5 text-[10px] font-bold text-primary">
+          Tümü <span class="material-symbols-outlined" style="font-size:12px">arrow_forward</span>
+        </a>
+      </div>
+      <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+        <% hubBrands.forEach(slug => {
+           const b = brands.find(br => br.slug === slug);
+           if (!b) return; %>
+        <a href="/ilan?marka=<%= b.slug %>" class="flex flex-col items-center gap-1 min-w-[52px] group">
+          <div class="size-11 rounded-xl bg-white border border-slate-200 group-active:border-primary/40 flex items-center justify-center transition-all shadow-sm">
+            <% if (b.logo) { %>
+              <img src="<%= b.logo %>" alt="<%= b.name %>" class="size-5 object-contain" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+              <span class="material-symbols-outlined text-slate-300 hidden" style="font-size:16px">directions_car</span>
+            <% } else { %>
+              <span class="material-symbols-outlined text-slate-300" style="font-size:16px">directions_car</span>
+            <% } %>
+          </div>
+          <span class="text-[9px] font-semibold text-slate-500 whitespace-nowrap"><%= b.name.split('-')[0].split(' ')[0] %></span>
+        </a>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- Desktop: 12 marka grid -->
+    <div class="hidden sm:block">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary/80" style="font-size:16px">commute</span>
+          <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Popüler Markalar</span>
+        </div>
+        <a href="/arac-secim" class="inline-flex items-center gap-1 text-primary text-xs font-bold hover:underline">
+          306+ model · Araç Hub <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
+        </a>
+      </div>
+      <div class="grid grid-cols-6 md:grid-cols-12 gap-2">
+        <% hubBrands.forEach(slug => {
+           const b = brands.find(br => br.slug === slug);
+           if (!b) return; %>
+        <a href="/ilan?marka=<%= b.slug %>" class="group flex flex-col items-center justify-center gap-1 py-2.5 bg-white hover:bg-primary/5 border border-slate-200 hover:border-primary/40 rounded-xl transition-all shadow-sm">
+          <% if (b.logo) { %>
+            <img src="<%= b.logo %>" alt="<%= b.name %>" class="size-6 object-contain opacity-60 group-hover:opacity-100 transition-opacity" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+            <span class="material-symbols-outlined text-slate-300 hidden" style="font-size:18px">directions_car</span>
+          <% } else { %>
+            <span class="material-symbols-outlined text-slate-300 group-hover:text-primary" style="font-size:18px">directions_car</span>
+          <% } %>
+          <span class="text-[9px] font-semibold text-slate-400 group-hover:text-slate-700 whitespace-nowrap transition-colors"><%= b.name.split('-')[0].split(' ')[0] %></span>
+        </a>
+        <% }) %>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ AKILLI ARAMA ═══════════════════════ -->
+<section class="bg-gradient-to-r from-indigo-950 via-slate-900 to-violet-950 border-b border-slate-100">
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-3 sm:py-4">
+    <a href="/akilli-oneri" class="flex items-center justify-between group">
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <div class="size-8 sm:size-9 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
+          <span class="material-symbols-outlined text-white" style="font-size:16px">auto_awesome</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <p class="text-white text-xs sm:text-sm font-bold">Akıllı Araç Asistanı</p>
+            <span class="hidden sm:inline-flex items-center gap-1 bg-white/10 text-[9px] font-bold text-blue-300 px-1.5 py-0.5 rounded-full">AI</span>
+          </div>
+          <p class="text-white/40 text-[10px] sm:text-xs">Birkaç soruya cevap ver, sana en uygun aracı bulalım</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1 text-primary text-xs font-bold group-hover:gap-2 transition-all">
+        <span class="hidden sm:inline">Başlat</span>
+        <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span>
+      </div>
+    </a>
   </div>
 </section>
 
