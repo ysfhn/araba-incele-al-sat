@@ -7,28 +7,28 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
 %>
 
 <!-- ═══════════════════════ HERO ═══════════════════════ -->
-<section class="relative min-h-[540px] md:min-h-[600px] flex items-center justify-center overflow-hidden">
+<section class="relative min-h-[420px] sm:min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden">
   <!-- Layered background -->
   <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80');"></div>
   <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/70 to-background-dark/90 z-10"></div>
 
-  <div class="relative z-20 w-full" style="max-width:1200px;margin:0 auto;padding:0 24px;">
-    <div class="text-center max-w-3xl mx-auto pt-16 pb-20 md:pt-20 md:pb-24">
-      <h1 class="text-white text-4xl sm:text-5xl md:text-6xl font-black leading-[1.08] tracking-tight mb-5">
+  <div class="relative z-20 w-full" style="max-width:1200px;margin:0 auto;padding:0 16px;">
+    <div class="text-center max-w-3xl mx-auto pt-12 pb-14 sm:pt-16 sm:pb-20 md:pt-20 md:pb-24">
+      <h1 class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.08] tracking-tight mb-4 sm:mb-5">
         Hayalinizdeki Aracı<br/>
         <span class="bg-gradient-to-r from-primary via-blue-400 to-cyan-400 bg-clip-text text-transparent">Keşfedin</span>
       </h1>
-      <p class="text-slate-300/90 text-base md:text-lg max-w-xl mx-auto mb-10 leading-relaxed">
+      <p class="text-slate-300/90 text-sm sm:text-base md:text-lg max-w-xl mx-auto mb-7 sm:mb-10 leading-relaxed">
         Binlerce araç ilanı, güvenilir servisler ve Türkiye'nin en büyük otomobil topluluğu tek platformda.
       </p>
 
       <!-- ══════ ARAMA ÇUBUĞU ══════ -->
-      <form action="/ilan" method="GET" class="bg-white p-2 rounded-2xl shadow-2xl shadow-black/25 max-w-2xl mx-auto" id="heroSearchForm">
-        <div class="flex flex-col md:flex-row gap-2">
+      <form action="/ilan" method="GET" class="bg-white p-1.5 sm:p-2 rounded-xl sm:rounded-2xl shadow-2xl shadow-black/25 max-w-2xl mx-auto" id="heroSearchForm">
+        <div class="flex flex-col sm:flex-row gap-1.5 sm:gap-2">
           <!-- Marka -->
           <div class="flex-1 relative">
-            <div class="flex items-center px-4 gap-2.5 h-[52px] bg-slate-50 rounded-xl border border-slate-200/80 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-              <span class="material-symbols-outlined text-primary" style="font-size:20px">directions_car</span>
+            <div class="flex items-center px-3 sm:px-4 gap-2 sm:gap-2.5 h-11 sm:h-[52px] bg-slate-50 rounded-lg sm:rounded-xl border border-slate-200/80 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px">directions_car</span>
               <input type="text" id="heroMarka" name="marka" placeholder="Marka ara..." autocomplete="off"
                 class="w-full bg-transparent border-none focus:ring-0 text-slate-800 placeholder:text-slate-400 text-sm font-medium p-0"/>
             </div>
@@ -36,30 +36,30 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
           </div>
           <!-- Şehir -->
           <div class="flex-1 relative">
-            <div class="flex items-center px-4 gap-2.5 h-[52px] bg-slate-50 rounded-xl border border-slate-200/80 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-              <span class="material-symbols-outlined text-primary" style="font-size:20px">location_on</span>
+            <div class="flex items-center px-3 sm:px-4 gap-2 sm:gap-2.5 h-11 sm:h-[52px] bg-slate-50 rounded-lg sm:rounded-xl border border-slate-200/80 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+              <span class="material-symbols-outlined text-primary" style="font-size:18px">location_on</span>
               <input type="text" id="heroSehir" name="sehir" placeholder="Şehir ara..." autocomplete="off"
                 class="w-full bg-transparent border-none focus:ring-0 text-slate-800 placeholder:text-slate-400 text-sm font-medium p-0"/>
             </div>
             <div id="heroSehirDropdown" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-64 overflow-y-auto"></div>
           </div>
           <!-- Ara Butonu -->
-          <button type="submit" class="h-[52px] px-8 bg-primary text-white font-bold rounded-xl hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/25">
-            <span class="material-symbols-outlined text-xl">search</span>
+          <button type="submit" class="h-11 sm:h-[52px] px-6 sm:px-8 bg-primary text-white font-bold rounded-lg sm:rounded-xl hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/25">
+            <span class="material-symbols-outlined text-lg sm:text-xl">search</span>
             <span>Ara</span>
           </button>
         </div>
         <!-- Hızlı filtreler -->
-        <div class="flex flex-wrap items-center gap-1.5 mt-2.5 px-1">
-          <span class="text-[11px] text-slate-400 font-medium mr-1">Popüler:</span>
+        <div class="flex flex-wrap items-center gap-1 sm:gap-1.5 mt-2 sm:mt-2.5 px-1">
+          <span class="text-[10px] sm:text-[11px] text-slate-400 font-medium mr-0.5 sm:mr-1">Popüler:</span>
           <% ['BMW', 'Mercedes-Benz', 'Audi', 'Toyota', 'Volkswagen', 'Tesla'].forEach(name => { %>
-            <button type="button" class="hero-quick-brand text-[11px] bg-slate-100 hover:bg-primary hover:text-white text-slate-500 font-semibold px-2.5 py-1 rounded-lg transition-all" data-brand="<%= name %>"><%= name %></button>
+            <button type="button" class="hero-quick-brand text-[10px] sm:text-[11px] bg-slate-100 hover:bg-primary hover:text-white text-slate-500 font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md sm:rounded-lg transition-all" data-brand="<%= name %>"><%= name %></button>
           <% }) %>
         </div>
       </form>
 
       <!-- Güven göstergeleri -->
-      <div class="flex flex-wrap items-center justify-center gap-6 mt-8">
+      <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-5 sm:mt-8">
         <div class="flex items-center gap-2 text-white/60 text-xs font-medium">
           <span class="material-symbols-outlined text-green-400" style="font-size:16px">verified</span>
           <span><%= stats.businesses %>+ onaylı servis</span>
@@ -79,9 +79,9 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
 
 
 <!-- ═══════════════════════ MARKALAR ═══════════════════════ -->
-<section class="py-8 bg-white border-b border-slate-100">
-  <div style="max-width:1200px" class="mx-auto px-6">
-    <div class="flex items-center gap-6 overflow-x-auto pb-1 scrollbar-hide">
+<section class="py-5 sm:py-8 bg-white border-b border-slate-100">
+  <div style="max-width:1200px" class="mx-auto px-4 sm:px-6">
+    <div class="flex items-center gap-3 sm:gap-6 overflow-x-auto pb-1 scrollbar-hide">
       <% (typeof popularBrands !== 'undefined' && popularBrands ? popularBrands : (brands || []).slice(0,12)).forEach(b => { %>
       <a href="/ilan?marka=<%= b.slug %>" class="flex flex-col items-center gap-1.5 min-w-[64px] group" title="<%= b.name %>">
         <div class="size-12 rounded-xl bg-slate-50 border border-slate-200/80 group-hover:border-primary/40 group-hover:bg-primary/5 flex items-center justify-center transition-all">
@@ -106,44 +106,44 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
 </section>
 
 
-<main style="max-width:1200px" class="mx-auto px-6 py-14">
+<main style="max-width:1200px" class="mx-auto px-4 sm:px-6 py-8 sm:py-14">
 
 <!-- ═══════════════════════ ÖNE ÇIKAN İLANLAR ═══════════════════════ -->
 <% if (featuredListings && featuredListings.length > 0) { %>
-<section class="mb-16">
-  <div class="flex justify-between items-end mb-6">
-    <div>
+<section class="mb-10 sm:mb-16">
+  <div class="flex justify-between items-end mb-4 sm:mb-6">
+    <div class="min-w-0">
       <div class="flex items-center gap-2 mb-1.5">
-        <span class="size-7 rounded-lg bg-amber-100 flex items-center justify-center"><span class="material-symbols-outlined text-amber-600" style="font-size:16px">star</span></span>
+        <span class="size-7 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-amber-600" style="font-size:16px">star</span></span>
         <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Öne Çıkan</span>
       </div>
-      <h2 class="text-2xl font-black text-slate-900">Editör Seçimi Araçlar</h2>
+      <h2 class="text-xl sm:text-2xl font-black text-slate-900">Editör Seçimi Araçlar</h2>
     </div>
-    <a class="hidden sm:flex items-center gap-1.5 text-primary font-bold text-sm hover:underline" href="/ilan">
+    <a class="hidden sm:flex items-center gap-1.5 text-primary font-bold text-sm hover:underline flex-shrink-0" href="/ilan">
       Tüm İlanlar <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span>
     </a>
   </div>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+  <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
     <% featuredListings.forEach(l => { %>
-    <a href="/ilan/<%= l.slug %>" class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-primary/20 hover:-translate-y-1">
-      <div class="h-44 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center relative overflow-hidden">
-        <span class="material-symbols-outlined text-5xl text-slate-300/80 group-hover:scale-110 transition-transform duration-500">directions_car</span>
-        <div class="absolute top-3 left-3">
-          <span class="bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-md font-bold shadow-sm">⭐ ÖNE ÇIKAN</span>
+    <a href="/ilan/<%= l.slug %>" class="group bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-primary/20 hover:-translate-y-1">
+      <div class="h-32 sm:h-44 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center relative overflow-hidden">
+        <span class="material-symbols-outlined text-4xl sm:text-5xl text-slate-300/80 group-hover:scale-110 transition-transform duration-500">directions_car</span>
+        <div class="absolute top-2 left-2 sm:top-3 sm:left-3">
+          <span class="bg-amber-500 text-white text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-md font-bold shadow-sm">⭐ ÖNE ÇIKAN</span>
         </div>
         <div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/15 to-transparent"></div>
-        <div class="absolute bottom-2.5 left-3 flex gap-1.5">
-          <span class="bg-white/95 text-slate-700 text-[10px] font-semibold px-2 py-0.5 rounded-md"><%= l.year %></span>
-          <span class="bg-white/95 text-slate-700 text-[10px] font-semibold px-2 py-0.5 rounded-md"><%= fuelLabel(l.fuel_type) %></span>
+        <div class="absolute bottom-2 left-2 sm:bottom-2.5 sm:left-3 flex gap-1">
+          <span class="bg-white/95 text-slate-700 text-[9px] sm:text-[10px] font-semibold px-1.5 sm:px-2 py-0.5 rounded-md"><%= l.year %></span>
+          <span class="bg-white/95 text-slate-700 text-[9px] sm:text-[10px] font-semibold px-1.5 sm:px-2 py-0.5 rounded-md"><%= fuelLabel(l.fuel_type) %></span>
         </div>
       </div>
-      <div class="p-4">
-        <h3 class="font-bold text-sm text-slate-900 group-hover:text-primary transition-colors line-clamp-1"><%= l.brand_name %> <%= l.model_name %></h3>
-        <p class="text-primary font-black text-lg mt-1"><%= formatPrice(l.price) %></p>
-        <div class="flex items-center gap-3 mt-2.5 text-slate-400 text-[11px] font-medium">
-          <span class="flex items-center gap-1"><span class="material-symbols-outlined" style="font-size:13px">speed</span> <%= formatKm(l.km) %> km</span>
-          <span class="flex items-center gap-1"><span class="material-symbols-outlined" style="font-size:13px">settings</span> <%= transLabel(l.transmission) %></span>
-          <span class="flex items-center gap-1"><span class="material-symbols-outlined" style="font-size:13px">location_on</span> <%= l.city %></span>
+      <div class="p-3 sm:p-4">
+        <h3 class="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-primary transition-colors line-clamp-1"><%= l.brand_name %> <%= l.model_name %></h3>
+        <p class="text-primary font-black text-base sm:text-lg mt-0.5 sm:mt-1"><%= formatPrice(l.price) %></p>
+        <div class="flex items-center flex-wrap gap-x-2 gap-y-0.5 sm:gap-3 mt-1.5 sm:mt-2.5 text-slate-400 text-[10px] sm:text-[11px] font-medium">
+          <span class="flex items-center gap-0.5 sm:gap-1"><span class="material-symbols-outlined" style="font-size:12px">speed</span> <%= formatKm(l.km) %></span>
+          <span class="flex items-center gap-0.5 sm:gap-1"><span class="material-symbols-outlined" style="font-size:12px">settings</span> <%= transLabel(l.transmission) %></span>
+          <span class="flex items-center gap-0.5 sm:gap-1"><span class="material-symbols-outlined" style="font-size:12px">location_on</span> <%= l.city %></span>
         </div>
       </div>
     </a>
@@ -155,41 +155,41 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
 
 <!-- ═══════════════════════ SON İLANLAR (SLIDER) ═══════════════════════ -->
 <% if (latestListings && latestListings.length > 0) { %>
-<section class="mb-16">
-  <div class="flex justify-between items-end mb-6">
-    <div>
+<section class="mb-10 sm:mb-16">
+  <div class="flex justify-between items-end mb-4 sm:mb-6">
+    <div class="min-w-0">
       <div class="flex items-center gap-2 mb-1.5">
-        <span class="size-7 rounded-lg bg-blue-100 flex items-center justify-center"><span class="material-symbols-outlined text-blue-600" style="font-size:16px">schedule</span></span>
+        <span class="size-7 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-blue-600" style="font-size:16px">schedule</span></span>
         <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Yeni Eklenenler</span>
       </div>
-      <h2 class="text-2xl font-black text-slate-900">Son Eklenen İlanlar</h2>
+      <h2 class="text-xl sm:text-2xl font-black text-slate-900">Son Eklenen İlanlar</h2>
     </div>
-    <div class="flex items-center gap-2">
-      <button id="latestPrev" class="size-9 rounded-xl bg-white hover:bg-slate-50 flex items-center justify-center transition-colors border border-slate-200">
+    <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+      <button id="latestPrev" class="size-8 sm:size-9 rounded-lg sm:rounded-xl bg-white hover:bg-slate-50 flex items-center justify-center transition-colors border border-slate-200">
         <span class="material-symbols-outlined text-slate-500" style="font-size:18px">chevron_left</span>
       </button>
-      <button id="latestNext" class="size-9 rounded-xl bg-white hover:bg-slate-50 flex items-center justify-center transition-colors border border-slate-200">
+      <button id="latestNext" class="size-8 sm:size-9 rounded-lg sm:rounded-xl bg-white hover:bg-slate-50 flex items-center justify-center transition-colors border border-slate-200">
         <span class="material-symbols-outlined text-slate-500" style="font-size:18px">chevron_right</span>
       </button>
     </div>
   </div>
   <div class="relative overflow-hidden">
-    <div id="latestSlider" class="flex gap-4 transition-transform duration-500 ease-out">
+    <div id="latestSlider" class="flex gap-3 sm:gap-4 transition-transform duration-500 ease-out">
       <% latestListings.forEach(l => { %>
-      <a href="/ilan/<%= l.slug %>" class="group min-w-[260px] sm:min-w-[280px] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-100 hover:border-primary/20 flex-shrink-0">
-        <div class="h-40 bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center relative overflow-hidden">
-          <span class="material-symbols-outlined text-5xl text-slate-300/70 group-hover:scale-110 transition-transform duration-500">directions_car</span>
-          <div class="absolute bottom-2.5 left-3 flex gap-1.5">
-            <span class="bg-white/95 text-slate-700 text-[10px] font-semibold px-2 py-0.5 rounded-md"><%= l.year %></span>
-            <span class="bg-white/95 text-slate-700 text-[10px] font-semibold px-2 py-0.5 rounded-md"><%= fuelLabel(l.fuel_type) %></span>
+      <a href="/ilan/<%= l.slug %>" class="group min-w-[200px] sm:min-w-[260px] md:min-w-[280px] bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-100 hover:border-primary/20 flex-shrink-0">
+        <div class="h-32 sm:h-40 bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center relative overflow-hidden">
+          <span class="material-symbols-outlined text-4xl sm:text-5xl text-slate-300/70 group-hover:scale-110 transition-transform duration-500">directions_car</span>
+          <div class="absolute bottom-2 left-2 sm:bottom-2.5 sm:left-3 flex gap-1">
+            <span class="bg-white/95 text-slate-700 text-[9px] sm:text-[10px] font-semibold px-1.5 sm:px-2 py-0.5 rounded-md"><%= l.year %></span>
+            <span class="bg-white/95 text-slate-700 text-[9px] sm:text-[10px] font-semibold px-1.5 sm:px-2 py-0.5 rounded-md"><%= fuelLabel(l.fuel_type) %></span>
           </div>
         </div>
-        <div class="p-4">
-          <h3 class="font-bold text-sm text-slate-900 group-hover:text-primary transition-colors line-clamp-1"><%= l.brand_name %> <%= l.model_name %></h3>
-          <p class="text-primary font-black text-lg mt-1"><%= formatPrice(l.price) %></p>
-          <div class="flex items-center justify-between mt-2">
-            <span class="text-slate-400 text-[11px] flex items-center gap-1"><span class="material-symbols-outlined" style="font-size:12px">speed</span> <%= formatKm(l.km) %> km</span>
-            <span class="text-slate-400 text-[11px] flex items-center gap-1"><span class="material-symbols-outlined" style="font-size:12px">location_on</span> <%= l.city %></span>
+        <div class="p-3 sm:p-4">
+          <h3 class="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-primary transition-colors line-clamp-1"><%= l.brand_name %> <%= l.model_name %></h3>
+          <p class="text-primary font-black text-base sm:text-lg mt-0.5 sm:mt-1"><%= formatPrice(l.price) %></p>
+          <div class="flex items-center justify-between mt-1.5 sm:mt-2">
+            <span class="text-slate-400 text-[10px] sm:text-[11px] flex items-center gap-0.5 sm:gap-1"><span class="material-symbols-outlined" style="font-size:12px">speed</span> <%= formatKm(l.km) %></span>
+            <span class="text-slate-400 text-[10px] sm:text-[11px] flex items-center gap-0.5 sm:gap-1"><span class="material-symbols-outlined" style="font-size:12px">location_on</span> <%= l.city %></span>
           </div>
         </div>
       </a>
@@ -201,24 +201,24 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
 
 
 <!-- ═══════════════════════ ARAÇ HUB SHOWCASE ═══════════════════════ -->
-<section class="mb-16">
-  <div class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl overflow-hidden">
+<section class="mb-10 sm:mb-16 -mx-4 sm:mx-0">
+  <div class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 sm:rounded-2xl overflow-hidden">
     <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(circle at 30% 50%,rgba(59,130,246,.5) 0,transparent 50%),radial-gradient(circle at 70% 80%,rgba(99,102,241,.5) 0,transparent 50%);"></div>
 
     <div class="relative z-10 p-5 sm:p-8 md:p-12 flex flex-col lg:flex-row items-center gap-8 lg:gap-10">
       <!-- Sol: İçerik -->
-      <div class="flex-1 min-w-0">
-        <div class="inline-flex items-center gap-2 bg-primary/20 text-primary text-xs font-bold px-3.5 py-1.5 rounded-full mb-4">
+      <div class="flex-1 min-w-0 text-center lg:text-left">
+        <div class="inline-flex items-center gap-2 bg-primary/20 text-primary text-xs font-bold px-3.5 py-1.5 rounded-full mb-3 sm:mb-4">
           <span class="material-symbols-outlined" style="font-size:14px">auto_awesome</span> Araç Hub
         </div>
         <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-white leading-tight mb-3">
           Aracınızı Tanıyın,<br/>
           <span class="bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">Doğru Kararı Verin</span>
         </h2>
-        <p class="text-slate-400 text-sm leading-relaxed mb-5 sm:mb-6 max-w-md">
+        <p class="text-slate-400 text-sm leading-relaxed mb-5 sm:mb-6 max-w-md mx-auto lg:mx-0">
           306+ model, detaylı teknik özellikler, editör değerlendirmeleri ve gerçek kullanıcı deneyimleri.
         </p>
-        <div class="flex flex-wrap gap-2 mb-5 sm:mb-6">
+        <div class="flex flex-wrap gap-2 mb-5 sm:mb-6 justify-center lg:justify-start">
           <% [['build','Teknik Detaylar'],['play_circle','Video İncelemeler'],['rate_review','Editör Puanları'],['sell','Satılık İlanlar']].forEach(([icon,text]) => { %>
           <div class="flex items-center gap-1.5 bg-white/[0.07] px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-white/[0.08]">
             <span class="material-symbols-outlined text-primary" style="font-size:16px"><%= icon %></span>
@@ -235,7 +235,7 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
 
       <!-- Sağ: Marka Grid -->
       <div class="w-full lg:w-auto flex-shrink-0">
-        <div class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-4 gap-2 sm:gap-2.5">
+        <div class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-4 gap-2 sm:gap-2.5 max-w-xs sm:max-w-md lg:max-w-none mx-auto lg:mx-0">
           <% const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsche','volvo','honda','hyundai','kia','ford'];
              hubBrands.forEach(slug => {
                const b = brands.find(br => br.slug === slug);
@@ -259,18 +259,18 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
 
 
 <!-- ═══════════════════════ NASIL ÇALIŞIR ═══════════════════════ -->
-<section class="mb-16">
-  <div class="text-center mb-10">
+<section class="mb-10 sm:mb-16">
+  <div class="text-center mb-6 sm:mb-10">
     <span class="text-xs font-bold text-primary uppercase tracking-wider">Kolay & Güvenli</span>
-    <h2 class="text-2xl font-black text-slate-900 mt-1.5">Platform Nasıl Çalışır?</h2>
+    <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1.5">Platform Nasıl Çalışır?</h2>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 relative">
     <!-- Connecting line -->
-    <div class="hidden md:block absolute top-14 left-[20%] right-[20%] h-px bg-gradient-to-r from-primary/10 via-primary/30 to-primary/10 z-0"></div>
+    <div class="hidden sm:block absolute top-14 left-[20%] right-[20%] h-px bg-gradient-to-r from-primary/10 via-primary/30 to-primary/10 z-0"></div>
     <% [['pageview','Keşfet & Karşılaştır','Araç Hub\'da detaylı incelemeleri okuyun, 306+ model arasından karşılaştırma yapın.'],
         ['verified_user','Ekspertiz & Güven','Onaylı servis ağımızda aracınızın detaylı ekspertiz raporunu alın.'],
         ['handshake','Güvenli Satın Al','Ödeme ve devir işlemlerini platform güvencesiyle tamamlayın.']].forEach((item, i) => { %>
-    <div class="relative z-10 flex flex-col items-center text-center bg-white rounded-2xl p-7 border border-slate-100 hover:border-primary/20 shadow-sm hover:shadow-md transition-all group">
+    <div class="relative z-10 flex flex-col items-center text-center bg-white rounded-xl sm:rounded-2xl p-5 sm:p-7 border border-slate-100 hover:border-primary/20 shadow-sm hover:shadow-md transition-all group">
       <div class="size-12 rounded-xl bg-gradient-to-br from-primary to-blue-600 text-white flex items-center justify-center mb-4 shadow-md shadow-primary/20 group-hover:shadow-lg group-hover:shadow-primary/30 transition-shadow">
         <span class="material-symbols-outlined text-xl"><%= item[0] %></span>
       </div>
@@ -284,8 +284,8 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
 
 
 <!-- ═══════════════════════ FORUM & SERVİSLER ═══════════════════════ -->
-<section class="mb-16">
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<section class="mb-10 sm:mb-16">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
   <!-- Forum -->
   <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
     <div class="flex justify-between items-center px-5 py-4 border-b border-slate-100">
@@ -350,15 +350,15 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
 
 
 <!-- ═══════════════════════ İSTATİSTİKLER ═══════════════════════ -->
-<section class="mb-16">
-  <div class="bg-gradient-to-r from-primary/[0.04] to-blue-50/80 rounded-2xl p-8 border border-primary/10">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<section class="mb-10 sm:mb-16">
+  <div class="bg-gradient-to-r from-primary/[0.04] to-blue-50/80 rounded-xl sm:rounded-2xl p-5 sm:p-8 border border-primary/10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
       <% [['listings','Aktif İlan','directions_car'],['users','Kayıtlı Üye','group'],['businesses','Onaylı Servis','verified'],['topics','Forum Konusu','forum']].forEach(([key,label,icon]) => { %>
       <div class="text-center">
         <div class="flex justify-center mb-2">
           <span class="material-symbols-outlined text-primary/40" style="font-size:28px"><%= icon %></span>
         </div>
-        <p class="text-3xl md:text-4xl font-black text-primary"><%= stats[key] %>+</p>
+        <p class="text-2xl sm:text-3xl md:text-4xl font-black text-primary"><%= stats[key] %>+</p>
         <p class="text-xs text-slate-500 font-medium mt-0.5"><%= label %></p>
       </div>
       <% }) %>
@@ -368,17 +368,17 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
 
 
 <!-- ═══════════════════════ CTA ═══════════════════════ -->
-<section class="mb-10">
-  <div class="relative bg-gradient-to-br from-primary via-blue-600 to-indigo-700 rounded-2xl p-8 md:p-12 overflow-hidden">
+<section class="mb-10 -mx-4 sm:mx-0">
+  <div class="relative bg-gradient-to-br from-primary via-blue-600 to-indigo-700 sm:rounded-2xl p-6 sm:p-8 md:p-12 overflow-hidden">
     <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(circle at 80% 20%,rgba(255,255,255,.3) 0,transparent 50%);"></div>
-    <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6">
       <div class="max-w-lg text-center md:text-left">
-        <h2 class="text-2xl md:text-3xl font-black text-white mb-3">Otomobil Tutkunlarına Katılın</h2>
+        <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-white mb-2 sm:mb-3">Otomobil Tutkunlarına Katılın</h2>
         <p class="text-white/80 text-sm leading-relaxed">En güncel ilanlardan haberdar olun, forumdaki tartışmalara katılın, aracınızı satışa çıkarın.</p>
       </div>
-      <div class="flex flex-col sm:flex-row gap-3">
-        <a href="/giris" class="bg-white text-primary font-bold py-3.5 px-8 rounded-xl hover:bg-slate-50 transition-all shadow-xl text-center text-sm">Ücretsiz Katıl</a>
-        <a href="/ilan/ver" class="bg-white/15 text-white font-bold py-3.5 px-8 rounded-xl hover:bg-white/25 border border-white/20 transition-all text-center text-sm">İlan Ver</a>
+      <div class="flex flex-col sm:flex-row gap-2.5 sm:gap-3 w-full sm:w-auto">
+        <a href="/giris" class="bg-white text-primary font-bold py-3 sm:py-3.5 px-6 sm:px-8 rounded-xl hover:bg-slate-50 transition-all shadow-xl text-center text-sm">Ücretsiz Katıl</a>
+        <a href="/ilan/ver" class="bg-white/15 text-white font-bold py-3 sm:py-3.5 px-6 sm:px-8 rounded-xl hover:bg-white/25 border border-white/20 transition-all text-center text-sm">İlan Ver</a>
       </div>
     </div>
   </div>
@@ -490,7 +490,7 @@ const typeLabels = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',e
   const nextBtn = document.getElementById('latestNext');
   if (slider && prevBtn && nextBtn) {
     let scrollPos = 0;
-    const cardW = 320;
+    const cardW = window.innerWidth < 640 ? 220 : 320;
     nextBtn.addEventListener('click', () => {
       scrollPos = Math.min(scrollPos + cardW, slider.scrollWidth - slider.parentElement.offsetWidth);
       slider.style.transform = 'translateX(-' + scrollPos + 'px)';
