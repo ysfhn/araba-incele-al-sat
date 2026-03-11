@@ -7,8 +7,13 @@
 <h1 class="text-2xl font-bold text-slate-900 mb-2">Araç İlanı Oluştur</h1>
 <p class="text-slate-500 mb-8">Aracınızın bilgilerini girerek hemen ilan verebilirsiniz.</p>
 
+<%- include('../partials/flash') %>
+
 <form action="/ilan/ver" method="POST" class="space-y-6">
-<!-- Marka / Model -->
+
+<!-- ═══ BÖLÜM 1: Marka / Model ═══ -->
+<div style="background:#f8fafb;border-radius:12px;padding:1.25rem;border:1px solid #e8ecf0;">
+<h2 style="font-size:.95rem;font-weight:700;color:#1a1f36;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem;"><span class="material-symbols-outlined" style="font-size:1.1rem;color:#1a73e8;">directions_car</span> Araç Bilgileri</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 <div>
 <label class="block text-sm font-semibold text-slate-700 mb-1">Marka <span class="text-red-500">*</span></label>
@@ -24,34 +29,43 @@
 </select>
 </div>
 </div>
-
-<!-- İlan Başlığı -->
-<div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">İlan Başlığı (opsiyonel)</label>
-<input name="title" type="text" placeholder="Otomatik oluşturulur (ör: 2020 BMW 320i)" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
-</div>
-
-<!-- Yıl / KM / Fiyat -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
 <div>
 <label class="block text-sm font-semibold text-slate-700 mb-1">Model Yılı <span class="text-red-500">*</span></label>
-<input name="year" type="number" min="1970" max="2025" required placeholder="2020" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
+<select name="year" required class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<option value="">Seçin</option>
+<% for(let y=2026;y>=1970;y--){%><option value="<%=y%>"><%=y%></option><%}%>
+</select>
 </div>
 <div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Kilometre</label>
-<input name="km" type="number" min="0" placeholder="50000" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Gövde Tipi</label>
+<select name="body_type" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<option value="">Seçin</option>
+<option value="Sedan">Sedan</option>
+<option value="HB">Hatchback</option>
+<option value="SUV">SUV</option>
+<option value="Coupe">Coupe</option>
+<option value="Cabrio">Cabrio</option>
+<option value="Station Wagon">Station Wagon</option>
+<option value="MPV">MPV</option>
+<option value="Pick-up">Pick-up</option>
+<option value="Van">Van</option>
+</select>
 </div>
 <div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Fiyat (₺) <span class="text-red-500">*</span></label>
-<input name="price" type="number" min="1" required placeholder="500000" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Kilometre <span class="text-red-500">*</span></label>
+<input name="km" type="number" min="0" required placeholder="ör: 50000" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
+</div>
 </div>
 </div>
 
-<!-- Yakıt / Vites / HP -->
+<!-- ═══ BÖLÜM 2: Teknik Özellikler ═══ -->
+<div style="background:#f8fafb;border-radius:12px;padding:1.25rem;border:1px solid #e8ecf0;">
+<h2 style="font-size:.95rem;font-weight:700;color:#1a1f36;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem;"><span class="material-symbols-outlined" style="font-size:1.1rem;color:#e8710a;">build</span> Teknik Özellikler</h2>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 <div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Yakıt Tipi</label>
-<select name="fuel_type" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<label class="block text-sm font-semibold text-slate-700 mb-1">Yakıt Tipi <span class="text-red-500">*</span></label>
+<select name="fuel_type" required class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
 <option value="">Seçin</option>
 <option value="benzin">Benzin</option>
 <option value="dizel">Dizel</option>
@@ -61,8 +75,8 @@
 </select>
 </div>
 <div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Vites</label>
-<select name="transmission" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<label class="block text-sm font-semibold text-slate-700 mb-1">Vites <span class="text-red-500">*</span></label>
+<select name="transmission" required class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
 <option value="">Seçin</option>
 <option value="otomatik">Otomatik</option>
 <option value="manuel">Manuel</option>
@@ -70,27 +84,127 @@
 </select>
 </div>
 <div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Beygir Gücü</label>
-<input name="hp" type="number" placeholder="150" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Çekiş Tipi</label>
+<select name="drive_type" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<option value="">Seçin</option>
+<option value="FWD">Önden Çekiş (FWD)</option>
+<option value="RWD">Arkadan İtiş (RWD)</option>
+<option value="AWD">4x4 (AWD)</option>
+</select>
 </div>
 </div>
-
-<!-- Renk / Şehir -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Motor Hacmi (cc)</label>
+<input name="cc" type="number" min="0" placeholder="ör: 1598" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
+</div>
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Beygir Gücü (HP)</label>
+<input name="hp" type="number" min="0" placeholder="ör: 150" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
+</div>
 <div>
 <label class="block text-sm font-semibold text-slate-700 mb-1">Renk</label>
-<input name="color" type="text" placeholder="Beyaz" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
+<select name="color" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<option value="">Seçin</option>
+<option value="Beyaz">⬜ Beyaz</option>
+<option value="Siyah">⬛ Siyah</option>
+<option value="Gri">🔲 Gri</option>
+<option value="Kırmızı">🟥 Kırmızı</option>
+<option value="Mavi">🟦 Mavi</option>
+<option value="Lacivert">🔵 Lacivert</option>
+<option value="Yeşil">🟩 Yeşil</option>
+<option value="Sarı">🟨 Sarı</option>
+<option value="Turuncu">🟧 Turuncu</option>
+<option value="Kahverengi">🟫 Kahverengi</option>
+<option value="Bej">🏖️ Bej</option>
+<option value="Gümüş">🪙 Gümüş</option>
+<option value="Bordo">🍷 Bordo</option>
+<option value="Diğer">Diğer</option>
+</select>
 </div>
-<div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Şehir</label>
-<input name="city" type="text" placeholder="İstanbul" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
 </div>
 </div>
 
-<!-- Açıklama -->
+<!-- ═══ BÖLÜM 3: Durum & Konum ═══ -->
+<div style="background:#f8fafb;border-radius:12px;padding:1.25rem;border:1px solid #e8ecf0;">
+<h2 style="font-size:.95rem;font-weight:700;color:#1a1f36;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem;"><span class="material-symbols-outlined" style="font-size:1.1rem;color:#1e8e3e;">location_on</span> Durum & Konum</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 <div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">İl <span class="text-red-500">*</span></label>
+<select name="city" id="citySelect" required class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<option value="">Seçin</option>
+<option>Adana</option><option>Adıyaman</option><option>Afyonkarahisar</option><option>Ağrı</option>
+<option>Aksaray</option><option>Amasya</option><option>Ankara</option><option>Antalya</option>
+<option>Artvin</option><option>Aydın</option><option>Balıkesir</option><option>Bartın</option>
+<option>Batman</option><option>Bayburt</option><option>Bilecik</option><option>Bingöl</option>
+<option>Bitlis</option><option>Bolu</option><option>Burdur</option><option>Bursa</option>
+<option>Çanakkale</option><option>Çankırı</option><option>Çorum</option><option>Denizli</option>
+<option>Diyarbakır</option><option>Düzce</option><option>Edirne</option><option>Elazığ</option>
+<option>Erzincan</option><option>Erzurum</option><option>Eskişehir</option><option>Gaziantep</option>
+<option>Giresun</option><option>Gümüşhane</option><option>Hakkari</option><option>Hatay</option>
+<option>Iğdır</option><option>Isparta</option><option>İstanbul</option><option>İzmir</option>
+<option>Kahramanmaraş</option><option>Karabük</option><option>Karaman</option><option>Kars</option>
+<option>Kastamonu</option><option>Kayseri</option><option>Kırıkkale</option><option>Kırklareli</option>
+<option>Kırşehir</option><option>Kilis</option><option>Kocaeli</option><option>Konya</option>
+<option>Kütahya</option><option>Malatya</option><option>Manisa</option><option>Mardin</option>
+<option>Mersin</option><option>Muğla</option><option>Muş</option><option>Nevşehir</option>
+<option>Niğde</option><option>Ordu</option><option>Osmaniye</option><option>Rize</option>
+<option>Sakarya</option><option>Samsun</option><option>Siirt</option><option>Sinop</option>
+<option>Sivas</option><option>Şanlıurfa</option><option>Şırnak</option><option>Tekirdağ</option>
+<option>Tokat</option><option>Trabzon</option><option>Tunceli</option><option>Uşak</option>
+<option>Van</option><option>Yalova</option><option>Yozgat</option><option>Zonguldak</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">İlçe</label>
+<input name="district" type="text" placeholder="ör: Kadıköy" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+<label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+<input type="checkbox" name="damage_free" value="1" checked class="w-5 h-5 rounded text-primary focus:ring-primary"/>
+<div>
+<span class="text-sm font-semibold text-slate-700">Boyasız / Hasarsız</span>
+<p class="text-xs text-slate-400 mt-0.5">Araç boyasız ve hasarsız durumda</p>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+<input type="checkbox" name="trade_in" value="1" class="w-5 h-5 rounded text-primary focus:ring-primary"/>
+<div>
+<span class="text-sm font-semibold text-slate-700">Takasa Açık</span>
+<p class="text-xs text-slate-400 mt-0.5">Takas tekliflerini değerlendiriyorum</p>
+</div>
+</label>
+</div>
+</div>
+
+<!-- ═══ BÖLÜM 4: Fiyat & İlan Bilgileri ═══ -->
+<div style="background:#f8fafb;border-radius:12px;padding:1.25rem;border:1px solid #e8ecf0;">
+<h2 style="font-size:.95rem;font-weight:700;color:#1a1f36;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem;"><span class="material-symbols-outlined" style="font-size:1.1rem;color:#9334e6;">sell</span> Fiyat & Detaylar</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Fiyat (₺) <span class="text-red-500">*</span></label>
+<input name="price" type="number" min="1" required placeholder="ör: 500000" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary" oninput="formatPriceDisplay(this)"/>
+<p class="text-xs text-slate-400 mt-1" id="priceFormatted"></p>
+</div>
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">İlan Başlığı (opsiyonel)</label>
+<input name="title" type="text" placeholder="Otomatik oluşturulur (ör: 2020 BMW 320i)" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
+</div>
+</div>
+<div class="mt-4">
 <label class="block text-sm font-semibold text-slate-700 mb-1">Açıklama</label>
-<textarea name="description" rows="5" placeholder="Aracınız hakkında detaylı bilgi verin..." class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"></textarea>
+<textarea name="description" rows="5" placeholder="Aracınız hakkında detaylı bilgi verin. Bakım durumu, lastik durumu, km garantisi, aksesuar ve ekstra donanımlar..." class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"></textarea>
+</div>
+</div>
+
+<!-- Bilgi Notu -->
+<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:1rem 1.25rem;display:flex;gap:.75rem;align-items:start;">
+<span class="material-symbols-outlined" style="color:#3b82f6;font-size:1.25rem;margin-top:2px;">info</span>
+<div>
+<p style="margin:0;font-size:.85rem;color:#1e40af;font-weight:600;">İlan Oluşturma Bilgisi</p>
+<p style="margin:.25rem 0 0;font-size:.8rem;color:#3b82f6;">İlanınız admin ekibimiz tarafından incelendikten sonra yayına alınacaktır. Fotoğraf ekleme özelliği yakında eklenecektir.</p>
+</div>
 </div>
 
 <button type="submit" class="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary/90 transition-all text-lg flex items-center justify-center gap-2">
@@ -101,6 +215,7 @@
 </main>
 
 <script>
+// Marka-Model cascade
 document.getElementById('brand_id').addEventListener('change', async function() {
   const modelSelect = document.getElementById('model_id');
   modelSelect.innerHTML = '<option value="">Yükleniyor...</option>';
@@ -108,7 +223,18 @@ document.getElementById('brand_id').addEventListener('change', async function() 
   try {
     const res = await fetch('/api/models/' + this.value);
     const models = await res.json();
-    modelSelect.innerHTML = '<option value="">Model seçin</option>' + models.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+    modelSelect.innerHTML = '<option value="">Model seçin</option>' + models.map(m => `<option value="${m.id}">${m.name}${m.body_type ? ' ('+m.body_type+')' : ''}</option>`).join('');
   } catch(e) { modelSelect.innerHTML = '<option value="">Hata oluştu</option>'; }
 });
+
+// Fiyat formatlama
+function formatPriceDisplay(input) {
+  const val = parseInt(input.value);
+  const el = document.getElementById('priceFormatted');
+  if (val && val > 0) {
+    el.textContent = '≈ ' + val.toLocaleString('tr-TR') + ' ₺';
+  } else {
+    el.textContent = '';
+  }
+}
 </script>

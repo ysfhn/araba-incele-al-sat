@@ -5,12 +5,12 @@ const { getDb } = require('../db/database');
 const { isGuest } = require('../middleware/auth');
 
 // GET /auth/giris
-router.get('/giris', isGuest, (req, res) => {
+router.get('/giris', isGuest, async (req, res) => {
   res.render('pages/giris-kayit', { title: 'Giriş Yap / Kayıt Ol - Araba İncele Al Sat' });
 });
 
 // POST /auth/giris
-router.post('/giris', (req, res) => {
+router.post('/giris', async (req, res) => {
   const { email, password, remember } = req.body;
   const db = getDb();
 
@@ -19,7 +19,7 @@ router.post('/giris', (req, res) => {
     return res.redirect('/giris');
   }
 
-  const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+  const user = await db.prepare('SELECT * FROM users WHERE email = ?').get(email);
   if (!user) {
     req.flash('error', 'E-posta veya şifre hatalı.');
     return res.redirect('/giris');
@@ -53,7 +53,7 @@ router.post('/giris', (req, res) => {
 });
 
 // POST /auth/kayit
-router.post('/kayit', (req, res) => {
+router.post('/kayit', async (req, res) => {
   const { name, email, password, password_confirm, phone, role } = req.body;
   const db = getDb();
 
@@ -74,7 +74,7 @@ router.post('/kayit', (req, res) => {
   }
 
   // Email kontrolü
-  const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
+  const existing = await db.prepare('SELECT id FROM users WHERE email = ?').get(email);
   if (existing) {
     req.flash('error', 'Bu e-posta adresi zaten kayıtlı.');
     return res.redirect('/giris');
@@ -83,7 +83,7 @@ router.post('/kayit', (req, res) => {
   const hashedPassword = bcrypt.hashSync(password, 10);
   const userRole = (role === 'kurumsal') ? 'kurumsal' : 'bireysel';
 
-  const result = db.prepare(
+  const result = await db.prepare(
     'INSERT INTO users (email, password, name, phone, role) VALUES (?, ?, ?, ?, ?)'
   ).run(email, hashedPassword, name, phone || null, userRole);
 
@@ -103,7 +103,7 @@ router.post('/kayit', (req, res) => {
 });
 
 // GET /auth/cikis
-router.get('/cikis', (req, res) => {
+router.get('/cikis', async (req, res) => {
   req.session.destroy(() => {
     res.redirect('/');
   });

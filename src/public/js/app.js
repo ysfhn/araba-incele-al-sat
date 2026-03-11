@@ -145,19 +145,56 @@ function initFavoriteButtons() {
         if (!res.ok) { showToast(data.error || 'Hata oluştu', 'error'); return; }
 
         const icon = btn.querySelector('.material-symbols-outlined, .material-icons');
-        if (icon) {
+
+        // Handle det-fav-btn (ilan-detay page)
+        if (btn.classList.contains('det-fav-btn')) {
           if (data.favorited) {
-            icon.textContent = 'favorite';
-            icon.classList.add('text-red-500');
-            icon.classList.remove('text-gray-400');
+            btn.classList.add('active');
+            if (icon) {
+              icon.textContent = 'favorite';
+              icon.style.fontVariationSettings = "'FILL' 1";
+            }
+            // Update text node
+            const textNodes = Array.from(btn.childNodes).filter(n => n.nodeType === 3);
+            textNodes.forEach(n => { if (n.textContent.trim()) n.textContent = ' Favorilerde'; });
           } else {
-            icon.textContent = 'favorite_border';
-            icon.classList.remove('text-red-500');
-            icon.classList.add('text-gray-400');
+            btn.classList.remove('active');
+            if (icon) {
+              icon.textContent = 'favorite_border';
+              icon.style.fontVariationSettings = '';
+            }
+            const textNodes = Array.from(btn.childNodes).filter(n => n.nodeType === 3);
+            textNodes.forEach(n => { if (n.textContent.trim()) n.textContent = ' Favorile'; });
           }
         }
-        btn.classList.toggle('favorited', data.favorited);
+        // Handle ilan-fav-btn (ilan-arama page)
+        else if (btn.classList.contains('ilan-fav-btn')) {
+          if (icon) {
+            if (data.favorited) {
+              icon.textContent = 'favorite';
+              icon.style.color = '#dc2626';
+            } else {
+              icon.textContent = 'favorite_border';
+              icon.style.color = '';
+            }
+          }
+        }
+        // Generic fallback
+        else {
+          if (icon) {
+            if (data.favorited) {
+              icon.textContent = 'favorite';
+              icon.classList.add('text-red-500');
+              icon.classList.remove('text-gray-400');
+            } else {
+              icon.textContent = 'favorite_border';
+              icon.classList.remove('text-red-500');
+              icon.classList.add('text-gray-400');
+            }
+          }
+        }
 
+        btn.classList.toggle('favorited', data.favorited);
         const countEl = btn.querySelector('.fav-count');
         if (countEl && data.totalFavorites !== undefined) countEl.textContent = data.totalFavorites;
 
@@ -1029,8 +1066,10 @@ function initAdminActions() {
     btn.addEventListener('click', async () => {
       const id = btn.dataset.id;
       const status = btn.dataset.moderationAction;
-      const label = status === 'approved' ? 'onaylamak' : 'reddetmek';
-      if (!confirm(`Bu içeriği ${label} istiyor musunuz?`)) return;
+      const msg = status === 'rejected'
+        ? 'Şikayeti ONAYLAYIP içeriği kaldırmak istiyor musunuz?\n\n(İçerik yayından kaldırılacak ve sahibine bildirim gidecek)'
+        : 'Şikayeti REDDEDİP içeriği uygun bulmak istiyor musunuz?\n\n(İçerik yayında kalmaya devam edecek)';
+      if (!confirm(msg)) return;
       try {
         const res = await fetch(`/api/admin/moderation/${id}`, {
           method: 'PATCH',
@@ -1055,6 +1094,27 @@ function initAdminActions() {
         const data = await res.json();
         if (!res.ok) { showToast(data.error || 'Hata', 'error'); return; }
         showToast('Değerlendirme silindi', 'success');
+        setTimeout(() => location.reload(), 800);
+      } catch { showToast('Hata oluştu', 'error'); }
+    });
+  });
+
+  // Admin: Randevu durumu değiştir
+  document.querySelectorAll('[data-admin-appt-status]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.apptId;
+      const status = btn.dataset.status;
+      const labels = { confirmed: 'onaylamak', cancelled: 'iptal etmek', completed: 'tamamlandı olarak işaretlemek' };
+      if (!confirm(`Bu randevuyu ${labels[status] || status} istediğinize emin misiniz?`)) return;
+      try {
+        const res = await fetch(`/api/admin/appointments/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status })
+        });
+        const data = await res.json();
+        if (!res.ok) { showToast(data.error || 'Hata', 'error'); return; }
+        showToast(data.message || 'Güncellendi', 'success');
         setTimeout(() => location.reload(), 800);
       } catch { showToast('Hata oluştu', 'error'); }
     });
@@ -1388,4 +1448,156 @@ window.timeAgo = timeAgo;
     .animate-slide-in { animation: slideIn .3s ease-out; }
   `;
   document.head.appendChild(style);
+})();
+
+// ============================================================
+// RAPORLAMA MODAL (Global)
+// ============================================================
+function openReportModal(type, itemId) {
+  // Giriş kontrolü
+  if (!document.body.hasAttribute('data-logged-in')) {
+    showToast('Raporlamak için giriş yapmalısınız', 'warning');
+    setTimeout(() => { window.location.href = '/auth/giris'; }, 1200);
+    return;
+  }
+
+  // Mevcut modal varsa kaldır
+  const existing = document.getElementById('reportModal');
+  if (existing) existing.remove();
+
+  const typeLabels = {
+    listing: 'İlanı', business: 'İşletmeyi', forum_topic: 'Forum Konusunu',
+    forum_reply: 'Forum Yanıtını', review: 'Değerlendirmeyi'
+  };
+
+  const reasons = [
+    { value: 'Spam veya reklam', label: '📢 Spam veya reklam' },
+    { value: 'Yanıltıcı bilgi', label: '⚠️ Yanıltıcı bilgi' },
+    { value: 'Uygunsuz içerik', label: '🚫 Uygunsuz içerik' },
+    { value: 'Hakaret / küfür', label: '💢 Hakaret / küfür' },
+    { value: 'Dolandırıcılık şüphesi', label: '🕵️ Dolandırıcılık şüphesi' },
+    { value: 'Telif hakkı ihlali', label: '©️ Telif hakkı ihlali' },
+    { value: 'Diğer', label: '📝 Diğer' },
+  ];
+
+  const modal = document.createElement('div');
+  modal.id = 'reportModal';
+  modal.style.cssText = 'position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);animation:fadeIn .2s;';
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:20px;width:90%;max-width:440px;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);animation:scaleIn .25s ease-out;">
+      <div style="background:linear-gradient(135deg,#dc2626,#b91c1c);padding:20px 24px;color:#fff;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span class="material-symbols-outlined" style="font-size:1.5rem;">flag</span>
+            <div>
+              <h3 style="margin:0;font-size:1.1rem;font-weight:700;">${typeLabels[type] || 'İçeriği'} Raporla</h3>
+              <p style="margin:2px 0 0;font-size:.75rem;opacity:.8;">Raporunuz gizli tutulacaktır</p>
+            </div>
+          </div>
+          <button onclick="closeReportModal()" style="background:rgba(255,255,255,.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <span class="material-symbols-outlined" style="font-size:18px;">close</span>
+          </button>
+        </div>
+      </div>
+      <div style="padding:24px;">
+        <p style="font-size:.85rem;color:#555;margin:0 0 16px;">Neden raporluyorsunuz?</p>
+        <div id="reportReasons" style="display:flex;flex-direction:column;gap:8px;">
+          ${reasons.map(r => `
+            <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #e2e8f0;border-radius:10px;cursor:pointer;transition:all .15s;font-size:.9rem;" 
+              onmouseover="this.style.borderColor='#dc2626';this.style.background='#fef2f2'" 
+              onmouseout="if(!this.querySelector('input').checked){this.style.borderColor='#e2e8f0';this.style.background='#fff'}">
+              <input type="radio" name="reportReason" value="${r.value}" style="accent-color:#dc2626;">
+              <span>${r.label}</span>
+            </label>
+          `).join('')}
+        </div>
+        <div id="reportCustomReason" style="display:none;margin-top:12px;">
+          <textarea id="reportCustomText" placeholder="Detaylı açıklama yazın..." style="width:100%;padding:10px 14px;border:1px solid #e2e8f0;border-radius:10px;font-size:.85rem;resize:none;height:70px;box-sizing:border-box;"></textarea>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:20px;">
+          <button onclick="closeReportModal()" style="flex:1;padding:12px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;color:#666;font-size:.9rem;font-weight:600;cursor:pointer;">İptal</button>
+          <button onclick="submitReport('${type}', ${itemId})" style="flex:1;padding:12px;border:none;border-radius:10px;background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+            <span class="material-symbols-outlined" style="font-size:16px;">send</span> Rapor Gönder
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  // Overlay click to close
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeReportModal(); });
+
+  // "Diğer" seçilince custom textarea göster
+  modal.querySelectorAll('input[name="reportReason"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const custom = document.getElementById('reportCustomReason');
+      custom.style.display = radio.value === 'Diğer' ? 'block' : 'none';
+      // Seçili label'ı vurgula
+      modal.querySelectorAll('#reportReasons label').forEach(l => {
+        if (l.querySelector('input').checked) {
+          l.style.borderColor = '#dc2626';
+          l.style.background = '#fef2f2';
+        } else {
+          l.style.borderColor = '#e2e8f0';
+          l.style.background = '#fff';
+        }
+      });
+    });
+  });
+}
+
+function closeReportModal() {
+  const modal = document.getElementById('reportModal');
+  if (modal) {
+    modal.style.animation = 'fadeOut .15s';
+    setTimeout(() => modal.remove(), 150);
+  }
+}
+
+async function submitReport(type, itemId) {
+  const selected = document.querySelector('input[name="reportReason"]:checked');
+  if (!selected) {
+    showToast('Lütfen bir neden seçin', 'warning');
+    return;
+  }
+  let reason = selected.value;
+  if (reason === 'Diğer') {
+    const custom = document.getElementById('reportCustomText')?.value?.trim();
+    if (custom) reason = custom;
+  }
+
+  const btn = document.querySelector('#reportModal button:last-child');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px;animation:spin 1s linear infinite;">refresh</span> Gönderiliyor...'; }
+
+  try {
+    const res = await fetch('/api/report', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type, item_id: itemId, reason })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      closeReportModal();
+      showToast(data.message || 'Raporunuz alındı', 'success');
+    } else {
+      showToast(data.error || 'Rapor gönderilemedi', 'error');
+      if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px;">send</span> Rapor Gönder'; }
+    }
+  } catch {
+    showToast('Bağlantı hatası', 'error');
+    if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px;">send</span> Rapor Gönder'; }
+  }
+}
+
+// Modal animations
+(function() {
+  const animStyle = document.createElement('style');
+  animStyle.textContent = `
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
+    @keyframes scaleIn { from { opacity:0; transform:scale(.9); } to { opacity:1; transform:scale(1); } }
+    @keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+  `;
+  document.head.appendChild(animStyle);
 })();

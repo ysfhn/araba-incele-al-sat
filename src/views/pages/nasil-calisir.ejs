@@ -1,88 +1,472 @@
-<main class="container mx-auto px-6 py-12 max-w-5xl">
-<div class="text-center mb-16">
-<h1 class="text-4xl font-bold text-slate-900 mb-4">Platform Nasıl Çalışır?</h1>
-<p class="text-lg text-slate-500 max-w-2xl mx-auto">Araba İncele Al Sat ile araç alım-satım sürecini güvenli ve kolay bir şekilde tamamlayabilirsiniz.</p>
+<style>
+  .nc-hero { background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); border-radius:18px; padding:48px 40px; color:#fff; position:relative; overflow:hidden; margin-bottom:40px; }
+  .nc-hero::after { content:''; position:absolute; top:-50%; right:-20%; width:60%; height:200%; background:radial-gradient(circle,rgba(99,102,241,0.08) 0%,transparent 70%); pointer-events:none; }
+  .nc-hero h1 { font-size:28px; font-weight:800; line-height:1.2; margin-bottom:10px; }
+  .nc-hero p { color:#94a3b8; font-size:15px; line-height:1.6; max-width:560px; }
+
+  .nc-step { display:flex; gap:24px; align-items:flex-start; }
+  .nc-step-num { width:48px; height:48px; border-radius:14px; background:#f8fafc; border:1px solid #e2e8f0; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:18px; color:#1e293b; flex-shrink:0; transition:all .2s; }
+  .nc-step:hover .nc-step-num { background:#1e293b; color:#fff; }
+  .nc-step-body h3 { font-size:16px; font-weight:700; color:#1e293b; margin-bottom:4px; }
+  .nc-step-body p { font-size:13px; color:#64748b; line-height:1.6; }
+  .nc-step-body .nc-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .nc-step-body .nc-tag { font-size:11px; color:#64748b; background:#f8fafc; border:1px solid #f1f5f9; padding:3px 10px; border-radius:6px; }
+
+  .nc-card { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:24px; transition:all .2s; }
+  .nc-card:hover { border-color:#cbd5e1; box-shadow:0 4px 20px rgba(0,0,0,0.04); }
+  .nc-card-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+  .nc-card-icon .material-symbols-outlined { font-size:22px; }
+  .nc-card h4 { font-size:14px; font-weight:700; color:#1e293b; margin-bottom:6px; }
+  .nc-card p { font-size:12px; color:#64748b; line-height:1.6; }
+
+  .nc-seller-section { background:#f8fafc; border:1px solid #f1f5f9; border-radius:18px; padding:40px; margin-top:40px; }
+
+  .nc-biz-section { background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); border-radius:18px; padding:40px; margin-top:40px; color:#fff; position:relative; overflow:hidden; }
+  .nc-biz-section::after { content:''; position:absolute; bottom:-40%; left:-10%; width:50%; height:180%; background:radial-gradient(circle,rgba(16,185,129,0.06) 0%,transparent 70%); pointer-events:none; }
+  .nc-biz-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:24px; backdrop-filter:blur(10px); transition:all .2s; }
+  .nc-biz-card:hover { background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.15); }
+  .nc-biz-card-icon { width:44px; height:44px; border-radius:12px; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+  .nc-biz-card-icon .material-symbols-outlined { font-size:22px; color:#94a3b8; }
+  .nc-biz-card h4 { font-size:14px; font-weight:700; color:#fff; margin-bottom:6px; }
+  .nc-biz-card p { font-size:12px; color:#94a3b8; line-height:1.6; }
+
+  .nc-biz-benefit { display:flex; align-items:flex-start; gap:12px; padding:14px 0; }
+  .nc-biz-benefit-icon { width:32px; height:32px; border-radius:8px; background:rgba(16,185,129,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .nc-biz-benefit-icon .material-symbols-outlined { font-size:16px; color:#10b981; }
+  .nc-biz-benefit h5 { font-size:13px; font-weight:600; color:#e2e8f0; }
+  .nc-biz-benefit p { font-size:12px; color:#94a3b8; margin-top:2px; }
+
+  .nc-plan { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:24px; text-align:center; transition:all .2s; }
+  .nc-plan:hover { border-color:rgba(255,255,255,0.2); }
+  .nc-plan.featured { border-color:#10b981; background:rgba(16,185,129,0.08); }
+  .nc-plan-name { font-size:12px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.05em; }
+  .nc-plan-price { font-size:28px; font-weight:800; color:#fff; margin:8px 0 4px; }
+  .nc-plan-price span { font-size:13px; font-weight:500; color:#64748b; }
+  .nc-plan-features { list-style:none; padding:0; margin:16px 0; text-align:left; }
+  .nc-plan-features li { font-size:12px; color:#cbd5e1; padding:5px 0; display:flex; align-items:center; gap:6px; }
+  .nc-plan-features li .material-symbols-outlined { font-size:14px; color:#10b981; }
+  .nc-plan-btn { display:block; width:100%; padding:10px; border-radius:10px; font-weight:700; font-size:13px; border:none; cursor:pointer; transition:all .15s; }
+  .nc-plan-btn.dark { background:#fff; color:#1e293b; }
+  .nc-plan-btn.dark:hover { background:#f1f5f9; }
+  .nc-plan-btn.green { background:#10b981; color:#fff; }
+  .nc-plan-btn.green:hover { background:#059669; }
+  .nc-plan-btn.outline { background:transparent; color:#cbd5e1; border:1px solid rgba(255,255,255,0.15); }
+  .nc-plan-btn.outline:hover { border-color:rgba(255,255,255,0.3); color:#fff; }
+
+  .nc-faq-item { background:#fff; border:1px solid #e2e8f0; border-radius:12px; margin-bottom:8px; overflow:hidden; transition:all .2s; }
+  .nc-faq-item:hover { border-color:#cbd5e1; }
+  .nc-faq-item.open { border-color:#cbd5e1; box-shadow:0 2px 12px rgba(0,0,0,0.04); }
+  .nc-faq-q { width:100%; text-align:left; padding:16px 20px; font-size:13px; font-weight:600; color:#1e293b; background:transparent; border:none; cursor:pointer; display:flex; align-items:center; gap:12px; transition:all .15s; }
+  .nc-faq-q:hover { color:#334155; }
+  .nc-faq-q-icon { width:30px; height:30px; border-radius:8px; background:#f8fafc; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s; }
+  .nc-faq-item.open .nc-faq-q-icon { background:#1e293b; }
+  .nc-faq-q-icon .material-symbols-outlined { font-size:16px; color:#94a3b8; transition:all .2s; }
+  .nc-faq-item.open .nc-faq-q-icon .material-symbols-outlined { color:#fff; transform:rotate(180deg); }
+  .nc-faq-q span.nc-faq-text { flex:1; }
+  .nc-faq-a { max-height:0; overflow:hidden; transition:max-height .3s ease, padding .3s ease; padding:0 20px 0 62px; font-size:13px; color:#64748b; line-height:1.7; }
+  .nc-faq-item.open .nc-faq-a { max-height:200px; padding:0 20px 16px 62px; }
+
+  .nc-stat { text-align:center; }
+  .nc-stat-val { font-size:24px; font-weight:800; color:#1e293b; }
+  .nc-stat-label { font-size:11px; color:#94a3b8; margin-top:2px; }
+
+  .nc-cta-btn { display:inline-flex; align-items:center; gap:6px; padding:12px 28px; border-radius:12px; font-weight:700; font-size:13px; transition:all .15s; }
+  .nc-cta-btn.white { background:#fff; color:#1e293b; }
+  .nc-cta-btn.white:hover { background:#f1f5f9; }
+  .nc-cta-btn.outline-w { background:transparent; color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.2); }
+  .nc-cta-btn.outline-w:hover { border-color:rgba(255,255,255,0.4); color:#fff; }
+  .nc-cta-btn.dark { background:#1e293b; color:#fff; }
+  .nc-cta-btn.dark:hover { background:#334155; }
+  .nc-cta-btn.green { background:#10b981; color:#fff; }
+  .nc-cta-btn.green:hover { background:#059669; }
+</style>
+
+<main class="max-w-6xl mx-auto px-6 py-6">
+
+<!-- Breadcrumb -->
+<nav class="flex items-center gap-1.5 text-xs text-slate-400 mb-6">
+  <a href="/" class="hover:text-slate-600">Ana Sayfa</a>
+  <span class="material-symbols-outlined" style="font-size:14px">chevron_right</span>
+  <span class="text-slate-700 font-medium">Nasıl Çalışır</span>
+</nav>
+
+<!-- Hero -->
+<div class="nc-hero">
+  <div class="relative z-10">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="inline-flex items-center gap-1 text-[11px] font-semibold bg-white/10 px-3 py-1 rounded-full text-slate-300">
+        <span class="material-symbols-outlined" style="font-size:14px">menu_book</span> Adım Adım Rehber
+      </span>
+    </div>
+    <h1>Araç Alım-Satım Sürecinde<br>Yanınızdayız</h1>
+    <p class="mt-2">İlan vermekten araç satın almaya, ekspertiz raporlarından güvenli ödemeye kadar tüm süreçte size rehberlik ediyoruz. İşletmeler için özel çözümler de sunuyoruz.</p>
+    <div class="flex flex-wrap gap-3 mt-6">
+      <a href="/ilan" class="nc-cta-btn white"><span class="material-symbols-outlined" style="font-size:16px">search</span> İlanlara Göz At</a>
+      <a href="#isletme-uyelik" class="nc-cta-btn outline-w"><span class="material-symbols-outlined" style="font-size:16px">storefront</span> İşletme Üyeliği</a>
+    </div>
+  </div>
 </div>
 
-<!-- Adımlar -->
-<div class="space-y-16">
-<div class="flex flex-col md:flex-row items-center gap-8">
-<div class="size-20 bg-primary text-white rounded-3xl flex items-center justify-center text-4xl font-black shadow-lg shadow-primary/30 flex-shrink-0">1</div>
-<div>
-<h2 class="text-2xl font-bold text-slate-900 mb-2">Araç Keşfet & Karşılaştır</h2>
-<p class="text-slate-600 leading-relaxed">Binlerce ilan arasından filtreleme yaparak hayalinizdeki aracı bulun. Detaylı araç bilgileri, fotoğraflar ve fiyat karşılaştırmaları ile en doğru kararı verin. Araç hub sayfalarında model bazlı detaylı incelemeler, forum tartışmaları ve güncel piyasa analizlerine ulaşın.</p>
-</div>
+<!-- Sayılar -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10">
+  <div class="nc-stat"><p class="nc-stat-val">10.000+</p><p class="nc-stat-label">Aktif İlan</p></div>
+  <div class="nc-stat"><p class="nc-stat-val">5.000+</p><p class="nc-stat-label">Kayıtlı Kullanıcı</p></div>
+  <div class="nc-stat"><p class="nc-stat-val">250+</p><p class="nc-stat-label">Onaylı Servis</p></div>
+  <div class="nc-stat"><p class="nc-stat-val">50+</p><p class="nc-stat-label">Üye İş Yeri</p></div>
 </div>
 
-<div class="flex flex-col md:flex-row items-center gap-8">
-<div class="size-20 bg-primary text-white rounded-3xl flex items-center justify-center text-4xl font-black shadow-lg shadow-primary/30 flex-shrink-0">2</div>
-<div>
-<h2 class="text-2xl font-bold text-slate-900 mb-2">İletişime Geç</h2>
-<p class="text-slate-600 leading-relaxed">Beğendiğiniz aracın satıcısıyla platform üzerinden güvenli bir şekilde iletişime geçin. Mesajlaşma sistemi ile soru sorun, fiyat müzakeresi yapın. Satıcının diğer ilanlarını ve profilini inceleyin.</p>
-</div>
+<!-- ============================================ -->
+<!-- ALICILAR İÇİN -->
+<!-- ============================================ -->
+<div class="mb-10">
+  <div class="flex items-center gap-2 mb-1">
+    <span class="material-symbols-outlined text-slate-400" style="font-size:18px">shopping_cart</span>
+    <h2 class="text-lg font-bold text-slate-800">Alıcılar İçin</h2>
+  </div>
+  <p class="text-xs text-slate-400 mb-6">Araç satın alma sürecinde izlemeniz gereken adımlar</p>
+
+  <!-- Üst 3'lü grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+    <!-- Adım 1 -->
+    <div class="nc-card group" style="position:relative; padding-top:44px;">
+      <div style="position:absolute; top:-1px; left:20px; background:#3b82f6; color:#fff; font-size:11px; font-weight:800; padding:5px 14px; border-radius:0 0 10px 10px; letter-spacing:0.03em;">ADIM 1</div>
+      <div class="nc-card-icon" style="background:#eff6ff;"><span class="material-symbols-outlined" style="color:#3b82f6;">search</span></div>
+      <h4>Araç Keşfet & Karşılaştır</h4>
+      <p>Binlerce ilan arasından marka, model, yıl, fiyat aralığı ve konum bazlı filtrelerle arama yapın. Araç Hub ile her modelin piyasa analizini inceleyin.</p>
+      <div class="nc-tags" style="margin-top:10px;">
+        <span class="nc-tag">Gelişmiş Filtreleme</span>
+        <span class="nc-tag">Araç Hub</span>
+        <span class="nc-tag">Piyasa Analizi</span>
+      </div>
+    </div>
+
+    <!-- Adım 2 -->
+    <div class="nc-card group" style="position:relative; padding-top:44px;">
+      <div style="position:absolute; top:-1px; left:20px; background:#8b5cf6; color:#fff; font-size:11px; font-weight:800; padding:5px 14px; border-radius:0 0 10px 10px; letter-spacing:0.03em;">ADIM 2</div>
+      <div class="nc-card-icon" style="background:#f5f3ff;"><span class="material-symbols-outlined" style="color:#8b5cf6;">favorite</span></div>
+      <h4>İncele & Favorile</h4>
+      <p>Beğendiğiniz ilanları favorilere ekleyin, detaylı fotoğrafları inceleyin. İlan detayında tüm teknik özellikler, donanım ve satıcı bilgilerine ulaşın.</p>
+      <div class="nc-tags" style="margin-top:10px;">
+        <span class="nc-tag">Favori Listesi</span>
+        <span class="nc-tag">Detaylı Görseller</span>
+        <span class="nc-tag">Teknik Özellikler</span>
+      </div>
+    </div>
+
+    <!-- Adım 3 -->
+    <div class="nc-card group" style="position:relative; padding-top:44px;">
+      <div style="position:absolute; top:-1px; left:20px; background:#10b981; color:#fff; font-size:11px; font-weight:800; padding:5px 14px; border-radius:0 0 10px 10px; letter-spacing:0.03em;">ADIM 3</div>
+      <div class="nc-card-icon" style="background:#ecfdf5;"><span class="material-symbols-outlined" style="color:#10b981;">chat</span></div>
+      <h4>Satıcıyla İletişime Geç</h4>
+      <p>Güvenli mesajlaşma ile satıcıya sorularınızı iletin. Telefon numarasını görün, fiyat müzakeresi yapın ve satıcı profilini inceleyin.</p>
+      <div class="nc-tags" style="margin-top:10px;">
+        <span class="nc-tag">Güvenli Mesajlaşma</span>
+        <span class="nc-tag">Telefon Görüntüleme</span>
+        <span class="nc-tag">Satıcı Profili</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alt 2'li grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Adım 4 -->
+    <div class="nc-card group" style="position:relative; padding-top:44px;">
+      <div style="position:absolute; top:-1px; left:20px; background:#f59e0b; color:#fff; font-size:11px; font-weight:800; padding:5px 14px; border-radius:0 0 10px 10px; letter-spacing:0.03em;">ADIM 4</div>
+      <div class="flex gap-4 items-start">
+        <div class="nc-card-icon flex-shrink-0" style="background:#fef3c7;"><span class="material-symbols-outlined" style="color:#f59e0b;">build</span></div>
+        <div>
+          <h4>Ekspertiz Yaptır</h4>
+          <p>Servis rehberimizden en yakın onaylı servisi bulun, bağımsız ekspertiz raporu alın. Boya kalınlığı, mekanik durum, hasar geçmişi ve motor kontrollerini içeren kapsamlı inceleme yaptırın.</p>
+          <div class="nc-tags" style="margin-top:10px;">
+            <span class="nc-tag">Onaylı Servisler</span>
+            <span class="nc-tag">Boya Ölçümü</span>
+            <span class="nc-tag">Hasar Raporu</span>
+            <span class="nc-tag">Mekanik Kontrol</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adım 5 -->
+    <div class="nc-card group" style="position:relative; padding-top:44px;">
+      <div style="position:absolute; top:-1px; left:20px; background:#1e293b; color:#fff; font-size:11px; font-weight:800; padding:5px 14px; border-radius:0 0 10px 10px; letter-spacing:0.03em;">ADIM 5</div>
+      <div class="flex gap-4 items-start">
+        <div class="nc-card-icon flex-shrink-0" style="background:#f1f5f9;"><span class="material-symbols-outlined" style="color:#1e293b;">verified</span></div>
+        <div>
+          <h4>Satın Al & Devir</h4>
+          <p>Aracınızı satın alın ve noter işlemlerini tamamlayın. Tüm süreç boyunca platform rehberliğinde güvenli alışveriş yapın. Alıcı hakları koruma altındadır.</p>
+          <div class="nc-tags" style="margin-top:10px;">
+            <span class="nc-tag">Güvenli Ödeme</span>
+            <span class="nc-tag">Noter İşlemleri</span>
+            <span class="nc-tag">Alıcı Koruması</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="flex flex-col md:flex-row items-center gap-8">
-<div class="size-20 bg-primary text-white rounded-3xl flex items-center justify-center text-4xl font-black shadow-lg shadow-primary/30 flex-shrink-0">3</div>
-<div>
-<h2 class="text-2xl font-bold text-slate-900 mb-2">Ekspertiz & Güvenlik</h2>
-<p class="text-slate-600 leading-relaxed">Onaylı servis ağımızdaki uzman ekiplerden bağımsız ekspertiz raporu alın. Aracın mekanik durumu, boya durumu, hasar geçmişi ve daha fazlasını detaylı olarak öğrenin. Servis rehberimizden size en yakın onaylı servisi bulun.</p>
-</div>
+<!-- ============================================ -->
+<!-- SATICILAR İÇİN -->
+<!-- ============================================ -->
+<div class="nc-seller-section">
+  <div class="flex items-center gap-2 mb-1">
+    <span class="material-symbols-outlined text-slate-400" style="font-size:18px">sell</span>
+    <h2 class="text-lg font-bold text-slate-800">Satıcılar İçin</h2>
+  </div>
+  <p class="text-xs text-slate-400 mb-6">Aracınızı hızlı ve güvenli bir şekilde satmak için 3 adım</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="nc-card">
+      <div class="nc-card-icon" style="background:#eff6ff;">
+        <span class="material-symbols-outlined" style="color:#3b82f6;">add_photo_alternate</span>
+      </div>
+      <h4>1. İlan Oluşturun</h4>
+      <p>Aracınızın detaylı bilgilerini girin, kaliteli fotoğraflar ekleyin ve açıklayıcı bir metin yazın. Ne kadar detaylı bir ilan oluşturursanız, o kadar hızlı sonuç alırsınız. Çoklu fotoğraf yükleme desteği ile aracınızı her açıdan gösterin.</p>
+    </div>
+    <div class="nc-card">
+      <div class="nc-card-icon" style="background:#f0fdf4;">
+        <span class="material-symbols-outlined" style="color:#22c55e;">trending_up</span>
+      </div>
+      <h4>2. Öne Çıkarın</h4>
+      <p>İlanınızı öne çıkararak arama sonuçlarında üst sıralarda yer alın. Öne çıkan ilanlar 5 kata kadar daha fazla görüntüleme alır. Ana sayfada ve kategori listelerinde özel rozet ile gösterilir.</p>
+    </div>
+    <div class="nc-card">
+      <div class="nc-card-icon" style="background:#fef3c7;">
+        <span class="material-symbols-outlined" style="color:#f59e0b;">handshake</span>
+      </div>
+      <h4>3. Güvenli Satış</h4>
+      <p>Alıcılarla platform üzerinden güvenle iletişime geçin. Mesajlaşma sistemiyle fiyat müzakeresi yapın, randevu planlayın ve satış sürecini tamamlayın. Satıcı panelinden tüm ilanlarınızı ve mesajlarınızı yönetin.</p>
+    </div>
+  </div>
+
+  <div class="text-center mt-8">
+    <a href="/ilan/ver" class="nc-cta-btn dark"><span class="material-symbols-outlined" style="font-size:16px">add</span> Hemen İlan Ver — Ücretsiz</a>
+  </div>
 </div>
 
-<div class="flex flex-col md:flex-row items-center gap-8">
-<div class="size-20 bg-primary text-white rounded-3xl flex items-center justify-center text-4xl font-black shadow-lg shadow-primary/30 flex-shrink-0">4</div>
-<div>
-<h2 class="text-2xl font-bold text-slate-900 mb-2">Güvenli Satın Alma</h2>
-<p class="text-slate-600 leading-relaxed">Platform güvencesiyle ödeme ve devir işlemlerini tamamlayın. Tüm süreç boyunca destek ekibimiz yanınızda. Alıcı ve satıcı haklarını koruma altına alan güvenli alışveriş sistemi ile gönül rahatlığıyla işleminizi gerçekleştirin.</p>
-</div>
-</div>
-</div>
-
-<!-- Satıcı Bölümü -->
-<div class="mt-20 bg-primary/5 rounded-3xl p-8 md:p-12 border border-primary/10">
-<div class="text-center mb-10">
-<h2 class="text-3xl font-bold text-slate-900">Aracınızı Satmak mı İstiyorsunuz?</h2>
-<p class="text-slate-500 mt-2">Ücretsiz ilan vererek binlerce potansiyel alıcıya ulaşın.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-<div class="bg-white rounded-xl p-6 text-center">
-<span class="material-symbols-outlined text-primary text-4xl mb-3">photo_camera</span>
-<h3 class="font-bold text-slate-800 mb-2">İlan Oluşturun</h3>
-<p class="text-sm text-slate-500">Aracınızın bilgilerini girin, fotoğraf ekleyin ve ilanınızı yayınlayın.</p>
-</div>
-<div class="bg-white rounded-xl p-6 text-center">
-<span class="material-symbols-outlined text-primary text-4xl mb-3">trending_up</span>
-<h3 class="font-bold text-slate-800 mb-2">Öne Çıkın</h3>
-<p class="text-sm text-slate-500">İlanınızı öne çıkararak daha fazla alıcıya ulaşın ve hızlı satış yapın.</p>
-</div>
-<div class="bg-white rounded-xl p-6 text-center">
-<span class="material-symbols-outlined text-primary text-4xl mb-3">handshake</span>
-<h3 class="font-bold text-slate-800 mb-2">Güvenli Satış</h3>
-<p class="text-sm text-slate-500">Platform güvencesiyle güvenli şekilde satışınızı tamamlayın.</p>
-</div>
-</div>
-<div class="text-center mt-8">
-<a href="/ilan/ver" class="inline-block bg-primary text-white font-bold py-4 px-10 rounded-2xl hover:bg-primary/90 transition-all shadow-lg">Hemen İlan Ver</a>
-</div>
+<!-- ============================================ -->
+<!-- PLATFORM ÖZELLİKLERİ -->
+<!-- ============================================ -->
+<div class="mt-10 mb-2">
+  <div class="flex items-center gap-2 mb-1">
+    <span class="material-symbols-outlined text-slate-400" style="font-size:18px">star</span>
+    <h2 class="text-lg font-bold text-slate-800">Platform Özellikleri</h2>
+  </div>
+  <p class="text-xs text-slate-400 mb-6">Araç alım-satımını kolaylaştıran tüm araçlar tek platformda</p>
 </div>
 
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+  <div class="nc-card">
+    <div class="nc-card-icon" style="background:#faf5ff;"><span class="material-symbols-outlined" style="color:#a855f7;">hub</span></div>
+    <h4>Araç Hub</h4>
+    <p>Her model için piyasa analizi, ortalama fiyat, kullanıcı yorumları ve teknik detaylar. Satın almadan önce modeli tanıyın.</p>
+  </div>
+  <div class="nc-card">
+    <div class="nc-card-icon" style="background:#ecfdf5;"><span class="material-symbols-outlined" style="color:#10b981;">forum</span></div>
+    <h4>Topluluk Forumu</h4>
+    <p>Araç sahipleri ve meraklılarıyla deneyim paylaşın. Teknik sorular sorun, tavsiye alın, alım satım deneyimlerini okuyun.</p>
+  </div>
+  <div class="nc-card">
+    <div class="nc-card-icon" style="background:#fff7ed;"><span class="material-symbols-outlined" style="color:#f97316;">build</span></div>
+    <h4>Servis Rehberi</h4>
+    <p>Onaylı servisler, galeriler ve ekspertiz merkezleri. Konum bazlı arama, kullanıcı puanları ve randevu sistemiyle hızlı erişim.</p>
+  </div>
+  <div class="nc-card">
+    <div class="nc-card-icon" style="background:#eff6ff;"><span class="material-symbols-outlined" style="color:#3b82f6;">smart_toy</span></div>
+    <h4>Araç Seçim Sihirbazı</h4>
+    <p>Bütçenize, ihtiyaçlarınıza ve tercihlerinize göre size en uygun araç modellerini 5 adımda bulun.</p>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- İŞLETME ÜYELİĞİ BÖLÜMÜ -->
+<!-- ============================================ -->
+<div class="nc-biz-section" id="isletme-uyelik">
+  <div class="relative z-10">
+
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined" style="color:#10b981; font-size:20px">storefront</span>
+      <h2 class="text-xl font-bold">İşletme Üyeliği</h2>
+    </div>
+    <p class="text-sm text-slate-400 mb-8 max-w-xl">Galeri, servis, ekspertiz merkezi veya oto kuaför olarak platformumuza katılın. Binlerce potansiyel müşteriye ulaşın, randevu alın ve işinizi büyütün.</p>
+
+    <!-- Kimler katılabilir -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+      <div class="nc-biz-card">
+        <div class="nc-biz-card-icon"><span class="material-symbols-outlined">directions_car</span></div>
+        <h4>Oto Galeriler</h4>
+        <p>Toplu ilan yönetimi, kurumsal profil sayfası, öncelikli listeleme ve marka bilinirliği.</p>
+      </div>
+      <div class="nc-biz-card">
+        <div class="nc-biz-card-icon"><span class="material-symbols-outlined">build</span></div>
+        <h4>Servis & Bakım</h4>
+        <p>Online randevu sistemi, müşteri yorumları, hizmet listesi ve konum bazlı müşteri erişimi.</p>
+      </div>
+      <div class="nc-biz-card">
+        <div class="nc-biz-card-icon"><span class="material-symbols-outlined">search</span></div>
+        <h4>Ekspertiz Merkezleri</h4>
+        <p>Ekspertiz talebi alma, rapor paylaşımı, onaylı merkez rozeti ve güven sertifikası.</p>
+      </div>
+      <div class="nc-biz-card">
+        <div class="nc-biz-card-icon"><span class="material-symbols-outlined">local_car_wash</span></div>
+        <h4>Oto Kuaför & Detailing</h4>
+        <p>Hizmet vitrine, öncesi-sonrası galerisi, fiyat listesi ve müşteri değerlendirmeleri.</p>
+      </div>
+    </div>
+
+    <!-- Avantajlar -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-10">
+      <div>
+        <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined" style="font-size:18px; color:#10b981;">verified</span> Üyelik Avantajları
+        </h3>
+        <div class="space-y-1">
+          <div class="nc-biz-benefit">
+            <div class="nc-biz-benefit-icon"><span class="material-symbols-outlined">language</span></div>
+            <div><h5>Kurumsal Profil Sayfası</h5><p>İşletmenize özel profil sayfası, logo, açıklama, fotoğraflar, çalışma saatleri ve konum haritası.</p></div>
+          </div>
+          <div class="nc-biz-benefit">
+            <div class="nc-biz-benefit-icon"><span class="material-symbols-outlined">calendar_month</span></div>
+            <div><h5>Online Randevu Sistemi</h5><p>Müşterileriniz profil sayfanızdan doğrudan randevu oluşturabilir. Takvim yönetimi ve bildirimler dahil.</p></div>
+          </div>
+          <div class="nc-biz-benefit">
+            <div class="nc-biz-benefit-icon"><span class="material-symbols-outlined">star</span></div>
+            <div><h5>Değerlendirme & Yorumlar</h5><p>Müşteri yorumları ve puanlama sistemiyle güvenilirliğinizi artırın. Yüksek puan = daha fazla müşteri.</p></div>
+          </div>
+          <div class="nc-biz-benefit">
+            <div class="nc-biz-benefit-icon"><span class="material-symbols-outlined">request_quote</span></div>
+            <div><h5>Teklif Talebi Alma</h5><p>Kullanıcılar doğrudan size teklif talebi gönderebilir. Hızlı yanıt verin, işleri kaçırmayın.</p></div>
+          </div>
+          <div class="nc-biz-benefit">
+            <div class="nc-biz-benefit-icon"><span class="material-symbols-outlined">location_on</span></div>
+            <div><h5>Harita Üzerinde Gösterim</h5><p>Google Maps entegrasyonuyla müşteriler sizi kolayca bulur. Yol tarifi butonu ile erişim bir tık uzağında.</p></div>
+          </div>
+          <div class="nc-biz-benefit">
+            <div class="nc-biz-benefit-icon"><span class="material-symbols-outlined">monitoring</span></div>
+            <div><h5>İşletme Paneli & İstatistikler</h5><p>Profil görüntülenme, randevu sayıları, teklif istatistikleri ve müşteri analizleri tek panelde.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paketler -->
+      <div>
+        <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined" style="font-size:18px; color:#10b981;">payments</span> Üyelik Paketleri
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="nc-plan">
+            <p class="nc-plan-name">Başlangıç</p>
+            <p class="nc-plan-price">Ücretsiz</p>
+            <ul class="nc-plan-features">
+              <li><span class="material-symbols-outlined">check</span> Temel profil sayfası</li>
+              <li><span class="material-symbols-outlined">check</span> Aylık 5 ilan hakkı</li>
+              <li><span class="material-symbols-outlined">check</span> Müşteri mesajları</li>
+              <li><span class="material-symbols-outlined">check</span> Temel istatistikler</li>
+            </ul>
+            <a href="/giris" class="nc-plan-btn outline">Hemen Başla</a>
+          </div>
+          <div class="nc-plan featured">
+            <div class="inline-flex items-center gap-1 bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-3 py-1 rounded-full mb-2">
+              <span class="material-symbols-outlined" style="font-size:12px">star</span> ÖNERİLEN
+            </div>
+            <p class="nc-plan-name">Profesyonel</p>
+            <p class="nc-plan-price">₺499 <span>/ ay</span></p>
+            <ul class="nc-plan-features">
+              <li><span class="material-symbols-outlined">check</span> Premium profil sayfası</li>
+              <li><span class="material-symbols-outlined">check</span> Sınırsız ilan</li>
+              <li><span class="material-symbols-outlined">check</span> Online randevu sistemi</li>
+              <li><span class="material-symbols-outlined">check</span> Öncelikli listeleme</li>
+              <li><span class="material-symbols-outlined">check</span> Teklif talebi alma</li>
+              <li><span class="material-symbols-outlined">check</span> Detaylı analitik panel</li>
+              <li><span class="material-symbols-outlined">check</span> Onaylı işletme rozeti</li>
+            </ul>
+            <a href="/giris" class="nc-plan-btn green">Profesyonel Ol</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center pt-4 pb-2">
+      <p class="text-slate-400 text-sm mb-4">İşletmenizi platformumuza ekleyin, binlerce potansiyel müşteriye ulaşın.</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/giris" class="nc-cta-btn green"><span class="material-symbols-outlined" style="font-size:16px">storefront</span> İşletme Kaydı Oluştur</a>
+        <a href="/servis" class="nc-cta-btn outline-w"><span class="material-symbols-outlined" style="font-size:16px">explore</span> Mevcut İşletmeleri Gör</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================ -->
 <!-- SSS -->
-<div class="mt-20">
-<h2 class="text-3xl font-bold text-slate-900 text-center mb-10">Sıkça Sorulan Sorular</h2>
-<div class="space-y-4 max-w-3xl mx-auto">
-<div class="bg-white rounded-xl border border-slate-100 p-5">
-<h4 class="font-bold text-slate-800">İlan vermek ücretli mi?</h4>
-<p class="text-sm text-slate-600 mt-2">Hayır, temel ilan verme tamamen ücretsizdir. Dilerseniz ilanınızı öne çıkararak daha fazla görünürlük elde edebilirsiniz.</p>
+<!-- ============================================ -->
+<div class="mt-10">
+  <div class="flex items-center gap-2 mb-1">
+    <span class="material-symbols-outlined text-slate-400" style="font-size:18px">help</span>
+    <h2 class="text-lg font-bold text-slate-800">Sıkça Sorulan Sorular</h2>
+  </div>
+  <p class="text-xs text-slate-400 mb-5">Merak edilen sorular ve yanıtları</p>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-y-0">
+    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
+      <button class="nc-faq-q">
+        <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
+        <span class="nc-faq-text">İlan vermek ücretli mi?</span>
+      </button>
+      <div class="nc-faq-a">Hayır, bireysel kullanıcılar için temel ilan verme tamamen ücretsizdir. İlanınızı daha fazla kişiye ulaştırmak için öne çıkarma seçeneğini kullanabilirsiniz. İşletme üyeleri ise paketlerine göre ilan haklarına sahiptir.</div>
+    </div>
+    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
+      <button class="nc-faq-q">
+        <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
+        <span class="nc-faq-text">Ekspertiz raporu nasıl alınır?</span>
+      </button>
+      <div class="nc-faq-a">Servis rehberimizden konumunuza en yakın onaylı ekspertiz merkezini bulun. Profil sayfasından online randevu alabilir veya doğrudan iletişime geçebilirsiniz. Ekspertiz raporu; boya ölçümü, mekanik kontrol, hasar geçmişi, motor ve şanzıman durumunu kapsar.</div>
+    </div>
+    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
+      <button class="nc-faq-q">
+        <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
+        <span class="nc-faq-text">Platform komisyon alıyor mu?</span>
+      </button>
+      <div class="nc-faq-a">Araç alım-satım işlemlerinden herhangi bir komisyon alınmamaktadır. Gelir modelimiz, işletme üyelik paketleri ve ilan öne çıkarma gibi premium hizmetlere dayalıdır.</div>
+    </div>
+    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
+      <button class="nc-faq-q">
+        <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
+        <span class="nc-faq-text">İşletme olarak nasıl kayıt olabilirim?</span>
+      </button>
+      <div class="nc-faq-a">Kayıt sayfasından "Kurumsal" hesap tipini seçerek kaydolun. Ardından işletme bilgilerinizi girerek profilinizi oluşturun. Onay sürecinden sonra işletmeniz platformda yayına alınır. Başlangıç paketi ücretsizdir.</div>
+    </div>
+    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
+      <button class="nc-faq-q">
+        <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
+        <span class="nc-faq-text">Randevu sistemi nasıl çalışıyor?</span>
+      </button>
+      <div class="nc-faq-a">Profesyonel paket üyesi işletmeler profil sayfalarında online randevu açabilir. Müşteriler tarih ve saat seçerek randevu talebi gönderir. İşletme panelinden randevuları yönetebilir ve onaylayabilirsiniz.</div>
+    </div>
+    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
+      <button class="nc-faq-q">
+        <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
+        <span class="nc-faq-text">Onaylı işletme rozeti nedir?</span>
+      </button>
+      <div class="nc-faq-a">Onaylı işletme rozeti, işletmenizin gerçek ve güvenilir olduğunu doğrulayan bir etikettir. Profesyonel paket üyelerine verilir. Rozetli işletmeler arama sonuçlarında özel olarak vurgulanır.</div>
+    </div>
+  </div>
 </div>
-<div class="bg-white rounded-xl border border-slate-100 p-5">
-<h4 class="font-bold text-slate-800">Ekspertiz raporu nasıl alınır?</h4>
-<p class="text-sm text-slate-600 mt-2">Servis rehberimizden size en yakın onaylı servisi bulun ve randevu alın. Uzman ekipler aracınızı detaylı olarak inceleyecektir.</p>
+
+<!-- Son CTA -->
+<div class="mt-10 mb-4 text-center">
+  <div class="bg-white border border-slate-200 rounded-18 p-8" style="border-radius:18px">
+    <span class="material-symbols-outlined text-slate-300 mb-3 block" style="font-size:36px">rocket_launch</span>
+    <h3 class="text-base font-bold text-slate-800 mb-2">Hemen Başlayın</h3>
+    <p class="text-xs text-slate-400 mb-5 max-w-md mx-auto">İster araç alın, ister satın, ister işletmenizi tanıtın — tüm ihtiyaçlarınız için tek platform.</p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="/ilan" class="nc-cta-btn dark"><span class="material-symbols-outlined" style="font-size:16px">search</span> İlanlara Göz At</a>
+      <a href="/ilan/ver" class="nc-cta-btn green"><span class="material-symbols-outlined" style="font-size:16px">add</span> İlan Ver</a>
+      <a href="/arac-secim" class="nc-cta-btn" style="background:#f8fafc; color:#1e293b; border:1px solid #e2e8f0;"><span class="material-symbols-outlined" style="font-size:16px">smart_toy</span> Araç Sihirbazı</a>
+    </div>
+  </div>
 </div>
-<div class="bg-white rounded-xl border border-slate-100 p-5">
-<h4 class="font-bold text-slate-800">Platform komisyon alıyor mu?</h4>
-<p class="text-sm text-slate-600 mt-2">Araç alım-satım işlemlerinden herhangi bir komisyon alınmamaktadır. Gelir modelimiz premium hizmetlere dayalıdır.</p>
-</div>
-</div>
-</div>
+
 </main>

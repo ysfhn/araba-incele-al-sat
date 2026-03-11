@@ -25,7 +25,7 @@ tailwind.config = {
 </script>
 <title><%= typeof title !== 'undefined' ? title : 'Araba İncele Al Sat' %></title>
 </head>
-<body class="bg-background-light font-display text-slate-900">
+<body class="bg-background-light font-display text-slate-900" <% if (typeof currentUser !== 'undefined' && currentUser) { %>data-logged-in="<%= currentUser.id %>"<% } %>>
 <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
 <div class="layout-container flex h-full grow flex-col">
 <%- include('../partials/flash') %>

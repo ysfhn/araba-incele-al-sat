@@ -3,11 +3,11 @@ const router = express.Router();
 const { getDb } = require('../db/database');
 
 // Forum Ana Sayfa - GET /forum
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const db = getDb();
   const { kategori } = req.query;
 
-  const categories = db.prepare('SELECT * FROM forum_categories ORDER BY sort_order').all();
+  const categories = await db.prepare('SELECT * FROM forum_categories ORDER BY sort_order').all();
 
   let topicsWhere = '';
   const topicsParams = [];
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
     topicsParams.push(kategori);
   }
 
-  const recentTopics = db.prepare(`
+  const recentTopics = await db.prepare(`
     SELECT ft.*, u.name as author_name, u.avatar as author_avatar, fc.name as category_name, fc.icon as category_icon, fc.color as category_color,
            lu.name as last_reply_name
     FROM forum_topics ft
@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
     LIMIT 20
   `).all(...topicsParams);
 
-  const popularTopics = db.prepare(`
+  const popularTopics = await db.prepare(`
     SELECT ft.*, u.name as author_name, fc.name as category_name
     FROM forum_topics ft
     JOIN users u ON ft.user_id = u.id
@@ -37,9 +37,9 @@ router.get('/', (req, res) => {
   `).all();
 
   const stats = {
-    topics: db.prepare('SELECT COUNT(*) as c FROM forum_topics').get().c,
-    replies: db.prepare('SELECT COUNT(*) as c FROM forum_replies').get().c,
-    users: db.prepare('SELECT COUNT(*) as c FROM users').get().c
+    topics: (await db.prepare('SELECT COUNT(*) as c FROM forum_topics').get()).c,
+    replies: (await db.prepare('SELECT COUNT(*) as c FROM forum_replies').get()).c,
+    users: (await db.prepare('SELECT COUNT(*) as c FROM users').get()).c
   };
 
   res.render('pages/forum', {
@@ -50,14 +50,14 @@ router.get('/', (req, res) => {
 });
 
 // Yeni Konu Form - GET /forum/yeni-konu
-router.get('/yeni-konu', (req, res) => {
+router.get('/yeni-konu', async (req, res) => {
   if (!req.session.user) {
     req.flash('error', 'Konu oluşturmak için giriş yapmalısınız.');
     return res.redirect('/giris');
   }
 
   const db = getDb();
-  const categories = db.prepare('SELECT * FROM forum_categories ORDER BY sort_order').all();
+  const categories = await db.prepare('SELECT * FROM forum_categories ORDER BY sort_order').all();
 
   res.render('pages/forum-konu', {
     title: 'Yeni Konu Oluştur - Forum - Araba İncele Al Sat',
@@ -67,7 +67,7 @@ router.get('/yeni-konu', (req, res) => {
 });
 
 // Yeni Konu Kaydet - POST /forum/yeni-konu
-router.post('/yeni-konu', (req, res) => {
+router.post('/yeni-konu', async (req, res) => {
   if (!req.session.user) {
     req.flash('error', 'Giriş yapmalısınız.');
     return res.redirect('/giris');
@@ -95,19 +95,19 @@ router.post('/yeni-konu', (req, res) => {
     .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g')
     .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now().toString(36);
 
-  db.prepare('INSERT INTO forum_topics (category_id, user_id, title, slug, content) VALUES (?, ?, ?, ?, ?)')
+  await db.prepare('INSERT INTO forum_topics (category_id, user_id, title, slug, content) VALUES (?, ?, ?, ?, ?)')
     .run(category_id, req.session.user.id, title, slug, content);
 
-  db.prepare('UPDATE forum_categories SET topic_count = topic_count + 1 WHERE id = ?').run(category_id);
+  await db.prepare('UPDATE forum_categories SET topic_count = topic_count + 1 WHERE id = ?').run(category_id);
 
   req.flash('success', 'Konunuz oluşturuldu!');
   res.redirect(`/forum/konu/${slug}`);
 });
 
 // Forum Konu Detay - GET /forum/konu/:slug
-router.get('/konu/:slug', (req, res) => {
+router.get('/konu/:slug', async (req, res) => {
   const db = getDb();
-  const topic = db.prepare(`
+  const topic = await db.prepare(`
     SELECT ft.*, u.name as author_name, u.avatar as author_avatar, u.role as author_role,
            u.created_at as author_since, fc.name as category_name, fc.slug as category_slug
     FROM forum_topics ft
@@ -121,9 +121,9 @@ router.get('/konu/:slug', (req, res) => {
   }
 
   // Görüntülenme artır
-  db.prepare('UPDATE forum_topics SET view_count = view_count + 1 WHERE id = ?').run(topic.id);
+  await db.prepare('UPDATE forum_topics SET view_count = view_count + 1 WHERE id = ?').run(topic.id);
 
-  const replies = db.prepare(`
+  const replies = await db.prepare(`
     SELECT fr.*, u.name as author_name, u.avatar as author_avatar, u.role as author_role,
            u.created_at as author_since
     FROM forum_replies fr
@@ -135,12 +135,12 @@ router.get('/konu/:slug', (req, res) => {
   // Kullanıcının beğenileri
   let userLikes = [];
   if (req.session.user) {
-    userLikes = db.prepare(`
+    userLikes = (await db.prepare(`
       SELECT reply_id FROM forum_likes WHERE user_id = ? AND reply_id IN (SELECT id FROM forum_replies WHERE topic_id = ?)
-    `).all(req.session.user.id, topic.id).map(r => r.reply_id);
+    `).all(req.session.user.id, topic.id)).map(r => r.reply_id);
   }
 
-  const relatedTopics = db.prepare(`
+  const relatedTopics = await db.prepare(`
     SELECT ft.*, u.name as author_name
     FROM forum_topics ft
     JOIN users u ON ft.user_id = u.id
@@ -156,14 +156,14 @@ router.get('/konu/:slug', (req, res) => {
 });
 
 // Yeni Yanıt - POST /forum/konu/:slug/yanit
-router.post('/konu/:slug/yanit', (req, res) => {
+router.post('/konu/:slug/yanit', async (req, res) => {
   if (!req.session.user) {
     req.flash('error', 'Yanıt yazmak için giriş yapmalısınız.');
     return res.redirect(`/forum/konu/${req.params.slug}`);
   }
 
   const db = getDb();
-  const topic = db.prepare('SELECT * FROM forum_topics WHERE slug = ?').get(req.params.slug);
+  const topic = await db.prepare('SELECT * FROM forum_topics WHERE slug = ?').get(req.params.slug);
   if (!topic || topic.is_locked) {
     req.flash('error', 'Bu konuya yanıt yazılamaz.');
     return res.redirect('/forum');
@@ -175,13 +175,13 @@ router.post('/konu/:slug/yanit', (req, res) => {
     return res.redirect(`/forum/konu/${req.params.slug}`);
   }
 
-  db.prepare('INSERT INTO forum_replies (topic_id, user_id, content) VALUES (?, ?, ?)').run(topic.id, req.session.user.id, content.trim());
-  db.prepare('UPDATE forum_topics SET reply_count = reply_count + 1, last_reply_at = CURRENT_TIMESTAMP, last_reply_by = ? WHERE id = ?').run(req.session.user.id, topic.id);
-  db.prepare('UPDATE forum_categories SET post_count = post_count + 1 WHERE id = ?').run(topic.category_id);
+  await db.prepare('INSERT INTO forum_replies (topic_id, user_id, content) VALUES (?, ?, ?)').run(topic.id, req.session.user.id, content.trim());
+  await db.prepare('UPDATE forum_topics SET reply_count = reply_count + 1, last_reply_at = CURRENT_TIMESTAMP, last_reply_by = ? WHERE id = ?').run(req.session.user.id, topic.id);
+  await db.prepare('UPDATE forum_categories SET post_count = post_count + 1 WHERE id = ?').run(topic.category_id);
 
   // Konu sahibine bildirim
   if (topic.user_id !== req.session.user.id) {
-    db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'forum', 'Yeni Yanıt', ?, ?)")
+    await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'forum', 'Yeni Yanıt', ?, ?)")
       .run(topic.user_id, `${req.session.user.name} konunuza yanıt yazdı: "${topic.title}"`, `/forum/konu/${topic.slug}`);
   }
 

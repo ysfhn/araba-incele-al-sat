@@ -1,3 +1,6 @@
+// ─── Environment ───
+require('dotenv').config();
+
 const express = require('express');
 const session = require('express-session');
 const flash = require('express-flash');
@@ -5,51 +8,121 @@ const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const helmet = require('helmet');
 const compression = require('compression');
+const cors = require('cors');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
 const { initializeDatabase } = require('./db/database');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
-// Initialize DB
-initializeDatabase();
-
-// View engine
+// ─── View engine ───
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(expressLayouts);
 app.set('layout', 'layouts/main');
 
-// Middleware
+// ─── Proxy güveni (rate-limit ve gerçek IP için) ───
+app.set('trust proxy', 1);
+
+// ─── Temel Middleware ───
 app.use(compression());
 app.use(helmet({
   contentSecurityPolicy: false,
   crossOriginEmbedderPolicy: false,
 }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+// CORS — API erişimi için
+app.use(cors({
+  origin: process.env.BASE_URL || 'http://localhost:3000',
+  credentials: true,
+}));
+
+// HTTP loglama
+if (NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+} else {
+  app.use(morgan('combined'));
+}
+
+// Rate limiting — DDoS ve brute-force koruması
+const limiter = rateLimit({
+  windowMs: (Number(process.env.RATE_LIMIT_WINDOW) || 15) * 60 * 1000,
+  max: Number(process.env.RATE_LIMIT_MAX) || 100,
+  message: { error: 'Çok fazla istek gönderdiniz, lütfen biraz bekleyin.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/api/', limiter);
+
+// Auth endpoint'leri için daha sıkı limit
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { error: 'Çok fazla giriş denemesi, 15 dakika sonra tekrar deneyin.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/auth/', authLimiter);
+
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Session
-const SQLiteStore = require('connect-sqlite3')(session);
-app.use(session({
-  store: new SQLiteStore({ db: 'sessions.sqlite', dir: path.join(__dirname, 'db') }),
-  secret: 'araba-incele-al-sat-secret-key-2024',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 } // 7 gün
-}));
+// ─── Session ───
+let sessionConfig;
+if (NODE_ENV === 'production') {
+  const pgSession = require('connect-pg-simple')(session);
+  const { getPool } = require('./db/pg-wrapper');
+  sessionConfig = {
+    store: new pgSession({
+      pool: getPool(),
+      tableName: 'session',
+      createTableIfMissing: true,
+    }),
+    secret: process.env.SESSION_SECRET || 'fallback-secret-change-me',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+    },
+    name: 'araba.sid',
+  };
+} else {
+  const SQLiteStore = require('connect-sqlite3')(session);
+  sessionConfig = {
+    store: new SQLiteStore({ db: 'sessions.sqlite', dir: path.join(__dirname, 'db') }),
+    secret: process.env.SESSION_SECRET || 'fallback-secret-change-me',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+    },
+    name: 'araba.sid',
+  };
+}
+
+app.use(session(sessionConfig));
 app.use(flash());
 
-// Global template variables
+// ─── Global template değişkenleri ───
 app.use((req, res, next) => {
   res.locals.currentUser = req.session.user || null;
   res.locals.currentPath = req.path;
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
+  res.locals.NODE_ENV = NODE_ENV;
   next();
 });
 
-// Routes
+// ─── Routes ───
 app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/auth'));
 app.use('/api', require('./routes/api'));
@@ -60,20 +133,65 @@ app.use('/kullanici', require('./routes/user'));
 app.use('/isletme', require('./routes/business'));
 app.use('/admin', require('./routes/admin'));
 
-// 404
+// ─── Sağlık kontrolü (monitoring için) ───
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    env: NODE_ENV,
+  });
+});
+
+// ─── 404 ───
 app.use((req, res) => {
   res.status(404).render('pages/404', { title: 'Sayfa Bulunamadı' });
 });
 
-// Error handler
+// ─── Error handler ───
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).render('pages/404', { title: 'Sunucu Hatası' });
+  console.error(`[${new Date().toISOString()}] ❌ ${err.stack}`);
+  const statusCode = err.status || 500;
+  if (req.path.startsWith('/api/')) {
+    return res.status(statusCode).json({
+      error: NODE_ENV === 'production' ? 'Sunucu hatası' : err.message,
+    });
+  }
+  res.status(statusCode).render('pages/404', { title: 'Sunucu Hatası' });
 });
 
-app.listen(PORT, () => {
-  console.log(`\n🚗 Araba İncele Al Sat - http://localhost:${PORT}`);
-  console.log(`📂 Ortam: ${process.env.NODE_ENV || 'development'}\n`);
+// ─── DB başlat & Sunucu (sadece doğrudan çalıştırılırsa) ───
+let dbReady = false;
+const dbReadyPromise = initializeDatabase().then(() => {
+  dbReady = true;
+  console.log('✅ Veritabanı hazır');
+}).catch(err => {
+  console.error('❌ Veritabanı başlatma hatası:', err);
 });
+
+// Vercel serverless: app.listen çalıştırma, sadece export et
+if (!process.env.VERCEL) {
+  dbReadyPromise.then(() => {
+    const server = app.listen(PORT, () => {
+      console.log(`\n🚗 Araba İncele Al Sat - http://localhost:${PORT}`);
+      console.log(`📂 Ortam: ${NODE_ENV}`);
+      console.log(`🛡️  Rate Limit: ${process.env.RATE_LIMIT_MAX || 100} istek / ${process.env.RATE_LIMIT_WINDOW || 15} dk`);
+      console.log(`🔑 Session Secret: ${process.env.SESSION_SECRET ? '✅ .env\'den yüklendi' : '⚠️  Varsayılan kullanılıyor'}\n`);
+    });
+
+    const gracefulShutdown = (signal) => {
+      console.log(`\n🛑 ${signal} sinyali alındı, sunucu kapatılıyor...`);
+      server.close(async () => {
+        const { closeDatabase } = require('./db/database');
+        await closeDatabase();
+        console.log('✅ Bağlantılar kapatıldı, çıkış yapılıyor.');
+        process.exit(0);
+      });
+    };
+
+    process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+    process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+  });
+}
 
 module.exports = app;

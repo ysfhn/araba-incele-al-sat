@@ -1,0 +1,11 @@
+node_modules
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+sessions.sqlite
+.env
+.git
+scripts/
+src/routes-backup/
+*.html
+knexfile.js

@@ -4,7 +4,7 @@ const { getDb } = require('../db/database');
 const { isAuthenticated } = require('../middleware/auth');
 
 // İlan Listesi - GET /ilan
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const db = getDb();
   const { marka, model, yil_min, yil_max, fiyat_min, fiyat_max, yakit, vites, sehir, siralama, sayfa } = req.query;
 
@@ -31,14 +31,14 @@ router.get('/', (req, res) => {
   const limit = 12;
   const offset = (page - 1) * limit;
 
-  const totalCount = db.prepare(`
+  const totalCount = (await db.prepare(`
     SELECT COUNT(*) as count FROM listings l
     JOIN brands b ON l.brand_id = b.id
     JOIN models m ON l.model_id = m.id
     ${where}
-  `).get(...params).count;
+  `).get(...params)).count;
 
-  const listings = db.prepare(`
+  const listings = await db.prepare(`
     SELECT l.*, b.name as brand_name, m.name as model_name,
            (SELECT url FROM listing_images WHERE listing_id = l.id AND is_primary = 1 LIMIT 1) as image
     FROM listings l
@@ -48,8 +48,8 @@ router.get('/', (req, res) => {
     LIMIT ? OFFSET ?
   `).all(...params, limit, offset);
 
-  const brands = db.prepare('SELECT * FROM brands ORDER BY name').all();
-  const cities = db.prepare("SELECT DISTINCT city FROM listings WHERE status='active' AND city IS NOT NULL ORDER BY city").all().map(r => r.city);
+  const brands = await db.prepare('SELECT * FROM brands ORDER BY name').all();
+  const cities = (await db.prepare("SELECT DISTINCT city FROM listings WHERE status='active' AND city IS NOT NULL ORDER BY city").all()).map(r => r.city);
 
   const totalPages = Math.ceil(totalCount / limit);
 
@@ -61,14 +61,14 @@ router.get('/', (req, res) => {
 });
 
 // İlan Ver Form - GET /ilan/ver
-router.get('/ver', isAuthenticated, (req, res) => {
+router.get('/ver', isAuthenticated, async (req, res) => {
   const db = getDb();
-  const brands = db.prepare('SELECT * FROM brands ORDER BY name').all();
+  const brands = await db.prepare('SELECT * FROM brands ORDER BY name').all();
   res.render('pages/ilan-ver', { title: 'İlan Ver - Araba İncele Al Sat', brands, editMode: false, listing: null, models: [], features: [], images: [] });
 });
 
 // İlan Kaydet - POST /ilan/ver
-router.post('/ver', isAuthenticated, (req, res) => {
+router.post('/ver', isAuthenticated, async (req, res) => {
   const db = getDb();
   const { brand_id, model_id, year, km, fuel_type, transmission, hp, color, price, description, title } = req.body;
 
@@ -77,30 +77,30 @@ router.post('/ver', isAuthenticated, (req, res) => {
     return res.redirect('/ilan/ver');
   }
 
-  const brand = db.prepare('SELECT * FROM brands WHERE id = ?').get(brand_id);
-  const model = db.prepare('SELECT * FROM models WHERE id = ?').get(model_id);
+  const brand = await db.prepare('SELECT * FROM brands WHERE id = ?').get(brand_id);
+  const model = await db.prepare('SELECT * FROM models WHERE id = ?').get(model_id);
 
   const autoTitle = title || `${year} ${brand.name} ${model.name}`;
   const slug = autoTitle.toLowerCase()
     .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g')
     .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now().toString(36);
 
-  const result = db.prepare(`
+  const result = await db.prepare(`
     INSERT INTO listings (user_id, brand_id, model_id, title, slug, year, km, fuel_type, transmission, hp, color, price, description, city, status)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
   `).run(req.session.user.id, brand_id, model_id, autoTitle, slug, year, km || 0, fuel_type, transmission, hp || null, color || null, price, description || null, req.body.city || null);
 
   // Placeholder görsel ekle
-  db.prepare('INSERT INTO listing_images (listing_id, url, is_primary) VALUES (?, ?, 1)').run(result.lastInsertRowid, '/images/car-placeholder.svg');
+  await db.prepare('INSERT INTO listing_images (listing_id, url, is_primary) VALUES (?, ?, 1)').run(result.lastInsertRowid, '/images/car-placeholder.svg');
 
   req.flash('success', 'İlanınız başarıyla oluşturuldu!');
   res.redirect(`/ilan/${slug}`);
 });
 
 // İlan Düzenle Form - GET /ilan/:slug/duzenle
-router.get('/:slug/duzenle', isAuthenticated, (req, res) => {
+router.get('/:slug/duzenle', isAuthenticated, async (req, res) => {
   const db = getDb();
-  const listing = db.prepare(`
+  const listing = await db.prepare(`
     SELECT l.*, b.name as brand_name, m.name as model_name
     FROM listings l JOIN brands b ON l.brand_id = b.id JOIN models m ON l.model_id = m.id
     WHERE l.slug = ?
@@ -112,10 +112,10 @@ router.get('/:slug/duzenle', isAuthenticated, (req, res) => {
     return res.redirect(`/ilan/${req.params.slug}`);
   }
 
-  const brands = db.prepare('SELECT * FROM brands ORDER BY name').all();
-  const models = db.prepare('SELECT * FROM models WHERE brand_id = ? ORDER BY name').all(listing.brand_id);
-  const features = db.prepare('SELECT feature FROM listing_features WHERE listing_id = ?').all(listing.id).map(r => r.feature);
-  const images = db.prepare('SELECT * FROM listing_images WHERE listing_id = ? ORDER BY sort_order').all(listing.id);
+  const brands = await db.prepare('SELECT * FROM brands ORDER BY name').all();
+  const models = await db.prepare('SELECT * FROM models WHERE brand_id = ? ORDER BY name').all(listing.brand_id);
+  const features = (await db.prepare('SELECT feature FROM listing_features WHERE listing_id = ?').all(listing.id)).map(r => r.feature);
+  const images = await db.prepare('SELECT * FROM listing_images WHERE listing_id = ? ORDER BY sort_order').all(listing.id);
 
   res.render('pages/ilan-ver', {
     title: 'İlan Düzenle - Araba İncele Al Sat',
@@ -124,9 +124,9 @@ router.get('/:slug/duzenle', isAuthenticated, (req, res) => {
 });
 
 // İlan Düzenle Kaydet - POST /ilan/:slug/duzenle
-router.post('/:slug/duzenle', isAuthenticated, (req, res) => {
+router.post('/:slug/duzenle', isAuthenticated, async (req, res) => {
   const db = getDb();
-  const listing = db.prepare('SELECT * FROM listings WHERE slug = ?').get(req.params.slug);
+  const listing = await db.prepare('SELECT * FROM listings WHERE slug = ?').get(req.params.slug);
 
   if (!listing) return res.status(404).render('pages/404', { title: 'İlan Bulunamadı' });
   if (listing.user_id !== req.session.user.id && req.session.user.role !== 'admin') {
@@ -136,7 +136,7 @@ router.post('/:slug/duzenle', isAuthenticated, (req, res) => {
 
   const { brand_id, model_id, year, km, fuel_type, transmission, hp, color, price, description, title, city } = req.body;
 
-  db.prepare(`
+  await db.prepare(`
     UPDATE listings SET brand_id=?, model_id=?, year=?, km=?, fuel_type=?, transmission=?, hp=?, color=?, price=?, description=?, title=?, city=?, updated_at=CURRENT_TIMESTAMP
     WHERE id=?
   `).run(brand_id, model_id, year, km || 0, fuel_type, transmission, hp || null, color || null, price, description || null, title, city || null, listing.id);
@@ -144,10 +144,10 @@ router.post('/:slug/duzenle', isAuthenticated, (req, res) => {
   // Özellikleri güncelle
   const features = req.body.features;
   if (features) {
-    db.prepare('DELETE FROM listing_features WHERE listing_id = ?').run(listing.id);
+    await db.prepare('DELETE FROM listing_features WHERE listing_id = ?').run(listing.id);
     const featureArr = Array.isArray(features) ? features : [features];
     const insertFeature = db.prepare('INSERT INTO listing_features (listing_id, feature) VALUES (?, ?)');
-    featureArr.forEach(f => { if (f.trim()) insertFeature.run(listing.id, f.trim()); });
+    for (const f of featureArr) { if (f.trim()) await insertFeature.run(listing.id, f.trim()); }
   }
 
   req.flash('success', 'İlan güncellendi!');
@@ -155,69 +155,69 @@ router.post('/:slug/duzenle', isAuthenticated, (req, res) => {
 });
 
 // İlan Satıldı İşaretle - POST /ilan/:slug/satildi
-router.post('/:slug/satildi', isAuthenticated, (req, res) => {
+router.post('/:slug/satildi', isAuthenticated, async (req, res) => {
   const db = getDb();
-  const listing = db.prepare('SELECT * FROM listings WHERE slug = ?').get(req.params.slug);
+  const listing = await db.prepare('SELECT * FROM listings WHERE slug = ?').get(req.params.slug);
   if (!listing || (listing.user_id !== req.session.user.id && req.session.user.role !== 'admin')) {
     req.flash('error', 'Yetkiniz yok.');
     return res.redirect('/kullanici/ilanlarim');
   }
 
-  db.prepare("UPDATE listings SET status = 'sold', updated_at = CURRENT_TIMESTAMP WHERE id = ?").run(listing.id);
+  await db.prepare("UPDATE listings SET status = 'sold', updated_at = CURRENT_TIMESTAMP WHERE id = ?").run(listing.id);
   req.flash('success', 'İlan "Satıldı" olarak işaretlendi!');
   res.redirect('/kullanici/ilanlarim');
 });
 
 // İlan Sil - POST /ilan/:slug/sil
-router.post('/:slug/sil', isAuthenticated, (req, res) => {
+router.post('/:slug/sil', isAuthenticated, async (req, res) => {
   const db = getDb();
-  const listing = db.prepare('SELECT * FROM listings WHERE slug = ?').get(req.params.slug);
+  const listing = await db.prepare('SELECT * FROM listings WHERE slug = ?').get(req.params.slug);
   if (!listing || (listing.user_id !== req.session.user.id && req.session.user.role !== 'admin')) {
     req.flash('error', 'Yetkiniz yok.');
     return res.redirect('/kullanici/ilanlarim');
   }
 
-  db.prepare('DELETE FROM listing_images WHERE listing_id = ?').run(listing.id);
-  db.prepare('DELETE FROM listing_features WHERE listing_id = ?').run(listing.id);
-  db.prepare('DELETE FROM favorites WHERE listing_id = ?').run(listing.id);
-  db.prepare('DELETE FROM listings WHERE id = ?').run(listing.id);
+  await db.prepare('DELETE FROM listing_images WHERE listing_id = ?').run(listing.id);
+  await db.prepare('DELETE FROM listing_features WHERE listing_id = ?').run(listing.id);
+  await db.prepare('DELETE FROM favorites WHERE listing_id = ?').run(listing.id);
+  await db.prepare('DELETE FROM listings WHERE id = ?').run(listing.id);
 
   req.flash('success', 'İlan silindi!');
   res.redirect('/kullanici/ilanlarim');
 });
 
 // İlan Yayından Kaldır - POST /ilan/:slug/pasif
-router.post('/:slug/pasif', isAuthenticated, (req, res) => {
+router.post('/:slug/pasif', isAuthenticated, async (req, res) => {
   const db = getDb();
-  const listing = db.prepare('SELECT * FROM listings WHERE slug = ?').get(req.params.slug);
+  const listing = await db.prepare('SELECT * FROM listings WHERE slug = ?').get(req.params.slug);
   if (!listing || (listing.user_id !== req.session.user.id && req.session.user.role !== 'admin')) {
     req.flash('error', 'Yetkiniz yok.');
     return res.redirect('/kullanici/ilanlarim');
   }
 
-  db.prepare("UPDATE listings SET status = 'draft', updated_at = CURRENT_TIMESTAMP WHERE id = ?").run(listing.id);
+  await db.prepare("UPDATE listings SET status = 'draft', updated_at = CURRENT_TIMESTAMP WHERE id = ?").run(listing.id);
   req.flash('success', 'İlan yayından kaldırıldı.');
   res.redirect('/kullanici/ilanlarim');
 });
 
 // İlan Tekrar Yayınla - POST /ilan/:slug/yayin
-router.post('/:slug/yayin', isAuthenticated, (req, res) => {
+router.post('/:slug/yayin', isAuthenticated, async (req, res) => {
   const db = getDb();
-  const listing = db.prepare('SELECT * FROM listings WHERE slug = ?').get(req.params.slug);
+  const listing = await db.prepare('SELECT * FROM listings WHERE slug = ?').get(req.params.slug);
   if (!listing || (listing.user_id !== req.session.user.id && req.session.user.role !== 'admin')) {
     req.flash('error', 'Yetkiniz yok.');
     return res.redirect('/kullanici/ilanlarim');
   }
 
-  db.prepare("UPDATE listings SET status = 'active', updated_at = CURRENT_TIMESTAMP WHERE id = ?").run(listing.id);
+  await db.prepare("UPDATE listings SET status = 'active', updated_at = CURRENT_TIMESTAMP WHERE id = ?").run(listing.id);
   req.flash('success', 'İlan tekrar yayınlandı!');
   res.redirect('/kullanici/ilanlarim');
 });
 
 // İlan Detay - GET /ilan/:slug
-router.get('/:slug', (req, res) => {
+router.get('/:slug', async (req, res) => {
   const db = getDb();
-  const listing = db.prepare(`
+  const listing = await db.prepare(`
     SELECT l.*, b.name as brand_name, b.slug as brand_slug, m.name as model_name, m.slug as model_slug,
            u.name as seller_name, u.phone as seller_phone, u.email as seller_email,
            u.created_at as seller_since, u.role as seller_role
@@ -233,15 +233,15 @@ router.get('/:slug', (req, res) => {
   }
 
   // Görüntülenme sayısını artır
-  db.prepare('UPDATE listings SET view_count = view_count + 1 WHERE id = ?').run(listing.id);
+  await db.prepare('UPDATE listings SET view_count = view_count + 1 WHERE id = ?').run(listing.id);
 
-  const images = db.prepare('SELECT * FROM listing_images WHERE listing_id = ? ORDER BY sort_order').all(listing.id);
-  const features = db.prepare('SELECT feature FROM listing_features WHERE listing_id = ?').all(listing.id).map(r => r.feature);
+  const images = await db.prepare('SELECT * FROM listing_images WHERE listing_id = ? ORDER BY sort_order').all(listing.id);
+  const features = (await db.prepare('SELECT feature FROM listing_features WHERE listing_id = ?').all(listing.id)).map(r => r.feature);
 
   const isFavorited = req.session.user ?
-    !!db.prepare('SELECT id FROM favorites WHERE user_id = ? AND listing_id = ?').get(req.session.user.id, listing.id) : false;
+    !!await db.prepare('SELECT id FROM favorites WHERE user_id = ? AND listing_id = ?').get(req.session.user.id, listing.id) : false;
 
-  const similarListings = db.prepare(`
+  const similarListings = await db.prepare(`
     SELECT l.*, b.name as brand_name, m.name as model_name,
            (SELECT url FROM listing_images WHERE listing_id = l.id AND is_primary = 1 LIMIT 1) as image
     FROM listings l
@@ -252,7 +252,7 @@ router.get('/:slug', (req, res) => {
   `).all(listing.id, listing.brand_id, listing.model_id, listing.price);
 
   // Satıcının diğer ilanları
-  const sellerListings = db.prepare(`
+  const sellerListings = await db.prepare(`
     SELECT l.*, b.name as brand_name, m.name as model_name,
            (SELECT url FROM listing_images WHERE listing_id = l.id AND is_primary = 1 LIMIT 1) as image
     FROM listings l

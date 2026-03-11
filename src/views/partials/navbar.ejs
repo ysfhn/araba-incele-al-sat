@@ -1,63 +1,198 @@
-<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 bg-white px-6 md:px-10 py-3 sticky top-0 z-50">
-  <div class="flex items-center gap-8">
-    <a href="/" class="flex items-center gap-2 text-primary">
-      <span class="material-symbols-outlined text-3xl font-bold">directions_car</span>
-      <h2 class="text-slate-900 text-lg font-bold leading-tight tracking-tight">Araba İncele Al Sat</h2>
-    </a>
-    <nav class="hidden lg:flex items-center gap-8">
-      <a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors <%= currentPath.startsWith('/ilan') ? 'text-primary' : '' %>" href="/ilan">İlanlar</a>
-      <a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors <%= currentPath.startsWith('/servis') ? 'text-primary' : '' %>" href="/servis">Servisler</a>
-      <a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors <%= currentPath.startsWith('/forum') ? 'text-primary' : '' %>" href="/forum">Forum</a>
-      <a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors <%= currentPath.startsWith('/arac') ? 'text-primary' : '' %>" href="/arac-secim">Araç Hub</a>
-      <a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="/nasil-calisir">Nasıl Çalışır</a>
-    </nav>
-  </div>
-  <div class="flex flex-1 justify-end gap-4 items-center">
-    <div class="hidden md:flex items-center bg-slate-100 rounded-xl px-3 py-1.5 border border-slate-200">
-      <span class="material-symbols-outlined text-slate-500 text-xl">search</span>
-      <input id="globalSearch" class="bg-transparent border-none focus:ring-0 text-sm w-48 placeholder:text-slate-400" placeholder="Hızlı ara..." autocomplete="off"/>
-    </div>
-    <div id="searchResults" class="hidden absolute top-full right-0 mt-1 w-96 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-96 overflow-y-auto"></div>
-    <div class="flex gap-2">
-      <% if (currentUser) { %>
-        <a href="/ilan/ver" class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-slate-100 text-slate-900 text-sm font-bold border border-slate-200 hover:bg-slate-200 transition-all">
-          <span class="material-symbols-outlined text-sm mr-1">add</span> İlan Ver
+<style>
+  .nav-header { background:#fff; border-bottom:1px solid #e2e8f0; position:sticky; top:0; z-index:50; }
+  .nav-inner { max-width:1200px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px; }
+  .nav-logo img { height:44px; width:auto; display:block; }
+  .nav-links { display:none; align-items:center; gap:2px; }
+  .nav-link { font-size:13px; font-weight:500; color:#475569; padding:7px 14px; border-radius:8px; transition:all .15s; text-decoration:none; white-space:nowrap; }
+  .nav-link:hover { color:#1e293b; background:#f1f5f9; }
+  .nav-link.active { color:#1775d3; background:#eff6ff; font-weight:600; }
+  .nav-right { display:flex; align-items:center; gap:8px; }
+  .nav-search { display:none; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:0 12px; height:36px; transition:all .2s; position:relative; }
+  .nav-search:focus-within { border-color:#1775d3; background:#fff; box-shadow:0 0 0 3px rgba(23,117,211,0.08); }
+  .nav-search input { background:transparent; border:none; outline:none; font-size:13px; width:180px; color:#1e293b; }
+  .nav-search input::placeholder { color:#94a3b8; }
+  .nav-search-icon { font-size:18px; color:#94a3b8; margin-right:6px; }
+  .nav-btn { display:flex; align-items:center; justify-content:center; height:36px; border-radius:10px; font-size:13px; font-weight:600; padding:0 14px; border:none; cursor:pointer; transition:all .15s; text-decoration:none; white-space:nowrap; gap:5px; }
+  .nav-btn-icon { display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:1px solid #e2e8f0; background:#f8fafc; color:#64748b; cursor:pointer; transition:all .15s; text-decoration:none; position:relative; }
+  .nav-btn-icon:hover { background:#f1f5f9; border-color:#cbd5e1; color:#1e293b; }
+  .nav-btn-icon .material-symbols-outlined { font-size:18px; }
+  .nav-btn-ghost { background:#f8fafc; color:#1e293b; border:1px solid #e2e8f0; }
+  .nav-btn-ghost:hover { background:#f1f5f9; border-color:#cbd5e1; }
+  .nav-btn-primary { background:#1775d3; color:#fff; border:1px solid #1775d3; }
+  .nav-btn-primary:hover { background:#1565c0; }
+  .nav-badge { position:absolute; top:-4px; right:-4px; background:#ef4444; color:#fff; font-size:10px; font-weight:700; border-radius:50px; min-width:17px; height:17px; display:flex; align-items:center; justify-content:center; padding:0 4px; line-height:1; border:2px solid #fff; }
+  .nav-badge-blue { background:#3b82f6; }
+  .nav-divider { width:1px; height:24px; background:#e2e8f0; margin:0 4px; }
+
+  /* Mobile hamburger */
+  .nav-hamburger { display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:none; background:transparent; cursor:pointer; color:#475569; }
+  .nav-hamburger:hover { background:#f1f5f9; }
+  .nav-hamburger .material-symbols-outlined { font-size:22px; }
+
+  /* Mobile menu */
+  .nav-mobile { display:none; position:fixed; top:56px; left:0; right:0; bottom:0; background:rgba(15,23,42,0.4); z-index:49; backdrop-filter:blur(2px); }
+  .nav-mobile.open { display:block; }
+  .nav-mobile-inner { background:#fff; border-bottom:1px solid #e2e8f0; padding:16px 20px 20px; box-shadow:0 8px 30px rgba(0,0,0,0.1); max-height:calc(100vh - 56px); overflow-y:auto; }
+  .nav-mobile-link { display:flex; align-items:center; gap:10px; font-size:14px; font-weight:500; color:#475569; padding:11px 14px; border-radius:10px; text-decoration:none; transition:all .15s; }
+  .nav-mobile-link:hover, .nav-mobile-link.active { background:#f1f5f9; color:#1775d3; }
+  .nav-mobile-link .material-symbols-outlined { font-size:20px; color:#94a3b8; }
+  .nav-mobile-link.active .material-symbols-outlined { color:#1775d3; }
+  .nav-mobile-divider { height:1px; background:#f1f5f9; margin:10px 0; }
+  .nav-mobile-search { display:flex; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:0 14px; height:40px; margin-bottom:12px; }
+  .nav-mobile-search input { background:transparent; border:none; outline:none; font-size:14px; width:100%; color:#1e293b; }
+  .nav-mobile-search input::placeholder { color:#94a3b8; }
+  .nav-mobile-search .material-symbols-outlined { font-size:18px; color:#94a3b8; margin-right:8px; }
+
+  @media (min-width:768px) { .nav-search { display:flex; } .nav-hamburger-wrap { display:none; } }
+  @media (min-width:1024px) { .nav-links { display:flex; } }
+</style>
+
+<header class="nav-header">
+  <div class="nav-inner">
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <a href="/" class="nav-logo">
+        <img src="/images/logo.png" alt="arabaincele.com" />
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="nav-links">
+        <a class="nav-link <%= currentPath.startsWith('/ilan') ? 'active' : '' %>" href="/ilan">
+          <span class="material-symbols-outlined" style="font-size:16px; vertical-align:-3px; margin-right:3px;">directions_car</span>İlanlar
         </a>
+        <a class="nav-link <%= currentPath.startsWith('/servis') ? 'active' : '' %>" href="/servis">Servisler</a>
+        <a class="nav-link <%= currentPath.startsWith('/forum') ? 'active' : '' %>" href="/forum">Forum</a>
+        <a class="nav-link <%= currentPath.startsWith('/arac') ? 'active' : '' %>" href="/arac-secim">Araç Hub</a>
+        <a class="nav-link <%= currentPath === '/nasil-calisir' ? 'active' : '' %>" href="/nasil-calisir">Nasıl Çalışır</a>
+      </nav>
+    </div>
+
+    <!-- Right side -->
+    <div class="nav-right">
+      <!-- Search -->
+      <div class="nav-search" style="position:relative;">
+        <span class="material-symbols-outlined nav-search-icon">search</span>
+        <input id="globalSearch" placeholder="Araç, marka veya model ara..." autocomplete="off"/>
+        <div id="searchResults" class="hidden absolute top-full left-0 mt-2 w-80 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-80 overflow-y-auto"></div>
+      </div>
+
+      <% if (currentUser) { %>
+        <div class="nav-divider hidden md:block"></div>
+
+        <!-- İlan Ver -->
+        <a href="/ilan/ver" class="nav-btn nav-btn-ghost hidden sm:flex">
+          <span class="material-symbols-outlined" style="font-size:16px">add_circle</span> İlan Ver
+        </a>
+
         <!-- Bildirimler -->
         <div class="relative">
-          <button id="notificationBtn" class="flex items-center justify-center rounded-xl h-10 w-10 bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 transition-all relative">
-            <span class="material-symbols-outlined text-sm">notifications</span>
-            <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center hidden">0</span>
+          <button id="notificationBtn" class="nav-btn-icon" title="Bildirimler">
+            <span class="material-symbols-outlined">notifications</span>
+            <span id="notificationBadge" class="nav-badge hidden">0</span>
           </button>
           <div id="notificationDropdown" class="hidden absolute right-0 top-full mt-2 w-80 bg-white border border-slate-200 rounded-xl shadow-xl z-50 max-h-96 overflow-y-auto"></div>
         </div>
+
         <!-- Mesajlar -->
-        <a href="/kullanici/mesajlar" class="flex items-center justify-center rounded-xl h-10 w-10 bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 transition-all relative">
-          <span class="material-symbols-outlined text-sm">chat</span>
-          <span id="unreadMessageBadge" class="absolute -top-1 -right-1 bg-blue-500 text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center hidden">0</span>
+        <a href="/kullanici/mesajlar" class="nav-btn-icon" title="Mesajlar">
+          <span class="material-symbols-outlined">chat_bubble</span>
+          <span id="unreadMessageBadge" class="nav-badge nav-badge-blue hidden">0</span>
         </a>
+
+        <!-- Panel -->
         <% if (currentUser.role === 'admin') { %>
-          <a href="/admin" class="flex items-center justify-center rounded-xl h-10 px-4 bg-slate-100 text-slate-900 text-sm font-bold border border-slate-200 hover:bg-slate-200">
-            <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
+          <a href="/admin/panel" class="nav-btn-icon hidden sm:flex" title="Admin Paneli">
+            <span class="material-symbols-outlined">admin_panel_settings</span>
           </a>
         <% } else if (currentUser.role === 'kurumsal') { %>
-          <a href="/isletme" class="flex items-center justify-center rounded-xl h-10 px-4 bg-slate-100 text-slate-900 text-sm font-bold border border-slate-200 hover:bg-slate-200">
-            <span class="material-symbols-outlined text-sm">store</span>
+          <a href="/isletme/panel" class="nav-btn-icon hidden sm:flex" title="İşletme Paneli">
+            <span class="material-symbols-outlined">storefront</span>
           </a>
         <% } else { %>
-          <a href="/kullanici/panel" class="flex items-center justify-center rounded-xl h-10 px-4 bg-slate-100 text-slate-900 text-sm font-bold border border-slate-200 hover:bg-slate-200">
-            <span class="material-symbols-outlined text-sm">person</span>
+          <a href="/kullanici/panel" class="nav-btn-icon hidden sm:flex" title="Hesabım">
+            <span class="material-symbols-outlined">person</span>
           </a>
         <% } %>
-        <a href="/auth/cikis" class="flex items-center justify-center rounded-xl h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
-          <span class="material-symbols-outlined text-sm mr-1">logout</span> Çıkış
+
+        <a href="/auth/cikis" class="nav-btn nav-btn-primary hidden sm:flex" title="Çıkış">
+          <span class="material-symbols-outlined" style="font-size:16px">logout</span>
+          <span class="hidden md:inline">Çıkış</span>
         </a>
       <% } else { %>
-        <a href="/giris" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">Giriş Yap</a>
-        <a href="/ilan/ver" class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-slate-100 text-slate-900 text-sm font-bold border border-slate-200 hover:bg-slate-200 transition-all">
-          <span class="material-symbols-outlined text-sm mr-1">add</span> İlan Ver
+        <a href="/giris" class="nav-btn nav-btn-primary">Giriş Yap</a>
+        <a href="/ilan/ver" class="nav-btn nav-btn-ghost hidden sm:flex">
+          <span class="material-symbols-outlined" style="font-size:16px">add_circle</span> İlan Ver
         </a>
       <% } %>
+
+      <!-- Mobile hamburger -->
+      <div class="nav-hamburger-wrap lg:hidden">
+        <button class="nav-hamburger" onclick="document.getElementById('mobileNav').classList.toggle('open'); this.querySelector('.material-symbols-outlined').textContent = document.getElementById('mobileNav').classList.contains('open') ? 'close' : 'menu';">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
     </div>
   </div>
 </header>
+
+<!-- Mobile Navigation -->
+<div id="mobileNav" class="nav-mobile" onclick="if(event.target===this){this.classList.remove('open'); document.querySelector('.nav-hamburger .material-symbols-outlined').textContent='menu';}">
+  <div class="nav-mobile-inner">
+    <!-- Mobile Search -->
+    <div class="nav-mobile-search md:hidden">
+      <span class="material-symbols-outlined">search</span>
+      <input placeholder="Araç, marka veya model ara..." autocomplete="off" oninput="document.getElementById('globalSearch').value=this.value; document.getElementById('globalSearch').dispatchEvent(new Event('input'));"/>
+    </div>
+
+    <a class="nav-mobile-link <%= currentPath.startsWith('/ilan') && !currentPath.startsWith('/ilan/ver') ? 'active' : '' %>" href="/ilan">
+      <span class="material-symbols-outlined">directions_car</span> İlanlar
+    </a>
+    <a class="nav-mobile-link <%= currentPath.startsWith('/servis') ? 'active' : '' %>" href="/servis">
+      <span class="material-symbols-outlined">build</span> Servisler
+    </a>
+    <a class="nav-mobile-link <%= currentPath.startsWith('/forum') ? 'active' : '' %>" href="/forum">
+      <span class="material-symbols-outlined">forum</span> Forum
+    </a>
+    <a class="nav-mobile-link <%= currentPath.startsWith('/arac') ? 'active' : '' %>" href="/arac-secim">
+      <span class="material-symbols-outlined">hub</span> Araç Hub
+    </a>
+    <a class="nav-mobile-link <%= currentPath === '/nasil-calisir' ? 'active' : '' %>" href="/nasil-calisir">
+      <span class="material-symbols-outlined">help</span> Nasıl Çalışır
+    </a>
+
+    <div class="nav-mobile-divider"></div>
+
+    <% if (currentUser) { %>
+      <a class="nav-mobile-link" href="/ilan/ver">
+        <span class="material-symbols-outlined">add_circle</span> İlan Ver
+      </a>
+      <% if (currentUser.role === 'admin') { %>
+        <a class="nav-mobile-link" href="/admin/panel">
+          <span class="material-symbols-outlined">admin_panel_settings</span> Admin Paneli
+        </a>
+      <% } else if (currentUser.role === 'kurumsal') { %>
+        <a class="nav-mobile-link" href="/isletme/panel">
+          <span class="material-symbols-outlined">storefront</span> İşletme Paneli
+        </a>
+      <% } else { %>
+        <a class="nav-mobile-link" href="/kullanici/panel">
+          <span class="material-symbols-outlined">person</span> Hesabım
+        </a>
+      <% } %>
+      <a class="nav-mobile-link" href="/kullanici/mesajlar">
+        <span class="material-symbols-outlined">chat_bubble</span> Mesajlarım
+      </a>
+      <div class="nav-mobile-divider"></div>
+      <a class="nav-mobile-link" href="/auth/cikis" style="color:#ef4444;">
+        <span class="material-symbols-outlined" style="color:#ef4444;">logout</span> Çıkış Yap
+      </a>
+    <% } else { %>
+      <a class="nav-mobile-link" href="/giris">
+        <span class="material-symbols-outlined">login</span> Giriş Yap
+      </a>
+      <a class="nav-mobile-link" href="/ilan/ver">
+        <span class="material-symbols-outlined">add_circle</span> İlan Ver
+      </a>
+    <% } %>
+  </div>
+</div>

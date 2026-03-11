@@ -1,86 +1,334 @@
-<main class="container mx-auto px-6 py-8">
-<div class="flex items-center text-sm text-slate-500 mb-6 gap-1">
-<a href="/" class="hover:text-primary">Ana Sayfa</a><span>/</span><span class="text-slate-800 font-medium">Forum</span>
+<%
+function timeAgo(d) {
+  const s = Math.floor((Date.now() - new Date(d)) / 1000);
+  if (s < 60) return 'az önce';
+  if (s < 3600) return Math.floor(s/60) + ' dk önce';
+  if (s < 86400) return Math.floor(s/3600) + ' saat önce';
+  if (s < 604800) return Math.floor(s/86400) + ' gün önce';
+  return new Date(d).toLocaleDateString('tr-TR');
+}
+%>
+
+<style>
+/* ═══ FORUM HERO ═══ */
+.forum-hero {
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+}
+.forum-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+}
+.forum-hero-glow {
+  position: absolute; width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+  top: -200px; right: -100px;
+}
+
+/* ═══ KATEGORİ KARTLARI ═══ */
+.forum-cat-card {
+  position: relative; border-radius: 16px; padding: 20px;
+  background: white; border: 1px solid #e2e8f0;
+  transition: all .25s ease; cursor: pointer; overflow: hidden;
+  text-decoration: none; display: block;
+}
+.forum-cat-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--cat-color); opacity: 0; transition: opacity .25s;
+}
+.forum-cat-card:hover, .forum-cat-card.active {
+  border-color: var(--cat-color); transform: translateY(-2px);
+  box-shadow: 0 8px 25px -8px rgba(0,0,0,0.1);
+}
+.forum-cat-card:hover::after, .forum-cat-card.active::after { opacity: 1; }
+.forum-cat-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 22px; flex-shrink: 0;
+}
+
+/* ═══ KONU KARTLARI ═══ */
+.forum-topic-card {
+  background: white; border: 1px solid #e2e8f0; border-radius: 16px;
+  padding: 20px; display: flex; gap: 16px; align-items: flex-start;
+  transition: all .2s ease; text-decoration: none;
+}
+.forum-topic-card:hover {
+  border-color: #6366f1; transform: translateY(-1px);
+  box-shadow: 0 8px 20px -8px rgba(99,102,241,0.15);
+}
+.forum-topic-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 16px; flex-shrink: 0;
+}
+.forum-reply-box {
+  min-width: 56px; text-align: center; border-radius: 12px;
+  padding: 8px 6px; flex-shrink: 0;
+}
+.forum-reply-box.has-replies { background: #eef2ff; color: #4f46e5; }
+.forum-reply-box.no-replies { background: #f1f5f9; color: #94a3b8; }
+.forum-pinned-badge {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  color: #92400e; font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 20px;
+  display: inline-flex; align-items: center; gap: 3px;
+}
+
+/* ═══ SIDEBAR ═══ */
+.forum-sidebar-card {
+  background: white; border: 1px solid #e2e8f0; border-radius: 16px;
+  overflow: hidden;
+}
+.forum-sidebar-header {
+  padding: 16px 20px; border-bottom: 1px solid #f1f5f9;
+  background: linear-gradient(135deg, #f8fafc, white);
+}
+.forum-popular-item {
+  display: flex; gap: 12px; padding: 12px 16px;
+  transition: background .15s; border-bottom: 1px solid #f8fafc;
+  text-decoration: none;
+}
+.forum-popular-item:hover { background: #f8fafc; }
+.forum-popular-item:last-child { border-bottom: none; }
+.forum-rank {
+  width: 28px; height: 28px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; flex-shrink: 0;
+}
+
+/* ═══ YENİ KONU BUTONU ═══ */
+.forum-new-topic-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white; font-weight: 700; font-size: 14px;
+  padding: 12px 24px; border-radius: 14px;
+  transition: all .2s; box-shadow: 0 4px 15px -3px rgba(99,102,241,0.4);
+  text-decoration: none;
+}
+.forum-new-topic-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px -5px rgba(99,102,241,0.5);
+}
+
+@media (max-width: 1023px) {
+  .forum-topic-card { flex-wrap: wrap; }
+}
+</style>
+
+<!-- ═══════ HERO ═══════ -->
+<div class="forum-hero py-10 lg:py-14">
+  <div class="forum-hero-glow"></div>
+  <div class="container mx-auto px-6 relative z-10">
+    <!-- Breadcrumb -->
+    <div class="flex items-center text-sm text-white/40 mb-6 gap-1.5">
+      <a href="/" class="hover:text-white/70 transition-colors">Ana Sayfa</a>
+      <span class="material-symbols-outlined text-xs">chevron_right</span>
+      <span class="text-white/80 font-medium">Forum</span>
+    </div>
+
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+            <span class="material-symbols-outlined text-white text-2xl">forum</span>
+          </div>
+          <h1 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">Forum</h1>
+        </div>
+        <p class="text-white/50 text-sm max-w-lg">Araç dünyası hakkında sorularınızı sorun, deneyimlerinizi paylaşın ve topluluğumuzla etkileşime geçin.</p>
+      </div>
+      <a href="/forum/yeni-konu" class="forum-new-topic-btn shrink-0">
+        <span class="material-symbols-outlined text-lg">add_circle</span> Yeni Konu Oluştur
+      </a>
+    </div>
+
+    <!-- Mini İstatistikler -->
+    <div class="grid grid-cols-3 gap-3 mt-8 max-w-md">
+      <div class="bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 text-center border border-white/10">
+        <p class="text-2xl font-extrabold text-white"><%= stats.topics %></p>
+        <p class="text-[10px] text-white/40 font-semibold uppercase tracking-wider">Konu</p>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 text-center border border-white/10">
+        <p class="text-2xl font-extrabold text-white"><%= stats.replies %></p>
+        <p class="text-[10px] text-white/40 font-semibold uppercase tracking-wider">Yanıt</p>
+      </div>
+      <div class="bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 text-center border border-white/10">
+        <p class="text-2xl font-extrabold text-white"><%= stats.users %></p>
+        <p class="text-[10px] text-white/40 font-semibold uppercase tracking-wider">Üye</p>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="flex flex-col lg:flex-row gap-8">
-<!-- Sol: Konular -->
-<div class="flex-1">
-<div class="flex justify-between items-center mb-6">
-<h1 class="text-3xl font-bold text-slate-900">Forum</h1>
-</div>
+<div class="container mx-auto px-6 py-8">
 
-<!-- Kategoriler -->
-<div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-8">
-<% categories.forEach(cat => { %>
-<div class="bg-white rounded-xl border border-slate-100 p-4 hover:border-primary/30 transition-colors">
-<div class="flex items-center gap-3">
-<div class="size-10 rounded-lg flex items-center justify-center text-white" style="background:<%= cat.color || '#6366f1' %>">
-<span class="material-symbols-outlined text-xl"><%= cat.icon || 'forum' %></span>
-</div>
-<div>
-<h3 class="font-bold text-sm text-slate-800"><%= cat.name %></h3>
-<p class="text-xs text-slate-400"><%= cat.description || '' %></p>
-</div>
-</div>
-</div>
-<% }) %>
-</div>
+  <!-- ═══════ KATEGORİLER ═══════ -->
+  <div class="mb-10">
+    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-5">
+      <span class="material-symbols-outlined text-indigo-500">category</span> Kategoriler
+    </h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-<%= categories.length + 1 <= 7 ? categories.length + 1 : 6 %> gap-3">
+      <a href="/forum" class="forum-cat-card text-center group <%= !activeCategory ? 'active' : '' %>" style="--cat-color:#6366f1">
+        <div class="forum-cat-icon mx-auto mb-2" style="background: linear-gradient(135deg, #6366f1, #4f46e5)">
+          <span class="material-symbols-outlined">apps</span>
+        </div>
+        <h3 class="font-bold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors">Tümü</h3>
+      </a>
+      <% categories.forEach(cat => { %>
+      <a href="/forum?kategori=<%= cat.slug %>" class="forum-cat-card text-center group <%= activeCategory === cat.slug ? 'active' : '' %>" style="--cat-color:<%= cat.color || '#6366f1' %>">
+        <div class="forum-cat-icon mx-auto mb-2" style="background: linear-gradient(135deg, <%= cat.color || '#6366f1' %>, <%= cat.color || '#6366f1' %>dd)">
+          <span class="material-symbols-outlined"><%= cat.icon || 'forum' %></span>
+        </div>
+        <h3 class="font-bold text-sm text-slate-800 group-hover:text-indigo-600 transition-colors"><%= cat.name %></h3>
+        <p class="text-[10px] text-slate-400 mt-1"><%= cat.topic_count %> konu</p>
+      </a>
+      <% }) %>
+    </div>
+  </div>
 
-<!-- Son Konular -->
-<h2 class="text-xl font-bold text-slate-900 mb-4">Son Konular</h2>
-<div class="space-y-3">
-<% recentTopics.forEach(t => { %>
-<a href="/forum/konu/<%= t.slug %>" class="bg-white rounded-xl border border-slate-100 p-5 flex gap-4 items-start hover:border-primary/30 transition-colors block">
-<div class="flex-shrink-0 flex flex-col items-center bg-slate-50 rounded-lg p-2 min-w-14 text-center">
-<span class="material-symbols-outlined text-slate-400 text-sm">chat_bubble</span>
-<span class="font-bold text-slate-700"><%= t.reply_count %></span>
-</div>
-<div class="flex-1 min-w-0">
-<div class="flex items-center gap-2 flex-wrap">
-<% if (t.is_pinned) { %><span class="bg-yellow-100 text-yellow-700 text-[10px] px-2 py-0.5 rounded-full font-bold">SABİT</span><% } %>
-<% if (t.is_locked) { %><span class="bg-red-100 text-red-700 text-[10px] px-2 py-0.5 rounded-full font-bold">KİLİTLİ</span><% } %>
-<span class="text-[10px] px-2 py-0.5 rounded-full font-bold text-white" style="background:<%= t.category_color || '#6366f1' %>"><%= t.category_name %></span>
-</div>
-<h3 class="font-bold text-slate-800 mt-1 truncate"><%= t.title %></h3>
-<div class="flex items-center gap-3 mt-2 text-xs text-slate-400">
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">person</span> <%= t.author_name %></span>
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">visibility</span> <%= t.view_count %></span>
-<% if (t.last_reply_name) { %><span>Son yanıt: <%= t.last_reply_name %></span><% } %>
-</div>
-</div>
-</a>
-<% }) %>
-</div>
-</div>
+  <div class="flex flex-col lg:flex-row gap-8">
+    <!-- ═══════ SOL: KONULAR ═══════ -->
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <span class="material-symbols-outlined text-indigo-500">chat</span>
+          <% if (activeCategory) { %>
+            <% const activeCat = categories.find(c => c.slug === activeCategory); %>
+            <%= activeCat ? activeCat.name : 'Konular' %>
+          <% } else { %>
+            Son Konular
+          <% } %>
+        </h2>
+        <span class="text-xs text-slate-400 bg-slate-100 px-3 py-1 rounded-full font-medium"><%= recentTopics.length %> konu</span>
+      </div>
 
-<!-- Sağ: İstatistikler & Popüler -->
-<aside class="lg:w-72 shrink-0 space-y-6">
-<!-- İstatistikler -->
-<div class="bg-white rounded-2xl border border-slate-100 p-6">
-<h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary">analytics</span> Forum İstatistikleri</h3>
-<div class="space-y-3 text-sm">
-<div class="flex justify-between"><span class="text-slate-500">Toplam Konu</span><span class="font-bold text-slate-800"><%= stats.topics %></span></div>
-<div class="flex justify-between"><span class="text-slate-500">Toplam Yanıt</span><span class="font-bold text-slate-800"><%= stats.replies %></span></div>
-<div class="flex justify-between"><span class="text-slate-500">Kayıtlı Üye</span><span class="font-bold text-slate-800"><%= stats.users %></span></div>
-</div>
-</div>
+      <% if (recentTopics.length === 0) { %>
+      <div class="bg-white rounded-2xl border border-slate-100 p-12 text-center">
+        <span class="material-symbols-outlined text-5xl text-slate-200 mb-3">forum</span>
+        <p class="text-slate-500 font-medium">Bu kategoride henüz konu bulunmuyor.</p>
+        <a href="/forum/yeni-konu" class="inline-flex items-center gap-2 mt-4 text-indigo-600 font-bold text-sm hover:text-indigo-700">
+          <span class="material-symbols-outlined text-lg">add_circle</span> İlk konuyu oluştur
+        </a>
+      </div>
+      <% } %>
 
-<!-- Popüler Konular -->
-<div class="bg-white rounded-2xl border border-slate-100 p-6">
-<h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary">trending_up</span> Popüler Konular</h3>
-<div class="space-y-3">
-<% popularTopics.forEach(t => { %>
-<a href="/forum/konu/<%= t.slug %>" class="flex items-start gap-3 hover:bg-slate-50 rounded-lg p-2 transition-colors block">
-<span class="text-sm text-slate-400 mt-0.5"><%= t.view_count %> 👁</span>
-<div>
-<p class="text-sm font-semibold text-slate-800 leading-tight"><%= t.title %></p>
-<p class="text-xs text-slate-400 mt-1"><%= t.author_name %></p>
+      <div class="space-y-3">
+        <% recentTopics.forEach(t => { %>
+        <a href="/forum/konu/<%= t.slug %>" class="forum-topic-card block">
+          <!-- Avatar -->
+          <div class="forum-topic-avatar" style="background: linear-gradient(135deg, <%= t.category_color || '#6366f1' %>20, <%= t.category_color || '#6366f1' %>40); color: <%= t.category_color || '#6366f1' %>">
+            <%= t.author_name.charAt(0).toUpperCase() %>
+          </div>
+
+          <!-- İçerik -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 flex-wrap mb-1">
+              <% if (t.is_pinned) { %>
+              <span class="forum-pinned-badge">
+                <span class="material-symbols-outlined" style="font-size:11px">push_pin</span> SABİT
+              </span>
+              <% } %>
+              <% if (t.is_locked) { %>
+              <span class="bg-red-100 text-red-600 text-[10px] px-2 py-0.5 rounded-full font-bold inline-flex items-center gap-1">
+                <span class="material-symbols-outlined" style="font-size:11px">lock</span> KİLİTLİ
+              </span>
+              <% } %>
+              <span class="text-[10px] px-2.5 py-0.5 rounded-full font-bold text-white" style="background:<%= t.category_color || '#6366f1' %>"><%= t.category_name %></span>
+            </div>
+
+            <h3 class="font-bold text-slate-800 text-[15px] leading-snug mb-2 line-clamp-2"><%= t.title %></h3>
+
+            <div class="flex items-center gap-3 text-xs text-slate-400 flex-wrap">
+              <span class="font-medium text-slate-600"><%= t.author_name %></span>
+              <span>•</span>
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined" style="font-size:13px">schedule</span> <%= timeAgo(t.last_reply_at || t.created_at) %></span>
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined" style="font-size:13px">visibility</span> <%= t.view_count %></span>
+              <% if (t.last_reply_name) { %>
+              <span class="hidden sm:inline-flex items-center gap-1 text-indigo-500">
+                <span class="material-symbols-outlined" style="font-size:13px">reply</span> Son: <span class="font-medium"><%= t.last_reply_name %></span>
+              </span>
+              <% } %>
+            </div>
+          </div>
+
+          <!-- Yanıt Sayısı -->
+          <div class="forum-reply-box hidden sm:block <%= t.reply_count > 0 ? 'has-replies' : 'no-replies' %>">
+            <span class="material-symbols-outlined text-base block mb-0.5">chat_bubble</span>
+            <span class="text-sm font-extrabold block"><%= t.reply_count %></span>
+            <span class="text-[9px] uppercase font-semibold opacity-70">yanıt</span>
+          </div>
+        </a>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- ═══════ SAĞ: SIDEBAR ═══════ -->
+    <aside class="lg:w-80 shrink-0 space-y-5">
+
+      <!-- Popüler Konular -->
+      <div class="forum-sidebar-card">
+        <div class="forum-sidebar-header">
+          <h3 class="font-bold text-slate-900 flex items-center gap-2 text-sm">
+            <span class="material-symbols-outlined text-lg text-amber-500">local_fire_department</span> Popüler Konular
+          </h3>
+        </div>
+        <div>
+          <% popularTopics.forEach((t, i) => { %>
+          <a href="/forum/konu/<%= t.slug %>" class="forum-popular-item">
+            <div class="forum-rank <%= i === 0 ? 'bg-amber-100 text-amber-700' : i === 1 ? 'bg-slate-100 text-slate-600' : i === 2 ? 'bg-orange-50 text-orange-600' : 'bg-slate-50 text-slate-400' %>">
+              <%= i + 1 %>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold text-slate-800 leading-tight line-clamp-2 hover:text-indigo-600 transition-colors"><%= t.title %></p>
+              <div class="flex items-center gap-2 mt-1.5 text-[11px] text-slate-400">
+                <span><%= t.author_name %></span>
+                <span>•</span>
+                <span class="flex items-center gap-0.5"><span class="material-symbols-outlined" style="font-size:12px">visibility</span> <%= t.view_count %></span>
+                <span class="flex items-center gap-0.5"><span class="material-symbols-outlined" style="font-size:12px">chat_bubble</span> <%= t.reply_count %></span>
+              </div>
+            </div>
+          </a>
+          <% }) %>
+        </div>
+      </div>
+
+      <!-- Forum Kuralları -->
+      <div class="forum-sidebar-card">
+        <div class="forum-sidebar-header">
+          <h3 class="font-bold text-slate-900 flex items-center gap-2 text-sm">
+            <span class="material-symbols-outlined text-lg text-blue-500">gavel</span> Forum Kuralları
+          </h3>
+        </div>
+        <div class="p-4 space-y-2.5">
+          <div class="flex items-start gap-2.5">
+            <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined" style="font-size:14px">check</span></span>
+            <p class="text-xs text-slate-600">Saygılı ve yapıcı bir dil kullanın</p>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined" style="font-size:14px">check</span></span>
+            <p class="text-xs text-slate-600">Aynı konuyu tekrar açmayın, arama yapın</p>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined" style="font-size:14px">check</span></span>
+            <p class="text-xs text-slate-600">Reklam ve spam içerik paylaşmayın</p>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined" style="font-size:14px">check</span></span>
+            <p class="text-xs text-slate-600">Doğru kategoriyi seçerek konu açın</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Konu Oluştur CTA -->
+      <div class="bg-gradient-to-br from-indigo-500 to-violet-600 rounded-2xl p-6 text-center">
+        <span class="material-symbols-outlined text-white/80 text-4xl mb-2">edit_note</span>
+        <h4 class="font-bold text-white mb-1">Bir sorunuz mu var?</h4>
+        <p class="text-white/60 text-xs mb-4">Topluluğumuz size yardımcı olmaktan mutluluk duyar.</p>
+        <a href="/forum/yeni-konu" class="inline-flex items-center gap-2 bg-white text-indigo-600 font-bold text-sm px-6 py-3 rounded-xl hover:bg-white/90 transition-all shadow-lg">
+          <span class="material-symbols-outlined text-lg">add</span> Konu Oluştur
+        </a>
+      </div>
+
+    </aside>
+  </div>
 </div>
-</a>
-<% }) %>
-</div>
-</div>
-</aside>
-</div>
-</main>

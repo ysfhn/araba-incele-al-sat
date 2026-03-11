@@ -1,214 +1,450 @@
 <%
 const typeLabels = { servis: 'Servis', galeri: 'Galeri', yedek_parca: 'Yedek Parça', ekspertiz: 'Ekspertiz' };
+const typeIcons = { servis: 'build', galeri: 'directions_car', yedek_parca: 'settings', ekspertiz: 'verified' };
+const typeColors = { servis: { bg:'#dbeafe', text:'#2563eb', grad:'from-blue-500 to-blue-600' }, galeri: { bg:'#d1fae5', text:'#059669', grad:'from-emerald-500 to-emerald-600' }, yedek_parca: { bg:'#fef3c7', text:'#d97706', grad:'from-amber-500 to-amber-600' }, ekspertiz: { bg:'#ede9fe', text:'#7c3aed', grad:'from-violet-500 to-violet-600' } };
+const tc = typeColors[business.type] || typeColors.servis;
+const dayLabels = { pazartesi:'Pazartesi', sali:'Salı', carsamba:'Çarşamba', persembe:'Perşembe', cuma:'Cuma', cumartesi:'Cumartesi', pazar:'Pazar' };
 let parsedHours = null;
 try { parsedHours = JSON.parse(business.working_hours || 'null'); } catch(e) {}
 let parsedServices = [];
 try { const s = JSON.parse(business.services || '[]'); if(Array.isArray(s)) parsedServices = s; } catch(e) {}
+
+function isOpenNow(hours) {
+  if (!hours || typeof hours !== 'object') return null;
+  const days = ['pazar','pazartesi','sali','carsamba','persembe','cuma','cumartesi'];
+  const now = new Date();
+  const dayKey = days[now.getDay()];
+  const todayHours = hours[dayKey];
+  if (!todayHours || todayHours === 'Kapalı') return false;
+  const parts = todayHours.split('-');
+  if (parts.length !== 2) return null;
+  const [startH, startM] = parts[0].split(':').map(Number);
+  const [endH, endM] = parts[1].split(':').map(Number);
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  return nowMin >= startH * 60 + (startM||0) && nowMin <= endH * 60 + (endM||0);
+}
+const openStatus = isOpenNow(parsedHours);
 %>
-<main class="container mx-auto px-6 py-8">
-<div class="flex items-center text-sm text-slate-500 mb-6 gap-1">
-<a href="/" class="hover:text-primary">Ana Sayfa</a><span>/</span>
-<a href="/servis" class="hover:text-primary">Servis Rehberi</a><span>/</span>
-<span class="text-slate-800 font-medium"><%= business.name %></span>
-</div>
 
-<div class="flex flex-col lg:flex-row gap-8">
-<!-- Sol: İşletme Bilgileri -->
-<div class="flex-1">
-<!-- Header -->
-<div class="bg-white rounded-2xl border border-slate-100 p-8 mb-6">
-<div class="flex items-start gap-6">
-<div class="size-20 bg-slate-100 rounded-2xl flex items-center justify-center flex-shrink-0">
-<span class="material-symbols-outlined text-4xl text-slate-400">home_repair_service</span>
-</div>
-<div class="flex-1">
-<div class="flex items-center gap-2 flex-wrap">
-<h1 class="text-2xl font-bold text-slate-900"><%= business.name %></h1>
-<% if (business.is_verified) { %><span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full font-bold">✓ ONAYLI</span><% } %>
-<% if (business.is_premium) { %><span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-0.5 rounded-full font-bold">PREMIUM</span><% } %>
-</div>
-<p class="text-slate-500 mt-1"><%= typeLabels[business.type] || business.type %></p>
-<div class="flex items-center gap-1 mt-2 text-yellow-500">
-<% for(let i=0;i<5;i++){%><span class="material-symbols-outlined"><%= i < Math.round(business.rating) ? 'star' : 'star_border' %></span><%}%>
-<span class="text-slate-600 font-bold ml-2"><%= business.rating %></span>
-<span class="text-slate-400 text-sm">(<%= business.review_count %> değerlendirme)</span>
-</div>
-</div>
-</div>
-</div>
+<style>
+.bp-hero { position:relative; overflow:hidden; }
+.bp-hero-bg { position:absolute; inset:0; background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1a4480 100%); }
+.bp-hero-bg::after { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+.bp-icon-box { width:80px; height:80px; border-radius:20px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.bp-card { background:#fff; border-radius:16px; border:1px solid #f1f5f9; transition: all .3s ease; }
+.bp-card:hover { box-shadow: 0 8px 25px -5px rgba(0,0,0,.08); }
+.bp-section-title { font-size:1rem; font-weight:700; color:#0f172a; display:flex; align-items:center; gap:.5rem; margin-bottom:1rem; }
+.bp-section-title .material-symbols-outlined { font-size:1.2rem; }
+.bp-service-chip { font-size:.8rem; padding:6px 14px; border-radius:10px; font-weight:500; display:inline-flex; align-items:center; gap:6px; transition: all .2s; }
+.bp-service-chip:hover { transform: translateY(-1px); }
+.bp-day-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f8fafc; }
+.bp-day-row:last-child { border:none; }
+.bp-day-row.today { background:#f0f9ff; margin:0 -12px; padding:8px 12px; border-radius:8px; border:none; }
+.bp-review { transition: all .2s; }
+.bp-review:hover { background: #f8fafc; }
+.bp-rating-bar { height:6px; border-radius:3px; background:#f1f5f9; overflow:hidden; flex:1; }
+.bp-rating-fill { height:100%; border-radius:3px; background:linear-gradient(90deg, #facc15, #f59e0b); }
+.bp-sidebar-card { background:#fff; border-radius:16px; border:1px solid #f1f5f9; overflow:hidden; }
+.bp-contact-row { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid #f8fafc; }
+.bp-contact-row:last-child { border:none; }
+.bp-action-btn { width:100%; display:flex; align-items:center; justify-content:center; gap:8px; padding:12px; border-radius:12px; font-weight:700; font-size:.9rem; transition: all .25s; cursor:pointer; text-decoration:none; border:none; }
+.bp-action-btn:hover { transform:translateY(-1px); box-shadow: 0 4px 15px -3px rgba(0,0,0,.15); }
+.bp-star-input { cursor:pointer; transition:all .15s; }
+.bp-star-input:hover { transform:scale(1.2); }
+</style>
 
-<!-- Hizmetler -->
-<% if (parsedServices.length > 0) { %>
-<div class="bg-white rounded-2xl border border-slate-100 p-6 mb-6">
-<h2 class="text-lg font-bold text-slate-900 mb-3">Sunulan Hizmetler</h2>
-<div class="flex flex-wrap gap-2">
-<% parsedServices.forEach(svc => { %>
-<span class="bg-blue-50 text-blue-700 text-sm px-3 py-1.5 rounded-full font-medium flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">build</span> <%= svc %>
-</span>
-<% }) %>
-</div>
-</div>
-<% } %>
+<!-- ═══════════════ HERO HEADER ═══════════════ -->
+<section class="bp-hero">
+  <div class="bp-hero-bg"></div>
+  <div class="relative z-10 container mx-auto px-6 pt-8 pb-24">
+    <!-- Breadcrumb -->
+    <div class="flex items-center text-sm text-white/50 mb-8 gap-1.5">
+      <a href="/" class="hover:text-white/80 transition-colors">Ana Sayfa</a>
+      <span class="material-symbols-outlined text-xs">chevron_right</span>
+      <a href="/servis" class="hover:text-white/80 transition-colors">Servis Rehberi</a>
+      <span class="material-symbols-outlined text-xs">chevron_right</span>
+      <span class="text-white/90 font-medium"><%= business.name %></span>
+    </div>
 
-<!-- Hakkında -->
-<% if (business.description) { %>
-<div class="bg-white rounded-2xl border border-slate-100 p-6 mb-6">
-<h2 class="text-lg font-bold text-slate-900 mb-3">Hakkında</h2>
-<p class="text-slate-600 leading-relaxed"><%= business.description %></p>
-</div>
-<% } %>
+    <div class="flex flex-col md:flex-row items-start gap-6">
+      <!-- İkon -->
+      <div class="bp-icon-box shadow-2xl" style="background: linear-gradient(135deg, <%= tc.bg %>, white);">
+        <span class="material-symbols-outlined text-4xl" style="color:<%= tc.text %>"><%= typeIcons[business.type] || 'store' %></span>
+      </div>
+      <div class="flex-1">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+          <h1 class="text-white text-2xl md:text-3xl font-black"><%= business.name %></h1>
+          <% if (business.is_premium) { %>
+          <span class="inline-flex items-center gap-1 bg-gradient-to-r from-amber-400 to-orange-400 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg shadow-lg shadow-amber-500/20">
+            <span class="material-symbols-outlined" style="font-size:12px">workspace_premium</span> PREMİUM
+          </span>
+          <% } %>
+          <% if (business.is_verified) { %>
+          <span class="inline-flex items-center gap-1 bg-green-500/90 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">
+            <span class="material-symbols-outlined" style="font-size:12px">check_circle</span> Onaylı
+          </span>
+          <% } %>
+        </div>
 
-<!-- Değerlendirmeler -->
-<div class="bg-white rounded-2xl border border-slate-100 p-6">
-<h2 class="text-lg font-bold text-slate-900 mb-6">Değerlendirmeler</h2>
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          <span class="inline-flex items-center gap-1.5 text-white/60 text-sm">
+            <span class="material-symbols-outlined text-base">category</span> <%= typeLabels[business.type] || business.type %>
+          </span>
+          <% if (business.city) { %>
+          <%
+            const heroAddr = (business.address || '') + (business.city ? ', ' + business.city : '') + (business.district ? ' ' + business.district : '');
+            const heroMapsUrl = business.lat && business.lng
+              ? `https://www.google.com/maps/dir/?api=1&destination=${business.lat},${business.lng}`
+              : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(heroAddr)}`;
+          %>
+          <a href="<%= heroMapsUrl %>" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-white/60 text-sm hover:text-white transition-colors group">
+            <span class="material-symbols-outlined text-base">location_on</span> <%= business.city %><%= business.district ? ', ' + business.district : '' %>
+            <span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
+          </a>
+          <% } %>
+          <% if (openStatus !== null) { %>
+          <span class="inline-flex items-center gap-1.5 text-sm font-medium <%= openStatus ? 'text-green-400' : 'text-red-400' %>">
+            <span class="size-2 rounded-full <%= openStatus ? 'bg-green-400 animate-pulse' : 'bg-red-400' %>"></span>
+            <%= openStatus ? 'Şu an açık' : 'Şu an kapalı' %>
+          </span>
+          <% } %>
+        </div>
 
-<!-- Rating Dağılımı -->
-<div class="mb-8 p-4 bg-slate-50 rounded-xl">
-<div class="flex items-center gap-6">
-<div class="text-center">
-<p class="text-4xl font-black text-slate-900"><%= business.rating %></p>
-<div class="flex justify-center text-yellow-500 mt-1">
-<% for(let i=0;i<5;i++){%><span class="material-symbols-outlined text-sm"><%= i < Math.round(business.rating) ? 'star' : 'star_border' %></span><%}%>
-</div>
-<p class="text-xs text-slate-400 mt-1"><%= business.review_count %> değerlendirme</p>
-</div>
-<div class="flex-1 space-y-1">
-<% for(let s=5; s>=1; s--) { %>
-<div class="flex items-center gap-2 text-sm">
-<span class="w-3 text-slate-500"><%= s %></span>
-<span class="material-symbols-outlined text-yellow-500 text-sm">star</span>
-<div class="flex-1 bg-slate-200 rounded-full h-2">
-<div class="bg-yellow-400 h-2 rounded-full" style="width:<%= business.review_count > 0 ? ((ratingDist[s] || 0) / business.review_count * 100) : 0 %>%"></div>
-</div>
-<span class="w-6 text-right text-slate-400 text-xs"><%= ratingDist[s] || 0 %></span>
-</div>
-<% } %>
-</div>
-</div>
-</div>
+        <!-- Rating -->
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-0.5">
+            <% for(let i=0;i<5;i++){%><span class="material-symbols-outlined text-lg <%= i < Math.round(business.rating) ? 'text-amber-400' : 'text-white/20' %>"><%= i < Math.round(business.rating) ? 'star' : 'star_border' %></span><%}%>
+          </div>
+          <span class="text-white font-bold text-lg"><%= business.rating %></span>
+          <span class="text-white/50 text-sm">(<%= business.review_count %> değerlendirme)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- Yorum Formu -->
-<% if (typeof currentUser !== 'undefined' && currentUser) { %>
-<div class="mb-6 p-4 bg-blue-50 rounded-xl border border-blue-100">
-<h3 class="font-bold text-slate-800 mb-3">Değerlendirme Yap</h3>
-<form id="reviewForm">
-<input type="hidden" name="business_id" value="<%= business.id %>">
-<div class="star-rating flex items-center gap-1 mb-3">
-<input type="hidden" name="rating" value="0">
-<% for(let i=1;i<=5;i++){%>
-<button type="button" class="star text-gray-300 cursor-pointer" data-value="<%= i %>">
-<span class="material-symbols-outlined text-2xl">star_border</span>
-</button>
-<%}%>
-</div>
-<textarea name="comment" rows="3" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none" placeholder="Deneyiminizi paylaşın..." required></textarea>
-<button type="submit" class="mt-2 bg-primary text-white font-bold py-2 px-6 rounded-xl hover:bg-primary/90 transition-all text-sm">Gönder</button>
-</form>
-</div>
-<% } %>
+<!-- ═══════════════ ANA İÇERİK ═══════════════ -->
+<div class="container mx-auto px-6 -mt-12 relative z-20 pb-16">
+  <div class="flex flex-col lg:flex-row gap-6">
 
-<!-- Yorumlar -->
-<% if (reviews.length === 0) { %>
-<p class="text-center text-slate-400 py-6">Henüz değerlendirme yapılmamış.</p>
-<% } else { %>
-<div class="space-y-4">
-<% reviews.forEach(r => { %>
-<div class="border-b border-slate-100 pb-4 last:border-0">
-<div class="flex items-center gap-3 mb-2">
-<div class="size-9 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm"><%= r.reviewer_name.charAt(0).toUpperCase() %></div>
-<div>
-<p class="font-semibold text-sm text-slate-800"><%= r.reviewer_name %></p>
-<div class="flex items-center gap-1 text-yellow-500">
-<% for(let i=0;i<5;i++){%><span class="material-symbols-outlined text-xs"><%= i < r.rating ? 'star' : 'star_border' %></span><%}%>
-<span class="text-xs text-slate-400 ml-1"><%= new Date(r.created_at).toLocaleDateString('tr-TR') %></span>
-</div>
-</div>
-</div>
-<p class="text-sm text-slate-600 ml-12"><%= r.comment %></p>
-</div>
-<% }) %>
-</div>
-<% } %>
-</div>
-</div>
+    <!-- ═══════ SOL: ANA İÇERİK ═══════ -->
+    <div class="flex-1 space-y-6">
 
-<!-- Sağ: İletişim -->
-<aside class="lg:w-80 shrink-0">
-<div class="bg-white rounded-2xl border border-slate-100 p-6 sticky top-28 space-y-4">
-<h3 class="font-bold text-slate-900">İletişim Bilgileri</h3>
-<% if (business.phone) { %>
-<div class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-primary">call</span>
-<a href="tel:<%= business.phone %>" class="text-slate-700 hover:text-primary"><%= business.phone %></a>
-</div>
-<% } %>
-<% if (business.email) { %>
-<div class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-primary">mail</span>
-<a href="mailto:<%= business.email %>" class="text-slate-700 hover:text-primary"><%= business.email %></a>
-</div>
-<% } %>
-<% if (business.website) { %>
-<div class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-primary">language</span>
-<a href="<%= business.website %>" target="_blank" class="text-slate-700 hover:text-primary"><%= business.website %></a>
-</div>
-<% } %>
-<% if (business.address) { %>
-<div class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-primary">location_on</span>
-<span class="text-slate-700"><%= business.address %></span>
-</div>
-<% } %>
-<% if (business.city) { %>
-<div class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-primary">apartment</span>
-<span class="text-slate-700"><%= business.city %><%= business.district ? ', ' + business.district : '' %></span>
-</div>
-<% } %>
+      <!-- Hızlı Bilgiler -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="bp-card p-4 text-center">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-2">
+            <span class="material-symbols-outlined">star</span>
+          </div>
+          <p class="text-xl font-black text-slate-900"><%= business.rating %></p>
+          <p class="text-xs text-slate-500">Puan</p>
+        </div>
+        <div class="bp-card p-4 text-center">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-2">
+            <span class="material-symbols-outlined">reviews</span>
+          </div>
+          <p class="text-xl font-black text-slate-900"><%= business.review_count %></p>
+          <p class="text-xs text-slate-500">Değerlendirme</p>
+        </div>
+        <div class="bp-card p-4 text-center">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-2">
+            <span class="material-symbols-outlined"><%= typeIcons[business.type] || 'store' %></span>
+          </div>
+          <p class="text-sm font-bold text-slate-900"><%= typeLabels[business.type] || business.type %></p>
+          <p class="text-xs text-slate-500">Tür</p>
+        </div>
+        <div class="bp-card p-4 text-center">
+          <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center mx-auto mb-2">
+            <span class="material-symbols-outlined">handyman</span>
+          </div>
+          <p class="text-xl font-black text-slate-900"><%= parsedServices.length %></p>
+          <p class="text-xs text-slate-500">Hizmet</p>
+        </div>
+      </div>
 
-<!-- Çalışma Saatleri (parsed) -->
-<% if (parsedHours && typeof parsedHours === 'object') { %>
-<div class="border-t border-slate-100 pt-4">
-<h4 class="font-semibold text-slate-800 text-sm mb-2 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-base">schedule</span> Çalışma Saatleri
-</h4>
-<div class="space-y-1">
-<% Object.entries(parsedHours).forEach(([day, hours]) => { %>
-<div class="flex justify-between text-sm">
-<span class="text-slate-600"><%= day %></span>
-<span class="text-slate-800 font-medium"><%= hours %></span>
-</div>
-<% }) %>
-</div>
-</div>
-<% } else if (business.working_hours) { %>
-<div class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-primary">schedule</span>
-<span class="text-slate-700"><%= business.working_hours %></span>
-</div>
-<% } %>
+      <!-- Hakkında -->
+      <% if (business.description) { %>
+      <div class="bp-card p-6">
+        <h2 class="bp-section-title"><span class="material-symbols-outlined" style="color:<%= tc.text %>">info</span> Hakkında</h2>
+        <p class="text-slate-600 leading-relaxed text-sm"><%= business.description %></p>
+      </div>
+      <% } %>
 
-<!-- Aksiyon Butonları -->
-<div class="border-t border-slate-100 pt-4 space-y-3">
-<% if (typeof currentUser !== 'undefined' && currentUser) { %>
-<button data-book-appointment="<%= business.id %>" data-business-name="<%= business.name %>" class="w-full bg-green-600 text-white font-bold py-3 rounded-xl hover:bg-green-700 transition-all flex items-center justify-center gap-2">
-<span class="material-symbols-outlined">calendar_month</span> Randevu Al
-</button>
-<button data-request-quote="<%= business.id %>" data-business-name="<%= business.name %>" class="w-full bg-orange-500 text-white font-bold py-3 rounded-xl hover:bg-orange-600 transition-all flex items-center justify-center gap-2">
-<span class="material-symbols-outlined">request_quote</span> Teklif İste
-</button>
-<button data-send-message="<%= business.user_id %>" data-receiver-name="<%= business.name %>" class="w-full bg-primary text-white font-bold py-3 rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
-<span class="material-symbols-outlined">mail</span> Mesaj Gönder
-</button>
-<% } else { %>
-<a href="/giris" class="w-full bg-primary text-white font-bold py-3 rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2 block">
-<span class="material-symbols-outlined">login</span> Randevu/Teklif için Giriş Yap
-</a>
-<% } %>
+      <!-- Sunulan Hizmetler -->
+      <% if (parsedServices.length > 0) { %>
+      <div class="bp-card p-6">
+        <h2 class="bp-section-title"><span class="material-symbols-outlined" style="color:<%= tc.text %>">checklist</span> Sunulan Hizmetler</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <% parsedServices.forEach((svc, i) => { %>
+          <div class="bp-service-chip" style="background:<%= tc.bg %>20; color:<%= tc.text %>">
+            <span class="material-symbols-outlined text-sm">check_circle</span> <%= svc %>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+      <% } %>
+
+      <!-- ═══════ DEĞERLENDİRMELER ═══════ -->
+      <div class="bp-card p-6">
+        <h2 class="bp-section-title"><span class="material-symbols-outlined" style="color:<%= tc.text %>">rate_review</span> Değerlendirmeler</h2>
+
+        <!-- Rating Dağılımı -->
+        <div class="bg-gradient-to-br from-slate-50 to-white rounded-2xl p-5 mb-6 border border-slate-100">
+          <div class="flex items-center gap-8">
+            <div class="text-center flex-shrink-0">
+              <p class="text-5xl font-black text-slate-900 leading-none"><%= business.rating %></p>
+              <div class="flex justify-center gap-0.5 mt-2 mb-1">
+                <% for(let i=0;i<5;i++){%><span class="material-symbols-outlined text-base <%= i < Math.round(business.rating) ? 'text-amber-400' : 'text-slate-200' %>"><%= i < Math.round(business.rating) ? 'star' : 'star_border' %></span><%}%>
+              </div>
+              <p class="text-xs text-slate-400"><%= business.review_count %> toplam</p>
+            </div>
+            <div class="flex-1 space-y-2">
+              <% for(let s=5; s>=1; s--) { %>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-medium text-slate-600 w-3"><%= s %></span>
+                <span class="material-symbols-outlined text-amber-400 text-xs">star</span>
+                <div class="bp-rating-bar">
+                  <div class="bp-rating-fill" style="width:<%= business.review_count > 0 ? ((ratingDist[s] || 0) / business.review_count * 100) : 0 %>%"></div>
+                </div>
+                <span class="text-xs text-slate-400 w-6 text-right"><%= ratingDist[s] || 0 %></span>
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Yorum Formu -->
+        <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-5 mb-6 border border-blue-100/50">
+          <h3 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2">
+            <span class="material-symbols-outlined text-blue-500 text-lg">edit_note</span> Deneyiminizi Paylaşın
+          </h3>
+          <form id="reviewForm">
+            <input type="hidden" name="business_id" value="<%= business.id %>">
+            <div class="flex items-center gap-1 mb-3">
+              <input type="hidden" name="rating" value="0">
+              <% for(let i=1;i<=5;i++){%>
+              <button type="button" class="star bp-star-input text-slate-300" data-value="<%= i %>">
+                <span class="material-symbols-outlined text-2xl">star_border</span>
+              </button>
+              <%}%>
+              <span class="text-xs text-slate-400 ml-2" id="ratingLabel">Puanınızı seçin</span>
+            </div>
+            <textarea name="comment" rows="3" class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none bg-white" placeholder="Bu işletme hakkındaki deneyiminizi paylaşın..." required></textarea>
+            <div class="flex items-center justify-between mt-3">
+              <p class="text-xs text-slate-400">Değerlendirmeniz diğer kullanıcılara yardımcı olacak.</p>
+              <button type="submit" class="bg-gradient-to-r <%= tc.grad %> text-white font-bold py-2.5 px-6 rounded-xl hover:shadow-lg transition-all text-sm">
+                <span class="material-symbols-outlined text-sm align-middle mr-1">send</span> Gönder
+              </button>
+            </div>
+          </form>
+        </div>
+        <% } %>
+
+        <!-- Yorumlar Listesi -->
+        <% if (reviews.length === 0) { %>
+        <div class="text-center py-10">
+          <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="material-symbols-outlined text-3xl text-slate-300">chat_bubble_outline</span>
+          </div>
+          <p class="text-slate-500 text-sm">Henüz değerlendirme yapılmamış.</p>
+          <p class="text-slate-400 text-xs mt-1">İlk değerlendirmeyi siz yapın!</p>
+        </div>
+        <% } else { %>
+        <div class="space-y-1">
+          <% reviews.forEach((r, idx) => { %>
+          <div class="bp-review rounded-xl p-4 <%= idx < reviews.length - 1 ? 'border-b border-slate-100' : '' %>">
+            <div class="flex items-start gap-3">
+              <div class="size-10 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0" style="background: linear-gradient(135deg, <%= tc.text %>, <%= tc.text %>cc);">
+                <%= r.reviewer_name.charAt(0).toUpperCase() %>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between mb-1">
+                  <div>
+                    <span class="font-semibold text-sm text-slate-800"><%= r.reviewer_name %></span>
+                    <% if (r.service_type) { %>
+                    <span class="text-xs text-slate-400 ml-2">· <%= r.service_type %></span>
+                    <% } %>
+                  </div>
+                  <span class="text-xs text-slate-400"><%= new Date(r.created_at).toLocaleDateString('tr-TR', {year:'numeric',month:'long',day:'numeric'}) %></span>
+                </div>
+                <div class="flex items-center gap-0.5 mb-2">
+                  <% for(let i=0;i<5;i++){%><span class="material-symbols-outlined text-sm <%= i < r.rating ? 'text-amber-400' : 'text-slate-200' %>"><%= i < r.rating ? 'star' : 'star_border' %></span><%}%>
+                </div>
+                <p class="text-sm text-slate-600 leading-relaxed"><%= r.comment %></p>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- ═══════ SAĞ: SİDEBAR ═══════ -->
+    <aside class="lg:w-[340px] shrink-0 space-y-5">
+
+      <!-- İletişim Kartı -->
+      <div class="bp-sidebar-card sticky top-24">
+        <div class="p-5 border-b border-slate-100" style="background: linear-gradient(135deg, <%= tc.bg %>40, white);">
+          <h3 class="font-bold text-slate-900 flex items-center gap-2">
+            <span class="material-symbols-outlined text-lg" style="color:<%= tc.text %>">contact_phone</span> İletişim Bilgileri
+          </h3>
+        </div>
+        <div class="p-5">
+          <% if (business.phone) { %>
+          <div class="bp-contact-row">
+            <div class="w-9 h-9 rounded-lg bg-green-50 text-green-600 flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-lg">call</span>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400">Telefon</p>
+              <a href="tel:<%= business.phone %>" class="text-sm font-medium text-slate-800 hover:text-green-600 transition-colors"><%= business.phone %></a>
+            </div>
+          </div>
+          <% } %>
+
+          <% if (business.email) { %>
+          <div class="bp-contact-row">
+            <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-lg">mail</span>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400">E-posta</p>
+              <a href="mailto:<%= business.email %>" class="text-sm font-medium text-slate-800 hover:text-blue-600 transition-colors"><%= business.email %></a>
+            </div>
+          </div>
+          <% } %>
+
+          <% if (business.address) { %>
+          <%
+            const fullAddress = business.address + (business.city ? ', ' + business.city : '') + (business.district ? ' ' + business.district : '');
+            const mapsQuery = encodeURIComponent(fullAddress);
+            const mapsDirectionUrl = business.lat && business.lng
+              ? `https://www.google.com/maps/dir/?api=1&destination=${business.lat},${business.lng}`
+              : `https://www.google.com/maps/dir/?api=1&destination=${mapsQuery}`;
+            const mapsSearchUrl = business.lat && business.lng
+              ? `https://www.google.com/maps/search/?api=1&query=${business.lat},${business.lng}`
+              : `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+          %>
+          <a href="<%= mapsSearchUrl %>" target="_blank" rel="noopener" class="bp-contact-row group cursor-pointer hover:bg-rose-50/50 rounded-lg transition-colors">
+            <div class="w-9 h-9 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0 group-hover:bg-rose-100 transition-colors">
+              <span class="material-symbols-outlined text-lg">location_on</span>
+            </div>
+            <div class="flex-1">
+              <p class="text-xs text-slate-400">Adres</p>
+              <p class="text-sm text-slate-800 group-hover:text-rose-600 transition-colors"><%= business.address %></p>
+              <% if (business.city) { %><p class="text-xs text-slate-500"><%= business.city %><%= business.district ? ' / ' + business.district : '' %></p><% } %>
+            </div>
+            <div class="flex-shrink-0 text-slate-300 group-hover:text-rose-500 transition-colors">
+              <span class="material-symbols-outlined text-base">open_in_new</span>
+            </div>
+          </a>
+          <% } %>
+
+          <% if (business.website) { %>
+          <div class="bp-contact-row">
+            <div class="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-lg">language</span>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400">Web Sitesi</p>
+              <a href="<%= business.website %>" target="_blank" class="text-sm font-medium text-slate-800 hover:text-indigo-600 transition-colors"><%= business.website %></a>
+            </div>
+          </div>
+          <% } %>
+        </div>
+
+        <!-- Çalışma Saatleri -->
+        <% if (parsedHours && typeof parsedHours === 'object') { %>
+        <div class="border-t border-slate-100 p-5">
+          <h4 class="font-bold text-sm text-slate-800 flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined text-base" style="color:<%= tc.text %>">schedule</span> Çalışma Saatleri
+            <% if (openStatus !== null) { %>
+            <span class="ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full <%= openStatus ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' %>"><%= openStatus ? 'AÇIK' : 'KAPALI' %></span>
+            <% } %>
+          </h4>
+          <div class="space-y-0">
+            <% const days = ['pazartesi','sali','carsamba','persembe','cuma','cumartesi','pazar'];
+               const todayIdx = new Date().getDay();
+               const todayKey = ['pazar','pazartesi','sali','carsamba','persembe','cuma','cumartesi'][todayIdx];
+               days.forEach(day => { %>
+            <div class="bp-day-row <%= day === todayKey ? 'today' : '' %>">
+              <span class="text-xs font-medium <%= day === todayKey ? 'text-blue-700' : 'text-slate-600' %>"><%= dayLabels[day] || day %></span>
+              <span class="text-xs font-semibold <%= parsedHours[day] === 'Kapalı' ? 'text-red-500' : day === todayKey ? 'text-blue-700' : 'text-slate-800' %>"><%= parsedHours[day] || '-' %></span>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+        <% } %>
+
+        <!-- Aksiyon Butonları -->
+        <div class="border-t border-slate-100 p-5 space-y-2.5">
+          <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+          <button data-book-appointment="<%= business.id %>" data-business-name="<%= business.name %>" class="bp-action-btn bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg shadow-green-500/20">
+            <span class="material-symbols-outlined">calendar_month</span> Randevu Al
+          </button>
+          <button data-request-quote="<%= business.id %>" data-business-name="<%= business.name %>" class="bp-action-btn bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/20">
+            <span class="material-symbols-outlined">request_quote</span> Teklif İste
+          </button>
+          <button data-send-message="<%= business.user_id %>" data-receiver-name="<%= business.name %>" class="bp-action-btn bg-gradient-to-r <%= tc.grad %> text-white shadow-lg" style="box-shadow:0 4px 15px -3px <%= tc.text %>40">
+            <span class="material-symbols-outlined">mail</span> Mesaj Gönder
+          </button>
+          <% if (business.phone) { %>
+          <a href="tel:<%= business.phone %>" class="bp-action-btn bg-white border-2 border-slate-200 text-slate-700 hover:border-slate-300">
+            <span class="material-symbols-outlined">call</span> Hemen Ara
+          </a>
+          <% } %>
+          <% } else { %>
+          <a href="/giris" class="bp-action-btn bg-gradient-to-r <%= tc.grad %> text-white shadow-lg">
+            <span class="material-symbols-outlined">login</span> Randevu / Teklif İçin Giriş
+          </a>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Konum / Harita Kartı -->
+      <% if (business.address || (business.lat && business.lng)) { %>
+      <%
+        const locFullAddr = (business.address || '') + (business.city ? ', ' + business.city : '') + (business.district ? ' ' + business.district : '');
+        const locQuery = encodeURIComponent(locFullAddr);
+        const locDirectionUrl = business.lat && business.lng
+          ? `https://www.google.com/maps/dir/?api=1&destination=${business.lat},${business.lng}`
+          : `https://www.google.com/maps/dir/?api=1&destination=${locQuery}`;
+        const locEmbedUrl = business.lat && business.lng
+          ? `https://maps.google.com/maps?q=${business.lat},${business.lng}&z=15&output=embed`
+          : `https://maps.google.com/maps?q=${locQuery}&z=15&output=embed`;
+      %>
+      <div class="bp-sidebar-card overflow-hidden">
+        <div class="p-5 border-b border-slate-100" style="background: linear-gradient(135deg, <%= tc.bg %>40, white);">
+          <h3 class="font-bold text-slate-900 flex items-center gap-2">
+            <span class="material-symbols-outlined text-lg" style="color:<%= tc.text %>">map</span> Konum
+          </h3>
+        </div>
+        <!-- Harita Embed -->
+        <div class="relative w-full" style="height:220px;">
+          <iframe
+            src="<%= locEmbedUrl %>"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            class="w-full h-full"
+          ></iframe>
+          <!-- Harita üstü overlay tıklama -->
+          <a href="<%= locDirectionUrl %>" target="_blank" rel="noopener" class="absolute inset-0 z-10 opacity-0"></a>
+        </div>
+        <!-- Adres + Yol Tarifi -->
+        <div class="p-4">
+          <% if (business.address) { %>
+          <p class="text-sm text-slate-700 mb-1"><span class="material-symbols-outlined text-sm align-middle mr-1 text-slate-400">location_on</span><%= business.address %></p>
+          <% if (business.city) { %><p class="text-xs text-slate-400 mb-3"><%= business.city %><%= business.district ? ' / ' + business.district : '' %></p><% } %>
+          <% } %>
+          <a href="<%= locDirectionUrl %>" target="_blank" rel="noopener"
+             class="bp-action-btn bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-lg shadow-rose-500/20 !text-sm">
+            <span class="material-symbols-outlined">directions</span> Yol Tarifi Al
+          </a>
+        </div>
+      </div>
+      <% } %>
+
+    </aside>
+  </div>
 </div>
-</div>
-</aside>
-</div>
-</main>

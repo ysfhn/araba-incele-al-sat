@@ -182,6 +182,12 @@
             <% if (item.key === 'moderasyon' && typeof stats !== 'undefined' && stats.pendingModeration > 0) { %>
               <span class="badge-count"><%= stats.pendingModeration %></span>
             <% } %>
+            <% if (item.key === 'ilanlar' && typeof stats !== 'undefined' && stats.pendingListings > 0) { %>
+              <span class="badge-count"><%= stats.pendingListings %></span>
+            <% } %>
+            <% if (item.key === 'isletmeler' && typeof stats !== 'undefined' && stats.pendingBusinesses > 0) { %>
+              <span class="badge-count"><%= stats.pendingBusinesses %></span>
+            <% } %>
           </a>
         </li>
       <% }) %>
@@ -206,14 +212,18 @@
           <div class="stat-icon green"><span class="material-icons">directions_car</span></div>
           <div class="stat-info"><h3><%= stats.activeListings %></h3><p>Aktif İlan</p></div>
         </div>
-        <div class="stat-card">
+        <a href="/admin/ilanlar?durum=pending" class="stat-card" style="text-decoration:none;color:inherit;cursor:pointer;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
           <div class="stat-icon orange"><span class="material-icons">pending_actions</span></div>
           <div class="stat-info"><h3><%= stats.pendingListings %></h3><p>Onay Bekleyen İlan</p></div>
-        </div>
-        <div class="stat-card">
+        </a>
+        <a href="/admin/isletmeler" class="stat-card" style="text-decoration:none;color:inherit;cursor:pointer;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
           <div class="stat-icon purple"><span class="material-icons">business</span></div>
           <div class="stat-info"><h3><%= stats.businesses %></h3><p>İşletme (<%= stats.verifiedBusinesses %> onaylı)</p></div>
-        </div>
+        </a>
+        <a href="/admin/isletmeler?durum=pending" class="stat-card" style="text-decoration:none;color:inherit;cursor:pointer;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
+          <div class="stat-icon yellow"><span class="material-icons">store</span></div>
+          <div class="stat-info"><h3><%= stats.pendingBusinesses %></h3><p>Onay Bekleyen İşletme</p></div>
+        </a>
         <div class="stat-card">
           <div class="stat-icon red"><span class="material-icons">shield</span></div>
           <div class="stat-info"><h3><%= stats.pendingModeration %></h3><p>Moderasyon Bekleyen</p></div>
@@ -262,15 +272,15 @@
                 <span class="material-icons">report</span>
               </div>
               <span class="activity-text">
-                <strong><%= mq.type %>:</strong> <%= mq.item_detail || 'İçerik #' + mq.item_id %>
+                <strong><%= ({listing:'İlan',business:'İşletme',forum_topic:'Forum Konu',forum_reply:'Forum Yanıt',review:'Değerlendirme'})[mq.type] || mq.type %>:</strong> <%= mq.item_detail || 'İçerik #' + mq.item_id %>
                 <% if (mq.reason) { %><br><small style="color:#999"><%= mq.reason %></small><% } %>
               </span>
               <div class="action-btns">
-                <button class="btn-sm btn-success" data-moderation-action="approved" data-id="<%= mq.id %>">
-                  <span class="material-icons">check</span>
+                <button class="btn-sm btn-danger" data-moderation-action="rejected" data-id="<%= mq.id %>" title="Şikayeti Onayla — İçeriği Kaldır">
+                  <span class="material-icons">gavel</span>
                 </button>
-                <button class="btn-sm btn-danger" data-moderation-action="rejected" data-id="<%= mq.id %>">
-                  <span class="material-icons">close</span>
+                <button class="btn-sm btn-success" data-moderation-action="approved" data-id="<%= mq.id %>" title="Şikayeti Reddet — İçerik Uygun">
+                  <span class="material-icons">verified</span>
                 </button>
               </div>
             </div>
@@ -287,6 +297,30 @@
     <% } else if (currentPage === 'kullanicilar') { %>
       <div class="admin-header"><h1>👥 Kullanıcı Yönetimi</h1></div>
 
+      <!-- Özet İstatistikler -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px;">
+        <div class="admin-card" style="text-align:center;padding:14px 10px;margin-bottom:0;">
+          <div style="font-size:1.6rem;font-weight:700;color:#1a73e8;"><%= data.allCount %></div>
+          <div style="font-size:.75rem;color:#666;">Toplam</div>
+        </div>
+        <div class="admin-card" style="text-align:center;padding:14px 10px;margin-bottom:0;">
+          <div style="font-size:1.6rem;font-weight:700;color:#34a853;"><%= data.roleMap?.bireysel || 0 %></div>
+          <div style="font-size:.75rem;color:#666;">Bireysel</div>
+        </div>
+        <div class="admin-card" style="text-align:center;padding:14px 10px;margin-bottom:0;">
+          <div style="font-size:1.6rem;font-weight:700;color:#9c27b0;"><%= data.roleMap?.kurumsal || 0 %></div>
+          <div style="font-size:.75rem;color:#666;">Kurumsal</div>
+        </div>
+        <div class="admin-card" style="text-align:center;padding:14px 10px;margin-bottom:0;">
+          <div style="font-size:1.6rem;font-weight:700;color:#e8710a;"><%= data.roleMap?.admin || 0 %></div>
+          <div style="font-size:.75rem;color:#666;">Admin</div>
+        </div>
+        <div class="admin-card" style="text-align:center;padding:14px 10px;margin-bottom:0;">
+          <div style="font-size:1.6rem;font-weight:700;color:#d93025;"><%= data.unverifiedCount %></div>
+          <div style="font-size:.75rem;color:#666;">Onaysız</div>
+        </div>
+      </div>
+
       <div class="admin-card">
         <form class="filter-bar" method="GET" action="/admin/kullanicilar">
           <input type="text" name="arama" placeholder="İsim veya e-posta ara..." value="<%= data.filters?.arama || '' %>">
@@ -296,22 +330,50 @@
             <option value="kurumsal" <%= data.filters?.rol==='kurumsal'?'selected':'' %>>Kurumsal</option>
             <option value="admin" <%= data.filters?.rol==='admin'?'selected':'' %>>Admin</option>
           </select>
+          <select name="onay">
+            <option value="">Tüm Onay</option>
+            <option value="1" <%= data.filters?.onay==='1'?'selected':'' %>>✅ Onaylı</option>
+            <option value="0" <%= data.filters?.onay==='0'?'selected':'' %>>❌ Onaysız</option>
+          </select>
           <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Ara</button>
+          <% if (data.filters?.arama || data.filters?.rol || data.filters?.onay) { %>
+            <a href="/admin/kullanicilar" class="btn-sm btn-outline" style="text-decoration:none;"><span class="material-icons">clear</span> Temizle</a>
+          <% } %>
         </form>
 
+        <% if (!data.users || data.users.length === 0) { %>
+          <div style="text-align:center;padding:40px 20px;color:#999;">
+            <span class="material-icons" style="font-size:48px;display:block;margin-bottom:8px;">person_off</span>
+            Kullanıcı bulunamadı.
+          </div>
+        <% } else { %>
         <div style="overflow-x:auto;">
           <table class="admin-table">
             <thead>
               <tr>
-                <th>ID</th><th>İsim</th><th>E-posta</th><th>Rol</th><th>Onay</th><th>Kayıt</th><th>İşlemler</th>
+                <th>Kullanıcı</th><th>İletişim</th><th>Rol</th><th>Onay</th><th>Profil</th><th>Aktivite</th><th>Kayıt</th><th>İşlemler</th>
               </tr>
             </thead>
             <tbody>
-              <% (data.users || []).forEach(u => { %>
+              <% data.users.forEach(u => { %>
                 <tr>
-                  <td>#<%= u.id %></td>
-                  <td><strong><%= u.name %></strong></td>
-                  <td><%= u.email %></td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <div style="width:32px;height:32px;border-radius:50%;background:<%= u.role==='admin'?'#e8710a':u.role==='kurumsal'?'#9c27b0':'#1a73e8' %>;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;">
+                        <%= u.avatar ? '<img src="' + u.avatar + '" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">' : u.name.charAt(0).toUpperCase() %>
+                      </div>
+                      <div>
+                        <strong><%= u.name %></strong>
+                        <div style="font-size:.7rem;color:#999;">#<%= u.id %></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <a href="mailto:<%= u.email %>" style="color:#1a73e8;text-decoration:none;font-size:.82rem;" title="<%= u.email %>"><%= u.email %></a>
+                    <% if (u.phone) { %>
+                      <div style="font-size:.72rem;color:#666;margin-top:2px;">📱 <%= u.phone %></div>
+                    <% } %>
+                  </td>
                   <td>
                     <select class="btn-sm btn-outline" data-admin-user-role data-user-id="<%= u.id %>" style="font-size:.75rem;">
                       <option value="bireysel" <%= u.role==='bireysel'?'selected':'' %>>Bireysel</option>
@@ -320,16 +382,32 @@
                     </select>
                   </td>
                   <td>
-                    <button class="btn-sm <%= u.is_verified ? 'btn-success' : 'btn-outline' %>" data-admin-verify-user data-user-id="<%= u.id %>" data-verified="<%= u.is_verified %>">
-                      <span class="material-icons"><%= u.is_verified ? 'verified' : 'cancel' %></span>
+                    <button class="btn-sm <%= u.is_verified ? 'btn-success' : 'btn-outline' %>" data-admin-verify-user data-user-id="<%= u.id %>" data-verified="<%= u.is_verified %>" title="<%= u.is_verified ? 'Onaylı — tıklayın kaldırın' : 'Onaysız — tıklayın onaylayın' %>">
+                      <span class="material-icons" style="font-size:18px;"><%= u.is_verified ? 'verified' : 'cancel' %></span>
                     </button>
                   </td>
-                  <td><%= timeAgo(u.created_at) %></td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:4px;">
+                      <div style="flex:1;background:#eee;border-radius:4px;height:6px;min-width:50px;">
+                        <div style="width:<%= u.profile_completion || 0 %>%;height:100%;border-radius:4px;background:<%= (u.profile_completion||0)>=80?'#34a853':(u.profile_completion||0)>=50?'#fbbc04':'#d93025' %>;"></div>
+                      </div>
+                      <span style="font-size:.7rem;color:#666;">%<%= u.profile_completion || 0 %></span>
+                    </div>
+                  </td>
+                  <td style="font-size:.75rem;white-space:nowrap;">
+                    <span title="İlan sayısı">🚗 <%= u.listing_count %></span>
+                    <span title="Forum konu sayısı" style="margin-left:6px;">💬 <%= u.topic_count %></span>
+                  </td>
+                  <td style="font-size:.8rem;"><%= timeAgo(u.created_at) %></td>
                   <td>
                     <div class="action-btns">
-                      <button class="btn-sm btn-danger" data-admin-delete-user data-user-id="<%= u.id %>" title="Sil">
-                        <span class="material-icons">delete</span>
-                      </button>
+                      <% if (u.id !== currentUser.id) { %>
+                        <button class="btn-sm btn-danger" data-admin-delete-user data-user-id="<%= u.id %>" title="Kullanıcıyı Sil">
+                          <span class="material-icons">delete</span>
+                        </button>
+                      <% } else { %>
+                        <span style="font-size:.7rem;color:#999;" title="Kendinizi silemezsiniz">—</span>
+                      <% } %>
                     </div>
                   </td>
                 </tr>
@@ -337,15 +415,16 @@
             </tbody>
           </table>
         </div>
+        <% } %>
 
         <% if (data.totalPages > 1) { %>
           <div class="pagination">
             <% for (let i = 1; i <= data.totalPages; i++) { %>
-              <a href="/admin/kullanicilar?sayfa=<%= i %>&arama=<%= data.filters?.arama||'' %>&rol=<%= data.filters?.rol||'' %>" class="<%= data.page === i ? 'active' : '' %>"><%= i %></a>
+              <a href="/admin/kullanicilar?sayfa=<%= i %>&arama=<%= data.filters?.arama||'' %>&rol=<%= data.filters?.rol||'' %>&onay=<%= data.filters?.onay||'' %>" class="<%= data.page === i ? 'active' : '' %>"><%= i %></a>
             <% } %>
           </div>
         <% } %>
-        <p style="font-size:.8rem;color:#999;margin-top:.5rem;text-align:center;">Toplam <%= data.totalCount %> kullanıcı</p>
+        <p style="font-size:.8rem;color:#999;margin-top:.5rem;text-align:center;">Filtreye göre <%= data.totalCount %> kullanıcı gösteriliyor</p>
       </div>
 
     <!-- ═══════════════════════════════════════════ -->
@@ -353,6 +432,18 @@
     <!-- ═══════════════════════════════════════════ -->
     <% } else if (currentPage === 'ilanlar') { %>
       <div class="admin-header"><h1>🚗 İlan Yönetimi</h1></div>
+
+      <!-- Hızlı Filtre Butonları -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+        <a href="/admin/ilanlar" class="btn-sm <%= !data.filters?.durum ? 'btn-primary' : 'btn-outline' %>" style="text-decoration:none;">Tümü (<%= data.totalCount %>)</a>
+        <a href="/admin/ilanlar?durum=pending" class="btn-sm <%= data.filters?.durum==='pending' ? 'btn-warning' : 'btn-outline' %>" style="text-decoration:none;position:relative;">
+          ⏳ Onay Bekleyen
+          <% if (data.pendingCount > 0) { %><span style="background:#ef4444;color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;"><%= data.pendingCount %></span><% } %>
+        </a>
+        <a href="/admin/ilanlar?durum=active" class="btn-sm <%= data.filters?.durum==='active' ? 'btn-success' : 'btn-outline' %>" style="text-decoration:none;">✅ Aktif</a>
+        <a href="/admin/ilanlar?durum=rejected" class="btn-sm <%= data.filters?.durum==='rejected' ? 'btn-danger' : 'btn-outline' %>" style="text-decoration:none;">❌ Reddedildi</a>
+        <a href="/admin/ilanlar?durum=sold" class="btn-sm <%= data.filters?.durum==='sold' ? 'btn-secondary' : 'btn-outline' %>" style="text-decoration:none;">🏷️ Satıldı</a>
+      </div>
 
       <div class="admin-card">
         <form class="filter-bar" method="GET" action="/admin/ilanlar">
@@ -378,7 +469,7 @@
               <% (data.listings || []).forEach(l => { %>
                 <tr>
                   <td>#<%= l.id %></td>
-                  <td><a href="/ilan/<%= l.id %>" target="_blank" style="color:#1a73e8;text-decoration:none;font-weight:600;"><%= l.title %></a></td>
+                  <td><a href="/ilan/<%= l.slug %>" target="_blank" style="color:#1a73e8;text-decoration:none;font-weight:600;"><%= l.title %></a></td>
                   <td><%= l.brand_name %> <%= l.model_name %></td>
                   <td style="font-weight:700;color:#1e8e3e;"><%= formatPrice(l.price) %></td>
                   <td><%= l.seller_name %></td>
@@ -438,6 +529,16 @@
     <!-- ═══════════════════════════════════════════ -->
     <% } else if (currentPage === 'isletmeler') { %>
       <div class="admin-header"><h1>🏢 İşletme Yönetimi</h1></div>
+
+      <!-- Hızlı Durum Filtreleri -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+        <a href="/admin/isletmeler" class="btn-sm <%= !data.filters?.durum ? 'btn-primary' : 'btn-outline' %>" style="text-decoration:none;">Tümü (<%= data.allBusinessCount %>)</a>
+        <a href="/admin/isletmeler?durum=pending" class="btn-sm <%= data.filters?.durum==='pending' ? 'btn-warning' : 'btn-outline' %>" style="text-decoration:none;position:relative;">
+          ⏳ Onay Bekleyen
+          <% if (data.pendingBusinessCount > 0) { %><span style="background:#ef4444;color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;"><%= data.pendingBusinessCount %></span><% } %>
+        </a>
+        <a href="/admin/isletmeler?durum=verified" class="btn-sm <%= data.filters?.durum==='verified' ? 'btn-success' : 'btn-outline' %>" style="text-decoration:none;">✅ Onaylı (<%= data.verifiedBusinessCount %>)</a>
+      </div>
 
       <div class="admin-card">
         <form class="filter-bar" method="GET" action="/admin/isletmeler">
@@ -509,6 +610,10 @@
 
       <div class="stats-grid">
         <div class="stat-card">
+          <div class="stat-icon purple"><span class="material-icons">event</span></div>
+          <div class="stat-info"><h3><%= data.totalCount %></h3><p>Toplam</p></div>
+        </div>
+        <div class="stat-card">
           <div class="stat-icon orange"><span class="material-icons">pending</span></div>
           <div class="stat-info"><h3><%= data.statusCounts?.pending || 0 %></h3><p>Bekleyen</p></div>
         </div>
@@ -527,40 +632,71 @@
       </div>
 
       <div class="admin-card">
-        <form class="filter-bar" method="GET" action="/admin/randevular">
-          <input type="text" name="arama" placeholder="İşletme veya kullanıcı ara..." value="<%= data.filters?.arama || '' %>">
-          <select name="durum">
+        <form class="filter-bar" method="GET" action="/admin/randevular" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+          <input type="text" name="arama" placeholder="İşletme veya kullanıcı ara..." value="<%= data.filters?.arama || '' %>" style="flex:1;min-width:180px;">
+          <select name="durum" style="padding:6px 10px;border-radius:8px;border:1px solid #e2e8f0;font-size:.8rem;">
             <option value="">Tüm Durumlar</option>
-            <option value="pending" <%= data.filters?.durum==='pending'?'selected':'' %>>Bekleyen</option>
-            <option value="confirmed" <%= data.filters?.durum==='confirmed'?'selected':'' %>>Onaylanan</option>
-            <option value="completed" <%= data.filters?.durum==='completed'?'selected':'' %>>Tamamlanan</option>
-            <option value="cancelled" <%= data.filters?.durum==='cancelled'?'selected':'' %>>İptal</option>
+            <option value="pending" <%= data.filters?.durum==='pending'?'selected':'' %>>⏳ Bekleyen</option>
+            <option value="confirmed" <%= data.filters?.durum==='confirmed'?'selected':'' %>>✅ Onaylanan</option>
+            <option value="completed" <%= data.filters?.durum==='completed'?'selected':'' %>>✔️ Tamamlanan</option>
+            <option value="cancelled" <%= data.filters?.durum==='cancelled'?'selected':'' %>>❌ İptal</option>
           </select>
-          <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Ara</button>
+          <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Filtrele</button>
+          <% if (data.filters?.arama || data.filters?.durum) { %>
+            <a href="/admin/randevular" class="btn-sm btn-outline" style="text-decoration:none;"><span class="material-icons">clear</span> Temizle</a>
+          <% } %>
         </form>
 
         <div style="overflow-x:auto;">
           <table class="admin-table">
             <thead>
               <tr>
-                <th>ID</th><th>İşletme</th><th>Müşteri</th><th>Tarih</th><th>Saat</th><th>Açıklama</th><th>Durum</th><th>Oluşturma</th>
+                <th>ID</th><th>İşletme</th><th>Müşteri</th><th>Hizmet</th><th>Araç</th><th>Tarih/Saat</th><th>Durum</th><th>İşlem</th>
               </tr>
             </thead>
             <tbody>
+              <% if (!data.appointments || data.appointments.length === 0) { %>
+              <tr><td colspan="8" style="text-align:center;padding:2rem;color:#94a3b8;"><span class="material-icons" style="font-size:2rem;display:block;margin-bottom:4px;">event_busy</span>Randevu bulunamadı</td></tr>
+              <% } %>
               <% (data.appointments || []).forEach(a => { %>
               <tr>
                 <td>#<%= a.id %></td>
-                <td><strong><%= a.business_name %></strong></td>
+                <td><a href="/servis/<%= (a.business_name || '').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9ğüşıöç-]/g,'') %>" target="_blank" style="color:#1a73e8;text-decoration:none;font-weight:600;"><%= a.business_name %> ↗</a></td>
                 <td><%= a.user_name %><br><small style="color:#999"><%= a.user_email %></small></td>
-                <td><%= a.appointment_date || '-' %></td>
-                <td><%= a.appointment_time || '-' %></td>
-                <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= a.description || '-' %></td>
-                <td>
-                  <% const apStat = {pending:'Bekleyen',confirmed:'Onaylı',completed:'Tamamlandı',cancelled:'İptal'}; %>
-                  <% const apBadge = {pending:'badge-warning',confirmed:'badge-info',completed:'badge-success',cancelled:'badge-danger'}; %>
-                  <span class="badge <%= apBadge[a.status] || 'badge-secondary' %>"><%= apStat[a.status] || a.status %></span>
+                <td><% if (a.service_type) { %><span style="background:#f0f9ff;color:#0369a1;font-size:.7rem;padding:2px 8px;border-radius:6px;white-space:nowrap;"><%= a.service_type %></span><% } else { %><span style="color:#ccc;">—</span><% } %></td>
+                <td><% if (a.vehicle_info) { %><span style="font-size:.8rem;font-weight:600;"><%= a.vehicle_info %></span><% } else { %><span style="color:#ccc;">—</span><% } %></td>
+                <td style="white-space:nowrap;">
+                  <span style="font-weight:600;"><%= a.date %></span><br>
+                  <small style="color:#666;">🕐 <%= a.time %></small>
                 </td>
-                <td><%= timeAgo(a.created_at) %></td>
+                <td>
+                  <% const apStat = {pending:'⏳ Bekleyen',confirmed:'✅ Onaylı',completed:'✔️ Tamamlandı',cancelled:'❌ İptal'}; %>
+                  <% const apBadge = {pending:'badge-warning',confirmed:'badge-info',completed:'badge-success',cancelled:'badge-danger'}; %>
+                  <span class="badge <%= apBadge[a.status] || 'badge-secondary' %>" style="font-size:.7rem;"><%= apStat[a.status] || a.status %></span>
+                </td>
+                <td>
+                  <% if (a.status === 'pending') { %>
+                  <div class="action-btns" style="gap:4px;">
+                    <button class="btn-sm btn-success" data-admin-appt-status data-appt-id="<%= a.id %>" data-status="confirmed" title="Onayla" style="padding:3px 6px;">
+                      <span class="material-icons" style="font-size:.85rem;">check</span>
+                    </button>
+                    <button class="btn-sm btn-danger" data-admin-appt-status data-appt-id="<%= a.id %>" data-status="cancelled" title="İptal Et" style="padding:3px 6px;">
+                      <span class="material-icons" style="font-size:.85rem;">close</span>
+                    </button>
+                  </div>
+                  <% } else if (a.status === 'confirmed') { %>
+                  <div class="action-btns" style="gap:4px;">
+                    <button class="btn-sm btn-success" data-admin-appt-status data-appt-id="<%= a.id %>" data-status="completed" title="Tamamlandı" style="padding:3px 6px;">
+                      <span class="material-icons" style="font-size:.85rem;">task_alt</span>
+                    </button>
+                    <button class="btn-sm btn-danger" data-admin-appt-status data-appt-id="<%= a.id %>" data-status="cancelled" title="İptal Et" style="padding:3px 6px;">
+                      <span class="material-icons" style="font-size:.85rem;">close</span>
+                    </button>
+                  </div>
+                  <% } else { %>
+                  <span style="color:#ccc;font-size:.75rem;">—</span>
+                  <% } %>
+                </td>
               </tr>
               <% }) %>
             </tbody>
@@ -654,6 +790,7 @@
     <% } else if (currentPage === 'degerlendirmeler') { %>
       <div class="admin-header"><h1>⭐ Değerlendirme Yönetimi</h1></div>
 
+      <!-- Özet Kartları -->
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon purple"><span class="material-icons">reviews</span></div>
@@ -663,40 +800,71 @@
           <div class="stat-icon orange"><span class="material-icons">star</span></div>
           <div class="stat-info"><h3><%= data.avgRating %></h3><p>Ortalama Puan</p></div>
         </div>
-        <% for (let s = 5; s >= 1; s--) { %>
-        <div class="stat-card">
-          <div class="stat-icon blue"><span class="material-icons">star</span></div>
-          <div class="stat-info"><h3><%= data.ratingDist?.[s] || 0 %></h3><p><%= s %> Yıldız</p></div>
+        <!-- Puan Dağılımı Bar -->
+        <div class="stat-card" style="grid-column: span 2;">
+          <div style="width:100%;">
+            <p style="font-size:.75rem;color:#64748b;font-weight:600;margin-bottom:8px;">Puan Dağılımı</p>
+            <% const totalReviewsForBar = Object.values(data.ratingDist || {}).reduce((a,b) => a+b, 0) || 1; %>
+            <% for (let s = 5; s >= 1; s--) { %>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                <span style="font-size:.7rem;font-weight:700;width:12px;text-align:right;"><%= s %></span>
+                <span class="material-icons" style="font-size:12px;color:#f59e0b;">star</span>
+                <div style="flex:1;height:8px;background:#f1f5f9;border-radius:4px;overflow:hidden;">
+                  <div style="height:100%;width:<%= Math.round(((data.ratingDist?.[s]||0)/totalReviewsForBar)*100) %>%;background:linear-gradient(90deg,#facc15,#f59e0b);border-radius:4px;"></div>
+                </div>
+                <span style="font-size:.7rem;color:#94a3b8;width:24px;"><%= data.ratingDist?.[s] || 0 %></span>
+              </div>
+            <% } %>
+          </div>
         </div>
-        <% } %>
       </div>
 
       <div class="admin-card">
-        <form class="filter-bar" method="GET" action="/admin/degerlendirmeler">
-          <input type="text" name="arama" placeholder="İşletme, kullanıcı veya yorum ara..." value="<%= data.filters?.arama || '' %>">
-          <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Ara</button>
+        <!-- Filtreler -->
+        <form class="filter-bar" method="GET" action="/admin/degerlendirmeler" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+          <input type="text" name="arama" placeholder="İşletme, kullanıcı veya yorum ara..." value="<%= data.filters?.arama || '' %>" style="flex:1;min-width:180px;">
+          <select name="puan" style="padding:6px 10px;border-radius:8px;border:1px solid #e2e8f0;font-size:.8rem;">
+            <option value="">Tüm Puanlar</option>
+            <% for(let s=5;s>=1;s--){ %><option value="<%= s %>" <%= data.filters?.puan == s ? 'selected' : '' %>><%= s %> Yıldız</option><% } %>
+          </select>
+          <select name="isletme" style="padding:6px 10px;border-radius:8px;border:1px solid #e2e8f0;font-size:.8rem;">
+            <option value="">Tüm İşletmeler</option>
+            <% (data.businessList || []).forEach(bl => { %>
+              <option value="<%= bl.id %>" <%= data.filters?.isletme == bl.id ? 'selected' : '' %>><%= bl.name %> (<%= bl.review_count %>)</option>
+            <% }) %>
+          </select>
+          <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Filtrele</button>
+          <% if (data.filters?.arama || data.filters?.puan || data.filters?.isletme) { %>
+            <a href="/admin/degerlendirmeler" class="btn-sm btn-outline" style="text-decoration:none;"><span class="material-icons">clear</span> Temizle</a>
+          <% } %>
         </form>
 
         <div style="overflow-x:auto;">
           <table class="admin-table">
             <thead>
               <tr>
-                <th>ID</th><th>İşletme</th><th>Kullanıcı</th><th>Puan</th><th>Yorum</th><th>Tarih</th><th>İşlemler</th>
+                <th>ID</th><th>İşletme</th><th>Kullanıcı</th><th>Puan</th><th>Hizmet</th><th>Yorum</th><th>Tarih</th><th>İşlem</th>
               </tr>
             </thead>
             <tbody>
+              <% if (!data.reviews || data.reviews.length === 0) { %>
+              <tr><td colspan="8" style="text-align:center;padding:2rem;color:#94a3b8;"><span class="material-icons" style="font-size:2rem;display:block;margin-bottom:4px;">rate_review</span>Henüz değerlendirme yok</td></tr>
+              <% } %>
               <% (data.reviews || []).forEach(r => { %>
               <tr>
                 <td>#<%= r.id %></td>
-                <td><strong><%= r.business_name %></strong></td>
+                <td><a href="/servis/<%= (r.business_name || '').toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9ğüşıöç-]/g,'') %>" target="_blank" style="color:#1a73e8;text-decoration:none;font-weight:600;"><%= r.business_name %> ↗</a></td>
                 <td><%= r.reviewer_name %><br><small style="color:#999"><%= r.reviewer_email %></small></td>
                 <td>
                   <div style="display:flex;align-items:center;gap:2px;">
                     <% for(let i=0;i<5;i++){%><span class="material-icons" style="font-size:14px;color:<%= i < r.rating ? '#f59e0b' : '#ddd' %>">star</span><%}%>
                   </div>
                 </td>
-                <td style="max-width:250px;"><%= (r.comment || '').substring(0, 100) %></td>
-                <td><%= timeAgo(r.created_at) %></td>
+                <td><% if (r.service_type) { %><span style="background:#f0f9ff;color:#0369a1;font-size:.7rem;padding:2px 8px;border-radius:6px;white-space:nowrap;"><%= r.service_type %></span><% } else { %><span style="color:#ccc;">—</span><% } %></td>
+                <td style="max-width:250px;" title="<%= (r.comment || '').replace(/"/g, '&quot;') %>">
+                  <%= (r.comment || '').substring(0, 80) %><% if ((r.comment || '').length > 80) { %>…<% } %>
+                </td>
+                <td style="white-space:nowrap;"><%= timeAgo(r.created_at) %></td>
                 <td>
                   <div class="action-btns">
                     <button class="btn-sm btn-danger" data-admin-delete-review data-review-id="<%= r.id %>" title="Sil">
@@ -713,7 +881,7 @@
         <% if (data.totalPages > 1) { %>
         <div class="pagination">
           <% for (let p = 1; p <= data.totalPages; p++) { %>
-            <a href="/admin/degerlendirmeler?sayfa=<%= p %>&arama=<%= data.filters?.arama || '' %>" class="<%= p === data.page ? 'active' : '' %>"><%= p %></a>
+            <a href="/admin/degerlendirmeler?sayfa=<%= p %>&arama=<%= data.filters?.arama || '' %>&puan=<%= data.filters?.puan || '' %>&isletme=<%= data.filters?.isletme || '' %>" class="<%= p === data.page ? 'active' : '' %>"><%= p %></a>
           <% } %>
         </div>
         <% } %>
@@ -723,50 +891,142 @@
     <!--  ARAÇ HUB                                   -->
     <!-- ═══════════════════════════════════════════ -->
     <% } else if (currentPage === 'hublar') { %>
+      <style>
+        .hub-card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:12px;overflow:hidden;transition:box-shadow .2s;}
+        .hub-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}
+        .hub-brand-header{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;cursor:pointer;user-select:none;transition:background .15s;}
+        .hub-brand-header:hover{background:#f8f9fa;}
+        .hub-brand-logo{width:40px;height:40px;border-radius:8px;object-fit:contain;background:#f8f9fa;padding:4px;flex-shrink:0;border:1px solid #eee;}
+        .hub-brand-logo-ph{width:40px;height:40px;border-radius:8px;background:#e8f0fe;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;color:#1a73e8;font-size:1rem;}
+        .hub-brand-info{flex:1;min-width:0;}
+        .hub-brand-info h3{margin:0;font-size:.95rem;font-weight:700;color:#1a1f36;}
+        .hub-brand-info .hub-brand-meta{display:flex;gap:1rem;font-size:.75rem;color:#999;margin-top:2px;}
+        .hub-brand-meta span{display:flex;align-items:center;gap:3px;}
+        .hub-brand-meta .material-icons{font-size:.85rem;}
+        .hub-expand{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .2s;color:#999;}
+        .hub-expand.open{transform:rotate(180deg);color:#1a73e8;}
+        .hub-models-list{display:none;padding:0 1.25rem 1rem;border-top:1px solid #f0f0f0;}
+        .hub-models-list.show{display:block;}
+        .hub-row{display:flex;align-items:center;gap:.75rem;padding:.75rem .5rem;border-bottom:1px solid #f5f5f5;font-size:.85rem;transition:background .15s;}
+        .hub-row:hover{background:#f8f9ff;}
+        .hub-row:last-child{border-bottom:none;}
+        .hub-row-img{width:56px;height:38px;border-radius:6px;object-fit:cover;flex-shrink:0;background:#f0f2f5;}
+        .hub-row-img-ph{width:56px;height:38px;border-radius:6px;background:#f0f2f5;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#cbd5e1;}
+        .hub-row .hub-name{flex:1;min-width:0;}
+        .hub-row .hub-name strong{font-weight:700;color:#1a1f36;font-size:.88rem;}
+        .hub-row .hub-name small{display:block;color:#999;font-size:.72rem;margin-top:1px;}
+        .hub-row .hub-specs{display:flex;gap:.75rem;color:#666;font-size:.75rem;flex-wrap:wrap;}
+        .hub-row .hub-specs span{display:flex;align-items:center;gap:3px;white-space:nowrap;}
+        .hub-row .hub-specs .material-icons{font-size:.85rem;color:#999;}
+        .hub-row .hub-price{font-weight:700;color:#1a73e8;font-size:.85rem;white-space:nowrap;}
+        .hub-row .hub-rating{display:flex;align-items:center;gap:3px;font-weight:700;font-size:.8rem;color:#e8710a;white-space:nowrap;}
+        .hub-row .hub-rating .material-icons{font-size:.9rem;color:#e8710a;}
+        .search-hubs{margin-bottom:1rem;padding:10px 14px;border:1px solid #ddd;border-radius:10px;width:100%;font-size:.9rem;box-sizing:border-box;}
+        .search-hubs:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 3px rgba(26,115,232,.1);}
+        .hub-stats-bar{display:flex;gap:1rem;margin-bottom:1.5rem;}
+        .hub-stat{background:#fff;border-radius:10px;padding:.75rem 1.25rem;display:flex;align-items:center;gap:.75rem;box-shadow:0 1px 4px rgba(0,0,0,.06);flex:1;}
+        .hub-stat .material-icons{font-size:1.5rem;opacity:.5;}
+        .hub-stat h4{margin:0;font-size:1.2rem;font-weight:700;color:#1a1f36;}.hub-stat p{margin:0;font-size:.7rem;color:#999;}
+        .hub-add-inline{display:flex;gap:.5rem;padding:.75rem .5rem;align-items:end;border-top:1px dashed #e5e7eb;}
+        .hub-add-inline select{padding:7px 10px;border:1px solid #ddd;border-radius:6px;font-size:.8rem;flex:1;}
+      </style>
+
       <div class="admin-header">
         <h1>🔧 Araç Hub Yönetimi</h1>
         <button class="btn-sm btn-primary" onclick="openHubModal()"><span class="material-icons">add</span> Yeni Hub</button>
       </div>
 
-      <div class="admin-card">
-        <div style="overflow-x:auto;">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th><th>Marka</th><th>Model</th><th>Yıl</th><th>Yakıt</th><th>Motor</th><th>HP</th><th>Ort. Fiyat</th><th>Editör Puanı</th><th>İşlemler</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% (data.hubs || []).forEach(h => { %>
-                <tr>
-                  <td>#<%= h.id %></td>
-                  <td><%= h.brand_name %></td>
-                  <td><%= h.model_name %></td>
-                  <td><%= h.year || '-' %></td>
-                  <td><%= h.fuel_type || '-' %></td>
-                  <td><%= h.engine || '-' %></td>
-                  <td><%= h.hp || '-' %></td>
-                  <td style="font-weight:700;"><%= formatPrice(h.avg_price) %></td>
-                  <td><%= h.editor_rating ? h.editor_rating + '/10' : '-' %></td>
-                  <td>
-                    <div class="action-btns">
-                      <button class="btn-sm btn-primary" onclick='openHubModal(<%- JSON.stringify(h) %>)' title="Düzenle">
-                        <span class="material-icons">edit</span>
-                      </button>
-                      <button class="btn-sm btn-danger" data-admin-delete-hub data-hub-id="<%= h.id %>" title="Sil">
-                        <span class="material-icons">delete</span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
-        </div>
-        <% if (!data.hubs || data.hubs.length === 0) { %>
-          <p style="color:#999;text-align:center;padding:2rem;">Henüz araç hub kaydı yok.</p>
-        <% } %>
+      <!-- İstatistik çubuğu -->
+      <div class="hub-stats-bar">
+        <div class="hub-stat"><span class="material-icons" style="color:#1a73e8;">hub</span><div><h4><%= (data.hubs||[]).length %></h4><p>Toplam Hub</p></div></div>
+        <div class="hub-stat"><span class="material-icons" style="color:#1e8e3e;">category</span><div><h4><%= data.brandsWithHubs || 0 %></h4><p>Marka</p></div></div>
+        <div class="hub-stat"><span class="material-icons" style="color:#e8710a;">star</span><div><h4><%= (data.hubs||[]).filter(h=>h.editor_rating).length %></h4><p>Puanlı</p></div></div>
       </div>
+
+      <!-- Arama -->
+      <input type="text" class="search-hubs" id="hubSearch" placeholder="🔍 Marka veya model ara..." oninput="filterHubBrands(this.value)">
+
+      <!-- Marka bazlı accordion listesi -->
+      <div id="hubBrandList">
+      <% 
+        const hubsByBrand = data.hubsByBrand || {};
+        // Hub olan markaları göster, sonra hub olmayanları gösterme
+        (data.brands || []).filter(b => hubsByBrand[b.id] && hubsByBrand[b.id].length > 0).forEach(b => { 
+          const brandHubs = hubsByBrand[b.id] || [];
+      %>
+        <div class="hub-card" data-hub-brand-name="<%= b.name.toLowerCase() %>" data-hub-models="<%= brandHubs.map(h=>h.model_name.toLowerCase()).join(',') %>">
+          <div class="hub-brand-header" onclick="toggleHubBrand(<%= b.id %>)">
+            <% if (b.logo) { %>
+              <img src="<%= b.logo %>" alt="<%= b.name %>" class="hub-brand-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="hub-brand-logo-ph" style="display:none;"><%= b.name.charAt(0) %></div>
+            <% } else { %>
+              <div class="hub-brand-logo-ph"><%= b.name.charAt(0) %></div>
+            <% } %>
+            <div class="hub-brand-info">
+              <h3><%= b.name %></h3>
+              <div class="hub-brand-meta">
+                <span><span class="material-icons">hub</span> <%= brandHubs.length %> hub</span>
+                <span><span class="material-icons">star</span> <%= brandHubs.filter(h=>h.editor_rating).length %> puanlı</span>
+              </div>
+            </div>
+            <div class="hub-expand" id="hubExpand_<%= b.id %>"><span class="material-icons">expand_more</span></div>
+          </div>
+          <div class="hub-models-list" id="hubModels_<%= b.id %>">
+            <% brandHubs.forEach(h => { %>
+              <div class="hub-row" data-hub-model-search="<%= h.model_name.toLowerCase() %>">
+                <% if (h.image_url) { %>
+                  <img src="<%= h.image_url %>" alt="<%= h.model_name %>" class="hub-row-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                  <div class="hub-row-img-ph" style="display:none;"><span class="material-icons" style="font-size:1rem;">directions_car</span></div>
+                <% } else { %>
+                  <div class="hub-row-img-ph"><span class="material-icons" style="font-size:1rem;">directions_car</span></div>
+                <% } %>
+                <div class="hub-name">
+                  <strong><%= h.model_name %></strong>
+                  <small><%= h.year || '' %><%= h.year && h.fuel_type ? ' · ' : '' %><%= h.fuel_type || '' %><%= (h.year || h.fuel_type) && h.engine ? ' · ' : '' %><%= h.engine || '' %></small>
+                </div>
+                <div class="hub-specs">
+                  <% if (h.hp) { %><span><span class="material-icons">speed</span> <%= h.hp %> HP</span><% } %>
+                  <% if (h.transmission) { %><span><span class="material-icons">settings</span> <%= h.transmission %></span><% } %>
+                </div>
+                <% if (h.avg_price) { %><span class="hub-price"><%= formatPrice(h.avg_price) %></span><% } %>
+                <% if (h.editor_rating) { %><span class="hub-rating"><span class="material-icons">star</span> <%= h.editor_rating %>/10</span><% } %>
+                <div class="action-btns">
+                  <a href="/arac/<%= h.brand_slug %>/<%= h.model_slug %>" target="_blank" class="btn-sm btn-outline" title="Hub'ı Görüntüle" style="text-decoration:none;padding:3px 8px;">
+                    <span class="material-icons" style="font-size:.8rem;">visibility</span>
+                  </a>
+                  <button class="btn-sm btn-primary" data-edit-hub='<%- JSON.stringify(h).replace(/'/g, "&#39;") %>' title="Düzenle" style="padding:3px 8px;">
+                    <span class="material-icons" style="font-size:.8rem;">edit</span>
+                  </button>
+                  <button class="btn-sm btn-danger" data-admin-delete-hub data-hub-id="<%= h.id %>" title="Sil" style="padding:3px 8px;">
+                    <span class="material-icons" style="font-size:.8rem;">delete</span>
+                  </button>
+                </div>
+              </div>
+            <% }) %>
+            <!-- Inline Hub Ekleme: marka için model seç -->
+            <div class="hub-add-inline">
+              <select id="inline_hub_model_<%= b.id %>">
+                <option value="">Model seçin...</option>
+                <% (data.models||[]).filter(m => String(m.brand_id) === String(b.id)).forEach(m => { 
+                  const alreadyHasHub = brandHubs.some(h => String(h.model_id) === String(m.id));
+                  if (!alreadyHasHub) {
+                %>
+                  <option value="<%= m.id %>"><%= m.name %></option>
+                <% } }) %>
+              </select>
+              <button class="btn-sm btn-success" onclick="addHubInline(<%= b.id %>)" title="Bu model için hub ekle"><span class="material-icons" style="font-size:.9rem;">add</span> Hub Ekle</button>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+      </div>
+
+      <% if (!data.hubs || data.hubs.length === 0) { %>
+        <div class="admin-card" style="text-align:center;padding:3rem;">
+          <span class="material-icons" style="font-size:3rem;color:#cbd5e1;">hub</span>
+          <p style="color:#999;margin-top:.75rem;">Henüz araç hub kaydı yok. Başlamak için "Yeni Hub" butonuna tıklayın.</p>
+        </div>
+      <% } %>
 
       <!-- HUB MODAL -->
       <div class="admin-modal-overlay" id="hubModal">
@@ -790,6 +1050,13 @@
                 <select id="hub_model_id" required>
                   <option value="">Önce marka seçin...</option>
                 </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Araç Görseli (URL)</label>
+              <input type="url" id="hub_image_url" placeholder="https://images.unsplash.com/... veya başka bir görsel URL'si">
+              <div id="hub_image_preview" style="margin-top:8px;display:none;">
+                <img id="hub_image_preview_img" src="" alt="Önizleme" style="max-width:100%;max-height:180px;border-radius:8px;object-fit:cover;border:1px solid #e2e8f0;">
               </div>
             </div>
             <div class="form-row">
@@ -847,80 +1114,133 @@
     <!--  MARKALAR / MODELLER                        -->
     <!-- ═══════════════════════════════════════════ -->
     <% } else if (currentPage === 'markalar') { %>
+      <style>
+        .brand-card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:12px;overflow:hidden;transition:box-shadow .2s;}
+        .brand-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}
+        .brand-header{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;cursor:pointer;user-select:none;transition:background .15s;}
+        .brand-header:hover{background:#f8f9fa;}
+        .brand-logo{width:40px;height:40px;border-radius:8px;object-fit:contain;background:#f8f9fa;padding:4px;flex-shrink:0;border:1px solid #eee;}
+        .brand-logo-placeholder{width:40px;height:40px;border-radius:8px;background:#e8f0fe;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;color:#1a73e8;font-size:1rem;}
+        .brand-info{flex:1;min-width:0;}
+        .brand-info h3{margin:0;font-size:.95rem;font-weight:700;color:#1a1f36;}
+        .brand-info .brand-meta{display:flex;gap:1rem;font-size:.75rem;color:#999;margin-top:2px;}
+        .brand-meta span{display:flex;align-items:center;gap:3px;}
+        .brand-meta .material-icons{font-size:.85rem;}
+        .brand-expand{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .2s;color:#999;}
+        .brand-expand.open{transform:rotate(180deg);color:#1a73e8;}
+        .brand-models{display:none;padding:0 1.25rem 1rem;border-top:1px solid #f0f0f0;}
+        .brand-models.show{display:block;}
+        .model-row{display:flex;align-items:center;gap:.75rem;padding:.6rem .5rem;border-bottom:1px solid #f5f5f5;font-size:.85rem;transition:background .15s;}
+        .model-row:hover{background:#f8f9ff;}
+        .model-row:last-child{border-bottom:none;}
+        .model-row .model-name{flex:1;font-weight:600;color:#1a1f36;}
+        .model-row .model-info{display:flex;gap:1rem;color:#999;font-size:.75rem;}
+        .model-row .model-info span{display:flex;align-items:center;gap:3px;}
+        .add-model-inline{display:flex;gap:.5rem;padding:.75rem .5rem;align-items:end;}
+        .add-model-inline input,.add-model-inline select{padding:7px 10px;border:1px solid #ddd;border-radius:6px;font-size:.8rem;}
+        .add-model-inline input{flex:1;}
+        .search-brands{margin-bottom:1rem;padding:10px 14px;border:1px solid #ddd;border-radius:10px;width:100%;font-size:.9rem;box-sizing:border-box;}
+        .search-brands:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 3px rgba(26,115,232,.1);}
+        .brand-stats-bar{display:flex;gap:1rem;margin-bottom:1.5rem;}
+        .brand-stat{background:#fff;border-radius:10px;padding:.75rem 1.25rem;display:flex;align-items:center;gap:.75rem;box-shadow:0 1px 4px rgba(0,0,0,.06);flex:1;}
+        .brand-stat .material-icons{font-size:1.5rem;opacity:.5;}
+        .brand-stat h4{margin:0;font-size:1.2rem;font-weight:700;color:#1a1f36;}.brand-stat p{margin:0;font-size:.7rem;color:#999;}
+      </style>
+
       <div class="admin-header">
         <h1>🏷️ Marka & Model Yönetimi</h1>
-        <div style="display:flex;gap:.5rem;">
-          <button class="btn-sm btn-primary" onclick="openBrandModal()"><span class="material-icons">add</span> Marka Ekle</button>
-          <button class="btn-sm btn-success" onclick="openModelModal()"><span class="material-icons">add</span> Model Ekle</button>
-        </div>
+        <button class="btn-sm btn-primary" onclick="openBrandModal()"><span class="material-icons">add</span> Yeni Marka</button>
       </div>
 
-      <!-- Markalar -->
-      <div class="admin-card">
-        <div class="admin-card-header"><h2>Markalar (<%= (data.brands||[]).length %>)</h2></div>
-        <div style="overflow-x:auto;">
-          <table class="admin-table">
-            <thead><tr><th>ID</th><th>Marka Adı</th><th>Slug</th><th>Model Sayısı</th><th>İlan Sayısı</th><th>İşlemler</th></tr></thead>
-            <tbody>
-              <% (data.brands || []).forEach(b => { %>
-                <tr>
-                  <td>#<%= b.id %></td>
-                  <td><strong><%= b.name %></strong></td>
-                  <td><code><%= b.slug %></code></td>
-                  <td><%= b.model_count %></td>
-                  <td><%= b.listing_count %></td>
-                  <td>
-                    <div class="action-btns">
-                      <button class="btn-sm btn-primary" onclick='openBrandModal(<%- JSON.stringify({id:b.id,name:b.name}) %>)' title="Düzenle"><span class="material-icons">edit</span></button>
-                      <button class="btn-sm btn-danger" data-admin-delete-brand data-brand-id="<%= b.id %>" title="Sil"><span class="material-icons">delete</span></button>
-                    </div>
-                  </td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
-        </div>
+      <div class="brand-stats-bar">
+        <div class="brand-stat"><span class="material-icons" style="color:#1a73e8;">category</span><div><h4><%= (data.brands||[]).length %></h4><p>Marka</p></div></div>
+        <div class="brand-stat"><span class="material-icons" style="color:#1e8e3e;">directions_car</span><div><h4><%= (data.models||[]).length %></h4><p>Model</p></div></div>
+        <div class="brand-stat"><span class="material-icons" style="color:#e8710a;">hub</span><div><h4><%= (data.models||[]).reduce((s,m)=>s+m.hub_count,0) %></h4><p>Hub</p></div></div>
       </div>
 
-      <!-- Modeller -->
-      <div class="admin-card">
-        <div class="admin-card-header"><h2>Modeller (<%= (data.models||[]).length %>)</h2></div>
-        <div style="overflow-x:auto;">
-          <table class="admin-table">
-            <thead><tr><th>ID</th><th>Marka</th><th>Model Adı</th><th>Slug</th><th>Gövde Tipi</th><th>İlan Sayısı</th><th>İşlemler</th></tr></thead>
-            <tbody>
-              <% (data.models || []).forEach(m => { %>
-                <tr>
-                  <td>#<%= m.id %></td>
-                  <td><%= m.brand_name %></td>
-                  <td><strong><%= m.name %></strong></td>
-                  <td><code><%= m.slug %></code></td>
-                  <td><%= m.body_type || '-' %></td>
-                  <td><%= m.listing_count %></td>
-                  <td>
-                    <div class="action-btns">
-                      <button class="btn-sm btn-primary" onclick='openModelModal(<%- JSON.stringify({id:m.id,brand_id:m.brand_id,name:m.name,body_type:m.body_type}) %>)' title="Düzenle"><span class="material-icons">edit</span></button>
-                      <button class="btn-sm btn-danger" data-admin-delete-model data-model-id="<%= m.id %>" title="Sil"><span class="material-icons">delete</span></button>
-                    </div>
-                  </td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
+      <input type="text" class="search-brands" id="brandSearch" placeholder="🔍 Marka ara..." oninput="filterBrands(this.value)">
+
+      <div id="brandList">
+      <% (data.brands || []).forEach(b => { 
+        const bModels = data.modelsByBrand[b.id] || [];
+      %>
+        <div class="brand-card" data-brand-name="<%= b.name.toLowerCase() %>">
+          <div class="brand-header" onclick="toggleBrand(<%= b.id %>)">
+            <% if (b.logo) { %>
+              <img src="<%= b.logo %>" alt="<%= b.name %>" class="brand-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="brand-logo-placeholder" style="display:none;"><%= b.name.charAt(0) %></div>
+            <% } else { %>
+              <div class="brand-logo-placeholder"><%= b.name.charAt(0) %></div>
+            <% } %>
+            <div class="brand-info">
+              <h3><%= b.name %></h3>
+              <div class="brand-meta">
+                <span><span class="material-icons">directions_car</span> <%= b.model_count %> model</span>
+                <span><span class="material-icons">list_alt</span> <%= b.listing_count %> ilan</span>
+                <span><span class="material-icons">hub</span> <%= b.hub_count %> hub</span>
+                <span style="color:#bbb;"><code><%= b.slug %></code></span>
+              </div>
+            </div>
+            <div class="action-btns" style="margin-right:.5rem;" onclick="event.stopPropagation()">
+              <button class="btn-sm btn-primary" data-edit-brand="<%= b.id %>" data-brand-name="<%= b.name %>" data-brand-logo="<%= b.logo || '' %>" title="Düzenle"><span class="material-icons">edit</span></button>
+              <button class="btn-sm btn-danger" data-admin-delete-brand data-brand-id="<%= b.id %>" title="Sil"><span class="material-icons">delete</span></button>
+            </div>
+            <div class="brand-expand" id="expand_<%= b.id %>"><span class="material-icons">expand_more</span></div>
+          </div>
+          <div class="brand-models" id="models_<%= b.id %>">
+            <% if (bModels.length === 0) { %>
+              <p style="color:#999;text-align:center;padding:1rem;font-size:.85rem;">Henüz model eklenmemiş</p>
+            <% } else { bModels.forEach(m => { %>
+              <div class="model-row">
+                <span class="material-icons" style="font-size:1rem;color:#ccc;">subdirectory_arrow_right</span>
+                <span class="model-name"><%= m.name %></span>
+                <div class="model-info">
+                  <span><%= m.body_type || '-' %></span>
+                  <span><span class="material-icons">list_alt</span> <%= m.listing_count %></span>
+                  <span><span class="material-icons">hub</span> <%= m.hub_count %></span>
+                </div>
+                <div class="action-btns">
+                  <button class="btn-sm btn-primary" data-edit-model="<%= m.id %>" data-model-brand="<%= m.brand_id %>" data-model-name="<%= m.name %>" data-model-body="<%= m.body_type || '' %>" title="Düzenle" style="padding:3px 8px;"><span class="material-icons" style="font-size:.8rem;">edit</span></button>
+                  <button class="btn-sm btn-danger" data-admin-delete-model data-model-id="<%= m.id %>" title="Sil" style="padding:3px 8px;"><span class="material-icons" style="font-size:.8rem;">delete</span></button>
+                </div>
+              </div>
+            <% }) } %>
+            <!-- Inline Model Ekleme -->
+            <div class="add-model-inline">
+              <input type="text" placeholder="Model adı..." id="inline_model_name_<%= b.id %>">
+              <select id="inline_model_body_<%= b.id %>">
+                <option value="">Gövde Tipi</option>
+                <option value="Sedan">Sedan</option><option value="HB">HB</option><option value="SUV">SUV</option>
+                <option value="Coupe">Coupe</option><option value="Cabrio">Cabrio</option><option value="Station Wagon">SW</option>
+                <option value="MPV">MPV</option><option value="Pick-up">Pick-up</option><option value="Van">Van</option>
+              </select>
+              <button class="btn-sm btn-success" onclick="addModelInline(<%= b.id %>)" title="Model Ekle"><span class="material-icons" style="font-size:.9rem;">add</span></button>
+            </div>
+          </div>
         </div>
+      <% }) %>
       </div>
 
-      <!-- MARKA MODAL -->
+      <!-- MARKA MODAL (gelişmiş) -->
       <div class="admin-modal-overlay" id="brandModal">
-        <div class="admin-modal">
+        <div class="admin-modal" style="max-width:500px;">
           <button class="close-modal" onclick="closeBrandModal()">&times;</button>
           <h3 id="brandModalTitle">Yeni Marka</h3>
           <form id="brandForm">
             <input type="hidden" id="brand_edit_id">
             <div class="form-group"><label>Marka Adı *</label><input type="text" id="brand_name" required placeholder="ör: Toyota"></div>
+            <div class="form-group">
+              <label>Logo URL</label>
+              <input type="text" id="brand_logo" placeholder="https://... veya /images/brands/..." oninput="previewBrandLogo(this.value)">
+              <div id="brandLogoPreview" style="margin-top:8px;display:none;"><img id="brandLogoImg" src="" style="width:48px;height:48px;object-fit:contain;border-radius:8px;border:1px solid #eee;background:#f8f9fa;padding:4px;"></div>
+              <div style="margin-top:8px;">
+                <p style="font-size:.7rem;color:#999;margin:0 0 6px;">Hızlı seçim (carlogos.org):</p>
+                <div id="brandLogoSuggestions" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+              </div>
+            </div>
             <div class="modal-actions">
               <button type="button" class="btn-sm btn-outline" onclick="closeBrandModal()">İptal</button>
-              <button type="submit" class="btn-sm btn-primary">Kaydet</button>
+              <button type="submit" class="btn-sm btn-primary"><span class="material-icons" style="font-size:.9rem;">save</span> Kaydet</button>
             </div>
           </form>
         </div>
@@ -928,7 +1248,7 @@
 
       <!-- MODEL MODAL -->
       <div class="admin-modal-overlay" id="modelModal">
-        <div class="admin-modal">
+        <div class="admin-modal" style="max-width:480px;">
           <button class="close-modal" onclick="closeModelModal()">&times;</button>
           <h3 id="modelModalTitle">Yeni Model</h3>
           <form id="modelForm">
@@ -954,7 +1274,7 @@
             </div>
             <div class="modal-actions">
               <button type="button" class="btn-sm btn-outline" onclick="closeModelModal()">İptal</button>
-              <button type="submit" class="btn-sm btn-primary">Kaydet</button>
+              <button type="submit" class="btn-sm btn-primary"><span class="material-icons" style="font-size:.9rem;">save</span> Kaydet</button>
             </div>
           </form>
         </div>
@@ -969,6 +1289,37 @@
         <button class="btn-sm btn-primary" onclick="openCategoryModal()"><span class="material-icons">add</span> Kategori Ekle</button>
       </div>
 
+      <!-- KATEGORİLER -->
+      <div class="admin-card" style="margin-bottom:1.5rem;">
+        <div class="admin-card-header">
+          <h2>📂 Kategoriler</h2>
+          <button class="btn-sm btn-primary" onclick="openCategoryModal()"><span class="material-icons">add</span> Yeni</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <% (data.categories || []).forEach(cat => { %>
+          <div style="background:#f8f9fa;border-radius:10px;padding:10px 16px;display:flex;align-items:center;gap:10px;border:1px solid #eee;">
+            <span class="material-icons" style="font-size:1.2rem;color:<%= cat.color || '#1775d3' %>"><%= cat.icon || 'forum' %></span>
+            <div>
+              <strong style="font-size:.85rem;"><%= cat.name %></strong>
+              <span style="font-size:.7rem;color:#999;margin-left:4px;">(<%= cat.topic_count %> konu)</span>
+              <% if (cat.description) { %><br><small style="color:#999;font-size:.7rem;"><%= cat.description %></small><% } %>
+            </div>
+            <div class="action-btns" style="margin-left:8px;">
+              <button class="btn-sm btn-outline" style="padding:3px 6px;" onclick="openCategoryModal({id:<%= cat.id %>,name:'<%= cat.name.replace(/'/g,"\\\'" )%>',description:'<%= (cat.description||'').replace(/'/g,"\\\'" )%>',icon:'<%= cat.icon||'forum' %>',color:'<%= cat.color||'#1775d3' %>'})">
+                <span class="material-icons" style="font-size:.8rem;">edit</span>
+              </button>
+              <button class="btn-sm btn-danger" style="padding:3px 6px;" data-admin-delete-category data-category-id="<%= cat.id %>">
+                <span class="material-icons" style="font-size:.8rem;">delete</span>
+              </button>
+            </div>
+          </div>
+          <% }) %>
+          <% if (!data.categories || data.categories.length === 0) { %>
+            <p style="color:#999;font-size:.85rem;">Henüz kategori yok</p>
+          <% } %>
+        </div>
+      </div>
+
       <div class="admin-card">
         <div class="admin-card-header"><h2>Forum Konuları</h2></div>
         <div style="overflow-x:auto;">
@@ -980,7 +1331,7 @@
               <% (data.topics || []).forEach(t => { %>
                 <tr>
                   <td>#<%= t.id %></td>
-                  <td><a href="/forum/<%= t.slug || t.id %>" target="_blank" style="color:#1a73e8;text-decoration:none;font-weight:600;"><%= t.title %></a></td>
+                  <td><a href="/forum/konu/<%= t.slug || t.id %>" target="_blank" style="color:#1a73e8;text-decoration:none;font-weight:600;"><%= t.title %></a></td>
                   <td><span class="badge badge-info"><%= t.category_name %></span></td>
                   <td><%= t.author_name %></td>
                   <td><%= t.reply_count || 0 %></td>
@@ -1034,56 +1385,191 @@
     <!--  MODERASYON                                 -->
     <!-- ═══════════════════════════════════════════ -->
     <% } else if (currentPage === 'moderasyon') { %>
-      <div class="admin-header"><h1>🛡️ Moderasyon</h1></div>
+      <div class="admin-header"><h1>🛡️ Moderasyon Merkezi</h1></div>
+
+      <!-- Durum Stat Kartları -->
+      <div class="stats-grid" style="margin-bottom:1.5rem;">
+        <a href="/admin/moderasyon" class="stat-card" style="text-decoration:none;color:inherit;border:2px solid <%=!data.filters?.durum?'#1a73e8':'transparent'%>;">
+          <div class="stat-icon blue"><span class="material-icons">list_alt</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts.all %></h3><p>Tümü</p></div>
+        </a>
+        <a href="/admin/moderasyon?durum=pending" class="stat-card" style="text-decoration:none;color:inherit;border:2px solid <%=data.filters?.durum==='pending'?'#e8710a':'transparent'%>;">
+          <div class="stat-icon orange"><span class="material-icons">hourglass_top</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts.pending %></h3><p>Beklemede</p></div>
+        </a>
+        <a href="/admin/moderasyon?durum=approved" class="stat-card" style="text-decoration:none;color:inherit;border:2px solid <%=data.filters?.durum==='approved'?'#1e8e3e':'transparent'%>;">
+          <div class="stat-icon green"><span class="material-icons">verified</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts.approved %></h3><p>İçerik Uygun</p></div>
+        </a>
+        <a href="/admin/moderasyon?durum=rejected" class="stat-card" style="text-decoration:none;color:inherit;border:2px solid <%=data.filters?.durum==='rejected'?'#d93025':'transparent'%>;">
+          <div class="stat-icon red"><span class="material-icons">gavel</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts.rejected %></h3><p>Kaldırılan</p></div>
+        </a>
+      </div>
+
+      <!-- Tür Filtreleri -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center;">
+        <span style="font-size:.8rem;font-weight:600;color:#666;margin-right:4px;">Tür:</span>
+        <a href="/admin/moderasyon<%= data.filters?.durum ? '?durum=' + data.filters.durum : '' %>" class="btn-sm <%= !data.filters?.tur ? 'btn-primary' : 'btn-outline' %>" style="text-decoration:none;">Tümü</a>
+        <a href="/admin/moderasyon?tur=listing<%= data.filters?.durum ? '&durum=' + data.filters.durum : '' %>" class="btn-sm <%= data.filters?.tur==='listing' ? 'btn-primary' : 'btn-outline' %>" style="text-decoration:none;">
+          🚗 İlan <% if(data.typeCounts.listing>0){%><span style="background:#e8f0fe;color:#1a73e8;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:2px;"><%= data.typeCounts.listing %></span><%}%>
+        </a>
+        <a href="/admin/moderasyon?tur=forum_topic<%= data.filters?.durum ? '&durum=' + data.filters.durum : '' %>" class="btn-sm <%= data.filters?.tur==='forum_topic' ? 'btn-primary' : 'btn-outline' %>" style="text-decoration:none;">
+          💬 Konu <% if(data.typeCounts.forum_topic>0){%><span style="background:#e8f0fe;color:#1a73e8;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:2px;"><%= data.typeCounts.forum_topic %></span><%}%>
+        </a>
+        <a href="/admin/moderasyon?tur=forum_reply<%= data.filters?.durum ? '&durum=' + data.filters.durum : '' %>" class="btn-sm <%= data.filters?.tur==='forum_reply' ? 'btn-primary' : 'btn-outline' %>" style="text-decoration:none;">
+          💭 Yanıt <% if(data.typeCounts.forum_reply>0){%><span style="background:#e8f0fe;color:#1a73e8;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:2px;"><%= data.typeCounts.forum_reply %></span><%}%>
+        </a>
+        <a href="/admin/moderasyon?tur=review<%= data.filters?.durum ? '&durum=' + data.filters.durum : '' %>" class="btn-sm <%= data.filters?.tur==='review' ? 'btn-primary' : 'btn-outline' %>" style="text-decoration:none;">
+          ⭐ Yorum <% if(data.typeCounts.review>0){%><span style="background:#e8f0fe;color:#1a73e8;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:2px;"><%= data.typeCounts.review %></span><%}%>
+        </a>
+        <a href="/admin/moderasyon?tur=business<%= data.filters?.durum ? '&durum=' + data.filters.durum : '' %>" class="btn-sm <%= data.filters?.tur==='business' ? 'btn-primary' : 'btn-outline' %>" style="text-decoration:none;">
+          🏢 İşletme <% if(data.typeCounts.business>0){%><span style="background:#e8f0fe;color:#1a73e8;font-size:10px;padding:1px 5px;border-radius:8px;margin-left:2px;"><%= data.typeCounts.business %></span><%}%>
+        </a>
+      </div>
+
+      <!-- Toplu İşlem Bar -->
+      <div id="modBulkBar" style="display:none;background:#1a1f36;color:#fff;padding:12px 20px;border-radius:12px;margin-bottom:16px;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span style="font-size:.85rem;"><strong id="modSelectedCount">0</strong> öğe seçildi</span>
+        <div style="margin-left:auto;display:flex;gap:8px;">
+          <button onclick="bulkModAction('rejected')" class="btn-sm btn-danger" style="color:#fff;">
+            <span class="material-icons" style="font-size:14px;">gavel</span> Tümünü Kaldır
+          </button>
+          <button onclick="bulkModAction('approved')" class="btn-sm btn-success" style="color:#fff;">
+            <span class="material-icons" style="font-size:14px;">verified</span> Tümünü Uygun Bul
+          </button>
+          <button onclick="clearModSelection()" class="btn-sm btn-outline" style="border-color:rgba(255,255,255,.3);color:#fff;">
+            <span class="material-icons" style="font-size:14px;">close</span> İptal
+          </button>
+        </div>
+      </div>
 
       <div class="admin-card">
-        <div style="overflow-x:auto;">
-          <table class="admin-table">
-            <thead>
-              <tr><th>ID</th><th>Tür</th><th>İçerik</th><th>Neden</th><th>Bildiren</th><th>Durum</th><th>Tarih</th><th>İşlemler</th></tr>
-            </thead>
-            <tbody>
-              <% (data.queue || []).forEach(mq => { %>
-                <tr style="<%= mq.status==='pending'?'background:#fffbe6':'opacity:.6' %>">
-                  <td>#<%= mq.id %></td>
-                  <td>
-                    <% if (mq.type==='listing') { %><span class="badge badge-info">İlan</span>
-                    <% } else if (mq.type==='business') { %><span class="badge badge-info">İşletme</span>
-                    <% } else if (mq.type==='forum_topic') { %><span class="badge badge-info">Konu</span>
-                    <% } else if (mq.type==='forum_reply') { %><span class="badge badge-info">Yanıt</span>
-                    <% } else if (mq.type==='review') { %><span class="badge badge-info">Yorum</span>
-                    <% } else { %><span class="badge badge-secondary"><%= mq.type %></span><% } %>
-                  </td>
-                  <td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%= mq.item_detail || 'İçerik #' + mq.item_id %></td>
-                  <td style="max-width:200px;"><%= mq.reason || '-' %></td>
-                  <td><%= mq.reported_by_name || '-' %></td>
-                  <td>
-                    <% if (mq.status==='pending') { %><span class="badge badge-warning">Beklemede</span>
-                    <% } else if (mq.status==='approved') { %><span class="badge badge-success">Onaylandı</span>
-                    <% } else { %><span class="badge badge-danger">Reddedildi</span><% } %>
-                  </td>
-                  <td><%= timeAgo(mq.created_at) %></td>
-                  <td>
-                    <% if (mq.status === 'pending') { %>
-                      <div class="action-btns">
-                        <button class="btn-sm btn-success" data-moderation-action="approved" data-id="<%= mq.id %>" title="Onayla">
-                          <span class="material-icons">check_circle</span>
-                        </button>
-                        <button class="btn-sm btn-danger" data-moderation-action="rejected" data-id="<%= mq.id %>" title="Reddet">
-                          <span class="material-icons">block</span>
-                        </button>
-                      </div>
-                    <% } else { %>
-                      <span style="font-size:.75rem;color:#999;">İşlendi</span>
-                    <% } %>
-                  </td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
-        </div>
         <% if (!data.queue || data.queue.length === 0) { %>
-          <p style="color:#999;text-align:center;padding:2rem;">Moderasyon kuyruğu boş ✅</p>
+          <div style="text-align:center;padding:3rem;">
+            <span class="material-icons" style="font-size:3rem;color:#c8e6c9;">verified_user</span>
+            <p style="color:#999;margin-top:.75rem;font-size:.95rem;">
+              <% if (data.filters?.durum || data.filters?.tur) { %>
+                Bu filtreyle eşleşen rapor bulunamadı.
+              <% } else { %>
+                Moderasyon kuyruğu boş, her şey yolunda! ✅
+              <% } %>
+            </p>
+          </div>
+        <% } else { %>
+          <!-- Tümünü Seç (sadece pending varsa) -->
+          <% const pendingItems = data.queue.filter(q => q.status === 'pending'); %>
+          <% if (pendingItems.length > 0) { %>
+          <div style="padding:12px 16px;border-bottom:1px solid #eee;display:flex;align-items:center;gap:8px;">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:.8rem;color:#666;">
+              <input type="checkbox" id="modSelectAll" onchange="toggleModSelectAll(this)"> Tümünü Seç (<%= pendingItems.length %> bekleyen)
+            </label>
+          </div>
+          <% } %>
+
+          <% data.queue.forEach(mq => { %>
+          <div class="mod-item" data-mod-id="<%= mq.id %>" data-status="<%= mq.status %>" style="padding:16px;border-bottom:1px solid #f0f0f0;transition:all .2s;<%= mq.status==='pending'?'':'opacity:.65;' %>">
+            <div style="display:flex;gap:12px;align-items:start;">
+              
+              <!-- Checkbox (sadece pending için) -->
+              <% if (mq.status === 'pending') { %>
+              <div style="padding-top:2px;">
+                <input type="checkbox" class="mod-checkbox" data-mod-id="<%= mq.id %>" onchange="updateModSelection()">
+              </div>
+              <% } %>
+
+              <!-- Tür İkonu -->
+              <div style="width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+                <% if (mq.type==='listing') { %>background:#e8f0fe;color:#1a73e8;
+                <% } else if (mq.type==='forum_topic' || mq.type==='forum_reply') { %>background:#ede9fe;color:#7c3aed;
+                <% } else if (mq.type==='review') { %>background:#fef3c7;color:#d97706;
+                <% } else if (mq.type==='business') { %>background:#e6f4ea;color:#1e8e3e;
+                <% } else { %>background:#f3f4f6;color:#6b7280;<% } %>">
+                <span class="material-icons" style="font-size:1.2rem;">
+                  <% if (mq.type==='listing') { %>directions_car
+                  <% } else if (mq.type==='forum_topic') { %>forum
+                  <% } else if (mq.type==='forum_reply') { %>chat_bubble
+                  <% } else if (mq.type==='review') { %>star
+                  <% } else if (mq.type==='business') { %>store
+                  <% } else { %>flag<% } %>
+                </span>
+              </div>
+
+              <!-- İçerik -->
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+                  <span style="font-size:.7rem;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:6px;
+                    <% if (mq.type==='listing') { %>background:#e8f0fe;color:#1a73e8;
+                    <% } else if (mq.type==='forum_topic') { %>background:#ede9fe;color:#7c3aed;
+                    <% } else if (mq.type==='forum_reply') { %>background:#fae8ff;color:#a855f7;
+                    <% } else if (mq.type==='review') { %>background:#fef3c7;color:#d97706;
+                    <% } else { %>background:#e6f4ea;color:#1e8e3e;<% } %>">
+                    <%= ({listing:'İlan',business:'İşletme',forum_topic:'Forum Konu',forum_reply:'Forum Yanıt',review:'Değerlendirme'})[mq.type] || mq.type %>
+                  </span>
+                  <span style="font-size:.7rem;color:#999;">#<%= mq.id %></span>
+                  <% if (mq.status === 'pending') { %><span class="badge badge-warning" style="font-size:.65rem;">⏳ Beklemede</span>
+                  <% } else if (mq.status === 'approved') { %><span class="badge badge-success" style="font-size:.65rem;">✅ İçerik Uygun</span>
+                  <% } else { %><span class="badge badge-danger" style="font-size:.65rem;">🔨 İçerik Kaldırıldı</span><% } %>
+                </div>
+
+                <!-- İçerik Detay -->
+                <div style="background:#f8f9fa;border-radius:8px;padding:10px 12px;margin:6px 0;">
+                  <p style="margin:0;font-size:.85rem;font-weight:600;color:#1a1f36;">
+                    <% if (mq.item_link && mq.item_link !== '#') { %>
+                      <a href="<%= mq.item_link %>" target="_blank" style="color:#1a73e8;text-decoration:none;"><%= mq.item_detail || 'İçerik #' + mq.item_id %> ↗</a>
+                    <% } else { %>
+                      <%= mq.item_detail || 'İçerik #' + mq.item_id %>
+                    <% } %>
+                  </p>
+                </div>
+
+                <!-- Rapor Nedeni -->
+                <div style="display:flex;align-items:start;gap:6px;margin-top:6px;">
+                  <span class="material-icons" style="font-size:14px;color:#d93025;margin-top:1px;">flag</span>
+                  <span style="font-size:.8rem;color:#555;"><%= mq.reason || 'Uygunsuz içerik' %></span>
+                </div>
+
+                <!-- Meta -->
+                <div style="display:flex;align-items:center;gap:12px;margin-top:8px;flex-wrap:wrap;">
+                  <span style="font-size:.75rem;color:#999;display:flex;align-items:center;gap:3px;">
+                    <span class="material-icons" style="font-size:13px;">person</span>
+                    Bildiren: <strong><%= mq.reported_by_name || 'Anonim' %></strong>
+                    <% if (mq.reported_by_email) { %><span style="color:#bbb;">(<%= mq.reported_by_email %>)</span><% } %>
+                  </span>
+                  <span style="font-size:.75rem;color:#999;display:flex;align-items:center;gap:3px;">
+                    <span class="material-icons" style="font-size:13px;">schedule</span>
+                    <%= timeAgo(mq.created_at) %>
+                  </span>
+                  <% if (mq.reviewed_by_name) { %>
+                  <span style="font-size:.75rem;color:#999;display:flex;align-items:center;gap:3px;">
+                    <span class="material-icons" style="font-size:13px;">admin_panel_settings</span>
+                    İnceleyen: <strong><%= mq.reviewed_by_name %></strong>
+                  </span>
+                  <% } %>
+                </div>
+              </div>
+
+              <!-- Aksiyon Butonları -->
+              <div style="display:flex;gap:6px;flex-shrink:0;align-items:start;">
+                <% if (mq.status === 'pending') { %>
+                  <% if (mq.item_link && mq.item_link !== '#') { %>
+                  <a href="<%= mq.item_link %>" target="_blank" class="btn-sm btn-outline" title="İçeriği Görüntüle" style="text-decoration:none;">
+                    <span class="material-icons">visibility</span>
+                  </a>
+                  <% } %>
+                  <button class="btn-sm btn-danger" data-moderation-action="rejected" data-id="<%= mq.id %>" title="Şikayeti Onayla — İçeriği Kaldır">
+                    <span class="material-icons">gavel</span> Kaldır
+                  </button>
+                  <button class="btn-sm btn-success" data-moderation-action="approved" data-id="<%= mq.id %>" title="Şikayeti Reddet — İçerik Uygun">
+                    <span class="material-icons">verified</span> Uygun
+                  </button>
+                <% } else { %>
+                  <span style="font-size:.75rem;color:#999;padding:6px 0;">İşlendi</span>
+                <% } %>
+              </div>
+            </div>
+          </div>
+          <% }) %>
         <% } %>
       </div>
 
@@ -1118,26 +1604,115 @@ function openHubModal(hub) {
   const modal = document.getElementById('hubModal');
   if (!modal) return;
   modal.classList.add('show');
-  const fields = ['id','year','avg_price','fuel_type','engine','hp','torque','transmission','acceleration','top_speed','fuel_consumption','length','width','height','wheelbase','weight','editor_rating','editor_review','pros','cons'];
+  const fields = ['id','year','avg_price','fuel_type','engine','hp','torque','transmission','acceleration','top_speed','fuel_consumption','length','width','height','wheelbase','weight','editor_rating','editor_review','pros','cons','image_url'];
   if (hub) {
     document.getElementById('hubModalTitle').textContent = 'Hub Düzenle: ' + (hub.brand_name||'') + ' ' + (hub.model_name||'');
     document.getElementById('hub_id').value = hub.id;
     document.getElementById('hub_brand_id').value = hub.brand_id;
     filterModels(hub.brand_id, document.getElementById('hub_model_id'), hub.model_id);
     fields.forEach(f => { const el = document.getElementById('hub_'+f); if (el && hub[f] != null) el.value = hub[f]; });
+    // Görsel önizleme
+    updateHubImagePreview(hub.image_url || '');
   } else {
     document.getElementById('hubModalTitle').textContent = 'Yeni Araç Hub';
     document.getElementById('hubForm').reset();
     document.getElementById('hub_id').value = '';
+    updateHubImagePreview('');
   }
 }
 function closeHubModal() { const m = document.getElementById('hubModal'); if(m) m.classList.remove('show'); }
+
+function updateHubImagePreview(url) {
+  const preview = document.getElementById('hub_image_preview');
+  const img = document.getElementById('hub_image_preview_img');
+  if (!preview || !img) return;
+  if (url && url.trim()) {
+    img.src = url.trim();
+    preview.style.display = 'block';
+    img.onerror = () => { preview.style.display = 'none'; };
+  } else {
+    preview.style.display = 'none';
+    img.src = '';
+  }
+}
+
+// Görsel URL değiştiğinde önizleme güncelle
+const hubImageInput = document.getElementById('hub_image_url');
+if (hubImageInput) {
+  hubImageInput.addEventListener('input', function() {
+    updateHubImagePreview(this.value);
+  });
+}
+
+// Hub accordion toggle
+function toggleHubBrand(brandId) {
+  const models = document.getElementById('hubModels_' + brandId);
+  const expand = document.getElementById('hubExpand_' + brandId);
+  if (!models) return;
+  models.classList.toggle('show');
+  expand.classList.toggle('open');
+}
+
+// Hub arama - marka ve model filtreleme
+function filterHubBrands(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.hub-card').forEach(card => {
+    const brandName = card.dataset.hubBrandName || '';
+    const modelNames = card.dataset.hubModels || '';
+    const match = brandName.includes(q) || modelNames.includes(q);
+    card.style.display = match ? '' : 'none';
+    // Model bazlı filtreleme
+    if (match && q.length > 0) {
+      card.querySelectorAll('.hub-row').forEach(row => {
+        const modelSearch = row.dataset.hubModelSearch || '';
+        row.style.display = (brandName.includes(q) || modelSearch.includes(q)) ? '' : 'none';
+      });
+      // Eşleşen card'ın accordion'ını aç
+      const brandId = card.querySelector('.hub-brand-header')?.getAttribute('onclick')?.match(/\d+/)?.[0];
+      if (brandId) {
+        const models = document.getElementById('hubModels_' + brandId);
+        const expand = document.getElementById('hubExpand_' + brandId);
+        if (models && !models.classList.contains('show')) {
+          models.classList.add('show');
+          expand?.classList.add('open');
+        }
+      }
+    } else if (q.length === 0) {
+      card.querySelectorAll('.hub-row').forEach(row => { row.style.display = ''; });
+    }
+  });
+}
+
+// Inline hub ekleme (marka altından model seçip hızlıca)
+async function addHubInline(brandId) {
+  const selectEl = document.getElementById('inline_hub_model_' + brandId);
+  if (!selectEl || !selectEl.value) { selectEl?.focus(); return; }
+  const modelId = selectEl.value;
+  try {
+    const res = await fetch('/api/admin/hubs', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ brand_id: brandId, model_id: modelId })
+    });
+    const d = await res.json();
+    if (d.success || d.id) { location.reload(); } else { alert(d.error || 'Hata oluştu'); }
+  } catch(err) { alert('Bağlantı hatası'); }
+}
+
+// Hub düzenle butonları - event delegation
+document.querySelectorAll('[data-edit-hub]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    try {
+      const hub = JSON.parse(this.getAttribute('data-edit-hub'));
+      openHubModal(hub);
+    } catch(e) { console.error('Hub parse hatası:', e); }
+  });
+});
 
 document.getElementById('hubForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const id = document.getElementById('hub_id').value;
   const body = {};
-  ['brand_id','model_id','year','avg_price','fuel_type','engine','hp','torque','transmission','acceleration','top_speed','fuel_consumption','length','width','height','wheelbase','weight','editor_rating','editor_review','pros','cons'].forEach(f => {
+  ['brand_id','model_id','year','avg_price','fuel_type','engine','hp','torque','transmission','acceleration','top_speed','fuel_consumption','length','width','height','wheelbase','weight','editor_rating','editor_review','pros','cons','image_url'].forEach(f => {
     const el = document.getElementById('hub_'+f);
     if (el) body[f] = el.value || null;
   });
@@ -1151,7 +1726,7 @@ document.getElementById('hubForm')?.addEventListener('submit', async (e) => {
 });
 
 // ═══════════════════════════════════════════════
-//  Modal: Marka
+//  Modal: Marka (gelişmiş - logo destekli)
 // ═══════════════════════════════════════════════
 function openBrandModal(brand) {
   const modal = document.getElementById('brandModal');
@@ -1161,26 +1736,95 @@ function openBrandModal(brand) {
     document.getElementById('brandModalTitle').textContent = 'Marka Düzenle';
     document.getElementById('brand_edit_id').value = brand.id;
     document.getElementById('brand_name').value = brand.name;
+    document.getElementById('brand_logo').value = brand.logo || '';
+    previewBrandLogo(brand.logo || '');
+    suggestLogos(brand.name);
   } else {
     document.getElementById('brandModalTitle').textContent = 'Yeni Marka';
     document.getElementById('brandForm').reset();
     document.getElementById('brand_edit_id').value = '';
+    document.getElementById('brandLogoPreview').style.display = 'none';
+    document.getElementById('brandLogoSuggestions').innerHTML = '';
   }
 }
 function closeBrandModal() { const m = document.getElementById('brandModal'); if(m) m.classList.remove('show'); }
+
+function previewBrandLogo(url) {
+  const prev = document.getElementById('brandLogoPreview');
+  const img = document.getElementById('brandLogoImg');
+  if (url) { img.src = url; prev.style.display = 'block'; } else { prev.style.display = 'none'; }
+}
+
+function suggestLogos(name) {
+  const container = document.getElementById('brandLogoSuggestions');
+  if (!container) return;
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const suggestions = [
+    { label: 'carlogos.org', url: `https://www.carlogos.org/car-logos/${slug}-logo.png` },
+  ];
+  container.innerHTML = suggestions.map(s =>
+    `<button type="button" style="padding:4px 8px;font-size:.7rem;border:1px solid #ddd;border-radius:4px;background:#fff;cursor:pointer;display:flex;align-items:center;gap:4px;" onclick="document.getElementById('brand_logo').value='${s.url}';previewBrandLogo('${s.url}')"><img src="${s.url}" style="width:20px;height:20px;object-fit:contain;" onerror="this.parentElement.style.display='none'"> ${s.label}</button>`
+  ).join('');
+}
+
+// Marka adı yazılınca otomatik logo öner
+document.getElementById('brand_name')?.addEventListener('input', function() {
+  suggestLogos(this.value);
+});
+
+// Event delegation for edit brand buttons
+document.querySelectorAll('[data-edit-brand]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    openBrandModal({ id: btn.dataset.editBrand, name: btn.dataset.brandName, logo: btn.dataset.brandLogo });
+  });
+});
 
 document.getElementById('brandForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const id = document.getElementById('brand_edit_id').value;
   const name = document.getElementById('brand_name').value;
+  const logo = document.getElementById('brand_logo').value || null;
   const url = id ? '/api/admin/brands/' + id : '/api/admin/brands';
   const method = id ? 'PUT' : 'POST';
   try {
-    const res = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify({ name }) });
+    const res = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify({ name, logo }) });
     const d = await res.json();
     if (d.success || d.id) { location.reload(); } else { alert(d.error || 'Hata oluştu'); }
   } catch(err) { alert('Bağlantı hatası'); }
 });
+
+// ═══════════════════════════════════════════════
+//  Accordion: Marka altındaki modeller
+// ═══════════════════════════════════════════════
+function toggleBrand(brandId) {
+  const models = document.getElementById('models_' + brandId);
+  const expand = document.getElementById('expand_' + brandId);
+  if (!models) return;
+  models.classList.toggle('show');
+  expand.classList.toggle('open');
+}
+
+function filterBrands(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.brand-card').forEach(card => {
+    card.style.display = card.dataset.brandName.includes(q) ? '' : 'none';
+  });
+}
+
+async function addModelInline(brandId) {
+  const nameEl = document.getElementById('inline_model_name_' + brandId);
+  const bodyEl = document.getElementById('inline_model_body_' + brandId);
+  const name = nameEl.value.trim();
+  if (!name) { nameEl.focus(); return; }
+  try {
+    const res = await fetch('/api/admin/models', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ brand_id: brandId, name, body_type: bodyEl.value || null })
+    });
+    const d = await res.json();
+    if (d.success || d.id) { location.reload(); } else { alert(d.error || 'Hata oluştu'); }
+  } catch(err) { alert('Bağlantı hatası'); }
+}
 
 // ═══════════════════════════════════════════════
 //  Modal: Model
@@ -1203,6 +1847,13 @@ function openModelModal(model) {
 }
 function closeModelModal() { const m = document.getElementById('modelModal'); if(m) m.classList.remove('show'); }
 
+// Event delegation for edit model buttons
+document.querySelectorAll('[data-edit-model]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    openModelModal({ id: btn.dataset.editModel, brand_id: btn.dataset.modelBrand, name: btn.dataset.modelName, body_type: btn.dataset.modelBody });
+  });
+});
+
 document.getElementById('modelForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const id = document.getElementById('model_edit_id').value;
@@ -1215,6 +1866,49 @@ document.getElementById('modelForm')?.addEventListener('submit', async (e) => {
     if (d.success || d.id) { location.reload(); } else { alert(d.error || 'Hata oluştu'); }
   } catch(err) { alert('Bağlantı hatası'); }
 });
+
+// ═══════════════════════════════════════════════
+//  Moderasyon: Toplu İşlem
+// ═══════════════════════════════════════════════
+function updateModSelection() {
+  const checked = document.querySelectorAll('.mod-checkbox:checked');
+  const bar = document.getElementById('modBulkBar');
+  const count = document.getElementById('modSelectedCount');
+  if (checked.length > 0) {
+    bar.style.display = 'flex';
+    count.textContent = checked.length;
+  } else {
+    bar.style.display = 'none';
+  }
+}
+
+function toggleModSelectAll(masterCb) {
+  document.querySelectorAll('.mod-checkbox').forEach(cb => { cb.checked = masterCb.checked; });
+  updateModSelection();
+}
+
+function clearModSelection() {
+  document.querySelectorAll('.mod-checkbox').forEach(cb => { cb.checked = false; });
+  const selectAll = document.getElementById('modSelectAll');
+  if (selectAll) selectAll.checked = false;
+  updateModSelection();
+}
+
+async function bulkModAction(status) {
+  const ids = Array.from(document.querySelectorAll('.mod-checkbox:checked')).map(cb => Number(cb.dataset.modId));
+  if (ids.length === 0) return;
+  const label = status === 'rejected' ? 'kaldırmak (şikayetleri onaylamak)' : 'uygun bulmak (şikayetleri reddetmek)';
+  if (!confirm(`Seçilen ${ids.length} içeriği ${label} istiyor musunuz?`)) return;
+  try {
+    const res = await fetch('/api/admin/moderation/bulk', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ids, status })
+    });
+    const d = await res.json();
+    if (d.success) { showToast(d.message, 'success'); setTimeout(() => location.reload(), 800); }
+    else { showToast(d.error || 'Hata', 'error'); }
+  } catch { showToast('Bağlantı hatası', 'error'); }
+}
 
 // ═══════════════════════════════════════════════
 //  Modal: Forum Kategorisi
@@ -1249,5 +1943,18 @@ document.getElementById('categoryForm')?.addEventListener('submit', async (e) =>
     const d = await res.json();
     if (d.success || d.id) { location.reload(); } else { alert(d.error || 'Hata oluştu'); }
   } catch(err) { alert('Bağlantı hatası'); }
+});
+
+// Kategori silme
+document.querySelectorAll('[data-admin-delete-category]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const id = btn.dataset.categoryId;
+    if (!confirm('Bu kategoriyi silmek istediğinize emin misiniz?\n\nKategorideki konular etkilenebilir.')) return;
+    try {
+      const res = await fetch('/api/admin/forum/categories/' + id, { method: 'DELETE' });
+      const d = await res.json();
+      if (d.success) { location.reload(); } else { alert(d.error || 'Silinemedi'); }
+    } catch(err) { alert('Bağlantı hatası'); }
+  });
 });
 </script>

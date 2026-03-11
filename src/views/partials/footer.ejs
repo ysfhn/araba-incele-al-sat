@@ -1,51 +1,79 @@
-<footer class="bg-white border-t border-solid border-slate-200 pt-12 pb-8 mt-auto">
-  <div class="container mx-auto px-6 lg:px-12">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-      <div>
-        <a href="/" class="flex items-center gap-2 text-primary mb-4">
-          <span class="material-symbols-outlined text-2xl font-bold">directions_car</span>
-          <span class="text-slate-900 text-sm font-bold">Araba İncele Al Sat</span>
+<footer class="bg-background-dark mt-auto">
+  <!-- Üst dekoratif çizgi -->
+  <div class="h-1 bg-gradient-to-r from-primary via-blue-400 to-primary"></div>
+
+  <div style="max-width:1200px" class="mx-auto px-6 pt-12 pb-8">
+    <!-- Ana grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
+
+      <!-- Logo & Açıklama — geniş kolon -->
+      <div class="lg:col-span-4">
+        <a href="/" class="inline-block mb-4">
+          <img src="/images/logo.png" alt="arabaincele.com" class="h-10 w-auto brightness-0 invert opacity-90" />
         </a>
-        <p class="text-xs text-slate-500 leading-relaxed">Türkiye'nin en modern araç alım-satım ve bilgi platformu.</p>
-        <div class="flex gap-3 mt-4">
-          <a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">language</span></a>
-          <a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">video_library</span></a>
-          <a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+        <p class="text-[13px] text-slate-400 leading-relaxed max-w-xs">Türkiye'nin en modern araç alım-satım ve bilgi platformu. Güvenli alışveriş, uzman incelemeleri ve geniş araç ağı.</p>
+        <div class="flex gap-2.5 mt-5">
+          <a class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/[0.07] text-slate-400 hover:bg-primary hover:text-white transition-all duration-200" href="https://x.com" target="_blank" rel="noopener noreferrer" title="X (Twitter)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/[0.07] text-slate-400 hover:bg-primary hover:text-white transition-all duration-200" href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/[0.07] text-slate-400 hover:bg-primary hover:text-white transition-all duration-200" href="https://instagram.com" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
         </div>
       </div>
-      <div>
-        <h4 class="text-sm font-bold text-slate-900 mb-4">Platform</h4>
-        <ul class="space-y-2 text-xs text-slate-500">
-          <li><a class="hover:text-primary transition-colors" href="/ilan">Araç İlanları</a></li>
-          <li><a class="hover:text-primary transition-colors" href="/servis">Servis Rehberi</a></li>
-          <li><a class="hover:text-primary transition-colors" href="/arac-secim">Araç Seçim Sihirbazı</a></li>
-          <li><a class="hover:text-primary transition-colors" href="/ilan-ver">İlan Ver</a></li>
+
+      <!-- Keşfet -->
+      <div class="lg:col-span-2">
+        <h4 class="text-[13px] font-semibold text-white tracking-wide uppercase mb-4">Keşfet</h4>
+        <ul class="space-y-2.5">
+          <li><a class="text-[13px] text-slate-400 hover:text-white transition-colors duration-150" href="/ilan">Araç İlanları</a></li>
+          <li><a class="text-[13px] text-slate-400 hover:text-white transition-colors duration-150" href="/servis">Servis Rehberi</a></li>
+          <li><a class="text-[13px] text-slate-400 hover:text-white transition-colors duration-150" href="/arac-secim">Araç Seçim Sihirbazı</a></li>
+          <li><a class="text-[13px] text-slate-400 hover:text-white transition-colors duration-150" href="/arac-secim">Araç Hub</a></li>
         </ul>
       </div>
-      <div>
-        <h4 class="text-sm font-bold text-slate-900 mb-4">Topluluk</h4>
-        <ul class="space-y-2 text-xs text-slate-500">
-          <li><a class="hover:text-primary transition-colors" href="/forum">Forum</a></li>
-          <li><a class="hover:text-primary transition-colors" href="/nasil-calisir">Nasıl Çalışır</a></li>
-          <li><a class="hover:text-primary transition-colors" href="#">SSS</a></li>
-          <li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+
+      <!-- Topluluk -->
+      <div class="lg:col-span-2">
+        <h4 class="text-[13px] font-semibold text-white tracking-wide uppercase mb-4">Topluluk</h4>
+        <ul class="space-y-2.5">
+          <li><a class="text-[13px] text-slate-400 hover:text-white transition-colors duration-150" href="/forum">Forum</a></li>
+          <li><a class="text-[13px] text-slate-400 hover:text-white transition-colors duration-150" href="/nasil-calisir">Nasıl Çalışır</a></li>
+          <li><a class="text-[13px] text-slate-400 hover:text-white transition-colors duration-150" href="/ilan/ver">İlan Ver</a></li>
         </ul>
       </div>
-      <div>
-        <h4 class="text-sm font-bold text-slate-900 mb-4">Yasal</h4>
-        <ul class="space-y-2 text-xs text-slate-500">
-          <li><a class="hover:text-primary transition-colors" href="#">Kullanım Koşulları</a></li>
-          <li><a class="hover:text-primary transition-colors" href="#">Gizlilik Politikası</a></li>
-          <li><a class="hover:text-primary transition-colors" href="#">KVKK Aydınlatma Metni</a></li>
-          <li><a class="hover:text-primary transition-colors" href="#">Çerez Politikası</a></li>
+
+      <!-- İletişim -->
+      <div class="lg:col-span-4">
+        <h4 class="text-[13px] font-semibold text-white tracking-wide uppercase mb-4">İletişim</h4>
+        <ul class="space-y-3">
+          <li class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-primary" style="font-size:18px;">mail</span>
+            <a class="text-[13px] text-slate-400 hover:text-white transition-colors duration-150" href="mailto:info@arabaincele.com">info@arabaincele.com</a>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-primary" style="font-size:18px;">phone</span>
+            <a class="text-[13px] text-slate-400 hover:text-white transition-colors duration-150" href="tel:08501234567">0850 123 45 67</a>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-primary" style="font-size:18px;">location_on</span>
+            <span class="text-[13px] text-slate-400">İstanbul, Türkiye</span>
+          </li>
         </ul>
       </div>
+
     </div>
-    <div class="border-t border-slate-100 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-      <p class="text-slate-400 text-xs">© 2025 Araba İncele Al Sat Platformu. Tüm hakları saklıdır.</p>
-      <div class="flex gap-4">
-        <a class="text-slate-400 text-xs hover:text-primary" href="#">KVKK Aydınlatma Metni</a>
-        <a class="text-slate-400 text-xs hover:text-primary" href="#">Çerez Politikası</a>
+
+    <!-- Alt bar -->
+    <div class="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <p class="text-slate-500 text-xs">© <%= new Date().getFullYear() %> arabaincele.com — Tüm hakları saklıdır.</p>
+      <div class="flex gap-5 text-xs text-slate-500">
+        <a class="hover:text-slate-300 transition-colors duration-150" href="/nasil-calisir">Hakkımızda</a>
+        <a class="hover:text-slate-300 transition-colors duration-150" href="mailto:info@arabaincele.com">İletişim</a>
+        <a class="hover:text-slate-300 transition-colors duration-150" href="/forum">Yardım</a>
       </div>
     </div>
   </div>
