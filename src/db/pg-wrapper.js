@@ -44,6 +44,12 @@ function convertSql(sql) {
   let converted = convertPlaceholders(sql);
 
   // SQLite date fonksiyonları → PostgreSQL
+  // datetime('now', ?) → NOW() + ?::interval  (parameterized interval)
+  converted = converted.replace(/datetime\('now',\s*(\$\d+)\)/gi, '(NOW() + $1::interval)');
+  // datetime('now', 'offset') → NOW() + INTERVAL 'offset'  (literal)
+  converted = converted.replace(/datetime\('now',\s*'([^']+)'\)/gi, "(NOW() + INTERVAL '$1')");
+  // date('now', ?) → (CURRENT_DATE + ?::interval)  (parameterized)
+  converted = converted.replace(/date\('now',\s*(\$\d+)\)/gi, '(CURRENT_DATE + $1::interval)');
   // date('now', '+N days') → CURRENT_DATE + INTERVAL 'N days'
   converted = converted.replace(/date\('now',\s*'([+-]?\d+)\s+days?'\)/gi, (_, n) => {
     const num = parseInt(n);
