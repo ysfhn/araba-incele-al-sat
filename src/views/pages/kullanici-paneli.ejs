@@ -123,7 +123,10 @@
 
   /* ═══════ RESPONSIVE ═══════ */
   @media (min-width:640px) {
-    .up-stats { grid-template-columns:repeat(4,1fr); }
+    .up-stats { grid-template-columns:repeat(3,1fr); }
+  }
+  @media (min-width:1024px) {
+    .up-stats:not([style*="grid-template"]) { grid-template-columns:repeat(4,1fr); }
   }
   @media (min-width:1024px) {
     .up-content { padding:2rem; }
@@ -157,8 +160,13 @@
   <!-- ═══════ SIDEBAR ═══════ -->
   <aside class="up-sidebar">
     <div class="sidebar-brand">
-      <h3>👤 Hesabım</h3>
-      <small><%= userProfile.name %></small>
+      <div style="display:flex;align-items:center;gap:.65rem;">
+        <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#6366f1);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.95rem;flex-shrink:0;"><%= userProfile.name.charAt(0).toUpperCase() %></div>
+        <div style="min-width:0;">
+          <h3 style="font-size:.95rem;">Hesabım</h3>
+          <small><%= userProfile.name %></small>
+        </div>
+      </div>
     </div>
     <ul class="up-menu">
       <% menuItems.forEach(item => { %>
@@ -185,11 +193,13 @@
 <% if (currentPage === 'dashboard') { %>
   <div class="up-header"><h1>📊 Dashboard</h1></div>
 
-  <div class="up-stats">
+  <div class="up-stats" style="grid-template-columns:repeat(3,1fr);">
     <div class="up-stat"><div class="icon blue"><span class="material-symbols-outlined">directions_car</span></div><div class="info"><h3><%= stats.activeListings %></h3><p>Aktif İlan</p></div></div>
+    <div class="up-stat"><div class="icon orange"><span class="material-symbols-outlined">list</span></div><div class="info"><h3><%= stats.totalListings %></h3><p>Toplam İlan</p></div></div>
     <div class="up-stat"><div class="icon red"><span class="material-symbols-outlined">favorite</span></div><div class="info"><h3><%= stats.favorites %></h3><p>Favori</p></div></div>
     <div class="up-stat"><div class="icon green"><span class="material-symbols-outlined">mail</span></div><div class="info"><h3><%= stats.unreadMessages %></h3><p>Okunmamış Mesaj</p></div></div>
     <div class="up-stat"><div class="icon purple"><span class="material-symbols-outlined">forum</span></div><div class="info"><h3><%= stats.forumReplies %></h3><p>Forum Yanıtı</p></div></div>
+    <div class="up-stat"><div class="icon" style="background:#e0f2fe;color:#0284c7;"><span class="material-symbols-outlined">visibility</span></div><div class="info"><h3><%= stats.totalViews %></h3><p>Toplam Görüntülenme</p></div></div>
   </div>
 
   <div class="up-grid-main">
@@ -205,8 +215,12 @@
         <% } else { %>
           <% recentListings.forEach(l => { %>
           <a href="/ilan/<%= l.slug %>" style="display:flex;align-items:center;gap:.75rem;padding:.6rem;border-radius:10px;text-decoration:none;color:inherit;transition:background .15s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
-            <div style="width:56px;height:40px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.3rem;">directions_car</span>
+            <div style="width:56px;height:40px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+              <% if (l.image) { %>
+                <img src="<%= l.image %>" alt="" style="width:100%;height:100%;object-fit:cover;">
+              <% } else { %>
+                <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.3rem;">directions_car</span>
+              <% } %>
             </div>
             <div style="flex:1;min-width:0;">
               <p style="font-weight:600;font-size:.82rem;color:#0f172a;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= l.brand_name %> <%= l.model_name %></p>
@@ -226,8 +240,12 @@
         <% } else { %>
           <% recentFavorites.forEach(l => { %>
           <a href="/ilan/<%= l.slug %>" style="display:flex;align-items:center;gap:.75rem;padding:.6rem;border-radius:10px;text-decoration:none;color:inherit;transition:background .15s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
-            <div style="width:56px;height:40px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.3rem;">directions_car</span>
+            <div style="width:56px;height:40px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+              <% if (l.image) { %>
+                <img src="<%= l.image %>" alt="" style="width:100%;height:100%;object-fit:cover;">
+              <% } else { %>
+                <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.3rem;">directions_car</span>
+              <% } %>
             </div>
             <div style="flex:1;min-width:0;">
               <p style="font-weight:600;font-size:.82rem;color:#0f172a;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= l.brand_name %> <%= l.model_name %></p>
@@ -330,8 +348,12 @@
             <tr>
               <td>
                 <a href="/ilan/<%= l.slug %>" style="text-decoration:none;color:inherit;display:flex;align-items:center;gap:.6rem;">
-                  <div style="width:52px;height:36px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.1rem;">directions_car</span>
+                  <div style="width:52px;height:36px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+                    <% if (l.image) { %>
+                      <img src="<%= l.image %>" alt="" style="width:100%;height:100%;object-fit:cover;">
+                    <% } else { %>
+                      <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.1rem;">directions_car</span>
+                    <% } %>
                   </div>
                   <div style="min-width:0;">
                     <p style="font-weight:600;font-size:.8rem;margin:0;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= l.brand_name %> <%= l.model_name %></p>
@@ -359,8 +381,12 @@
       <div class="up-mcard">
         <% data.listings.forEach(l => { %>
         <div style="display:flex;align-items:center;gap:.75rem;padding:.65rem 0;border-bottom:1px solid #f1f5f9;">
-          <div style="width:48px;height:34px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.1rem;">directions_car</span>
+          <div style="width:48px;height:34px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+            <% if (l.image) { %>
+              <img src="<%= l.image %>" alt="" style="width:100%;height:100%;object-fit:cover;">
+            <% } else { %>
+              <span class="material-symbols-outlined" style="color:#cbd5e1;font-size:1.1rem;">directions_car</span>
+            <% } %>
           </div>
           <div style="flex:1;min-width:0;">
             <a href="/ilan/<%= l.slug %>" style="text-decoration:none;">
@@ -395,8 +421,12 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:.75rem;">
       <% data.favorites.forEach(l => { %>
       <div class="up-card" style="margin:0;padding:0;overflow:hidden;">
-        <div style="height:120px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;">
-          <span class="material-symbols-outlined" style="font-size:2.5rem;color:#cbd5e1;">directions_car</span>
+        <div style="height:120px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+          <% if (l.image) { %>
+            <img src="<%= l.image %>" alt="<%= l.brand_name %> <%= l.model_name %>" style="width:100%;height:100%;object-fit:cover;">
+          <% } else { %>
+            <span class="material-symbols-outlined" style="font-size:2.5rem;color:#cbd5e1;">directions_car</span>
+          <% } %>
         </div>
         <div style="padding:.85rem;">
           <h3 style="font-size:.88rem;font-weight:700;color:#0f172a;margin:0 0 .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= l.brand_name %> <%= l.model_name %></h3>
@@ -499,9 +529,9 @@
                 <a href="/servis/<%= a.business_slug %>" style="text-decoration:none;color:#2563eb;font-weight:600;font-size:.8rem;"><%= a.business_name %></a>
                 <% if (a.business_city) { %><br><small style="color:#94a3b8;font-size:.68rem;"><%= a.business_city %></small><% } %>
               </td>
-              <td style="white-space:nowrap;font-size:.78rem;"><%= a.appointment_date || a.date || '-' %></td>
-              <td style="font-size:.78rem;"><%= a.appointment_time || a.time || '-' %></td>
-              <td style="max-width:160px;font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= a.description || a.notes || '-' %></td>
+              <td style="white-space:nowrap;font-size:.78rem;"><%= a.date || '-' %></td>
+              <td style="font-size:.78rem;"><%= a.time || '-' %></td>
+              <td style="max-width:160px;font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= a.notes || '-' %></td>
               <td><span class="up-badge <%= aBadge[a.status] || 'secondary' %>"><%= aStat[a.status] || a.status %></span></td>
               <td>
                 <div style="display:flex;gap:3px;">
@@ -528,8 +558,8 @@
           <div style="display:flex;justify-content:space-between;align-items:start;gap:.5rem;">
             <div style="min-width:0;flex:1;">
               <a href="/servis/<%= a.business_slug %>" style="text-decoration:none;color:#2563eb;font-weight:600;font-size:.8rem;"><%= a.business_name %></a>
-              <p style="font-size:.7rem;color:#64748b;margin:2px 0;"><%= a.appointment_date || a.date || '-' %> · <%= a.appointment_time || a.time || '-' %></p>
-              <% if (a.description || a.notes) { %><p style="font-size:.68rem;color:#94a3b8;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= a.description || a.notes %></p><% } %>
+              <p style="font-size:.7rem;color:#64748b;margin:2px 0;"><%= a.date || '-' %> · <%= a.time || '-' %></p>
+              <% if (a.notes) { %><p style="font-size:.68rem;color:#94a3b8;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><%= a.notes %></p><% } %>
             </div>
             <span class="up-badge <%= aBadge2[a.status] || 'secondary' %>"><%= aStat2[a.status] || a.status %></span>
           </div>
@@ -717,7 +747,7 @@
     btn.addEventListener('click', async function(){
       btn.disabled = true;
       try {
-        var res = await fetch('/api/notifications/' + btn.dataset.markRead + '/read', { method:'PATCH' });
+        var res = await fetch('/api/notification/' + btn.dataset.markRead + '/read', { method:'POST' });
         if (res.ok) {
           var row = document.querySelector('[data-notification-id="' + btn.dataset.markRead + '"]');
           if (row) { row.style.background = 'transparent'; }
