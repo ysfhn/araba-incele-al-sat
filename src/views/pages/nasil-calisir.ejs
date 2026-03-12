@@ -79,6 +79,28 @@
   .nc-cta-btn.dark:hover { background:#334155; }
   .nc-cta-btn.green { background:#10b981; color:#fff; }
   .nc-cta-btn.green:hover { background:#059669; }
+
+  /* Responsive */
+  @media (max-width:640px) {
+    .nc-hero { padding:28px 20px; border-radius:14px; margin-bottom:28px; }
+    .nc-hero h1 { font-size:20px; }
+    .nc-hero p { font-size:13px; }
+    .nc-seller-section { padding:24px 16px; border-radius:14px; }
+    .nc-biz-section { padding:24px 16px; border-radius:14px; }
+    .nc-stat-val { font-size:20px; }
+    .nc-faq-a { padding:0 16px 0 46px; font-size:12px; }
+    .nc-faq-item.open .nc-faq-a { padding:0 16px 14px 46px; }
+    .nc-faq-q { padding:14px 14px; font-size:12px; gap:8px; }
+    .nc-faq-q-icon { width:26px; height:26px; border-radius:6px; }
+    .nc-faq-q-icon .material-symbols-outlined { font-size:14px; }
+    .nc-plan-price { font-size:22px; }
+    .nc-biz-benefit { padding:10px 0; }
+    .nc-biz-benefit-icon { width:28px; height:28px; }
+    .nc-biz-benefit h5 { font-size:12px; }
+    .nc-biz-benefit p { font-size:11px; }
+    .nc-card { padding:18px; }
+    .nc-biz-card { padding:18px; }
+  }
 </style>
 
 <main class="max-w-6xl mx-auto px-6 py-6">
@@ -100,7 +122,7 @@
     </div>
     <h1>Araç Alım-Satım Sürecinde<br>Yanınızdayız</h1>
     <p class="mt-2">İlan vermekten araç satın almaya, ekspertiz raporlarından güvenli ödemeye kadar tüm süreçte size rehberlik ediyoruz. İşletmeler için özel çözümler de sunuyoruz.</p>
-    <div class="flex flex-wrap gap-3 mt-6">
+    <div class="flex flex-wrap justify-center sm:justify-start gap-3 mt-6">
       <a href="/ilan" class="nc-cta-btn white"><span class="material-symbols-outlined" style="font-size:16px">search</span> İlanlara Göz At</a>
       <a href="#isletme-uyelik" class="nc-cta-btn outline-w"><span class="material-symbols-outlined" style="font-size:16px">storefront</span> İşletme Üyeliği</a>
     </div>
@@ -108,11 +130,11 @@
 </div>
 
 <!-- Sayılar -->
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10">
-  <div class="nc-stat"><p class="nc-stat-val">10.000+</p><p class="nc-stat-label">Aktif İlan</p></div>
-  <div class="nc-stat"><p class="nc-stat-val">5.000+</p><p class="nc-stat-label">Kayıtlı Kullanıcı</p></div>
-  <div class="nc-stat"><p class="nc-stat-val">250+</p><p class="nc-stat-label">Onaylı Servis</p></div>
-  <div class="nc-stat"><p class="nc-stat-val">50+</p><p class="nc-stat-label">Üye İş Yeri</p></div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-10">
+  <div class="nc-stat"><p class="nc-stat-val"><%= typeof stats !== 'undefined' && stats.listings ? stats.listings.toLocaleString('tr-TR') + '+' : '10.000+' %></p><p class="nc-stat-label">Aktif İlan</p></div>
+  <div class="nc-stat"><p class="nc-stat-val"><%= typeof stats !== 'undefined' && stats.users ? stats.users.toLocaleString('tr-TR') + '+' : '5.000+' %></p><p class="nc-stat-label">Kayıtlı Kullanıcı</p></div>
+  <div class="nc-stat"><p class="nc-stat-val"><%= typeof stats !== 'undefined' && stats.businesses ? stats.businesses.toLocaleString('tr-TR') + '+' : '250+' %></p><p class="nc-stat-label">Onaylı Servis</p></div>
+  <div class="nc-stat"><p class="nc-stat-val"><%= typeof stats !== 'undefined' && stats.topics ? stats.topics.toLocaleString('tr-TR') + '+' : '50+' %></p><p class="nc-stat-label">Forum Konusu</p></div>
 </div>
 
 <!-- ============================================ -->
@@ -410,47 +432,47 @@
   <p class="text-xs text-slate-400 mb-5">Merak edilen sorular ve yanıtları</p>
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-y-0">
-    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
-      <button class="nc-faq-q">
+    <div class="nc-faq-item" data-faq>
+      <button class="nc-faq-q" aria-expanded="false">
         <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
         <span class="nc-faq-text">İlan vermek ücretli mi?</span>
       </button>
-      <div class="nc-faq-a">Hayır, bireysel kullanıcılar için temel ilan verme tamamen ücretsizdir. İlanınızı daha fazla kişiye ulaştırmak için öne çıkarma seçeneğini kullanabilirsiniz. İşletme üyeleri ise paketlerine göre ilan haklarına sahiptir.</div>
+      <div class="nc-faq-a" role="region">Hayır, bireysel kullanıcılar için temel ilan verme tamamen ücretsizdir. İlanınızı daha fazla kişiye ulaştırmak için öne çıkarma seçeneğini kullanabilirsiniz. İşletme üyeleri ise paketlerine göre ilan haklarına sahiptir.</div>
     </div>
-    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
-      <button class="nc-faq-q">
+    <div class="nc-faq-item" data-faq>
+      <button class="nc-faq-q" aria-expanded="false">
         <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
         <span class="nc-faq-text">Ekspertiz raporu nasıl alınır?</span>
       </button>
-      <div class="nc-faq-a">Servis rehberimizden konumunuza en yakın onaylı ekspertiz merkezini bulun. Profil sayfasından online randevu alabilir veya doğrudan iletişime geçebilirsiniz. Ekspertiz raporu; boya ölçümü, mekanik kontrol, hasar geçmişi, motor ve şanzıman durumunu kapsar.</div>
+      <div class="nc-faq-a" role="region">Servis rehberimizden konumunuza en yakın onaylı ekspertiz merkezini bulun. Profil sayfasından online randevu alabilir veya doğrudan iletişime geçebilirsiniz. Ekspertiz raporu; boya ölçümü, mekanik kontrol, hasar geçmişi, motor ve şanzıman durumunu kapsar.</div>
     </div>
-    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
-      <button class="nc-faq-q">
+    <div class="nc-faq-item" data-faq>
+      <button class="nc-faq-q" aria-expanded="false">
         <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
         <span class="nc-faq-text">Platform komisyon alıyor mu?</span>
       </button>
-      <div class="nc-faq-a">Araç alım-satım işlemlerinden herhangi bir komisyon alınmamaktadır. Gelir modelimiz, işletme üyelik paketleri ve ilan öne çıkarma gibi premium hizmetlere dayalıdır.</div>
+      <div class="nc-faq-a" role="region">Araç alım-satım işlemlerinden herhangi bir komisyon alınmamaktadır. Gelir modelimiz, işletme üyelik paketleri ve ilan öne çıkarma gibi premium hizmetlere dayalıdır.</div>
     </div>
-    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
-      <button class="nc-faq-q">
+    <div class="nc-faq-item" data-faq>
+      <button class="nc-faq-q" aria-expanded="false">
         <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
         <span class="nc-faq-text">İşletme olarak nasıl kayıt olabilirim?</span>
       </button>
-      <div class="nc-faq-a">Kayıt sayfasından "Kurumsal" hesap tipini seçerek kaydolun. Ardından işletme bilgilerinizi girerek profilinizi oluşturun. Onay sürecinden sonra işletmeniz platformda yayına alınır. Başlangıç paketi ücretsizdir.</div>
+      <div class="nc-faq-a" role="region">Kayıt sayfasından "Kurumsal" hesap tipini seçerek kaydolun. Ardından işletme bilgilerinizi girerek profilinizi oluşturun. Onay sürecinden sonra işletmeniz platformda yayına alınır. Başlangıç paketi ücretsizdir.</div>
     </div>
-    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
-      <button class="nc-faq-q">
+    <div class="nc-faq-item" data-faq>
+      <button class="nc-faq-q" aria-expanded="false">
         <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
         <span class="nc-faq-text">Randevu sistemi nasıl çalışıyor?</span>
       </button>
-      <div class="nc-faq-a">Profesyonel paket üyesi işletmeler profil sayfalarında online randevu açabilir. Müşteriler tarih ve saat seçerek randevu talebi gönderir. İşletme panelinden randevuları yönetebilir ve onaylayabilirsiniz.</div>
+      <div class="nc-faq-a" role="region">Profesyonel paket üyesi işletmeler profil sayfalarında online randevu açabilir. Müşteriler tarih ve saat seçerek randevu talebi gönderir. İşletme panelinden randevuları yönetebilir ve onaylayabilirsiniz.</div>
     </div>
-    <div class="nc-faq-item" onclick="this.classList.toggle('open')">
-      <button class="nc-faq-q">
+    <div class="nc-faq-item" data-faq>
+      <button class="nc-faq-q" aria-expanded="false">
         <div class="nc-faq-q-icon"><span class="material-symbols-outlined">expand_more</span></div>
         <span class="nc-faq-text">Onaylı işletme rozeti nedir?</span>
       </button>
-      <div class="nc-faq-a">Onaylı işletme rozeti, işletmenizin gerçek ve güvenilir olduğunu doğrulayan bir etikettir. Profesyonel paket üyelerine verilir. Rozetli işletmeler arama sonuçlarında özel olarak vurgulanır.</div>
+      <div class="nc-faq-a" role="region">Onaylı işletme rozeti, işletmenizin gerçek ve güvenilir olduğunu doğrulayan bir etikettir. Profesyonel paket üyelerine verilir. Rozetli işletmeler arama sonuçlarında özel olarak vurgulanır.</div>
     </div>
   </div>
 </div>
@@ -470,3 +492,14 @@
 </div>
 
 </main>
+
+<script>
+// FAQ accordion — CSP-safe event delegation
+document.querySelectorAll('[data-faq] .nc-faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.nc-faq-item');
+    const isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+  });
+});
+</script>

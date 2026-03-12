@@ -55,7 +55,14 @@ router.get('/', async (req, res) => {
 
 // Nasıl Çalışır
 router.get('/nasil-calisir', async (req, res) => {
-  res.render('pages/nasil-calisir', { title: 'Nasıl Çalışır - Araba İncele Al Sat' });
+  const db = getDb();
+  const stats = {
+    users: (await db.prepare('SELECT COUNT(*) as count FROM users').get()).count,
+    listings: (await db.prepare("SELECT COUNT(*) as count FROM listings WHERE status='active'").get()).count,
+    businesses: (await db.prepare('SELECT COUNT(*) as count FROM businesses WHERE is_verified=1').get()).count,
+    topics: (await db.prepare('SELECT COUNT(*) as count FROM forum_topics').get()).count
+  };
+  res.render('pages/nasil-calisir', { title: 'Nasıl Çalışır - Araba İncele Al Sat', stats });
 });
 
 // Araç Seçim Sihirbazı
