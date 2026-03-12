@@ -54,6 +54,8 @@
   background:white; transition:all .2s; cursor:pointer; text-align:center;
 }
 .wiz-fuel-btn:hover { border-color:#94a3b8; }
+.wiz-fuel-btn[disabled] { cursor:not-allowed; border-color:#f1f5f9; }
+.wiz-fuel-btn[disabled]:hover { border-color:#f1f5f9; background:white; }
 .wiz-fuel-btn.selected { border-color:#1e293b; background:#f8fafc; box-shadow:0 0 0 1px #1e293b; }
 .wiz-fuel-icon { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; }
 .wiz-search-box {
@@ -225,26 +227,7 @@
       <button onclick="goToStep(4)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3" id="fuelGrid">
-      <button type="button" data-fuel="benzin" class="wiz-fuel-btn fuel-btn">
-        <div class="wiz-fuel-icon bg-amber-50"><span class="material-symbols-outlined text-xl text-amber-600">local_gas_station</span></div>
-        <span class="font-semibold text-sm text-slate-800">Benzin</span>
-      </button>
-      <button type="button" data-fuel="dizel" class="wiz-fuel-btn fuel-btn">
-        <div class="wiz-fuel-icon bg-slate-100"><span class="material-symbols-outlined text-xl text-slate-600">oil_barrel</span></div>
-        <span class="font-semibold text-sm text-slate-800">Dizel</span>
-      </button>
-      <button type="button" data-fuel="hibrit" class="wiz-fuel-btn fuel-btn">
-        <div class="wiz-fuel-icon bg-green-50"><span class="material-symbols-outlined text-xl text-green-600">eco</span></div>
-        <span class="font-semibold text-sm text-slate-800">Hibrit</span>
-      </button>
-      <button type="button" data-fuel="elektrik" class="wiz-fuel-btn fuel-btn">
-        <div class="wiz-fuel-icon bg-blue-50"><span class="material-symbols-outlined text-xl text-blue-600">ev_station</span></div>
-        <span class="font-semibold text-sm text-slate-800">Elektrik</span>
-      </button>
-      <button type="button" data-fuel="lpg" class="wiz-fuel-btn fuel-btn">
-        <div class="wiz-fuel-icon bg-orange-50"><span class="material-symbols-outlined text-xl text-orange-600">propane_tank</span></div>
-        <span class="font-semibold text-sm text-slate-800">LPG</span>
-      </button>
+      <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
     </div>
   </div>
 </div>
@@ -422,7 +405,7 @@ function loadYears() {
   document.getElementById('yearSubtitle').textContent = state.brandName + ' ' + state.modelName + ' — yıl seçin';
   const currentYear = new Date().getFullYear();
   const years = [];
-  for (let y = currentYear + 1; y >= currentYear - 15; y--) years.push(y);
+  for (let y = currentYear + 1; y >= 1980; y--) years.push(y);
   grid.innerHTML = years.map(y =>
     '<button type="button" data-year="' + y + '" class="wiz-year-btn year-btn">' + y + '</button>'
   ).join('');
@@ -433,22 +416,56 @@ function loadYears() {
       state.year = parseInt(this.dataset.year);
       state.fuel = null; state.fuelName = '';
       updateSummary();
-      setTimeout(() => { goToStep(5); }, 250);
+      setTimeout(() => { loadFuelTypes(); goToStep(5); }, 250);
     });
   });
 }
 
-// Step 5: Yakıt türü
-document.querySelectorAll('.fuel-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.fuel-btn').forEach(b => b.classList.remove('selected'));
-    this.classList.add('selected');
-    state.fuel = this.dataset.fuel;
-    state.fuelName = this.querySelector('.font-semibold').textContent;
-    updateSummary();
-    setTimeout(() => {
-      window.location.href = '/arac/' + state.brandSlug + '/' + state.modelSlug + '?yil=' + state.year + '&yakit=' + state.fuel;
-    }, 400);
+// Step 5: Yakıt türü (dinamik yükleme)
+const FUEL_META = {
+  benzin:   { label: 'Benzin',   icon: 'local_gas_station', iconBg: 'bg-amber-50',  iconColor: 'text-amber-600' },
+  dizel:    { label: 'Dizel',    icon: 'oil_barrel',        iconBg: 'bg-slate-100', iconColor: 'text-slate-600' },
+  hibrit:   { label: 'Hibrit',   icon: 'eco',               iconBg: 'bg-green-50',  iconColor: 'text-green-600' },
+  elektrik: { label: 'Elektrik', icon: 'ev_station',         iconBg: 'bg-blue-50',   iconColor: 'text-blue-600' },
+  lpg:      { label: 'LPG',      icon: 'propane_tank',       iconBg: 'bg-orange-50', iconColor: 'text-orange-600' }
+};
+
+async function loadFuelTypes() {
+  const grid = document.getElementById('fuelGrid');
+  document.getElementById('fuelSubtitle').textContent = state.brandName + ' ' + state.modelName + ' — yakıt seçin';
+  grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
+
+  let availableFuels = ['benzin', 'dizel', 'hibrit', 'elektrik', 'lpg'];
+  try {
+    const res = await fetch('/api/fuel-types/' + state.brandSlug + '/' + state.modelSlug);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.fuelTypes && data.fuelTypes.length > 0) availableFuels = data.fuelTypes;
+    }
+  } catch(e) { /* fallback: tümünü göster */ }
+
+  const allFuels = ['benzin', 'dizel', 'hibrit', 'elektrik', 'lpg'];
+  grid.innerHTML = allFuels.map(f => {
+    const meta = FUEL_META[f];
+    const isAvailable = availableFuels.includes(f);
+    const disabledClass = isAvailable ? '' : ' opacity-40 pointer-events-none';
+    const badge = isAvailable ? '' : '<span class="text-[10px] text-slate-400 font-medium mt-0.5">Mevcut değil</span>';
+    return '<button type="button" data-fuel="' + f + '" class="wiz-fuel-btn fuel-btn' + disabledClass + '"' + (isAvailable ? '' : ' disabled') + '>' +
+      '<div class="wiz-fuel-icon ' + meta.iconBg + '"><span class="material-symbols-outlined text-xl ' + meta.iconColor + '">' + meta.icon + '</span></div>' +
+      '<span class="font-semibold text-sm text-slate-800">' + meta.label + '</span>' + badge + '</button>';
+  }).join('');
+
+  grid.querySelectorAll('.fuel-btn:not([disabled])').forEach(btn => {
+    btn.addEventListener('click', function() {
+      grid.querySelectorAll('.fuel-btn').forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+      state.fuel = this.dataset.fuel;
+      state.fuelName = FUEL_META[this.dataset.fuel].label;
+      updateSummary();
+      setTimeout(() => {
+        window.location.href = '/arac/' + state.brandSlug + '/' + state.modelSlug + '?yil=' + state.year + '&yakit=' + state.fuel;
+      }, 400);
+    });
   });
-});
+}
 </script>

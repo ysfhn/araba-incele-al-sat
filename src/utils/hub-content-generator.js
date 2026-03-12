@@ -442,7 +442,7 @@ function generateHubContent(brand, model) {
     editor_review: editorReview,
     pros: JSON.stringify(basePros.slice(0, 5)),
     cons: JSON.stringify(baseCons.slice(0, 4)),
-    image_url: null,
+    image_url: getModelImage(brand.slug, bodyType),
     // Ek alanlar (view için)
     _generated: true,
     _segment: segment,
@@ -570,9 +570,186 @@ function getBrandCountry(slug) {
   return countries[slug] || '';
 }
 
+
+/* ═══════════════════════════════════════════════════════════════
+   GEÇERLİ YAKIT TİPLERİ
+   ═══════════════════════════════════════════════════════════════ */
+
+/**
+ * Marka segmentine ve gövde tipine göre seçilebilir yakıt tiplerini döndürür.
+ * @param {string} brandSlug
+ * @param {string} bodyType
+ * @returns {string[]} Geçerli yakıt tipleri dizisi
+ */
+function getAvailableFuelTypes(brandSlug, bodyType) {
+  const segment = BRAND_SEGMENTS[brandSlug] || 'mainstream';
+
+  // Saf elektrikli markalar
+  if (segment === 'electric') {
+    return ['elektrik'];
+  }
+
+  // Ticari araçlar
+  if (segment === 'commercial') {
+    return ['dizel'];
+  }
+
+  // Şehir araçları (Smart vb.)
+  if (segment === 'city') {
+    return ['benzin', 'elektrik'];
+  }
+
+  // Süper premium — genellikle benzin, bazıları hibrit
+  if (segment === 'super_premium') {
+    // Bazı süper premium markalar hibrit/PHEV de sunuyor
+    const hybridBrands = ['porsche', 'ferrari', 'mclaren', 'bentley', 'lamborghini'];
+    if (hybridBrands.includes(brandSlug)) {
+      return ['benzin', 'hibrit'];
+    }
+    return ['benzin'];
+  }
+
+  // Premium segment
+  if (segment === 'premium') {
+    const base = ['benzin', 'dizel', 'hibrit'];
+    // Bazı premium markalar elektrikli de sunuyor
+    const electricPremium = ['bmw', 'mercedes-benz', 'audi', 'volvo', 'lexus', 'genesis', 'polestar'];
+    if (electricPremium.includes(brandSlug)) base.push('elektrik');
+    return base;
+  }
+
+  // Mainstream segment — gövde tipine göre
+  if (segment === 'mainstream') {
+    const base = ['benzin'];
+
+    // Pickup ve minivan dizel ağırlıklı
+    if (bodyType === 'pickup') return ['dizel', 'benzin'];
+    if (bodyType === 'minivan') return ['dizel', 'benzin', 'hibrit'];
+
+    // SUV/crossover — geniş seçenek
+    if (['suv', 'crossover'].includes(bodyType)) {
+      return ['benzin', 'dizel', 'hibrit', 'lpg'];
+    }
+
+    // Sedan/hatchback/station_wagon
+    base.push('dizel', 'lpg');
+    // Bazı mainstream markalar hibrit/elektrik de sunuyor
+    const hybridMainstream = ['toyota', 'honda', 'hyundai', 'kia', 'renault', 'ford', 'volkswagen', 'peugeot', 'citroen', 'opel', 'mazda', 'nissan', 'suzuki'];
+    if (hybridMainstream.includes(brandSlug)) base.push('hibrit');
+    const electricMainstream = ['hyundai', 'kia', 'volkswagen', 'renault', 'nissan', 'mg', 'byd'];
+    if (electricMainstream.includes(brandSlug)) base.push('elektrik');
+    return [...new Set(base)];
+  }
+
+  // Value segment
+  if (segment === 'value') {
+    const base = ['benzin'];
+    if (['suv', 'crossover', 'pickup'].includes(bodyType)) base.push('dizel');
+    base.push('lpg');
+    // Bazı Çinli markalar elektrikli de sunuyor
+    const electricValue = ['byd', 'mg', 'chery', 'geely', 'omoda', 'gac'];
+    if (electricValue.includes(brandSlug)) {
+      base.push('elektrik');
+      base.push('hibrit');
+    }
+    return [...new Set(base)];
+  }
+
+  // Fallback
+  return ['benzin', 'dizel', 'hibrit', 'elektrik', 'lpg'];
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ARAÇ GÖRSELLERİ
+   ═══════════════════════════════════════════════════════════════ */
+
+/**
+ * Marka ve gövde tipine göre temsili araç görseli URL'si döndürür
+ * Unsplash kaynaklı telif-serbest görseller
+ */
+function getModelImage(brandSlug, bodyType) {
+  // Marka-spesifik görseller (popüler markalar)
+  const BRAND_IMAGES = {
+    'bmw': 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80',
+    'mercedes-benz': 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80',
+    'audi': 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80',
+    'volkswagen': 'https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80',
+    'toyota': 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&q=80',
+    'honda': 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80',
+    'hyundai': 'https://images.unsplash.com/photo-1629385701021-fcd568a743e8?w=800&q=80',
+    'kia': 'https://images.unsplash.com/photo-1619682817481-e994891cd1f5?w=800&q=80',
+    'ford': 'https://images.unsplash.com/photo-1551830820-330a71b99659?w=800&q=80',
+    'renault': 'https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=800&q=80',
+    'peugeot': 'https://images.unsplash.com/photo-1609838923664-1ea1920a9299?w=800&q=80',
+    'citroen': 'https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=800&q=80',
+    'fiat': 'https://images.unsplash.com/photo-1595787572734-eed6a19b8560?w=800&q=80',
+    'volvo': 'https://images.unsplash.com/photo-1611016186353-652a477e78e0?w=800&q=80',
+    'nissan': 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80',
+    'mazda': 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80',
+    'skoda': 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80',
+    'opel': 'https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=800&q=80',
+    'porsche': 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80',
+    'tesla': 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&q=80',
+    'ferrari': 'https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80',
+    'lamborghini': 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80',
+    'maserati': 'https://images.unsplash.com/photo-1612825173281-9a193378527e?w=800&q=80',
+    'jaguar': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80',
+    'land-rover': 'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?w=800&q=80',
+    'jeep': 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80',
+    'chevrolet': 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80',
+    'dodge': 'https://images.unsplash.com/photo-1594502184342-2e12f877aa73?w=800&q=80',
+    'subaru': 'https://images.unsplash.com/photo-1626668011687-8a114cf5a34c?w=800&q=80',
+    'mitsubishi': 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80',
+    'suzuki': 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80',
+    'lexus': 'https://images.unsplash.com/photo-1622194993820-4d1e8b2af738?w=800&q=80',
+    'infiniti': 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80',
+    'genesis': 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&q=80',
+    'alfa-romeo': 'https://images.unsplash.com/photo-1612825173281-9a193378527e?w=800&q=80',
+    'bentley': 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=800&q=80',
+    'rolls-royce': 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=800&q=80',
+    'aston-martin': 'https://images.unsplash.com/photo-1596207891316-23751bc5e9b8?w=800&q=80',
+    'mclaren': 'https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80',
+    'lotus': 'https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80',
+    'togg': 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80',
+    'rivian': 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80',
+    'lucid': 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80',
+    'polestar': 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80',
+    'dacia': 'https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=800&q=80',
+    'seat': 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80',
+    'ds': 'https://images.unsplash.com/photo-1609838923664-1ea1920a9299?w=800&q=80',
+    'mg': 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&q=80',
+    'byd': 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80',
+    'chery': 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&q=80',
+    'geely': 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&q=80',
+    'cadillac': 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80',
+    'lincoln': 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80',
+    'chrysler': 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80',
+    'ram': 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80',
+  };
+
+  // Gövde tipine göre genel görseller (fallback)
+  const BODY_TYPE_IMAGES = {
+    sedan: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80',
+    suv: 'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?w=800&q=80',
+    hatchback: 'https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80',
+    crossover: 'https://images.unsplash.com/photo-1629385701021-fcd568a743e8?w=800&q=80',
+    coupe: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80',
+    cabrio: 'https://images.unsplash.com/photo-1596207891316-23751bc5e9b8?w=800&q=80',
+    station_wagon: 'https://images.unsplash.com/photo-1611016186353-652a477e78e0?w=800&q=80',
+    minivan: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80',
+    pickup: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80',
+  };
+
+  return BRAND_IMAGES[brandSlug] || BODY_TYPE_IMAGES[bodyType] || BODY_TYPE_IMAGES.sedan;
+}
+
+
 module.exports = {
   generateHubContent,
   generateBrandSummary,
+  getAvailableFuelTypes,
+  getModelImage,
   BRAND_SEGMENTS,
   BODY_TYPE_TR,
   getBrandCountry

@@ -55,6 +55,18 @@ router.get('/models/:brandId', async (req, res) => {
   res.json(models);
 });
 
+// Marka + model için geçerli yakıt tipleri
+router.get('/fuel-types/:brandSlug/:modelSlug', async (req, res) => {
+  const { getAvailableFuelTypes } = require('../utils/hub-content-generator');
+  const db = getDb();
+  const brand = await db.prepare('SELECT * FROM brands WHERE slug = ?').get(req.params.brandSlug);
+  if (!brand) return res.status(404).json({ error: 'Marka bulunamadı' });
+  const model = await db.prepare('SELECT * FROM models WHERE slug = ? AND brand_id = ?').get(req.params.modelSlug, brand.id);
+  if (!model) return res.status(404).json({ error: 'Model bulunamadı' });
+  const fuelTypes = getAvailableFuelTypes(brand.slug, model.body_type || 'sedan');
+  res.json({ fuelTypes });
+});
+
 // ═══════════════════════════════════════════════
 //  İLANLAR
 // ═══════════════════════════════════════════════
