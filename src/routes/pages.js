@@ -96,8 +96,18 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
   // Query params from wizard
   const queryYear = req.query.yil ? parseInt(req.query.yil) : null;
   const queryFuel = req.query.yakit || null;
+  const queryTransmission = req.query.vites || null;
+  const queryBudget = req.query.butce ? parseInt(req.query.butce) : null;
 
   const hub = await db.prepare('SELECT * FROM vehicle_hubs WHERE brand_id = ? AND model_id = ?').get(brand.id, model.id);
+
+  // Build dynamic listing query with optional year/fuel/transmission/budget filters
+  let listingWhere = "WHERE l.brand_id = ? AND l.model_id = ? AND l.status = 'active'";
+  const listingParams = [brand.id, model.id];
+  if (queryYear) { listingWhere += ' AND l.year = ?'; listingParams.push(queryYear); }
+  if (queryFuel) { listingWhere += ' AND l.fuel_type = ?'; listingParams.push(queryFuel); }
+  if (queryTransmission) { listingWhere += ' AND l.transmission = ?'; listingParams.push(queryTransmission); }
+  if (queryBudget) { listingWhere += ' AND l.price <= ?'; listingParams.push(queryBudget); }
 
   const listings = await db.prepare(`
     SELECT l.*, b.name as brand_name, m.name as model_name,
@@ -105,15 +115,22 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
     FROM listings l
     JOIN brands b ON l.brand_id = b.id
     JOIN models m ON l.model_id = m.id
-    WHERE l.brand_id = ? AND l.model_id = ? AND l.status = 'active'
+    ${listingWhere}
     ORDER BY l.created_at DESC LIMIT 6
-  `).all(brand.id, model.id);
+  `).all(...listingParams);
 
-  // Price stats
+  // Price stats — also filtered by year/fuel/transmission/budget if present
+  let priceWhere = "WHERE brand_id = ? AND model_id = ? AND status = 'active'";
+  const priceParams = [brand.id, model.id];
+  if (queryYear) { priceWhere += ' AND year = ?'; priceParams.push(queryYear); }
+  if (queryFuel) { priceWhere += ' AND fuel_type = ?'; priceParams.push(queryFuel); }
+  if (queryTransmission) { priceWhere += ' AND transmission = ?'; priceParams.push(queryTransmission); }
+  if (queryBudget) { priceWhere += ' AND price <= ?'; priceParams.push(queryBudget); }
+
   const priceStats = await db.prepare(`
     SELECT COUNT(*) as count, AVG(price) as avg, MIN(price) as min, MAX(price) as max
-    FROM listings WHERE brand_id = ? AND model_id = ? AND status = 'active'
-  `).get(brand.id, model.id);
+    FROM listings ${priceWhere}
+  `).get(...priceParams);
   if (priceStats && priceStats.avg) priceStats.avg = Math.round(priceStats.avg);
 
   const forumTopics = await db.prepare(`
@@ -131,7 +148,7 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
   res.render('pages/arac-hub', {
     title: `${brand.name} ${model.name}${queryYear ? ' ' + queryYear : ''} - Araba İncele Al Sat`,
     brand, model, hub, listings, forumTopics, nearbyServices, priceStats,
-    queryYear, queryFuel
+    queryYear, queryFuel, queryTransmission, queryBudget
   });
 });
 

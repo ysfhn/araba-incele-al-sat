@@ -541,9 +541,31 @@
     const wrap = document.createElement('div');
     wrap.className = 'ao-results';
 
+    // Group listings by brand+model to show hub links
+    const hubMap = {};
     listings.forEach(l => {
+      const key = l.brand_slug + '/' + l.model_slug;
+      if (!hubMap[key]) {
+        hubMap[key] = { brand_name: l.brand_name, model_name: l.model_name, brand_slug: l.brand_slug, model_slug: l.model_slug, listings: [], minPrice: l.price, maxPrice: l.price, years: new Set(), fuels: new Set() };
+      }
+      const h = hubMap[key];
+      h.listings.push(l);
+      if (l.price < h.minPrice) h.minPrice = l.price;
+      if (l.price > h.maxPrice) h.maxPrice = l.price;
+      if (l.year) h.years.add(l.year);
+      if (l.fuel_type) h.fuels.add(l.fuel_type);
+    });
+
+    // Individual listing cards — link to hub
+    listings.forEach(l => {
+      const hubParams = new URLSearchParams();
+      if (l.year) hubParams.set('yil', l.year);
+      if (l.fuel_type) hubParams.set('yakit', l.fuel_type);
+      if (answers.transmission && answers.transmission !== 'all') hubParams.set('vites', answers.transmission);
+      if (answers.budget) hubParams.set('butce', answers.budget);
+      const hubUrl = '/arac/' + l.brand_slug + '/' + l.model_slug + (hubParams.toString() ? '?' + hubParams.toString() : '');
       const a = document.createElement('a');
-      a.href = '/ilan/' + l.slug;
+      a.href = hubUrl;
       a.className = 'ao-result-card';
 
       const fuelMap = {benzin:'⛽',dizel:'🛢️',hibrit:'🌿',elektrik:'⚡',lpg:'🔥'};
@@ -562,10 +584,50 @@
             '<span>' + fuelIcon + ' ' + l.fuel_type + '</span>' +
             '<span>📍 ' + (l.city || '') + '</span>' +
           '</div>' +
+          '<div style="margin-top:6px;font-size:.68rem;color:rgba(147,197,253,.7);display:flex;align-items:center;gap:4px;">' +
+            '<span class="material-symbols-outlined" style="font-size:.8rem">hub</span> Araç Hub sayfasını incele' +
+          '</div>' +
         '</div>';
 
       wrap.appendChild(a);
     });
+
+    // Hub summary links — grouped by model
+    const hubKeys = Object.keys(hubMap);
+    if (hubKeys.length > 0) {
+      const hubSummary = document.createElement('div');
+      hubSummary.style.cssText = 'margin-top:.75rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.08);';
+
+      const hubLabel = document.createElement('div');
+      hubLabel.className = 'ao-msg bot';
+      hubLabel.style.fontSize = '.78rem';
+      hubLabel.innerHTML = '<div class="ao-sender"><span class="material-symbols-outlined">hub</span> Araç Hub</div>' +
+        'Bu modellerin detaylı inceleme, forum ve servis bilgilerine Araç Hub sayfalarından ulaşabilirsin:';
+      msgBox.appendChild(hubLabel);
+
+      hubKeys.forEach(key => {
+        const h = hubMap[key];
+        const hubLink = document.createElement('a');
+        hubLink.href = '/arac/' + h.brand_slug + '/' + h.model_slug;
+        hubLink.className = 'ao-result-card';
+        hubLink.style.cssText = 'border:1.5px solid rgba(59,130,246,.25);background:rgba(59,130,246,.08);';
+        hubLink.innerHTML =
+          '<div class="ao-result-img" style="background:rgba(59,130,246,.1)">' +
+            '<span class="material-symbols-outlined" style="color:rgba(96,165,250,.7);font-size:1.5rem">hub</span>' +
+          '</div>' +
+          '<div class="ao-result-info">' +
+            '<h3 style="color:#93c5fd">' + h.brand_name + ' ' + h.model_name + ' Hub</h3>' +
+            '<div class="ao-result-specs" style="color:rgba(255,255,255,.5)">' +
+              '<span>📊 ' + h.listings.length + ' ilan</span>' +
+              '<span>💰 ' + new Intl.NumberFormat('tr-TR').format(h.minPrice) + ' ₺' + (h.minPrice !== h.maxPrice ? ' – ' + new Intl.NumberFormat('tr-TR').format(h.maxPrice) + ' ₺' : '') + '</span>' +
+            '</div>' +
+            '<div style="margin-top:4px;font-size:.72rem;color:rgba(147,197,253,.8);">Teknik özellikler, forum, servisler →</div>' +
+          '</div>';
+        hubSummary.appendChild(hubLink);
+      });
+
+      wrap.appendChild(hubSummary);
+    }
 
     msgBox.appendChild(wrap);
     scroll();
@@ -584,6 +646,7 @@
     d.className = 'ao-restart';
     d.innerHTML =
       '<button class="ao-btn outline" id="aoRestart"><span class="material-symbols-outlined">refresh</span> Yeniden Başla</button>' +
+      ' <a href="/arac-secim" class="ao-btn outline" style="margin-left:.5rem;text-decoration:none;"><span class="material-symbols-outlined">hub</span> Araç Hub</a>' +
       ' <a href="/ilan/arama" class="ao-btn outline" style="margin-left:.5rem;text-decoration:none;"><span class="material-symbols-outlined">search</span> Tüm İlanlar</a>';
     msgBox.appendChild(d);
     scroll();
