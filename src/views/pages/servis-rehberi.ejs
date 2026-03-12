@@ -3,9 +3,19 @@ const f = filters || {};
 const typeMap = {servis:'Servis',galeri:'Galeri',yedek_parca:'Yedek Parça',ekspertiz:'Ekspertiz'};
 const typeIcons = {servis:'build',galeri:'directions_car',yedek_parca:'settings',ekspertiz:'verified'};
 const typeColors = {servis:'blue',galeri:'emerald',yedek_parca:'amber',ekspertiz:'violet'};
+const validTypes = Object.keys(typeMap);
+// Geçersiz tur parametresini temizle
+if (f.tur && !validTypes.includes(f.tur)) f.tur = '';
 const premiumList = businesses.filter(b => b.is_premium);
 const regularList = businesses.filter(b => !b.is_premium);
-function parseServices(s) { try { return JSON.parse(s); } catch { return []; } }
+function parseServices(s) { try { return Array.isArray(JSON.parse(s)) ? JSON.parse(s) : []; } catch { return []; } }
+function buildFilterUrl(exclude) {
+  const p = [];
+  if (exclude !== 'arama' && f.arama) p.push('arama=' + encodeURIComponent(f.arama));
+  if (exclude !== 'tur' && f.tur) p.push('tur=' + encodeURIComponent(f.tur));
+  if (exclude !== 'sehir' && f.sehir) p.push('sehir=' + encodeURIComponent(f.sehir));
+  return '/servis' + (p.length ? '?' + p.join('&') : '');
+}
 %>
 
 <style>
@@ -24,6 +34,16 @@ function parseServices(s) { try { return JSON.parse(s); } catch { return []; } }
 .sr-rating-fill { height: 100%; background: linear-gradient(90deg, #facc15, #f59e0b); border-radius: 2px; }
 .sr-service-chip { font-size: .7rem; padding: 3px 10px; border-radius: 20px; background: #f1f5f9; color: #475569; white-space: nowrap; }
 .sr-stat-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+@media (max-width:640px) {
+  .sr-cat-btn { padding:14px 12px; border-radius:14px; gap:10px; }
+  .sr-cat-btn .sr-stat-icon { width:34px; height:34px; border-radius:8px; }
+  .sr-cat-btn .sr-stat-icon .material-symbols-outlined { font-size:20px; }
+  .sr-premium-card .p-6, .sr-premium-card > div { padding:16px; }
+  .sr-premium-card .w-16 { width:44px; height:44px; border-radius:12px; }
+  .sr-premium-card .w-16 .material-symbols-outlined { font-size:24px; }
+  .sr-service-chip { font-size:.65rem; padding:2px 8px; }
+}
 </style>
 
 <!-- ═══════════════ HERO ═══════════════ -->
@@ -69,22 +89,22 @@ function parseServices(s) { try { return JSON.parse(s); } catch { return []; } }
 
 <!-- ═══════════════ KATEGORİ BUTONLARI ═══════════════ -->
 <section class="container mx-auto px-6 -mt-8 relative z-20 mb-10">
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    <a href="/servis?tur=servis" class="sr-cat-btn bg-white rounded-2xl p-5 flex items-center gap-4 shadow-sm <%= f.tur==='servis' ? 'ring-2 ring-blue-500 active' : '' %>">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+    <a href="/servis?tur=servis" class="sr-cat-btn bg-white rounded-2xl p-3.5 sm:p-5 flex items-center gap-3 sm:gap-4 shadow-sm <%= f.tur==='servis' ? 'ring-2 ring-blue-500 active' : '' %>">
       <div class="sr-stat-icon bg-blue-50 text-blue-600"><span class="material-symbols-outlined">build</span></div>
-      <div><p class="font-bold text-slate-900 text-sm">Servisler</p><p class="text-xs text-slate-500">Bakım & Onarım</p></div>
+      <div><p class="font-bold text-slate-900 text-xs sm:text-sm">Servisler</p><p class="text-[10px] sm:text-xs text-slate-500 hidden sm:block">Bakım & Onarım</p></div>
     </a>
-    <a href="/servis?tur=galeri" class="sr-cat-btn bg-white rounded-2xl p-5 flex items-center gap-4 shadow-sm <%= f.tur==='galeri' ? 'ring-2 ring-emerald-500 active' : '' %>">
+    <a href="/servis?tur=galeri" class="sr-cat-btn bg-white rounded-2xl p-3.5 sm:p-5 flex items-center gap-3 sm:gap-4 shadow-sm <%= f.tur==='galeri' ? 'ring-2 ring-emerald-500 active' : '' %>">
       <div class="sr-stat-icon bg-emerald-50 text-emerald-600"><span class="material-symbols-outlined">directions_car</span></div>
-      <div><p class="font-bold text-slate-900 text-sm">Galeriler</p><p class="text-xs text-slate-500">Araç Alım & Satım</p></div>
+      <div><p class="font-bold text-slate-900 text-xs sm:text-sm">Galeriler</p><p class="text-[10px] sm:text-xs text-slate-500 hidden sm:block">Araç Alım & Satım</p></div>
     </a>
-    <a href="/servis?tur=yedek_parca" class="sr-cat-btn bg-white rounded-2xl p-5 flex items-center gap-4 shadow-sm <%= f.tur==='yedek_parca' ? 'ring-2 ring-amber-500 active' : '' %>">
+    <a href="/servis?tur=yedek_parca" class="sr-cat-btn bg-white rounded-2xl p-3.5 sm:p-5 flex items-center gap-3 sm:gap-4 shadow-sm <%= f.tur==='yedek_parca' ? 'ring-2 ring-amber-500 active' : '' %>">
       <div class="sr-stat-icon bg-amber-50 text-amber-600"><span class="material-symbols-outlined">settings</span></div>
-      <div><p class="font-bold text-slate-900 text-sm">Yedek Parça</p><p class="text-xs text-slate-500">Orijinal & Muadil</p></div>
+      <div><p class="font-bold text-slate-900 text-xs sm:text-sm">Yedek Parça</p><p class="text-[10px] sm:text-xs text-slate-500 hidden sm:block">Orijinal & Muadil</p></div>
     </a>
-    <a href="/servis?tur=ekspertiz" class="sr-cat-btn bg-white rounded-2xl p-5 flex items-center gap-4 shadow-sm <%= f.tur==='ekspertiz' ? 'ring-2 ring-violet-500 active' : '' %>">
+    <a href="/servis?tur=ekspertiz" class="sr-cat-btn bg-white rounded-2xl p-3.5 sm:p-5 flex items-center gap-3 sm:gap-4 shadow-sm <%= f.tur==='ekspertiz' ? 'ring-2 ring-violet-500 active' : '' %>">
       <div class="sr-stat-icon bg-violet-50 text-violet-600"><span class="material-symbols-outlined">verified</span></div>
-      <div><p class="font-bold text-slate-900 text-sm">Ekspertiz</p><p class="text-xs text-slate-500">Araç Kontrol</p></div>
+      <div><p class="font-bold text-slate-900 text-xs sm:text-sm">Ekspertiz</p><p class="text-[10px] sm:text-xs text-slate-500 hidden sm:block">Araç Kontrol</p></div>
     </a>
   </div>
 </section>
@@ -98,19 +118,19 @@ function parseServices(s) { try { return JSON.parse(s); } catch { return []; } }
   <% if (f.arama) { %>
     <span class="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-xs font-medium px-3 py-1.5 rounded-full">
       <span class="material-symbols-outlined text-sm">search</span> "<%= f.arama %>"
-      <a href="/servis?<%= f.tur ? 'tur='+f.tur+'&' : '' %><%= f.sehir ? 'sehir='+f.sehir : '' %>" class="ml-1 hover:text-blue-900">✕</a>
+      <a href="<%= buildFilterUrl('arama') %>" class="ml-1 hover:text-blue-900">✕</a>
     </span>
   <% } %>
   <% if (f.tur) { %>
     <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 text-xs font-medium px-3 py-1.5 rounded-full">
-      <span class="material-symbols-outlined text-sm">category</span> <%= typeMap[f.tur] || f.tur %>
-      <a href="/servis?<%= f.arama ? 'arama='+f.arama+'&' : '' %><%= f.sehir ? 'sehir='+f.sehir : '' %>" class="ml-1 hover:text-emerald-900">✕</a>
+      <span class="material-symbols-outlined text-sm">category</span> <%= typeMap[f.tur] %>
+      <a href="<%= buildFilterUrl('tur') %>" class="ml-1 hover:text-emerald-900">✕</a>
     </span>
   <% } %>
   <% if (f.sehir) { %>
     <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-700 text-xs font-medium px-3 py-1.5 rounded-full">
       <span class="material-symbols-outlined text-sm">location_on</span> <%= f.sehir %>
-      <a href="/servis?<%= f.arama ? 'arama='+f.arama+'&' : '' %><%= f.tur ? 'tur='+f.tur : '' %>" class="ml-1 hover:text-amber-900">✕</a>
+      <a href="<%= buildFilterUrl('sehir') %>" class="ml-1 hover:text-amber-900">✕</a>
     </span>
   <% } %>
   <a href="/servis" class="text-xs text-red-500 hover:text-red-700 font-medium ml-2">Tümünü Temizle</a>
@@ -172,16 +192,16 @@ function parseServices(s) { try { return JSON.parse(s); } catch { return []; } }
             <!-- Rating -->
             <div class="flex items-center gap-3 mb-3">
               <div class="flex items-center gap-0.5">
-                <% for(let i=0;i<5;i++){%><span class="material-symbols-outlined text-base <%= i < Math.round(b.rating) ? 'text-amber-400' : 'text-slate-200' %>"><%= i < Math.round(b.rating) ? 'star' : 'star_border' %></span><%}%>
+                <% const pRating = Number(b.rating) || 0; for(let i=0;i<5;i++){%><span class="material-symbols-outlined text-base <%= i < Math.round(pRating) ? 'text-amber-400' : 'text-slate-200' %>"><%= i < Math.round(pRating) ? 'star' : 'star_border' %></span><%}%>
               </div>
-              <span class="text-sm font-bold text-slate-800"><%= b.rating %></span>
-              <span class="text-xs text-slate-400">(<%= b.review_count %> değerlendirme)</span>
+              <span class="text-sm font-bold text-slate-800"><%= pRating.toFixed(1) %></span>
+              <span class="text-xs text-slate-400">(<%= b.review_count || 0 %> değerlendirme)</span>
             </div>
 
             <!-- Alt Bilgiler -->
             <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
               <% if (b.city) { %><span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm text-slate-400">location_on</span> <%= b.city %><%= b.district ? ', ' + b.district : '' %></span><% } %>
-              <% if (b.phone) { %><span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm text-slate-400">call</span> <%= b.phone %></span><% } %>
+              <% if (b.phone && typeof currentUser !== 'undefined' && currentUser) { %><span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm text-slate-400">call</span> <%= b.phone %></span><% } %>
             </div>
 
             <!-- Hizmetler -->
@@ -208,7 +228,7 @@ function parseServices(s) { try { return JSON.parse(s); } catch { return []; } }
 </div>
 <% } %>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
   <% (premiumList.length > 0 ? regularList : businesses).forEach((b, idx) => { %>
   <a href="/servis/<%= b.slug %>" class="sr-card bg-white rounded-2xl overflow-hidden block group">
     <!-- Üst Renk Bandı -->
@@ -240,10 +260,10 @@ function parseServices(s) { try { return JSON.parse(s); } catch { return []; } }
       <!-- Rating -->
       <div class="flex items-center gap-2 mb-2.5">
         <div class="flex items-center gap-0.5">
-          <% for(let i=0;i<5;i++){%><span class="material-symbols-outlined text-sm <%= i < Math.round(b.rating) ? 'text-amber-400' : 'text-slate-200' %>"><%= i < Math.round(b.rating) ? 'star' : 'star_border' %></span><%}%>
+          <% const rRating = Number(b.rating) || 0; for(let i=0;i<5;i++){%><span class="material-symbols-outlined text-sm <%= i < Math.round(rRating) ? 'text-amber-400' : 'text-slate-200' %>"><%= i < Math.round(rRating) ? 'star' : 'star_border' %></span><%}%>
         </div>
-        <span class="text-xs font-bold text-slate-700"><%= b.rating %></span>
-        <span class="text-xs text-slate-400">(<%= b.review_count %>)</span>
+        <span class="text-xs font-bold text-slate-700"><%= rRating.toFixed(1) %></span>
+        <span class="text-xs text-slate-400">(<%= b.review_count || 0 %>)</span>
       </div>
 
       <p class="text-sm text-slate-500 line-clamp-2 mb-3 leading-relaxed"><%= b.description || 'Detaylar için tıklayın.' %></p>
@@ -256,7 +276,7 @@ function parseServices(s) { try { return JSON.parse(s); } catch { return []; } }
           <%= b.city %><%= b.district ? ' / ' + b.district : '' %>
         </span>
         <% } %>
-        <% if (b.phone) { %>
+        <% if (b.phone && typeof currentUser !== 'undefined' && currentUser) { %>
         <span class="inline-flex items-center gap-1.5">
           <span class="material-symbols-outlined text-sm text-slate-400">call</span>
           <%= b.phone %>
