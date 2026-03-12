@@ -26,6 +26,10 @@ function timeAgo(d) {
 }
 
 /* ═══ KATEGORİ KARTLARI ═══ */
+#forum-cat-grid { --cols: 4; }
+@media (min-width: 1024px) {
+  #forum-cat-grid { grid-template-columns: repeat(var(--cols), 1fr); }
+}
 .forum-cat-card {
   position: relative; border-radius: 16px; padding: 20px;
   background: white; border: 1px solid #e2e8f0;
@@ -114,12 +118,19 @@ function timeAgo(d) {
 @media (max-width: 1023px) {
   .forum-topic-card { flex-wrap: wrap; }
 }
+@media (max-width: 639px) {
+  .forum-topic-card { padding: 14px; gap: 12px; }
+  .forum-cat-card { padding: 14px; }
+  .forum-cat-icon { width: 36px; height: 36px; font-size: 18px; border-radius: 10px; }
+  .forum-hero-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .forum-hero-stats .stat-value { font-size: 1.25rem; }
+}
 </style>
 
 <!-- ═══════ HERO ═══════ -->
-<div class="forum-hero py-10 lg:py-14">
+<div class="forum-hero py-8 sm:py-10 lg:py-14">
   <div class="forum-hero-glow"></div>
-  <div class="container mx-auto px-6 relative z-10">
+  <div class="container mx-auto px-4 sm:px-6 relative z-10">
     <!-- Breadcrumb -->
     <div class="flex items-center text-sm text-white/40 mb-6 gap-1.5">
       <a href="/" class="hover:text-white/70 transition-colors">Ana Sayfa</a>
@@ -130,10 +141,10 @@ function timeAgo(d) {
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
       <div>
         <div class="flex items-center gap-3 mb-3">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-            <span class="material-symbols-outlined text-white text-2xl">forum</span>
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+            <span class="material-symbols-outlined text-white text-xl sm:text-2xl">forum</span>
           </div>
-          <h1 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">Forum</h1>
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">Forum</h1>
         </div>
         <p class="text-white/50 text-sm max-w-lg">Araç dünyası hakkında sorularınızı sorun, deneyimlerinizi paylaşın ve topluluğumuzla etkileşime geçin.</p>
       </div>
@@ -143,31 +154,31 @@ function timeAgo(d) {
     </div>
 
     <!-- Mini İstatistikler -->
-    <div class="grid grid-cols-3 gap-3 mt-8 max-w-md">
-      <div class="bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 text-center border border-white/10">
-        <p class="text-2xl font-extrabold text-white"><%= stats.topics %></p>
+    <div class="forum-hero-stats grid grid-cols-3 gap-3 mt-8 max-w-md">
+      <div class="bg-white/5 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-3 text-center border border-white/10">
+        <p class="stat-value text-xl sm:text-2xl font-extrabold text-white"><%= stats.topics %></p>
         <p class="text-[10px] text-white/40 font-semibold uppercase tracking-wider">Konu</p>
       </div>
-      <div class="bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 text-center border border-white/10">
-        <p class="text-2xl font-extrabold text-white"><%= stats.replies %></p>
+      <div class="bg-white/5 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-3 text-center border border-white/10">
+        <p class="stat-value text-xl sm:text-2xl font-extrabold text-white"><%= stats.replies %></p>
         <p class="text-[10px] text-white/40 font-semibold uppercase tracking-wider">Yanıt</p>
       </div>
-      <div class="bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 text-center border border-white/10">
-        <p class="text-2xl font-extrabold text-white"><%= stats.users %></p>
+      <div class="bg-white/5 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-3 text-center border border-white/10">
+        <p class="stat-value text-xl sm:text-2xl font-extrabold text-white"><%= stats.users %></p>
         <p class="text-[10px] text-white/40 font-semibold uppercase tracking-wider">Üye</p>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container mx-auto px-6 py-8">
+<div class="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
   <!-- ═══════ KATEGORİLER ═══════ -->
   <div class="mb-10">
     <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-5">
       <span class="material-symbols-outlined text-indigo-500">category</span> Kategoriler
     </h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-<%= categories.length + 1 <= 7 ? categories.length + 1 : 6 %> gap-3">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3" style="<% if (typeof categories !== 'undefined') { %>--cols:<%= Math.min(categories.length + 1, 6) %><% } %>" id="forum-cat-grid">
       <a href="/forum" class="forum-cat-card text-center group <%= !activeCategory ? 'active' : '' %>" style="--cat-color:#6366f1">
         <div class="forum-cat-icon mx-auto mb-2" style="background: linear-gradient(135deg, #6366f1, #4f46e5)">
           <span class="material-symbols-outlined">apps</span>

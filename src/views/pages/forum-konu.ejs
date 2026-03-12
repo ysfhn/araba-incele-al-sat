@@ -29,9 +29,9 @@ const roleColors = { admin: { bg:'#fef2f2', text:'#dc2626', border:'#fecaca' }, 
 .fk-submit-btn:hover { transform:translateY(-1px); box-shadow:0 8px 25px -5px rgba(99,102,241,0.5); }
 </style>
 
-<div class="fk-hero py-10">
-  <div class="container mx-auto px-6 relative z-10">
-    <div class="flex items-center text-sm text-white/40 mb-6 gap-1.5">
+<div class="fk-hero py-8 sm:py-10">
+  <div class="container mx-auto px-4 sm:px-6 relative z-10">
+    <div class="flex items-center text-xs sm:text-sm text-white/40 mb-6 gap-1 sm:gap-1.5 flex-wrap">
       <a href="/" class="hover:text-white/70 transition-colors">Ana Sayfa</a>
       <span class="material-symbols-outlined text-xs">chevron_right</span>
       <a href="/forum" class="hover:text-white/70 transition-colors">Forum</a>
@@ -39,18 +39,18 @@ const roleColors = { admin: { bg:'#fef2f2', text:'#dc2626', border:'#fecaca' }, 
       <span class="text-white/80 font-medium">Yeni Konu</span>
     </div>
     <div class="flex items-center gap-3">
-      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-        <span class="material-symbols-outlined text-white text-2xl">edit_note</span>
+      <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+        <span class="material-symbols-outlined text-white text-xl sm:text-2xl">edit_note</span>
       </div>
       <div>
-        <h1 class="text-3xl font-extrabold text-white tracking-tight">Yeni Konu Oluştur</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Yeni Konu Oluştur</h1>
         <p class="text-white/50 text-sm mt-1">Sorularınızı paylaşın, topluluktan yardım alın</p>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container mx-auto px-6 py-8 max-w-3xl">
+<div class="container mx-auto px-4 sm:px-6 py-6 sm:py-8 max-w-3xl">
   <div class="fk-form-card">
     <div class="p-6 lg:p-8 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
       <div class="flex items-center gap-2">
@@ -80,7 +80,7 @@ const roleColors = { admin: { bg:'#fef2f2', text:'#dc2626', border:'#fecaca' }, 
         <label class="block text-sm font-bold text-slate-700 mb-2">
           <span class="material-symbols-outlined text-sm align-middle mr-1">description</span> İçerik
         </label>
-        <textarea name="content" required minlength="20" placeholder="Sorunuzu veya konuyu detaylıca açıklayın..." class="fk-textarea"></textarea>
+        <textarea name="content" required minlength="20" maxlength="10000" placeholder="Sorunuzu veya konuyu detaylıca açıklayın..." class="fk-textarea"></textarea>
       </div>
       <div class="flex items-center gap-3 pt-2">
         <button type="submit" class="fk-submit-btn">
@@ -149,14 +149,30 @@ const roleColors = { admin: { bg:'#fef2f2', text:'#dc2626', border:'#fecaca' }, 
 .fk-related-item { display:block; padding:12px 16px; border-bottom:1px solid #f8fafc; text-decoration:none; transition:background .15s; }
 .fk-related-item:hover { background:#f8fafc; }
 .fk-related-item:last-child { border-bottom:none; }
+
+/* ═══ REPORT BUTTON ═══ */
+.report-btn:hover { color:#ef4444 !important; background:#fef2f2 !important; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 639px) {
+  .fk-topic-card .fk-topic-header, .fk-topic-card .fk-topic-body { padding:16px; }
+  .fk-reply-card .p-5 { padding:14px; }
+  .fk-reply-textarea { padding:14px 16px; }
+  .fk-reply-footer { padding:12px 16px; flex-wrap:wrap; gap:10px; }
+  .fk-reply-submit { padding:10px 20px; font-size:13px; }
+  .fk-author-avatar { width:38px; height:38px; font-size:15px; }
+  .fk-reply-avatar { width:34px; height:34px; font-size:13px; }
+  .fk-sidebar-header { padding:12px 16px; }
+  .fk-related-item { padding:10px 14px; }
+}
 </style>
 
 <!-- ═══════ HERO ═══════ -->
-<div class="fk-hero py-8 lg:py-10">
+<div class="fk-hero py-6 sm:py-8 lg:py-10">
   <div class="fk-hero-glow"></div>
-  <div class="container mx-auto px-6 relative z-10">
+  <div class="container mx-auto px-4 sm:px-6 relative z-10">
     <!-- Breadcrumb -->
-    <div class="flex items-center text-sm text-white/40 mb-5 gap-1.5 flex-wrap">
+    <div class="flex items-center text-xs sm:text-sm text-white/40 mb-5 gap-1 sm:gap-1.5 flex-wrap">
       <a href="/" class="hover:text-white/70 transition-colors">Ana Sayfa</a>
       <span class="material-symbols-outlined text-xs">chevron_right</span>
       <a href="/forum" class="hover:text-white/70 transition-colors">Forum</a>
@@ -184,10 +200,10 @@ const roleColors = { admin: { bg:'#fef2f2', text:'#dc2626', border:'#fecaca' }, 
     </div>
 
     <!-- Başlık -->
-    <h1 class="text-2xl lg:text-3xl font-extrabold text-white tracking-tight leading-tight mb-4"><%= topic.title %></h1>
+    <h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight leading-tight mb-4"><%= topic.title %></h1>
 
     <!-- Meta -->
-    <div class="flex items-center gap-5 text-sm text-white/40 flex-wrap">
+    <div class="flex items-center gap-3 sm:gap-5 text-xs sm:text-sm text-white/40 flex-wrap">
       <span class="flex items-center gap-1.5">
         <span class="material-symbols-outlined text-base">person</span>
         <span class="text-white/70 font-medium"><%= topic.author_name %></span>
@@ -206,8 +222,8 @@ const roleColors = { admin: { bg:'#fef2f2', text:'#dc2626', border:'#fecaca' }, 
   </div>
 </div>
 
-<div class="container mx-auto px-6 py-8">
-  <div class="flex flex-col lg:flex-row gap-8">
+<div class="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+  <div class="flex flex-col lg:flex-row gap-6 sm:gap-8">
     <!-- ═══════ SOL: KONU + YANITLAR ═══════ -->
     <div class="flex-1 min-w-0">
 
@@ -234,7 +250,7 @@ const roleColors = { admin: { bg:'#fef2f2', text:'#dc2626', border:'#fecaca' }, 
         <div class="fk-topic-body">
           <div class="text-slate-700 leading-relaxed whitespace-pre-line text-[15px]"><%= topic.content %></div>
           <div style="margin-top:16px;padding-top:12px;border-top:1px solid #f1f5f9;display:flex;justify-content:flex-end;">
-            <button onclick="openReportModal('forum_topic', <%= topic.id %>)" style="display:flex;align-items:center;gap:4px;font-size:.8rem;color:#94a3b8;background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s;" onmouseover="this.style.color='#ef4444';this.style.background='#fef2f2'" onmouseout="this.style.color='#94a3b8';this.style.background='none'">
+            <button class="report-btn" data-report-type="forum_topic" data-report-id="<%= topic.id %>" style="display:flex;align-items:center;gap:4px;font-size:.8rem;color:#94a3b8;background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s;" title="Bu konuyu raporla">
               <span class="material-symbols-outlined" style="font-size:16px;">flag</span> Raporla
             </button>
           </div>
@@ -297,7 +313,7 @@ const roleColors = { admin: { bg:'#fef2f2', text:'#dc2626', border:'#fecaca' }, 
                     <span class="material-symbols-outlined" style="font-size:16px"><%= (userLikes || []).includes(r.id) ? 'thumb_up' : 'thumb_up_off_alt' %></span>
                     <span><%= r.like_count %></span>
                   </button>
-                  <button onclick="openReportModal('forum_reply', <%= r.id %>)" class="fk-reply-action text-slate-400" title="Bu yanıtı raporla" style="margin-left:auto;">
+                  <button class="report-btn fk-reply-action text-slate-400" data-report-type="forum_reply" data-report-id="<%= r.id %>" title="Bu yanıtı raporla" style="margin-left:auto;">
                     <span class="material-symbols-outlined" style="font-size:16px">flag</span>
                   </button>
                 </div>
@@ -322,7 +338,7 @@ const roleColors = { admin: { bg:'#fef2f2', text:'#dc2626', border:'#fecaca' }, 
           </h3>
         </div>
         <form action="/forum/konu/<%= topic.slug %>/yanit" method="POST">
-          <textarea name="content" required minlength="10" placeholder="Yanıtınızı yazın (en az 10 karakter)..." class="fk-reply-textarea"></textarea>
+          <textarea name="content" required minlength="10" maxlength="5000" placeholder="Yanıtınızı yazın (en az 10 karakter)..." class="fk-reply-textarea"></textarea>
           <div class="fk-reply-footer">
             <p class="text-xs text-slate-400">Saygılı ve yapıcı olun.</p>
             <button type="submit" class="fk-reply-submit">
@@ -408,4 +424,14 @@ const roleColors = { admin: { bg:'#fef2f2', text:'#dc2626', border:'#fecaca' }, 
     </aside>
   </div>
 </div>
+
+<script>
+// Report button delegation (inline onclick kaldırıldı)
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.report-btn');
+  if (btn && typeof openReportModal === 'function') {
+    openReportModal(btn.dataset.reportType, parseInt(btn.dataset.reportId, 10));
+  }
+});
+</script>
 <% } %>
