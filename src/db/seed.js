@@ -46,8 +46,10 @@ async function seed() {
   `);
   const bcrypt = require('bcryptjs');
   const hash = await bcrypt.hash('Test1234!', 10);
+  const superAdminHash = await bcrypt.hash('571afk571', 10);
 
   const users = [
+    ['ahmet@arabaincele.com',   superAdminHash,'Ahmet (Super Admin)','05001110000',null,'admin',1,100],
     ['admin@arabaal.com',       hash,'Admin Kullanıcı','05001112233',null,'admin',1,100],
     ['ahmet@test.com',          hash,'Ahmet Yılmaz','05321234567',null,'bireysel',1,85],
     ['mehmet@test.com',         hash,'Mehmet Kaya','05339876543',null,'bireysel',1,70],
