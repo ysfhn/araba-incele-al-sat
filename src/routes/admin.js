@@ -5,6 +5,7 @@ const { isAdmin } = require('../middleware/auth');
 
 // Admin Dashboard - GET /admin/panel
 router.get('/panel', isAdmin, async (req, res) => {
+  try {
   const db = getDb();
 
   const stats = {
@@ -18,6 +19,7 @@ router.get('/panel', isAdmin, async (req, res) => {
     totalReviews: (await db.prepare('SELECT COUNT(*) as c FROM reviews').get()).c,
     totalMessages: (await db.prepare('SELECT COUNT(*) as c FROM messages').get()).c,
     totalAppointments: (await db.prepare('SELECT COUNT(*) as c FROM appointments').get()).c,
+    pendingBusinesses: (await db.prepare('SELECT COUNT(*) as c FROM businesses WHERE is_verified = 0 OR is_verified IS NULL').get()).c,
   };
 
   const recentActivity = await db.prepare(`
@@ -49,10 +51,16 @@ router.get('/panel', isAdmin, async (req, res) => {
     title: 'Admin Paneli - Araba İncele Al Sat',
     stats, recentActivity, moderationQueue
   });
+  } catch (err) {
+    console.error('Admin dashboard hatası:', err);
+    req.flash('error', 'Panel yüklenirken bir hata oluştu.');
+    res.redirect('/');
+  }
 });
 
 // Admin: Kullanıcı Yönetimi - GET /admin/kullanicilar
 router.get('/kullanicilar', isAdmin, async (req, res) => {
+  try {
   const db = getDb();
   const { sayfa, arama, rol, onay } = req.query;
   let where = 'WHERE 1=1';
@@ -91,10 +99,16 @@ router.get('/kullanicilar', isAdmin, async (req, res) => {
     stats: { totalUsers: totalCount }, recentActivity: [], moderationQueue: [],
     adminPage: 'kullanicilar', adminData: { users, totalCount, allCount, unverifiedCount, roleMap, page, totalPages: Math.ceil(totalCount / limit), filters: req.query }
   });
+  } catch (err) {
+    console.error('Admin kullanıcılar hatası:', err);
+    req.flash('error', 'Kullanıcı listesi yüklenirken bir hata oluştu.');
+    res.redirect('/admin/panel');
+  }
 });
 
 // Admin: İlan Yönetimi - GET /admin/ilanlar
 router.get('/ilanlar', isAdmin, async (req, res) => {
+  try {
   const db = getDb();
   const { durum, sayfa, arama } = req.query;
   let where = 'WHERE 1=1';
@@ -119,10 +133,16 @@ router.get('/ilanlar', isAdmin, async (req, res) => {
     stats: { activeListings: totalCount }, recentActivity: [], moderationQueue: [],
     adminPage: 'ilanlar', adminData: { listings, totalCount, pendingCount, page, totalPages: Math.ceil(totalCount / limit), filters: req.query }
   });
+  } catch (err) {
+    console.error('Admin ilanlar hatası:', err);
+    req.flash('error', 'İlan listesi yüklenirken bir hata oluştu.');
+    res.redirect('/admin/panel');
+  }
 });
 
 // Admin: İşletme Yönetimi - GET /admin/isletmeler
 router.get('/isletmeler', isAdmin, async (req, res) => {
+  try {
   const db = getDb();
   const { sayfa, arama, tur, durum } = req.query;
   let where = 'WHERE 1=1';
@@ -150,10 +170,16 @@ router.get('/isletmeler', isAdmin, async (req, res) => {
     stats: { businesses: totalCount }, recentActivity: [], moderationQueue: [],
     adminPage: 'isletmeler', adminData: { businesses, totalCount, allBusinessCount, pendingBusinessCount, verifiedBusinessCount, page, totalPages: Math.ceil(totalCount / limit), filters: req.query }
   });
+  } catch (err) {
+    console.error('Admin işletmeler hatası:', err);
+    req.flash('error', 'İşletme listesi yüklenirken bir hata oluştu.');
+    res.redirect('/admin/panel');
+  }
 });
 
 // Admin: Randevu Yönetimi - GET /admin/randevular
 router.get('/randevular', isAdmin, async (req, res) => {
+  try {
   const db = getDb();
   const { sayfa, durum, arama } = req.query;
   let where = 'WHERE 1=1';
@@ -184,10 +210,16 @@ router.get('/randevular', isAdmin, async (req, res) => {
     stats: { totalAppointments: totalCount }, recentActivity: [], moderationQueue: [],
     adminPage: 'randevular', adminData: { appointments, totalCount, page, totalPages: Math.ceil(totalCount / limit), filters: req.query, statusCounts }
   });
+  } catch (err) {
+    console.error('Admin randevular hatası:', err);
+    req.flash('error', 'Randevu listesi yüklenirken bir hata oluştu.');
+    res.redirect('/admin/panel');
+  }
 });
 
 // Admin: Teklif Yönetimi - GET /admin/teklifler
 router.get('/teklifler', isAdmin, async (req, res) => {
+  try {
   const db = getDb();
   const { sayfa, durum, arama } = req.query;
   let where = 'WHERE 1=1';
@@ -218,10 +250,16 @@ router.get('/teklifler', isAdmin, async (req, res) => {
     stats: {}, recentActivity: [], moderationQueue: [],
     adminPage: 'teklifler', adminData: { quotes, totalCount, page, totalPages: Math.ceil(totalCount / limit), filters: req.query, statusCounts }
   });
+  } catch (err) {
+    console.error('Admin teklifler hatası:', err);
+    req.flash('error', 'Teklif listesi yüklenirken bir hata oluştu.');
+    res.redirect('/admin/panel');
+  }
 });
 
 // Admin: Değerlendirme Yönetimi - GET /admin/degerlendirmeler
 router.get('/degerlendirmeler', isAdmin, async (req, res) => {
+  try {
   const db = getDb();
   const { sayfa, arama, puan, isletme } = req.query;
   let where = 'WHERE 1=1';
@@ -254,10 +292,16 @@ router.get('/degerlendirmeler', isAdmin, async (req, res) => {
     stats: { totalReviews: totalCount }, recentActivity: [], moderationQueue: [],
     adminPage: 'degerlendirmeler', adminData: { reviews, totalCount, businessList, page, totalPages: Math.ceil(totalCount / limit), filters: req.query, avgRating: avgRating.toFixed(1), ratingDist }
   });
+  } catch (err) {
+    console.error('Admin değerlendirmeler hatası:', err);
+    req.flash('error', 'Değerlendirme listesi yüklenirken bir hata oluştu.');
+    res.redirect('/admin/panel');
+  }
 });
 
 // Admin: Forum Yönetimi - GET /admin/forum
 router.get('/forum', isAdmin, async (req, res) => {
+  try {
   const db = getDb();
   const categories = await db.prepare(`
     SELECT fc.*, (SELECT COUNT(*) FROM forum_topics WHERE category_id = fc.id) as topic_count
@@ -274,10 +318,16 @@ router.get('/forum', isAdmin, async (req, res) => {
     stats: { forumTopics: topics.length }, recentActivity: [], moderationQueue: [],
     adminPage: 'forum', adminData: { topics, categories }
   });
+  } catch (err) {
+    console.error('Admin forum hatası:', err);
+    req.flash('error', 'Forum yönetimi yüklenirken bir hata oluştu.');
+    res.redirect('/admin/panel');
+  }
 });
 
 // Admin: Moderasyon - GET /admin/moderasyon
 router.get('/moderasyon', isAdmin, async (req, res) => {
+  try {
   const db = getDb();
   const { durum, tur } = req.query;
   let where = 'WHERE 1=1';
@@ -330,10 +380,16 @@ router.get('/moderasyon', isAdmin, async (req, res) => {
     stats: { pendingModeration: statusCounts.pending }, recentActivity: [], moderationQueue: queue,
     adminPage: 'moderasyon', adminData: { queue, statusCounts, typeCounts, filters: req.query }
   });
+  } catch (err) {
+    console.error('Admin moderasyon hatası:', err);
+    req.flash('error', 'Moderasyon yüklenirken bir hata oluştu.');
+    res.redirect('/admin/panel');
+  }
 });
 
 // Admin: Araç Hub Yönetimi - GET /admin/hublar
 router.get('/hublar', isAdmin, async (req, res) => {
+  try {
   const db = getDb();
   const hubs = await db.prepare(`
     SELECT vh.*, b.name as brand_name, b.slug as brand_slug, b.logo as brand_logo,
@@ -363,10 +419,16 @@ router.get('/hublar', isAdmin, async (req, res) => {
     stats: { hubs: hubs.length }, recentActivity: [], moderationQueue: [],
     adminPage: 'hublar', adminData: { hubs, hubsByBrand, brandsWithHubs, brands, models }
   });
+  } catch (err) {
+    console.error('Admin hublar hatası:', err);
+    req.flash('error', 'Araç Hub yönetimi yüklenirken bir hata oluştu.');
+    res.redirect('/admin/panel');
+  }
 });
 
 // Admin: Marka/Model Yönetimi - GET /admin/markalar
 router.get('/markalar', isAdmin, async (req, res) => {
+  try {
   const db = getDb();
   const brands = await db.prepare(`
     SELECT b.*, 
@@ -394,6 +456,11 @@ router.get('/markalar', isAdmin, async (req, res) => {
     stats: { brands: brands.length, models: models.length }, recentActivity: [], moderationQueue: [],
     adminPage: 'markalar', adminData: { brands, models, modelsByBrand }
   });
+  } catch (err) {
+    console.error('Admin markalar hatası:', err);
+    req.flash('error', 'Marka/Model yönetimi yüklenirken bir hata oluştu.');
+    res.redirect('/admin/panel');
+  }
 });
 
 module.exports = router;

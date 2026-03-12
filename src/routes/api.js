@@ -1312,11 +1312,19 @@ router.patch('/admin/listings/:id/feature', adminOnly, async (req, res) => {
 // Admin: İlan sil
 router.delete('/admin/listings/:id', adminOnly, async (req, res) => {
   const db = getDb();
+  const listing = await db.prepare('SELECT id, user_id, title FROM listings WHERE id = ?').get(req.params.id);
+  if (!listing) return res.status(404).json({ error: 'İlan bulunamadı' });
+
   await db.prepare('DELETE FROM listing_images WHERE listing_id = ?').run(req.params.id);
   await db.prepare('DELETE FROM listing_features WHERE listing_id = ?').run(req.params.id);
   await db.prepare('DELETE FROM favorites WHERE listing_id = ?').run(req.params.id);
   await db.prepare("DELETE FROM moderation_queue WHERE type = 'listing' AND item_id = ?").run(req.params.id);
   await db.prepare('DELETE FROM listings WHERE id = ?').run(req.params.id);
+
+  // İlan sahibine bildirim
+  await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'listing', 'İlan Silindi', ?, '/kullanici/panel')")
+    .run(listing.user_id, `"${listing.title}" ilanınız admin tarafından silindi`);
+
   res.json({ success: true });
 });
 
@@ -1357,11 +1365,19 @@ router.patch('/admin/businesses/:id/premium', adminOnly, async (req, res) => {
 // Admin: İşletme sil
 router.delete('/admin/businesses/:id', adminOnly, async (req, res) => {
   const db = getDb();
+  const biz = await db.prepare('SELECT id, user_id, name FROM businesses WHERE id = ?').get(req.params.id);
+  if (!biz) return res.status(404).json({ error: 'İşletme bulunamadı' });
+
   await db.prepare('DELETE FROM reviews WHERE business_id = ?').run(req.params.id);
   await db.prepare('DELETE FROM appointments WHERE business_id = ?').run(req.params.id);
   await db.prepare('DELETE FROM quote_requests WHERE business_id = ?').run(req.params.id);
   await db.prepare("DELETE FROM moderation_queue WHERE type = 'business' AND item_id = ?").run(req.params.id);
   await db.prepare('DELETE FROM businesses WHERE id = ?').run(req.params.id);
+
+  // İşletme sahibine bildirim
+  await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'business', 'İşletme Silindi', ?, '/kullanici/panel')")
+    .run(biz.user_id, `"${biz.name}" işletmeniz admin tarafından silindi`);
+
   res.json({ success: true });
 });
 
@@ -1400,12 +1416,44 @@ router.patch('/admin/moderation/:id', adminOnly, async (req, res) => {
   await db.prepare('UPDATE moderation_queue SET status = ?, reviewed_by = ? WHERE id = ?')
     .run(status, req.session.user.id, req.params.id);
 
-  // Reddedildi ise içeriği kaldır
+  // Reddedildi ise içeriği kaldır ve sahibine bildirim gönder
   if (status === 'rejected') {
-    if (item.type === 'listing') await db.prepare("UPDATE listings SET status = 'rejected' WHERE id = ?").run(item.item_id);
-    if (item.type === 'forum_topic') await db.prepare('DELETE FROM forum_topics WHERE id = ?').run(item.item_id);
-    if (item.type === 'forum_reply') await db.prepare('DELETE FROM forum_replies WHERE id = ?').run(item.item_id);
-    if (item.type === 'review') await db.prepare('DELETE FROM reviews WHERE id = ?').run(item.item_id);
+    if (item.type === 'listing') {
+      const listing = await db.prepare('SELECT user_id, title FROM listings WHERE id = ?').get(item.item_id);
+      await db.prepare("UPDATE listings SET status = 'rejected' WHERE id = ?").run(item.item_id);
+      if (listing) {
+        await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'moderation', 'İçerik Kaldırıldı', ?, '/kullanici/panel')")
+          .run(listing.user_id, `"${listing.title}" ilanınız topluluk kurallarına aykırı bulunarak kaldırıldı`);
+      }
+    }
+    if (item.type === 'forum_topic') {
+      const topic = await db.prepare('SELECT user_id, title FROM forum_topics WHERE id = ?').get(item.item_id);
+      await db.prepare('DELETE FROM forum_topics WHERE id = ?').run(item.item_id);
+      if (topic) {
+        await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'moderation', 'İçerik Kaldırıldı', ?, '/forum')")
+          .run(topic.user_id, `"${topic.title}" konunuz topluluk kurallarına aykırı bulunarak kaldırıldı`);
+      }
+    }
+    if (item.type === 'forum_reply') {
+      const reply = await db.prepare('SELECT user_id FROM forum_replies WHERE id = ?').get(item.item_id);
+      await db.prepare('DELETE FROM forum_replies WHERE id = ?').run(item.item_id);
+      if (reply) {
+        await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'moderation', 'İçerik Kaldırıldı', ?, '/forum')")
+          .run(reply.user_id, 'Forum yanıtınız topluluk kurallarına aykırı bulunarak kaldırıldı');
+      }
+    }
+    if (item.type === 'review') {
+      const review = await db.prepare('SELECT user_id, business_id FROM reviews WHERE id = ?').get(item.item_id);
+      await db.prepare('DELETE FROM reviews WHERE id = ?').run(item.item_id);
+      if (review) {
+        // İşletme rating'ini yeniden hesapla
+        const avgRating = await db.prepare('SELECT AVG(rating) as avg, COUNT(*) as cnt FROM reviews WHERE business_id = ?').get(review.business_id);
+        await db.prepare('UPDATE businesses SET rating = ROUND(COALESCE(?, 0), 1), review_count = ? WHERE id = ?')
+          .run(avgRating.avg, avgRating.cnt, review.business_id);
+        await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'moderation', 'İçerik Kaldırıldı', ?, '/kullanici/panel')")
+          .run(review.user_id, 'Değerlendirmeniz topluluk kurallarına aykırı bulunarak kaldırıldı');
+      }
+    }
   }
 
   res.json({ success: true, status });
@@ -1425,10 +1473,41 @@ router.post('/admin/moderation/bulk', adminOnly, async (req, res) => {
     await db.prepare('UPDATE moderation_queue SET status = ?, reviewed_by = ? WHERE id = ?')
       .run(status, req.session.user.id, id);
     if (status === 'rejected') {
-      if (item.type === 'listing') await db.prepare("UPDATE listings SET status = 'rejected' WHERE id = ?").run(item.item_id);
-      if (item.type === 'forum_topic') await db.prepare('DELETE FROM forum_topics WHERE id = ?').run(item.item_id);
-      if (item.type === 'forum_reply') await db.prepare('DELETE FROM forum_replies WHERE id = ?').run(item.item_id);
-      if (item.type === 'review') await db.prepare('DELETE FROM reviews WHERE id = ?').run(item.item_id);
+      if (item.type === 'listing') {
+        const listing = await db.prepare('SELECT user_id, title FROM listings WHERE id = ?').get(item.item_id);
+        await db.prepare("UPDATE listings SET status = 'rejected' WHERE id = ?").run(item.item_id);
+        if (listing) {
+          await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'moderation', 'İçerik Kaldırıldı', ?, '/kullanici/panel')")
+            .run(listing.user_id, `"${listing.title}" ilanınız topluluk kurallarına aykırı bulunarak kaldırıldı`);
+        }
+      }
+      if (item.type === 'forum_topic') {
+        const topic = await db.prepare('SELECT user_id, title FROM forum_topics WHERE id = ?').get(item.item_id);
+        await db.prepare('DELETE FROM forum_topics WHERE id = ?').run(item.item_id);
+        if (topic) {
+          await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'moderation', 'İçerik Kaldırıldı', ?, '/forum')")
+            .run(topic.user_id, `"${topic.title}" konunuz topluluk kurallarına aykırı bulunarak kaldırıldı`);
+        }
+      }
+      if (item.type === 'forum_reply') {
+        const reply = await db.prepare('SELECT user_id FROM forum_replies WHERE id = ?').get(item.item_id);
+        await db.prepare('DELETE FROM forum_replies WHERE id = ?').run(item.item_id);
+        if (reply) {
+          await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'moderation', 'İçerik Kaldırıldı', ?, '/forum')")
+            .run(reply.user_id, 'Forum yanıtınız topluluk kurallarına aykırı bulunarak kaldırıldı');
+        }
+      }
+      if (item.type === 'review') {
+        const review = await db.prepare('SELECT user_id, business_id FROM reviews WHERE id = ?').get(item.item_id);
+        await db.prepare('DELETE FROM reviews WHERE id = ?').run(item.item_id);
+        if (review) {
+          const avgRating = await db.prepare('SELECT AVG(rating) as avg, COUNT(*) as cnt FROM reviews WHERE business_id = ?').get(review.business_id);
+          await db.prepare('UPDATE businesses SET rating = ROUND(COALESCE(?, 0), 1), review_count = ? WHERE id = ?')
+            .run(avgRating.avg, avgRating.cnt, review.business_id);
+          await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'moderation', 'İçerik Kaldırıldı', ?, '/kullanici/panel')")
+            .run(review.user_id, 'Değerlendirmeniz topluluk kurallarına aykırı bulunarak kaldırıldı');
+        }
+      }
     }
     count++;
   }
@@ -1596,11 +1675,11 @@ router.post('/admin/brands', adminOnly, async (req, res) => {
 // Admin: Marka güncelle
 router.put('/admin/brands/:id', adminOnly, async (req, res) => {
   const db = getDb();
-  const { name } = req.body;
+  const { name, logo } = req.body;
   if (!name) return res.status(400).json({ error: 'Marka adı zorunlu' });
   const slug = name.toLowerCase().replace(/[^a-z0-9ğüşıöçĞÜŞİÖÇ]+/g, '-').replace(/^-|-$/g, '')
     .replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c');
-  await db.prepare('UPDATE brands SET name = ?, slug = ? WHERE id = ?').run(name, slug, req.params.id);
+  await db.prepare('UPDATE brands SET name = ?, slug = ?, logo = ? WHERE id = ?').run(name, slug, logo || null, req.params.id);
   res.json({ success: true });
 });
 

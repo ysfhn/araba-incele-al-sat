@@ -67,6 +67,16 @@ const authLimiter = rateLimit({
 });
 app.use('/auth/', authLimiter);
 
+// Admin panel için rate limit
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200,
+  message: { error: 'Çok fazla istek, lütfen biraz bekleyin.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/admin/', adminLimiter);
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));

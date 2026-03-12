@@ -168,6 +168,7 @@ async function initializeDatabase() {
       topic_id INTEGER NOT NULL REFERENCES forum_topics(id) ON DELETE CASCADE,
       user_id INTEGER NOT NULL REFERENCES users(id),
       content TEXT NOT NULL, like_count INTEGER DEFAULT 0,
+      is_solution INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -251,6 +252,14 @@ async function initializeDatabase() {
     CREATE INDEX IF NOT EXISTS idx_businesses_type ON businesses(type);
     CREATE INDEX IF NOT EXISTS idx_notifications_user ON notifications(user_id);
   `);
+
+  // Mevcut veritabanlarında is_solution sütununu ekle (yoksa)
+  try {
+    await db.prepare("SELECT is_solution FROM forum_replies LIMIT 1").get();
+  } catch (e) {
+    await db.exec("ALTER TABLE forum_replies ADD COLUMN is_solution INTEGER DEFAULT 0");
+    console.log('✅ forum_replies tablosuna is_solution sütunu eklendi');
+  }
 
   console.log('✅ Veritabanı tabloları oluşturuldu');
   return db;
