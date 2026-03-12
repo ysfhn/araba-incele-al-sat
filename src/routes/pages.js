@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getDb } = require('../db/database');
+const { generateHubContent, generateBrandSummary, BODY_TYPE_TR, getBrandCountry } = require('../utils/hub-content-generator');
 
 // Ana Sayfa
 router.get('/', async (req, res) => {
@@ -83,7 +84,34 @@ router.get('/giris', async (req, res) => {
   res.render('pages/giris-kayit', { title: 'Giriş Yap / Kayıt Ol - Araba İncele Al Sat' });
 });
 
-// Araç Hub
+// Araç Hub — Marka Sayfası (tüm modelleri listeler)
+router.get('/arac/:brandSlug', async (req, res) => {
+  const db = getDb();
+  const brand = await db.prepare('SELECT * FROM brands WHERE slug = ?').get(req.params.brandSlug);
+  if (!brand) return res.status(404).render('pages/404', { title: 'Marka Bulunamadı' });
+
+  const models = await db.prepare('SELECT * FROM models WHERE brand_id = ? ORDER BY name').all(brand.id);
+  const summary = generateBrandSummary(brand, models);
+
+  // Modelleri gövde tipine göre grupla
+  const modelsByBody = {};
+  models.forEach(m => {
+    const bt = m.body_type || 'sedan';
+    if (!modelsByBody[bt]) modelsByBody[bt] = [];
+    modelsByBody[bt].push(m);
+  });
+
+  // Tüm markalar (sidebar için)
+  const allBrands = await db.prepare('SELECT id, name, slug FROM brands ORDER BY name').all();
+
+  res.render('pages/marka-hub', {
+    title: `${brand.name} Modelleri — Araba İncele Al Sat`,
+    brand, models, summary, modelsByBody, allBrands,
+    BODY_TYPE_TR, getBrandCountry
+  });
+});
+
+// Araç Hub — Model Detay Sayfası
 router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
   const db = getDb();
   const brand = await db.prepare('SELECT * FROM brands WHERE slug = ?').get(req.params.brandSlug);
@@ -100,6 +128,9 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
   const queryBudget = req.query.butce ? parseInt(req.query.butce) : null;
 
   const hub = await db.prepare('SELECT * FROM vehicle_hubs WHERE brand_id = ? AND model_id = ?').get(brand.id, model.id);
+
+  // Hub kaydı yoksa otomatik içerik üret
+  const effectiveHub = hub || generateHubContent(brand, model);
 
   // Build dynamic listing query with optional year/fuel/transmission/budget filters
   let listingWhere = "WHERE l.brand_id = ? AND l.model_id = ? AND l.status = 'active'";
@@ -145,10 +176,13 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
     SELECT * FROM businesses WHERE type = 'servis' AND is_verified = 1 ORDER BY rating DESC LIMIT 3
   `).all();
 
+  // Aynı markanın diğer modelleri (sidebar/karşılaştırma için)
+  const otherModels = await db.prepare('SELECT * FROM models WHERE brand_id = ? AND id != ? ORDER BY name').all(brand.id, model.id);
+
   res.render('pages/arac-hub', {
     title: `${brand.name} ${model.name}${queryYear ? ' ' + queryYear : ''} - Araba İncele Al Sat`,
-    brand, model, hub, listings, forumTopics, nearbyServices, priceStats,
-    queryYear, queryFuel, queryTransmission, queryBudget
+    brand, model, hub: effectiveHub, listings, forumTopics, nearbyServices, priceStats,
+    queryYear, queryFuel, queryTransmission, queryBudget, otherModels, BODY_TYPE_TR
   });
 });
 

@@ -8,3 +8,4 @@ src/db/sessions.sqlite
 .DS_Store
 cookies.txt
 .vercel
+.env.production

@@ -1,0 +1,191 @@
+<%
+function formatPrice(p) { return new Intl.NumberFormat('tr-TR').format(p) + ' ₺'; }
+const country = typeof getBrandCountry === 'function' ? getBrandCountry(brand.slug) : '';
+const bodyTypeKeys = Object.keys(modelsByBody).sort((a,b) => modelsByBody[b].length - modelsByBody[a].length);
+%>
+
+<style>
+  .brand-hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%); border-radius: 16px; overflow: hidden; color: #fff; }
+  .brand-hero-inner { padding: 36px 32px 32px; }
+  .brand-stat { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; text-align: center; }
+  .brand-stat .val { font-size: 20px; font-weight: 800; color: #fff; }
+  .brand-stat .lbl { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+  .model-card { border: 1px solid #e2e8f0; border-radius: 14px; padding: 20px; transition: all .2s; display: flex; flex-direction: column; }
+  .model-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); border-color: #cbd5e1; transform: translateY(-2px); }
+  .model-card .icon-wrap { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .model-card .body-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .brand-sidebar-item { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 8px; font-size: 13px; color: #64748b; transition: all .15s; }
+  .brand-sidebar-item:hover { background: #f1f5f9; color: #334155; }
+  .brand-sidebar-item.active { background: #f1f5f9; color: #1e293b; font-weight: 700; }
+
+  .body-section-title { font-size: 14px; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 8px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; }
+  .body-section-title .material-symbols-outlined { font-size: 20px; color: #64748b; }
+  .body-count { font-size: 11px; font-weight: 600; color: #94a3b8; background: #f1f5f9; padding: 2px 8px; border-radius: 10px; }
+</style>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex gap-8">
+
+<!-- Sidebar: Markalar -->
+<aside class="hidden xl:block w-48 shrink-0">
+  <div class="sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto space-y-0.5 pr-2">
+    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Markalar</p>
+    <% allBrands.forEach(b => { %>
+    <a href="/arac/<%= b.slug %>" class="brand-sidebar-item<%= b.slug === brand.slug ? ' active' : '' %>">
+      <span class="w-1.5 h-1.5 rounded-full <%= b.slug === brand.slug ? 'bg-slate-800' : 'bg-slate-300' %>"></span>
+      <%= b.name %>
+    </a>
+    <% }) %>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="flex-1 min-w-0 space-y-6">
+
+<!-- Breadcrumb -->
+<nav class="flex items-center gap-1.5 text-xs text-slate-400">
+  <a href="/" class="hover:text-slate-600">Ana Sayfa</a>
+  <span class="material-symbols-outlined" style="font-size:14px">chevron_right</span>
+  <a href="/arac-secim" class="hover:text-slate-600">Araç Seçim</a>
+  <span class="material-symbols-outlined" style="font-size:14px">chevron_right</span>
+  <span class="text-slate-700 font-medium"><%= brand.name %></span>
+</nav>
+
+<!-- Hero -->
+<section class="brand-hero">
+  <div class="brand-hero-inner">
+    <div class="flex items-center gap-4 mb-2">
+      <% if (brand.logo) { %>
+      <img src="<%= brand.logo %>" alt="<%= brand.name %>" class="h-12 w-auto opacity-70">
+      <% } else { %>
+      <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+        <span class="material-symbols-outlined text-white/60" style="font-size:28px">directions_car</span>
+      </div>
+      <% } %>
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-bold"><%= brand.name %></h1>
+        <p class="text-sm text-white/45 mt-0.5">
+          <% if (country) { %><%= country %> · <% } %>
+          <%= summary.segment %> Segment · <%= models.length %> Model
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
+      <div class="brand-stat">
+        <p class="val"><%= models.length %></p>
+        <p class="lbl">Model</p>
+      </div>
+      <div class="brand-stat">
+        <p class="val"><%= bodyTypeKeys.length %></p>
+        <p class="lbl">Gövde Tipi</p>
+      </div>
+      <div class="brand-stat">
+        <p class="val"><%= formatPrice(summary.priceRange.min) %></p>
+        <p class="lbl">Başlangıç Fiyat</p>
+      </div>
+      <div class="brand-stat">
+        <p class="val"><%= formatPrice(summary.priceRange.max) %></p>
+        <p class="lbl">Üst Fiyat</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gövde Tipi Hızlı Filtre -->
+<div class="flex items-center gap-2 flex-wrap">
+  <span class="text-xs font-semibold text-slate-400 flex items-center gap-1">
+    <span class="material-symbols-outlined" style="font-size:16px">filter_list</span> Gövde Tipi:
+  </span>
+  <button onclick="filterBody('all')" class="body-filter-btn active text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-800 text-white transition-all" data-body="all">
+    Tümü (<%= models.length %>)
+  </button>
+  <% bodyTypeKeys.forEach(bt => { %>
+  <button onclick="filterBody('<%= bt %>')" class="body-filter-btn text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-all" data-body="<%= bt %>">
+    <%= BODY_TYPE_TR[bt] || bt %> (<%= modelsByBody[bt].length %>)
+  </button>
+  <% }) %>
+</div>
+
+<!-- Model Grid — Gövde Tipine Göre -->
+<% bodyTypeKeys.forEach(bt => { %>
+<section class="body-section" data-body-section="<%= bt %>">
+  <div class="body-section-title">
+    <span class="material-symbols-outlined">
+      <%= bt === 'suv' ? 'directions_car' : bt === 'pickup' ? 'local_shipping' : bt === 'minivan' ? 'airport_shuttle' : bt === 'coupe' ? 'sports_score' : bt === 'cabrio' ? 'wb_sunny' : 'directions_car' %>
+    </span>
+    <%= BODY_TYPE_TR[bt] || bt %>
+    <span class="body-count"><%= modelsByBody[bt].length %> model</span>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <% modelsByBody[bt].forEach(m => { %>
+    <a href="/arac/<%= brand.slug %>/<%= m.slug %>" class="model-card group">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="icon-wrap bg-slate-100 group-hover:bg-slate-200 transition-colors">
+          <span class="material-symbols-outlined text-slate-500" style="font-size:24px">directions_car</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="font-bold text-sm text-slate-800 group-hover:text-slate-600 transition-colors truncate"><%= m.name %></p>
+          <p class="text-xs text-slate-400"><%= brand.name %></p>
+        </div>
+        <span class="model-card body-badge bg-slate-100 text-slate-500"><%= BODY_TYPE_TR[bt] || bt %></span>
+      </div>
+      <div class="flex items-center justify-between mt-auto pt-3 border-t border-slate-100">
+        <span class="text-xs text-slate-400 flex items-center gap-1">
+          <span class="material-symbols-outlined" style="font-size:14px">open_in_new</span> Detayları İncele
+        </span>
+        <span class="material-symbols-outlined text-slate-300 group-hover:text-slate-500 transition-colors" style="font-size:18px">arrow_forward</span>
+      </div>
+    </a>
+    <% }) %>
+  </div>
+</section>
+<% }) %>
+
+<!-- Marka Hakkında -->
+<section class="bg-white border border-slate-200 rounded-xl p-6">
+  <h2 class="text-base font-bold text-slate-800 flex items-center gap-2 mb-4">
+    <span class="material-symbols-outlined text-slate-500" style="font-size:20px">info</span>
+    <%= brand.name %> Hakkında
+  </h2>
+  <p class="text-sm text-slate-600 leading-relaxed">
+    <%= brand.name %>, <%= country ? country + " menşeili " : '' %><%= summary.segment.toLowerCase() %> segmentte yer alan bir otomobil markasıdır.
+    Türkiye'de satışa sunulan toplam <strong><%= models.length %></strong> farklı modeli bulunmaktadır.
+    <% if (bodyTypeKeys.length > 1) { %>
+    Ürün gamında
+    <% bodyTypeKeys.forEach((bt, i) => { %>
+      <strong><%= BODY_TYPE_TR[bt] || bt %></strong><%= i < bodyTypeKeys.length - 2 ? ', ' : i === bodyTypeKeys.length - 2 ? ' ve ' : '' %>
+    <% }) %>
+    gövde tiplerinde modeller yer almaktadır.
+    <% } %>
+    Her model için detaylı teknik özellikler, editör yorumları, fiyat bilgileri ve satılık ilanlar hub sayfalarında mevcuttur.
+  </p>
+</section>
+
+</main>
+</div>
+
+<script>
+function filterBody(type) {
+  // Buton aktif durumunu güncelle
+  document.querySelectorAll('.body-filter-btn').forEach(btn => {
+    const isActive = btn.dataset.body === type;
+    btn.classList.toggle('bg-slate-800', isActive);
+    btn.classList.toggle('text-white', isActive);
+    btn.classList.toggle('bg-white', !isActive);
+    btn.classList.toggle('text-slate-600', !isActive);
+    if (isActive) btn.classList.add('active');
+    else btn.classList.remove('active');
+  });
+
+  // Sectionları göster/gizle
+  document.querySelectorAll('.body-section').forEach(sec => {
+    if (type === 'all') {
+      sec.style.display = '';
+    } else {
+      sec.style.display = sec.dataset.bodySection === type ? '' : 'none';
+    }
+  });
+}
+</script>

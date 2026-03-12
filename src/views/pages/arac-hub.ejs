@@ -59,10 +59,12 @@ const selectedBudget = typeof queryBudget !== 'undefined' ? queryBudget : null;
   .hub-service-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.05); }
 </style>
 
-<div class="max-w-7xl mx-auto px-6 py-6 flex gap-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex gap-8">
 <!-- Sidebar -->
 <aside class="hidden lg:block w-52 shrink-0">
-  <div class="sticky top-24 space-y-0.5">
+  <div class="sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto space-y-0.5 pr-2">
+    <!-- Sayfa İçi Navigasyon -->
+    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3.5 mb-1">Sayfada</p>
     <a href="#genel-bakis" class="hub-sidebar-link active"><span class="material-symbols-outlined">dashboard</span> Genel Bakış</a>
     <a href="#teknik" class="hub-sidebar-link"><span class="material-symbols-outlined">build</span> Teknik Özellikler</a>
     <a href="#videolar" class="hub-sidebar-link"><span class="material-symbols-outlined">play_circle</span> Videolar</a>
@@ -72,6 +74,26 @@ const selectedBudget = typeof queryBudget !== 'undefined' ? queryBudget : null;
     <a href="#servisler" class="hub-sidebar-link"><span class="material-symbols-outlined">home_repair_service</span> Servisler</a>
     <a href="#parcalar" class="hub-sidebar-link"><span class="material-symbols-outlined">settings</span> Yedek Parça</a>
     <a href="#belgeler" class="hub-sidebar-link"><span class="material-symbols-outlined">description</span> Belgeler</a>
+
+    <!-- Diğer Modeller -->
+    <% if (typeof otherModels !== 'undefined' && otherModels && otherModels.length > 0) { %>
+    <div class="mt-5 pt-4 border-t border-slate-100">
+      <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3.5 mb-1">
+        <a href="/arac/<%= brand.slug %>" class="hover:text-slate-600"><%= brand.name %> Modelleri</a>
+      </p>
+      <% otherModels.slice(0, 15).forEach(om => { %>
+      <a href="/arac/<%= brand.slug %>/<%= om.slug %>" class="hub-sidebar-link" style="font-size:12px; padding:6px 14px;">
+        <span class="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+        <span class="truncate"><%= om.name %></span>
+      </a>
+      <% }) %>
+      <% if (otherModels.length > 15) { %>
+      <a href="/arac/<%= brand.slug %>" class="hub-sidebar-link" style="font-size:11px; color:#94a3b8; padding:6px 14px;">
+        +<%= otherModels.length - 15 %> model daha →
+      </a>
+      <% } %>
+    </div>
+    <% } %>
   </div>
 </aside>
 
@@ -152,7 +174,7 @@ const selectedBudget = typeof queryBudget !== 'undefined' ? queryBudget : null;
       <div>
         <h1 class="text-2xl font-bold mb-1"><%= brand.name %> <%= model.name %></h1>
         <p class="text-sm text-white/50">
-          <% if (hub) { %><%= hub.engine || '' %><% if (hub.transmission) { %> · <%= hub.transmission %><% } %><% if (hub.hp) { %> · <%= hub.hp %> HP<% } %><% } else { %>Detaylı inceleme, ilanlar ve forum tartışmaları<% } %>
+          <%= hub.engine || '' %><% if (hub.transmission) { %> · <%= hub.transmission %><% } %><% if (hub.hp) { %> · <%= hub.hp %> HP<% } %>
         </p>
       </div>
       <% if (hub && hub.avg_price) { %>
@@ -168,19 +190,16 @@ const selectedBudget = typeof queryBudget !== 'undefined' ? queryBudget : null;
       <% } %>
     </div>
 
-    <% if (hub) { %>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
       <div class="hub-spec-pill"><p class="label">Yakıt</p><p class="value"><%= hub.fuel_type || selectedFuel || '—' %></p></div>
       <div class="hub-spec-pill"><p class="label">Motor</p><p class="value"><%= hub.engine ? hub.engine.split(' ').slice(0,2).join(' ') : '—' %></p></div>
       <div class="hub-spec-pill"><p class="label">Vites</p><p class="value"><%= hub.transmission || '—' %></p></div>
       <div class="hub-spec-pill"><p class="label">Tüketim</p><p class="value"><%= hub.fuel_consumption || '—' %></p></div>
     </div>
-    <% } %>
   </div>
 </section>
 
 <!-- Teknik Özellikler -->
-<% if (hub) { %>
 <section id="teknik" class="hub-section">
   <h2 class="hub-section-title"><span class="material-symbols-outlined">build</span> Teknik Özellikler</h2>
   <div class="grid md:grid-cols-2 gap-8">
@@ -206,7 +225,6 @@ const selectedBudget = typeof queryBudget !== 'undefined' ? queryBudget : null;
     </div>
   </div>
 </section>
-<% } %>
 
 <!-- Video İncelemeleri -->
 <section id="videolar" class="hub-section">
@@ -232,7 +250,7 @@ const selectedBudget = typeof queryBudget !== 'undefined' ? queryBudget : null;
 </section>
 
 <!-- Editör Değerlendirmesi -->
-<% if (hub && hub.editor_rating) { %>
+<% if (hub.editor_rating) { %>
 <section id="editor" class="hub-section">
   <h2 class="hub-section-title"><span class="material-symbols-outlined">rate_review</span> Editör Değerlendirmesi</h2>
   <div class="flex items-center gap-4 mb-5">
