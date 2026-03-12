@@ -124,6 +124,66 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
 </section>
 
 
+<!-- ═══════════════════════ AKILLI ARAMA ═══════════════════════ -->
+<section class="relative overflow-hidden border-b border-slate-100">
+  <div class="absolute inset-0 bg-gradient-to-r from-indigo-950 via-slate-900 to-violet-950"></div>
+  <div class="absolute inset-0 opacity-30" style="background-image:radial-gradient(circle at 15% 50%,rgba(99,102,241,.5) 0,transparent 50%),radial-gradient(circle at 85% 30%,rgba(59,130,246,.4) 0,transparent 50%);"></div>
+  <div class="absolute top-3 left-10 size-2 rounded-full bg-blue-400/20 animate-pulse hidden sm:block"></div>
+  <div class="absolute bottom-3 right-16 size-2 rounded-full bg-purple-400/20 animate-pulse hidden sm:block" style="animation-delay:.7s"></div>
+  <div class="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 py-4 sm:py-5">
+
+    <!-- Mobil -->
+    <a href="/akilli-oneri" class="sm:hidden flex items-center gap-3 group">
+      <div class="size-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/25">
+        <span class="material-symbols-outlined text-white" style="font-size:20px">auto_awesome</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-1.5 mb-0.5">
+          <p class="text-white text-sm font-bold">Akıllı Araç Asistanı</p>
+          <span class="bg-gradient-to-r from-blue-500/30 to-purple-500/30 text-[8px] font-bold text-blue-300 px-1.5 py-0.5 rounded-full border border-white/10">AI</span>
+        </div>
+        <p class="text-white/40 text-[11px]">Birkaç soruya cevap ver, sana en uygun aracı bulalım</p>
+      </div>
+      <div class="size-8 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0 group-active:bg-white/20 transition-all">
+        <span class="material-symbols-outlined text-white" style="font-size:18px">arrow_forward</span>
+      </div>
+    </a>
+
+    <!-- Desktop -->
+    <div class="hidden sm:flex items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <div class="size-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/25">
+          <span class="material-symbols-outlined text-white" style="font-size:24px">auto_awesome</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-0.5">
+            <h3 class="text-white text-base font-bold">Akıllı Araç Asistanı</h3>
+            <span class="bg-gradient-to-r from-blue-500/30 to-purple-500/30 text-[9px] font-bold text-blue-300 px-2 py-0.5 rounded-full border border-white/10">AI Destekli</span>
+          </div>
+          <p class="text-white/45 text-sm">Kullanım amacın, bütçen ve tercihlerin doğrultusunda sana özel araç önerileri al</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <div class="hidden lg:flex items-center gap-2">
+          <% [['psychology','Analiz'],['tune','Filtre'],['recommend','Eşleşme']].forEach(([icon,text]) => { %>
+          <div class="flex items-center gap-1.5 bg-white/[0.06] border border-white/[0.08] rounded-lg px-2.5 py-1.5">
+            <span class="material-symbols-outlined text-blue-400/70" style="font-size:14px"><%= icon %></span>
+            <span class="text-white/50 text-[10px] font-semibold"><%= text %></span>
+          </div>
+          <% }) %>
+        </div>
+        <a href="/akilli-oneri" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-2.5 px-5 rounded-xl text-sm transition-all shadow-lg shadow-purple-500/25 group">
+          <span class="material-symbols-outlined group-hover:rotate-12 transition-transform" style="font-size:16px">auto_awesome</span>
+          Başlat
+          <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
 <!-- ═══════════════════════ MARKALAR ═══════════════════════ -->
 <section class="bg-slate-50 border-b border-slate-100 py-4 sm:py-5">
   <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
@@ -181,66 +241,6 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
       <div class="text-center mt-2.5">
         <a href="/arac-secim" class="inline-flex items-center gap-1 text-primary text-xs font-bold hover:underline">
           Tüm markalar <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
-        </a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- ═══════════════════════ AKILLI ARAMA ═══════════════════════ -->
-<section class="relative overflow-hidden border-b border-slate-100">
-  <div class="absolute inset-0 bg-gradient-to-r from-indigo-950 via-slate-900 to-violet-950"></div>
-  <div class="absolute inset-0 opacity-30" style="background-image:radial-gradient(circle at 15% 50%,rgba(99,102,241,.5) 0,transparent 50%),radial-gradient(circle at 85% 30%,rgba(59,130,246,.4) 0,transparent 50%);"></div>
-  <div class="absolute top-3 left-10 size-2 rounded-full bg-blue-400/20 animate-pulse hidden sm:block"></div>
-  <div class="absolute bottom-3 right-16 size-2 rounded-full bg-purple-400/20 animate-pulse hidden sm:block" style="animation-delay:.7s"></div>
-  <div class="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 py-4 sm:py-5">
-
-    <!-- Mobil -->
-    <a href="/akilli-oneri" class="sm:hidden flex items-center gap-3 group">
-      <div class="size-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/25">
-        <span class="material-symbols-outlined text-white" style="font-size:20px">auto_awesome</span>
-      </div>
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center gap-1.5 mb-0.5">
-          <p class="text-white text-sm font-bold">Akıllı Araç Asistanı</p>
-          <span class="bg-gradient-to-r from-blue-500/30 to-purple-500/30 text-[8px] font-bold text-blue-300 px-1.5 py-0.5 rounded-full border border-white/10">AI</span>
-        </div>
-        <p class="text-white/40 text-[11px]">Birkaç soruya cevap ver, sana en uygun aracı bulalım</p>
-      </div>
-      <div class="size-8 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0 group-active:bg-white/20 transition-all">
-        <span class="material-symbols-outlined text-white" style="font-size:18px">arrow_forward</span>
-      </div>
-    </a>
-
-    <!-- Desktop -->
-    <div class="hidden sm:flex items-center justify-between gap-6">
-      <div class="flex items-center gap-4">
-        <div class="size-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/25">
-          <span class="material-symbols-outlined text-white" style="font-size:24px">auto_awesome</span>
-        </div>
-        <div>
-          <div class="flex items-center gap-2 mb-0.5">
-            <h3 class="text-white text-base font-bold">Akıllı Araç Asistanı</h3>
-            <span class="bg-gradient-to-r from-blue-500/30 to-purple-500/30 text-[9px] font-bold text-blue-300 px-2 py-0.5 rounded-full border border-white/10">AI Destekli</span>
-          </div>
-          <p class="text-white/45 text-sm">Kullanım amacın, bütçen ve tercihlerin doğrultusunda sana özel araç önerileri al</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-3 flex-shrink-0">
-        <div class="hidden lg:flex items-center gap-2">
-          <% [['psychology','Analiz'],['tune','Filtre'],['recommend','Eşleşme']].forEach(([icon,text]) => { %>
-          <div class="flex items-center gap-1.5 bg-white/[0.06] border border-white/[0.08] rounded-lg px-2.5 py-1.5">
-            <span class="material-symbols-outlined text-blue-400/70" style="font-size:14px"><%= icon %></span>
-            <span class="text-white/50 text-[10px] font-semibold"><%= text %></span>
-          </div>
-          <% }) %>
-        </div>
-        <a href="/akilli-oneri" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-2.5 px-5 rounded-xl text-sm transition-all shadow-lg shadow-purple-500/25 group">
-          <span class="material-symbols-outlined group-hover:rotate-12 transition-transform" style="font-size:16px">auto_awesome</span>
-          Başlat
-          <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span>
         </a>
       </div>
     </div>
