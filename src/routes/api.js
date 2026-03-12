@@ -1348,6 +1348,42 @@ router.patch('/admin/moderation/:id', adminOnly, async (req, res) => {
   res.json({ success: true, status });
 });
 
+// Admin: Toplu moderasyon aksiyonu
+router.post('/admin/moderation/bulk', adminOnly, async (req, res) => {
+  const db = getDb();
+  const { ids, status } = req.body;
+  if (!ids || !Array.isArray(ids) || ids.length === 0) return res.status(400).json({ error: 'Geçersiz istek' });
+  if (!['approved', 'rejected'].includes(status)) return res.status(400).json({ error: 'Geçersiz durum' });
+
+  let count = 0;
+  for (const id of ids) {
+    const item = await db.prepare('SELECT * FROM moderation_queue WHERE id = ? AND status = ?').get(id, 'pending');
+    if (!item) continue;
+    await db.prepare('UPDATE moderation_queue SET status = ?, reviewed_by = ? WHERE id = ?')
+      .run(status, req.session.user.id, id);
+    if (status === 'rejected') {
+      if (item.type === 'listing') await db.prepare("UPDATE listings SET status = 'rejected' WHERE id = ?").run(item.item_id);
+      if (item.type === 'forum_topic') await db.prepare('DELETE FROM forum_topics WHERE id = ?').run(item.item_id);
+      if (item.type === 'forum_reply') await db.prepare('DELETE FROM forum_replies WHERE id = ?').run(item.item_id);
+      if (item.type === 'review') await db.prepare('DELETE FROM reviews WHERE id = ?').run(item.item_id);
+    }
+    count++;
+  }
+  res.json({ success: true, message: `${count} öğe güncellendi` });
+});
+
+// Admin: Randevu durumu değiştir
+router.patch('/admin/appointments/:id', adminOnly, async (req, res) => {
+  const db = getDb();
+  const { status } = req.body;
+  if (!['confirmed', 'cancelled', 'completed'].includes(status)) return res.status(400).json({ error: 'Geçersiz durum' });
+  const appt = await db.prepare('SELECT * FROM appointments WHERE id = ?').get(req.params.id);
+  if (!appt) return res.status(404).json({ error: 'Randevu bulunamadı' });
+  await db.prepare('UPDATE appointments SET status = ? WHERE id = ?').run(status, req.params.id);
+  const labels = { confirmed: 'onaylandı', cancelled: 'iptal edildi', completed: 'tamamlandı' };
+  res.json({ success: true, message: `Randevu ${labels[status]}` });
+});
+
 // Admin: Forum konu yönetimi (sabitle/kilitle)
 router.patch('/admin/forum/topics/:id', adminOnly, async (req, res) => {
   const db = getDb();
@@ -1445,12 +1481,12 @@ router.get('/admin/hubs', adminOnly, async (req, res) => {
 // Admin: Hub oluştur
 router.post('/admin/hubs', adminOnly, async (req, res) => {
   const db = getDb();
-  const { brand_id, model_id, year, avg_price, fuel_type, engine, hp, torque, transmission, acceleration, top_speed, fuel_consumption, length, width, height, wheelbase, weight, editor_rating, editor_review, pros, cons } = req.body;
+  const { brand_id, model_id, year, avg_price, fuel_type, engine, hp, torque, transmission, acceleration, top_speed, fuel_consumption, length, width, height, wheelbase, weight, editor_rating, editor_review, pros, cons, image_url } = req.body;
   if (!brand_id || !model_id) return res.status(400).json({ error: 'Marka ve model zorunlu' });
   const existing = await db.prepare('SELECT id FROM vehicle_hubs WHERE brand_id = ? AND model_id = ?').get(brand_id, model_id);
   if (existing) return res.status(400).json({ error: 'Bu marka/model için zaten hub var' });
-  const result = await db.prepare(`INSERT INTO vehicle_hubs (brand_id, model_id, year, avg_price, fuel_type, engine, hp, torque, transmission, acceleration, top_speed, fuel_consumption, length, width, height, wheelbase, weight, editor_rating, editor_review, pros, cons) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
-    .run(brand_id, model_id, year || null, avg_price || null, fuel_type || null, engine || null, hp || null, torque || null, transmission || null, acceleration || null, top_speed || null, fuel_consumption || null, length || null, width || null, height || null, wheelbase || null, weight || null, editor_rating || null, editor_review || null, pros || null, cons || null);
+  const result = await db.prepare(`INSERT INTO vehicle_hubs (brand_id, model_id, year, avg_price, fuel_type, engine, hp, torque, transmission, acceleration, top_speed, fuel_consumption, length, width, height, wheelbase, weight, editor_rating, editor_review, pros, cons, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+    .run(brand_id, model_id, year || null, avg_price || null, fuel_type || null, engine || null, hp || null, torque || null, transmission || null, acceleration || null, top_speed || null, fuel_consumption || null, length || null, width || null, height || null, wheelbase || null, weight || null, editor_rating || null, editor_review || null, pros || null, cons || null, image_url || null);
   res.json({ success: true, id: result.lastInsertRowid });
 });
 
@@ -1459,9 +1495,9 @@ router.put('/admin/hubs/:id', adminOnly, async (req, res) => {
   const db = getDb();
   const hub = await db.prepare('SELECT id FROM vehicle_hubs WHERE id = ?').get(req.params.id);
   if (!hub) return res.status(404).json({ error: 'Hub bulunamadı' });
-  const { year, avg_price, fuel_type, engine, hp, torque, transmission, acceleration, top_speed, fuel_consumption, length, width, height, wheelbase, weight, editor_rating, editor_review, pros, cons } = req.body;
-  await db.prepare(`UPDATE vehicle_hubs SET year=?, avg_price=?, fuel_type=?, engine=?, hp=?, torque=?, transmission=?, acceleration=?, top_speed=?, fuel_consumption=?, length=?, width=?, height=?, wheelbase=?, weight=?, editor_rating=?, editor_review=?, pros=?, cons=? WHERE id=?`)
-    .run(year||null, avg_price||null, fuel_type||null, engine||null, hp||null, torque||null, transmission||null, acceleration||null, top_speed||null, fuel_consumption||null, length||null, width||null, height||null, wheelbase||null, weight||null, editor_rating||null, editor_review||null, pros||null, cons||null, req.params.id);
+  const { year, avg_price, fuel_type, engine, hp, torque, transmission, acceleration, top_speed, fuel_consumption, length, width, height, wheelbase, weight, editor_rating, editor_review, pros, cons, image_url } = req.body;
+  await db.prepare(`UPDATE vehicle_hubs SET year=?, avg_price=?, fuel_type=?, engine=?, hp=?, torque=?, transmission=?, acceleration=?, top_speed=?, fuel_consumption=?, length=?, width=?, height=?, wheelbase=?, weight=?, editor_rating=?, editor_review=?, pros=?, cons=?, image_url=? WHERE id=?`)
+    .run(year||null, avg_price||null, fuel_type||null, engine||null, hp||null, torque||null, transmission||null, acceleration||null, top_speed||null, fuel_consumption||null, length||null, width||null, height||null, wheelbase||null, weight||null, editor_rating||null, editor_review||null, pros||null, cons||null, image_url||null, req.params.id);
   res.json({ success: true });
 });
 

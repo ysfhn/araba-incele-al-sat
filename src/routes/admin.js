@@ -54,24 +54,42 @@ router.get('/panel', isAdmin, async (req, res) => {
 // Admin: Kullanıcı Yönetimi - GET /admin/kullanicilar
 router.get('/kullanicilar', isAdmin, async (req, res) => {
   const db = getDb();
-  const { sayfa, arama, rol } = req.query;
+  const { sayfa, arama, rol, onay } = req.query;
   let where = 'WHERE 1=1';
   const params = [];
-  if (arama) { where += ' AND (name LIKE ? OR email LIKE ?)'; params.push(`%${arama}%`, `%${arama}%`); }
-  if (rol) { where += ' AND role = ?'; params.push(rol); }
+  if (arama) { where += ' AND (u.name LIKE ? OR u.email LIKE ?)'; params.push(`%${arama}%`, `%${arama}%`); }
+  if (rol) { where += ' AND u.role = ?'; params.push(rol); }
+  if (onay === '1') { where += ' AND u.is_verified = 1'; }
+  else if (onay === '0') { where += ' AND (u.is_verified = 0 OR u.is_verified IS NULL)'; }
 
   const page = Math.max(1, Number(sayfa) || 1);
   const limit = 20;
   const offset = (page - 1) * limit;
 
-  const totalCount = (await db.prepare(`SELECT COUNT(*) as c FROM users ${where}`).get(...params)).c;
-  const users = await db.prepare(`SELECT id, name, email, phone, role, is_verified, avatar, created_at FROM users ${where} ORDER BY created_at DESC LIMIT ? OFFSET ?`)
-    .all(...params, limit, offset);
+  const totalCount = (await db.prepare(`SELECT COUNT(*) as c FROM users u ${where}`).get(...params)).c;
+  const users = await db.prepare(`
+    SELECT u.id, u.name, u.email, u.phone, u.role, u.is_verified, u.avatar, u.created_at,
+      (SELECT COUNT(*) FROM listings WHERE user_id = u.id) as listing_count,
+      (SELECT COUNT(*) FROM forum_topics WHERE user_id = u.id) as topic_count,
+      CASE WHEN u.avatar IS NOT NULL AND u.phone IS NOT NULL AND u.email IS NOT NULL THEN 100
+           WHEN u.phone IS NOT NULL AND u.email IS NOT NULL THEN 75
+           WHEN u.email IS NOT NULL THEN 50
+           ELSE 25 END as profile_completion
+    FROM users u ${where} ORDER BY u.created_at DESC LIMIT ? OFFSET ?
+  `).all(...params, limit, offset);
+
+  const allCount = (await db.prepare('SELECT COUNT(*) as c FROM users').get()).c;
+  const unverifiedCount = (await db.prepare('SELECT COUNT(*) as c FROM users WHERE is_verified = 0 OR is_verified IS NULL').get()).c;
+  const roleMap = {
+    bireysel: (await db.prepare("SELECT COUNT(*) as c FROM users WHERE role='bireysel'").get()).c,
+    kurumsal: (await db.prepare("SELECT COUNT(*) as c FROM users WHERE role='kurumsal'").get()).c,
+    admin: (await db.prepare("SELECT COUNT(*) as c FROM users WHERE role='admin'").get()).c,
+  };
 
   res.render('pages/admin-paneli', {
     title: 'Kullanıcı Yönetimi - Admin - Araba İncele Al Sat',
     stats: { totalUsers: totalCount }, recentActivity: [], moderationQueue: [],
-    adminPage: 'kullanicilar', adminData: { users, totalCount, page, totalPages: Math.ceil(totalCount / limit), filters: req.query }
+    adminPage: 'kullanicilar', adminData: { users, totalCount, allCount, unverifiedCount, roleMap, page, totalPages: Math.ceil(totalCount / limit), filters: req.query }
   });
 });
 
@@ -89,6 +107,7 @@ router.get('/ilanlar', isAdmin, async (req, res) => {
   const offset = (page - 1) * limit;
 
   const totalCount = (await db.prepare(`SELECT COUNT(*) as c FROM listings l JOIN brands b ON l.brand_id = b.id ${where}`).get(...params)).c;
+  const pendingCount = (await db.prepare("SELECT COUNT(*) as c FROM listings WHERE status='pending'").get()).c;
   const listings = await db.prepare(`
     SELECT l.*, b.name as brand_name, m.name as model_name, u.name as seller_name, u.email as seller_email
     FROM listings l JOIN brands b ON l.brand_id = b.id JOIN models m ON l.model_id = m.id JOIN users u ON l.user_id = u.id
@@ -98,24 +117,29 @@ router.get('/ilanlar', isAdmin, async (req, res) => {
   res.render('pages/admin-paneli', {
     title: 'İlan Yönetimi - Admin - Araba İncele Al Sat',
     stats: { activeListings: totalCount }, recentActivity: [], moderationQueue: [],
-    adminPage: 'ilanlar', adminData: { listings, totalCount, page, totalPages: Math.ceil(totalCount / limit), filters: req.query }
+    adminPage: 'ilanlar', adminData: { listings, totalCount, pendingCount, page, totalPages: Math.ceil(totalCount / limit), filters: req.query }
   });
 });
 
 // Admin: İşletme Yönetimi - GET /admin/isletmeler
 router.get('/isletmeler', isAdmin, async (req, res) => {
   const db = getDb();
-  const { sayfa, arama, tur } = req.query;
+  const { sayfa, arama, tur, durum } = req.query;
   let where = 'WHERE 1=1';
   const params = [];
   if (arama) { where += ' AND (b.name LIKE ? OR u.name LIKE ?)'; params.push(`%${arama}%`, `%${arama}%`); }
   if (tur) { where += ' AND b.type = ?'; params.push(tur); }
+  if (durum === 'pending') { where += ' AND (b.is_verified = 0 OR b.is_verified IS NULL)'; }
+  else if (durum === 'verified') { where += ' AND b.is_verified = 1'; }
 
   const page = Math.max(1, Number(sayfa) || 1);
   const limit = 20;
   const offset = (page - 1) * limit;
 
   const totalCount = (await db.prepare(`SELECT COUNT(*) as c FROM businesses b JOIN users u ON b.user_id = u.id ${where}`).get(...params)).c;
+  const allBusinessCount = (await db.prepare('SELECT COUNT(*) as c FROM businesses').get()).c;
+  const pendingBusinessCount = (await db.prepare('SELECT COUNT(*) as c FROM businesses WHERE is_verified = 0 OR is_verified IS NULL').get()).c;
+  const verifiedBusinessCount = (await db.prepare('SELECT COUNT(*) as c FROM businesses WHERE is_verified = 1').get()).c;
   const businesses = await db.prepare(`
     SELECT b.*, u.name as owner_name, u.email as owner_email
     FROM businesses b JOIN users u ON b.user_id = u.id ${where} ORDER BY b.created_at DESC LIMIT ? OFFSET ?
@@ -124,7 +148,7 @@ router.get('/isletmeler', isAdmin, async (req, res) => {
   res.render('pages/admin-paneli', {
     title: 'İşletme Yönetimi - Admin - Araba İncele Al Sat',
     stats: { businesses: totalCount }, recentActivity: [], moderationQueue: [],
-    adminPage: 'isletmeler', adminData: { businesses, totalCount, page, totalPages: Math.ceil(totalCount / limit), filters: req.query }
+    adminPage: 'isletmeler', adminData: { businesses, totalCount, allBusinessCount, pendingBusinessCount, verifiedBusinessCount, page, totalPages: Math.ceil(totalCount / limit), filters: req.query }
   });
 });
 
@@ -198,10 +222,12 @@ router.get('/teklifler', isAdmin, async (req, res) => {
 // Admin: Değerlendirme Yönetimi - GET /admin/degerlendirmeler
 router.get('/degerlendirmeler', isAdmin, async (req, res) => {
   const db = getDb();
-  const { sayfa, arama } = req.query;
+  const { sayfa, arama, puan, isletme } = req.query;
   let where = 'WHERE 1=1';
   const params = [];
   if (arama) { where += ' AND (b.name LIKE ? OR u.name LIKE ? OR r.comment LIKE ?)'; params.push(`%${arama}%`, `%${arama}%`, `%${arama}%`); }
+  if (puan) { where += ' AND r.rating = ?'; params.push(Number(puan)); }
+  if (isletme) { where += ' AND r.business_id = ?'; params.push(Number(isletme)); }
 
   const page = Math.max(1, Number(sayfa) || 1);
   const limit = 20;
@@ -220,16 +246,22 @@ router.get('/degerlendirmeler', isAdmin, async (req, res) => {
     ratingDist[i] = (await db.prepare('SELECT COUNT(*) as c FROM reviews WHERE rating = ?').get(i)).c;
   }
 
+  const businessList = await db.prepare('SELECT b.id, b.name, b.review_count FROM businesses b WHERE b.review_count > 0 ORDER BY b.name ASC').all();
+
   res.render('pages/admin-paneli', {
     title: 'Değerlendirme Yönetimi - Admin - Araba İncele Al Sat',
     stats: { totalReviews: totalCount }, recentActivity: [], moderationQueue: [],
-    adminPage: 'degerlendirmeler', adminData: { reviews, totalCount, page, totalPages: Math.ceil(totalCount / limit), filters: req.query, avgRating: avgRating.toFixed(1), ratingDist }
+    adminPage: 'degerlendirmeler', adminData: { reviews, totalCount, businessList, page, totalPages: Math.ceil(totalCount / limit), filters: req.query, avgRating: avgRating.toFixed(1), ratingDist }
   });
 });
 
 // Admin: Forum Yönetimi - GET /admin/forum
 router.get('/forum', isAdmin, async (req, res) => {
   const db = getDb();
+  const categories = await db.prepare(`
+    SELECT fc.*, (SELECT COUNT(*) FROM forum_topics WHERE category_id = fc.id) as topic_count
+    FROM forum_categories fc ORDER BY fc.sort_order ASC, fc.name ASC
+  `).all();
   const topics = await db.prepare(`
     SELECT ft.*, u.name as author_name, fc.name as category_name
     FROM forum_topics ft JOIN users u ON ft.user_id = u.id JOIN forum_categories fc ON ft.category_id = fc.id
@@ -239,13 +271,19 @@ router.get('/forum', isAdmin, async (req, res) => {
   res.render('pages/admin-paneli', {
     title: 'Forum Yönetimi - Admin - Araba İncele Al Sat',
     stats: { forumTopics: topics.length }, recentActivity: [], moderationQueue: [],
-    adminPage: 'forum', adminData: { topics }
+    adminPage: 'forum', adminData: { topics, categories }
   });
 });
 
 // Admin: Moderasyon - GET /admin/moderasyon
 router.get('/moderasyon', isAdmin, async (req, res) => {
   const db = getDb();
+  const { durum, tur } = req.query;
+  let where = 'WHERE 1=1';
+  const params = [];
+  if (durum) { where += ' AND mq.status = ?'; params.push(durum); }
+  if (tur) { where += ' AND mq.type = ?'; params.push(tur); }
+
   const queue = await db.prepare(`
     SELECT mq.*,
       CASE 
@@ -256,15 +294,40 @@ router.get('/moderasyon', isAdmin, async (req, res) => {
         WHEN mq.type = 'review' THEN (SELECT SUBSTR(comment, 1, 100) FROM reviews WHERE id = mq.item_id)
         ELSE 'İçerik #' || mq.item_id
       END as item_detail,
-      u.name as reported_by_name
-    FROM moderation_queue mq LEFT JOIN users u ON mq.reported_by = u.id
-    ORDER BY mq.status ASC, mq.created_at DESC
-  `).all();
+      CASE 
+        WHEN mq.type = 'listing' THEN '/ilan/' || (SELECT slug FROM listings WHERE id = mq.item_id)
+        WHEN mq.type = 'business' THEN '/servis/' || (SELECT slug FROM businesses WHERE id = mq.item_id)
+        WHEN mq.type = 'forum_topic' THEN '/forum/konu/' || (SELECT slug FROM forum_topics WHERE id = mq.item_id)
+        WHEN mq.type = 'forum_reply' THEN '/forum/konu/' || (SELECT ft.slug FROM forum_replies fr JOIN forum_topics ft ON fr.topic_id = ft.id WHERE fr.id = mq.item_id)
+        ELSE '#'
+      END as item_link,
+      u.name as reported_by_name,
+      u.email as reported_by_email,
+      ru.name as reviewed_by_name
+    FROM moderation_queue mq
+    LEFT JOIN users u ON mq.reported_by = u.id
+    LEFT JOIN users ru ON mq.reviewed_by = ru.id
+    ${where}
+    ORDER BY CASE mq.status WHEN 'pending' THEN 0 WHEN 'approved' THEN 1 ELSE 2 END ASC, mq.created_at DESC
+  `).all(...params);
+
+  // Durum sayaçları (filtresiz)
+  const statusCounts = {
+    all: (await db.prepare('SELECT COUNT(*) as c FROM moderation_queue').get()).c,
+    pending: (await db.prepare("SELECT COUNT(*) as c FROM moderation_queue WHERE status='pending'").get()).c,
+    approved: (await db.prepare("SELECT COUNT(*) as c FROM moderation_queue WHERE status='approved'").get()).c,
+    rejected: (await db.prepare("SELECT COUNT(*) as c FROM moderation_queue WHERE status='rejected'").get()).c,
+  };
+
+  // Tür sayaçları
+  const typeCountsRaw = await db.prepare("SELECT type, COUNT(*) as c FROM moderation_queue WHERE status='pending' GROUP BY type").all();
+  const typeCounts = { listing: 0, forum_topic: 0, forum_reply: 0, review: 0, business: 0 };
+  typeCountsRaw.forEach(r => { typeCounts[r.type] = r.c; });
 
   res.render('pages/admin-paneli', {
     title: 'Moderasyon - Admin - Araba İncele Al Sat',
-    stats: { pendingModeration: queue.filter(q => q.status === 'pending').length }, recentActivity: [], moderationQueue: queue,
-    adminPage: 'moderasyon', adminData: { queue }
+    stats: { pendingModeration: statusCounts.pending }, recentActivity: [], moderationQueue: queue,
+    adminPage: 'moderasyon', adminData: { queue, statusCounts, typeCounts, filters: req.query }
   });
 });
 
@@ -280,32 +343,19 @@ router.get('/hublar', isAdmin, async (req, res) => {
     ORDER BY b.name ASC, m.name ASC
   `).all();
 
-  // Hubları markaya göre grupla
+  // Hubları markaya göre grupla (brand_id -> hub dizisi)
   const hubsByBrand = {};
   hubs.forEach(hub => {
     if (!hubsByBrand[hub.brand_id]) {
-      hubsByBrand[hub.brand_id] = {
-        brand_id: hub.brand_id,
-        brand_name: hub.brand_name,
-        brand_slug: hub.brand_slug,
-        brand_logo: hub.brand_logo,
-        hubs: []
-      };
+      hubsByBrand[hub.brand_id] = [];
     }
-    hubsByBrand[hub.brand_id].hubs.push(hub);
+    hubsByBrand[hub.brand_id].push(hub);
   });
 
   const brands = await db.prepare('SELECT * FROM brands ORDER BY name ASC').all();
   const models = await db.prepare('SELECT * FROM models ORDER BY name ASC').all();
 
-  // Hub sayısı olan markalar
-  const brandsWithHubs = await db.prepare(`
-    SELECT b.id, b.name, b.slug, b.logo,
-      (SELECT COUNT(*) FROM vehicle_hubs WHERE brand_id = b.id) as hub_count
-    FROM brands b
-    WHERE (SELECT COUNT(*) FROM vehicle_hubs WHERE brand_id = b.id) > 0
-    ORDER BY b.name ASC
-  `).all();
+  const brandsWithHubs = Object.keys(hubsByBrand).length;
 
   res.render('pages/admin-paneli', {
     title: 'Araç Hub Yönetimi - Admin - Araba İncele Al Sat',
@@ -320,19 +370,28 @@ router.get('/markalar', isAdmin, async (req, res) => {
   const brands = await db.prepare(`
     SELECT b.*, 
       (SELECT COUNT(*) FROM models WHERE brand_id = b.id) as model_count,
-      (SELECT COUNT(*) FROM listings WHERE brand_id = b.id) as listing_count
+      (SELECT COUNT(*) FROM listings WHERE brand_id = b.id) as listing_count,
+      (SELECT COUNT(*) FROM vehicle_hubs WHERE brand_id = b.id) as hub_count
     FROM brands b ORDER BY b.name ASC
   `).all();
   const models = await db.prepare(`
     SELECT m.*, b.name as brand_name,
-      (SELECT COUNT(*) FROM listings WHERE model_id = m.id) as listing_count
+      (SELECT COUNT(*) FROM listings WHERE model_id = m.id) as listing_count,
+      (SELECT COUNT(*) FROM vehicle_hubs WHERE model_id = m.id) as hub_count
     FROM models m JOIN brands b ON m.brand_id = b.id ORDER BY b.name ASC, m.name ASC
   `).all();
+
+  // Modelleri markaya göre grupla
+  const modelsByBrand = {};
+  models.forEach(m => {
+    if (!modelsByBrand[m.brand_id]) modelsByBrand[m.brand_id] = [];
+    modelsByBrand[m.brand_id].push(m);
+  });
 
   res.render('pages/admin-paneli', {
     title: 'Marka/Model Yönetimi - Admin - Araba İncele Al Sat',
     stats: { brands: brands.length, models: models.length }, recentActivity: [], moderationQueue: [],
-    adminPage: 'markalar', adminData: { brands, models }
+    adminPage: 'markalar', adminData: { brands, models, modelsByBrand }
   });
 });
 
