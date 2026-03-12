@@ -1,33 +1,33 @@
 <style>
 .wiz-header { background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
-.wiz-progress-step { display:flex; align-items:center; gap:8px; }
+.wiz-progress-step { display:flex; align-items:center; gap:6px; }
 .wiz-progress-num {
-  width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-  font-size:13px; font-weight:700; transition:all .3s;
+  width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:700; transition:all .3s;
 }
 .wiz-progress-num.pending { background:#f1f5f9; color:#94a3b8; }
 .wiz-progress-num.active { background:#1e293b; color:white; }
 .wiz-progress-num.done { background:#22c55e; color:white; }
-.wiz-progress-line { width:40px; height:2px; border-radius:2px; transition:background .3s; }
+.wiz-progress-line { width:20px; height:2px; border-radius:2px; transition:background .3s; }
 .wiz-card { background:white; border:1px solid #e2e8f0; border-radius:16px; }
 .wiz-back-btn {
   display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:600;
   color:#64748b; padding:8px 14px; border-radius:10px; transition:all .15s; border:1px solid #e2e8f0;
 }
 .wiz-back-btn:hover { background:#f1f5f9; color:#334155; }
-.wiz-type-btn {
+.wiz-option-btn {
   display:flex; flex-direction:column; align-items:center; gap:8px;
-  padding:20px 12px; border-radius:14px; border:2px solid #e2e8f0;
+  padding:18px 12px; border-radius:14px; border:2px solid #e2e8f0;
   background:white; transition:all .2s; cursor:pointer; text-align:center;
 }
-.wiz-type-btn:hover { border-color:#94a3b8; background:#f8fafc; }
-.wiz-type-btn.selected { border-color:#1e293b; background:#f8fafc; box-shadow:0 0 0 1px #1e293b; }
-.wiz-type-btn .wiz-type-icon {
-  width:48px; height:48px; border-radius:12px; background:#f1f5f9;
-  display:flex; align-items:center; justify-content:center; transition:all .2s;
+.wiz-option-btn:hover { border-color:#94a3b8; background:#f8fafc; }
+.wiz-option-btn.selected { border-color:#1e293b; background:#f8fafc; box-shadow:0 0 0 1px #1e293b; }
+.wiz-option-btn[disabled] { cursor:not-allowed; opacity:.35; pointer-events:none; }
+.wiz-opt-icon {
+  width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; transition:all .2s;
 }
-.wiz-type-btn:hover .wiz-type-icon { background:#e2e8f0; }
-.wiz-type-btn.selected .wiz-type-icon { background:#1e293b; color:white; }
+.wiz-option-btn:hover .wiz-opt-icon { background:#e2e8f0; }
+.wiz-option-btn.selected .wiz-opt-icon { background:#1e293b; color:white; }
 .wiz-brand-btn {
   display:flex; flex-direction:column; align-items:center; gap:6px;
   padding:16px 8px; border-radius:12px; border:2px solid transparent;
@@ -48,16 +48,19 @@
 }
 .wiz-year-btn:hover { border-color:#94a3b8; }
 .wiz-year-btn.selected { border-color:#1e293b; background:#1e293b; color:white; }
-.wiz-fuel-btn {
-  display:flex; flex-direction:column; align-items:center; gap:8px;
-  padding:20px 12px; border-radius:14px; border:2px solid #e2e8f0;
-  background:white; transition:all .2s; cursor:pointer; text-align:center;
+.wiz-engine-btn {
+  padding:16px; border-radius:12px; border:2px solid #e2e8f0;
+  background:white; transition:all .2s; cursor:pointer; text-align:left;
 }
-.wiz-fuel-btn:hover { border-color:#94a3b8; }
-.wiz-fuel-btn[disabled] { cursor:not-allowed; border-color:#f1f5f9; }
-.wiz-fuel-btn[disabled]:hover { border-color:#f1f5f9; background:white; }
-.wiz-fuel-btn.selected { border-color:#1e293b; background:#f8fafc; box-shadow:0 0 0 1px #1e293b; }
-.wiz-fuel-icon { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; }
+.wiz-engine-btn:hover { border-color:#94a3b8; }
+.wiz-engine-btn.selected { border-color:#1e293b; background:#f8fafc; box-shadow:0 0 0 1px #1e293b; }
+.wiz-pkg-btn {
+  padding:14px 18px; border-radius:12px; border:2px solid #e2e8f0;
+  background:white; transition:all .2s; cursor:pointer; text-align:center;
+  font-weight:600; font-size:14px;
+}
+.wiz-pkg-btn:hover { border-color:#94a3b8; }
+.wiz-pkg-btn.selected { border-color:#1e293b; background:#f8fafc; box-shadow:0 0 0 1px #1e293b; }
 .wiz-search-box {
   display:flex; align-items:center; gap:8px; background:#f8fafc;
   border:1px solid #e2e8f0; border-radius:12px; padding:10px 16px;
@@ -77,7 +80,7 @@
 
 <main class="min-h-screen bg-slate-50">
 
-<!-- Compact Header -->
+<!-- Header -->
 <div class="wiz-header">
   <div class="container mx-auto px-6 py-5 max-w-4xl">
     <div class="flex items-center text-sm text-slate-400 mb-4 gap-1.5">
@@ -85,11 +88,9 @@
       <span class="material-symbols-outlined text-xs">chevron_right</span>
       <span class="text-slate-700 font-medium">Araç Seçim</span>
     </div>
-    <div class="flex items-center justify-between">
-      <div>
-        <h1 class="text-2xl font-bold text-slate-900">Araç Seçim Sihirbazı</h1>
-        <p class="text-sm text-slate-500 mt-1">5 adımda size uygun aracı bulun</p>
-      </div>
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900">Araç Seçim Sihirbazı</h1>
+      <p class="text-sm text-slate-500 mt-1">8 adımda size uygun aracı bulun</p>
     </div>
   </div>
 </div>
@@ -97,82 +98,33 @@
 <div class="container mx-auto px-6 py-8 max-w-4xl">
 
 <!-- Progress Bar -->
-<div class="flex items-center justify-center gap-1 sm:gap-2 mb-8" id="progressBar">
-  <div class="wiz-progress-step" data-step="1">
-    <span class="wiz-progress-num active">1</span>
-    <span class="hidden sm:inline text-sm font-semibold text-slate-700">Tür</span>
-  </div>
-  <div class="wiz-progress-line bg-slate-200" data-line="1"></div>
-  <div class="wiz-progress-step" data-step="2">
-    <span class="wiz-progress-num pending">2</span>
-    <span class="hidden sm:inline text-sm font-medium text-slate-400">Marka</span>
-  </div>
-  <div class="wiz-progress-line bg-slate-200" data-line="2"></div>
-  <div class="wiz-progress-step" data-step="3">
-    <span class="wiz-progress-num pending">3</span>
-    <span class="hidden sm:inline text-sm font-medium text-slate-400">Model</span>
-  </div>
-  <div class="wiz-progress-line bg-slate-200" data-line="3"></div>
-  <div class="wiz-progress-step" data-step="4">
-    <span class="wiz-progress-num pending">4</span>
-    <span class="hidden sm:inline text-sm font-medium text-slate-400">Yıl</span>
-  </div>
-  <div class="wiz-progress-line bg-slate-200" data-line="4"></div>
-  <div class="wiz-progress-step" data-step="5">
-    <span class="wiz-progress-num pending">5</span>
-    <span class="hidden sm:inline text-sm font-medium text-slate-400">Yakıt</span>
-  </div>
+<div class="flex items-center justify-center gap-0.5 sm:gap-1 mb-8 flex-wrap" id="progressBar">
+  <% const stepLabels = ['Yıl','Marka','Model','Yakıt','Kasa','Şanzıman','Motor','Paket']; %>
+  <% stepLabels.forEach((label, i) => { %>
+    <% if (i > 0) { %><div class="wiz-progress-line bg-slate-200" data-line="<%= i %>"></div><% } %>
+    <div class="wiz-progress-step" data-step="<%= i+1 %>">
+      <span class="wiz-progress-num <%= i === 0 ? 'active' : 'pending' %>"><%= i+1 %></span>
+      <span class="hidden md:inline text-xs font-<%= i === 0 ? 'semibold text-slate-700' : 'medium text-slate-400' %>"><%= label %></span>
+    </div>
+  <% }) %>
 </div>
 
-<!-- Step 1: Araç Türü -->
+<!-- Step 1: YIL -->
 <div id="step1" class="step-panel">
   <div class="wiz-card p-6 sm:p-8">
-    <h2 class="text-lg font-bold text-slate-900 mb-1">Araç Türünü Seçin</h2>
-    <p class="text-sm text-slate-500 mb-6">Hangi tip araç arıyorsunuz?</p>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="typeGrid">
-      <button type="button" data-type="sedan" class="wiz-type-btn type-btn">
-        <div class="wiz-type-icon"><span class="material-symbols-outlined text-xl text-slate-500">directions_car</span></div>
-        <span class="font-semibold text-sm text-slate-800">Sedan</span>
-      </button>
-      <button type="button" data-type="suv" class="wiz-type-btn type-btn">
-        <div class="wiz-type-icon"><span class="material-symbols-outlined text-xl text-slate-500">airport_shuttle</span></div>
-        <span class="font-semibold text-sm text-slate-800">SUV</span>
-      </button>
-      <button type="button" data-type="hatchback" class="wiz-type-btn type-btn">
-        <div class="wiz-type-icon"><span class="material-symbols-outlined text-xl text-slate-500">electric_car</span></div>
-        <span class="font-semibold text-sm text-slate-800">Hatchback</span>
-      </button>
-      <button type="button" data-type="crossover" class="wiz-type-btn type-btn">
-        <div class="wiz-type-icon"><span class="material-symbols-outlined text-xl text-slate-500">drive_eta</span></div>
-        <span class="font-semibold text-sm text-slate-800">Crossover</span>
-      </button>
-      <button type="button" data-type="station_wagon" class="wiz-type-btn type-btn">
-        <div class="wiz-type-icon"><span class="material-symbols-outlined text-xl text-slate-500">local_shipping</span></div>
-        <span class="font-semibold text-sm text-slate-800">Station Wagon</span>
-      </button>
-      <button type="button" data-type="coupe" class="wiz-type-btn type-btn">
-        <div class="wiz-type-icon"><span class="material-symbols-outlined text-xl text-slate-500">sports_motorsports</span></div>
-        <span class="font-semibold text-sm text-slate-800">Coupe</span>
-      </button>
-      <button type="button" data-type="cabrio" class="wiz-type-btn type-btn">
-        <div class="wiz-type-icon"><span class="material-symbols-outlined text-xl text-slate-500">wb_sunny</span></div>
-        <span class="font-semibold text-sm text-slate-800">Cabrio</span>
-      </button>
-      <button type="button" data-type="minivan" class="wiz-type-btn type-btn">
-        <div class="wiz-type-icon"><span class="material-symbols-outlined text-xl text-slate-500">rv_hookup</span></div>
-        <span class="font-semibold text-sm text-slate-800">Minivan</span>
-      </button>
-    </div>
+    <h2 class="text-lg font-bold text-slate-900 mb-1">Model Yılını Seçin</h2>
+    <p class="text-sm text-slate-500 mb-6">Hangi yıl model araç arıyorsunuz?</p>
+    <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 gap-3" id="yearGrid"></div>
   </div>
 </div>
 
-<!-- Step 2: Marka -->
+<!-- Step 2: MARKA -->
 <div id="step2" class="step-panel hidden">
   <div class="wiz-card p-6 sm:p-8">
     <div class="flex items-center justify-between mb-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 mb-1">Marka Seçin</h2>
-        <p class="text-sm text-slate-500">Seçtiğiniz türdeki markalar</p>
+        <p class="text-sm text-slate-500" id="brandSubtitle">Tüm markalar</p>
       </div>
       <button onclick="goToStep(1)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
     </div>
@@ -186,7 +138,7 @@
   </div>
 </div>
 
-<!-- Step 3: Model -->
+<!-- Step 3: MODEL -->
 <div id="step3" class="step-panel hidden">
   <div class="wiz-card p-6 sm:p-8">
     <div class="flex items-center justify-between mb-5">
@@ -202,32 +154,87 @@
   </div>
 </div>
 
-<!-- Step 4: Yıl -->
+<!-- Step 4: YAKIT TİPİ -->
 <div id="step4" class="step-panel hidden">
   <div class="wiz-card p-6 sm:p-8">
     <div class="flex items-center justify-between mb-5">
       <div>
-        <h2 class="text-lg font-bold text-slate-900 mb-1">Yıl Seçin</h2>
-        <p class="text-sm text-slate-500" id="yearSubtitle">Hangi yıl model arıyorsunuz?</p>
+        <h2 class="text-lg font-bold text-slate-900 mb-1">Yakıt Türünü Seçin</h2>
+        <p class="text-sm text-slate-500" id="fuelSubtitle">Mevcut yakıt seçenekleri</p>
       </div>
       <button onclick="goToStep(3)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
     </div>
-    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3" id="yearGrid"></div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3" id="fuelGrid">
+      <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
+    </div>
   </div>
 </div>
 
-<!-- Step 5: Yakıt Türü -->
+<!-- Step 5: KASA TİPİ -->
 <div id="step5" class="step-panel hidden">
   <div class="wiz-card p-6 sm:p-8">
     <div class="flex items-center justify-between mb-5">
       <div>
-        <h2 class="text-lg font-bold text-slate-900 mb-1">Yakıt Türü Seçin</h2>
-        <p class="text-sm text-slate-500" id="fuelSubtitle">Son adım!</p>
+        <h2 class="text-lg font-bold text-slate-900 mb-1">Kasa Tipini Seçin</h2>
+        <p class="text-sm text-slate-500" id="bodySubtitle">Araç kasa tipi</p>
       </div>
       <button onclick="goToStep(4)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3" id="fuelGrid">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="bodyGrid">
       <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Step 6: ŞANZIMAN TİPİ -->
+<div id="step6" class="step-panel hidden">
+  <div class="wiz-card p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 mb-1">Şanzıman Tipini Seçin</h2>
+        <p class="text-sm text-slate-500" id="transSubtitle">Vites türü</p>
+      </div>
+      <button onclick="goToStep(5)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="transGrid">
+      <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Step 7: MOTOR TİPİ -->
+<div id="step7" class="step-panel hidden">
+  <div class="wiz-card p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 mb-1">Motor Tipini Seçin</h2>
+        <p class="text-sm text-slate-500" id="engineSubtitle">Motor seçenekleri</p>
+      </div>
+      <button onclick="goToStep(6)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="engineGrid">
+      <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Step 8: PAKET -->
+<div id="step8" class="step-panel hidden">
+  <div class="wiz-card p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 mb-1">Donanım Paketini Seçin</h2>
+        <p class="text-sm text-slate-500" id="pkgSubtitle">Son adım!</p>
+      </div>
+      <button onclick="goToStep(7)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="pkgGrid">
+      <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
+    </div>
+    <div class="mt-6 pt-5 border-t border-slate-100 flex justify-end">
+      <button id="skipPkgBtn" onclick="navigateToHub()" class="inline-flex items-center gap-2 text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-5 py-2.5 rounded-xl transition-colors">
+        <span class="material-symbols-outlined text-lg">arrow_forward</span> Paketsiz Devam Et
+      </button>
     </div>
   </div>
 </div>
@@ -254,218 +261,479 @@
 </main>
 
 <script>
-const state = { type: null, typeName: '', brandId: null, brandSlug: '', brandName: '', modelId: null, modelSlug: '', modelName: '', year: null, fuel: null, fuelName: '' };
-const allBrands = <%- JSON.stringify(brands) %>;
+/* ─── State ─── */
+const S = {
+  year: null,
+  brandId: null, brandSlug: '', brandName: '',
+  modelId: null, modelSlug: '', modelName: '',
+  fuel: null, fuelName: '',
+  bodyType: null, bodyTypeName: '',
+  transmission: null, transmissionName: '',
+  engine: null, engineLabel: '',
+  pkg: null
+};
 
+const allBrands = <%- JSON.stringify(brands) %>;
+const TOTAL_STEPS = 8;
+
+/* ─── Lookup Maps ─── */
+const FUEL_META = {
+  benzin:   { label:'Benzin',   icon:'local_gas_station', bg:'bg-amber-50',  color:'text-amber-600' },
+  dizel:    { label:'Dizel',    icon:'oil_barrel',        bg:'bg-slate-100', color:'text-slate-600' },
+  hibrit:   { label:'Hibrit',   icon:'eco',               bg:'bg-green-50',  color:'text-green-600' },
+  elektrik: { label:'Elektrik', icon:'ev_station',         bg:'bg-blue-50',   color:'text-blue-600' },
+  lpg:      { label:'LPG',      icon:'propane_tank',       bg:'bg-orange-50', color:'text-orange-600' }
+};
+
+const BODY_META = {
+  sedan:         { label:'Sedan',         icon:'directions_car' },
+  suv:           { label:'SUV',           icon:'airport_shuttle' },
+  hatchback:     { label:'Hatchback',     icon:'electric_car' },
+  crossover:     { label:'Crossover',     icon:'drive_eta' },
+  station_wagon: { label:'Station Wagon', icon:'local_shipping' },
+  coupe:         { label:'Coupe',         icon:'sports_motorsports' },
+  cabrio:        { label:'Cabrio',        icon:'wb_sunny' },
+  minivan:       { label:'Minivan',       icon:'rv_hookup' },
+  pickup:        { label:'Pickup',        icon:'fire_truck' },
+  van:           { label:'Van',           icon:'local_shipping' }
+};
+
+const TRANS_META = {
+  otomatik:        { label:'Otomatik',       icon:'auto_mode' },
+  manuel:          { label:'Manuel',         icon:'pan_tool' },
+  'yari-otomatik': { label:'Yarı Otomatik', icon:'tune' }
+};
+
+/* ─── Navigation ─── */
 function goToStep(n) {
   document.querySelectorAll('.step-panel').forEach(p => p.classList.add('hidden'));
   document.getElementById('step' + n).classList.remove('hidden');
   updateProgress(n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function updateProgress(current) {
-  document.querySelectorAll('.wiz-progress-step').forEach(step => {
-    const s = parseInt(step.dataset.step);
+  for (let s = 1; s <= TOTAL_STEPS; s++) {
+    const step = document.querySelector('[data-step="' + s + '"]');
+    if (!step) continue;
     const num = step.querySelector('.wiz-progress-num');
     const label = step.querySelector('span:last-child');
     if (s < current) {
       num.className = 'wiz-progress-num done';
-      num.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px">check</span>';
-      if (label) { label.className = 'hidden sm:inline text-sm font-semibold text-green-600'; }
+      num.innerHTML = '<span class="material-symbols-outlined" style="font-size:14px">check</span>';
+      if (label) label.className = 'hidden md:inline text-xs font-semibold text-green-600';
     } else if (s === current) {
-      num.className = 'wiz-progress-num active';
-      num.textContent = s;
-      if (label) { label.className = 'hidden sm:inline text-sm font-semibold text-slate-700'; }
+      num.className = 'wiz-progress-num active'; num.textContent = s;
+      if (label) label.className = 'hidden md:inline text-xs font-semibold text-slate-700';
     } else {
-      num.className = 'wiz-progress-num pending';
-      num.textContent = s;
-      if (label) { label.className = 'hidden sm:inline text-sm font-medium text-slate-400'; }
+      num.className = 'wiz-progress-num pending'; num.textContent = s;
+      if (label) label.className = 'hidden md:inline text-xs font-medium text-slate-400';
     }
-  });
-  document.querySelectorAll('.wiz-progress-line').forEach(line => {
-    const l = parseInt(line.dataset.line);
-    line.className = 'wiz-progress-line ' + (l < current ? 'bg-green-400' : 'bg-slate-200');
-  });
+  }
+  for (let l = 1; l < TOTAL_STEPS; l++) {
+    const line = document.querySelector('[data-line="' + l + '"]');
+    if (line) line.className = 'wiz-progress-line ' + (l < current ? 'bg-green-400' : 'bg-slate-200');
+  }
 }
 
 function updateSummary() {
   const tags = [];
-  if (state.typeName) tags.push({ label: state.typeName, icon: 'directions_car' });
-  if (state.brandName) tags.push({ label: state.brandName, icon: 'star' });
-  if (state.modelName) tags.push({ label: state.modelName, icon: 'commute' });
-  if (state.year) tags.push({ label: state.year + ' Model', icon: 'calendar_today' });
-  if (state.fuelName) tags.push({ label: state.fuelName, icon: 'local_gas_station' });
-  const container = document.getElementById('selectionTags');
-  if (tags.length === 0) {
-    container.innerHTML = '<span class="text-sm text-slate-400">Henüz seçim yapılmadı</span>';
-  } else {
-    container.innerHTML = tags.map(t =>
-      '<span class="wiz-summary-tag"><span class="material-symbols-outlined">' + t.icon + '</span>' + t.label + '</span>'
-    ).join('');
-  }
+  if (S.year) tags.push({ label: S.year + ' Model', icon: 'calendar_today' });
+  if (S.brandName) tags.push({ label: S.brandName, icon: 'star' });
+  if (S.modelName) tags.push({ label: S.modelName, icon: 'commute' });
+  if (S.fuelName) tags.push({ label: S.fuelName, icon: 'local_gas_station' });
+  if (S.bodyTypeName) tags.push({ label: S.bodyTypeName, icon: 'directions_car' });
+  if (S.transmissionName) tags.push({ label: S.transmissionName, icon: 'settings' });
+  if (S.engineLabel) tags.push({ label: S.engineLabel, icon: 'speed' });
+  if (S.pkg) tags.push({ label: S.pkg, icon: 'inventory_2' });
+  const c = document.getElementById('selectionTags');
+  c.innerHTML = tags.length === 0
+    ? '<span class="text-sm text-slate-400">Henüz seçim yapılmadı</span>'
+    : tags.map(function(t) { return '<span class="wiz-summary-tag"><span class="material-symbols-outlined">' + t.icon + '</span>' + t.label + '</span>'; }).join('');
 }
 
-// Step 1: Tür seçimi
-document.querySelectorAll('.type-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected'));
-    this.classList.add('selected');
-    state.type = this.dataset.type;
-    state.typeName = this.querySelector('.font-semibold') ? this.querySelector('.font-semibold').textContent : this.querySelector('span:last-child').textContent;
-    state.brandId = null; state.brandSlug = ''; state.brandName = '';
-    state.modelId = null; state.modelSlug = ''; state.modelName = '';
-    state.year = null; state.fuel = null; state.fuelName = '';
-    updateSummary();
-    setTimeout(() => { loadBrands(); goToStep(2); }, 250);
-  });
-});
+/* ─── Navigate to Hub ─── */
+function navigateToHub() {
+  var params = [];
+  if (S.year) params.push('yil=' + S.year);
+  if (S.fuel) params.push('yakit=' + S.fuel);
+  if (S.transmission) params.push('vites=' + S.transmission);
+  if (S.engine) params.push('motor=' + encodeURIComponent(S.engine));
+  if (S.pkg) params.push('paket=' + encodeURIComponent(S.pkg));
+  if (S.bodyType) params.push('kasa=' + S.bodyType);
+  var qs = params.join('&');
+  window.location.href = '/arac/' + S.brandSlug + '/' + S.modelSlug + (qs ? '?' + qs : '');
+}
 
+/* ═══════ STEP 1: YIL ═══════ */
+(function initYears() {
+  var grid = document.getElementById('yearGrid');
+  var now = new Date().getFullYear();
+  var html = '';
+  for (var y = now + 1; y >= 1990; y--) {
+    html += '<button type="button" data-year="' + y + '" class="wiz-year-btn">' + y + '</button>';
+  }
+  grid.innerHTML = html;
+  grid.addEventListener('click', function(e) {
+    var btn = e.target.closest('.wiz-year-btn');
+    if (!btn) return;
+    grid.querySelectorAll('.wiz-year-btn').forEach(function(b) { b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    S.year = parseInt(btn.dataset.year);
+    S.brandId = null; S.brandSlug = ''; S.brandName = '';
+    S.modelId = null; S.modelSlug = ''; S.modelName = '';
+    S.fuel = null; S.fuelName = '';
+    S.bodyType = null; S.bodyTypeName = '';
+    S.transmission = null; S.transmissionName = '';
+    S.engine = null; S.engineLabel = '';
+    S.pkg = null;
+    updateSummary();
+    setTimeout(function() { loadBrands(); goToStep(2); }, 200);
+  });
+})();
+
+/* ═══════ STEP 2: MARKA ═══════ */
 function loadBrands() {
-  const grid = document.getElementById('brandGrid');
-  const renderBrands = (list) => {
+  var grid = document.getElementById('brandGrid');
+  document.getElementById('brandSubtitle').textContent = S.year + ' model araçlar için marka seçin';
+
+  function renderBrands(list) {
     if (list.length === 0) {
       grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Marka bulunamadı.</p>';
       return;
     }
-    grid.innerHTML = list.map(b => {
-      const logoHtml = b.logo
-        ? '<img src="' + b.logo + '" alt="' + b.name + '" class="w-8 h-8 object-contain" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'" /><span class="material-symbols-outlined text-lg text-slate-400" style="display:none">directions_car</span>'
+    grid.innerHTML = list.map(function(b) {
+      var logo = b.logo
+        ? '<img src="' + b.logo + '" alt="' + b.name + '" class="w-8 h-8 object-contain" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"/><span class="material-symbols-outlined text-lg text-slate-400" style="display:none">directions_car</span>'
         : '<span class="material-symbols-outlined text-lg text-slate-400">directions_car</span>';
-      return '<button type="button" data-brand-id="' + b.id + '" data-brand-slug="' + b.slug + '" class="wiz-brand-btn brand-btn">' +
-        '<div class="w-10 h-10 flex items-center justify-center">' + logoHtml + '</div>' +
+      return '<button type="button" data-id="' + b.id + '" data-slug="' + b.slug + '" data-name="' + b.name + '" class="wiz-brand-btn">' +
+        '<div class="w-10 h-10 flex items-center justify-center">' + logo + '</div>' +
         '<span class="font-semibold text-xs text-slate-700 text-center leading-tight">' + b.name + '</span></button>';
     }).join('');
-    grid.querySelectorAll('.brand-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        grid.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('selected'));
-        this.classList.add('selected');
-        state.brandId = this.dataset.brandId;
-        state.brandSlug = this.dataset.brandSlug;
-        state.brandName = this.querySelector('.font-semibold').textContent;
-        state.modelId = null; state.modelSlug = ''; state.modelName = '';
-        state.year = null; state.fuel = null; state.fuelName = '';
-        updateSummary();
-        setTimeout(() => { loadModels(); goToStep(3); }, 250);
-      });
-    });
-  };
+  }
+
   renderBrands(allBrands);
 
-  const searchInput = document.getElementById('brandSearch');
+  grid.onclick = function(e) {
+    var btn = e.target.closest('.wiz-brand-btn');
+    if (!btn) return;
+    grid.querySelectorAll('.wiz-brand-btn').forEach(function(b) { b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    S.brandId = btn.dataset.id;
+    S.brandSlug = btn.dataset.slug;
+    S.brandName = btn.dataset.name;
+    S.modelId = null; S.modelSlug = ''; S.modelName = '';
+    S.fuel = null; S.fuelName = '';
+    S.bodyType = null; S.bodyTypeName = '';
+    S.transmission = null; S.transmissionName = '';
+    S.engine = null; S.engineLabel = '';
+    S.pkg = null;
+    updateSummary();
+    setTimeout(function() { loadModels(); goToStep(3); }, 200);
+  };
+
+  var searchInput = document.getElementById('brandSearch');
   if (searchInput) {
     searchInput.value = '';
-    searchInput.addEventListener('input', function() {
-      const q = this.value.toLowerCase().trim();
-      const filtered = q ? allBrands.filter(b => b.name.toLowerCase().includes(q)) : allBrands;
-      renderBrands(filtered);
-    });
+    searchInput.oninput = function() {
+      var q = this.value.toLowerCase().trim();
+      renderBrands(q ? allBrands.filter(function(b) { return b.name.toLowerCase().indexOf(q) !== -1; }) : allBrands);
+    };
   }
 }
 
-async function loadModels() {
-  const grid = document.getElementById('modelGrid');
-  document.getElementById('modelSubtitle').textContent = state.brandName + ' modelleri';
+/* ═══════ STEP 3: MODEL ═══════ */
+function loadModels() {
+  var grid = document.getElementById('modelGrid');
+  document.getElementById('modelSubtitle').textContent = S.brandName + ' modelleri';
   grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
-  try {
-    const res = await fetch('/api/models/' + state.brandId);
-    let models = await res.json();
-    if (state.type) {
-      const filtered = models.filter(m => m.body_type === state.type);
-      if (filtered.length > 0) models = filtered;
-    }
-    if (models.length === 0) {
-      grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Bu markada seçtiğiniz türde model bulunamadı.</p>';
-      return;
-    }
-    grid.innerHTML = models.map(m =>
-      '<button type="button" data-model-id="' + m.id + '" data-model-slug="' + m.slug + '" class="wiz-model-btn model-btn">' +
-      '<p class="font-semibold text-sm text-slate-800">' + m.name + '</p>' +
-      (m.body_type ? '<p class="text-xs text-slate-400 mt-0.5 capitalize">' + m.body_type + '</p>' : '') +
-      '</button>'
-    ).join('');
-    grid.querySelectorAll('.model-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        grid.querySelectorAll('.model-btn').forEach(b => b.classList.remove('selected'));
-        this.classList.add('selected');
-        state.modelId = this.dataset.modelId;
-        state.modelSlug = this.dataset.modelSlug;
-        state.modelName = this.querySelector('p').textContent;
-        state.year = null; state.fuel = null; state.fuelName = '';
+  fetch('/api/models/' + S.brandId)
+    .then(function(res) { return res.json(); })
+    .then(function(models) {
+      if (models.length === 0) {
+        grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Model bulunamadı.</p>';
+        return;
+      }
+      grid.innerHTML = models.map(function(m) {
+        var btLabel = m.body_type && BODY_META[m.body_type] ? BODY_META[m.body_type].label : (m.body_type || '');
+        return '<button type="button" data-id="' + m.id + '" data-slug="' + m.slug + '" data-name="' + m.name + '" data-bt="' + (m.body_type || '') + '" class="wiz-model-btn">' +
+          '<p class="font-semibold text-sm text-slate-800">' + m.name + '</p>' +
+          (btLabel ? '<p class="text-xs text-slate-400 mt-0.5">' + btLabel + '</p>' : '') +
+          '</button>';
+      }).join('');
+      grid.onclick = function(e) {
+        var btn = e.target.closest('.wiz-model-btn');
+        if (!btn) return;
+        grid.querySelectorAll('.wiz-model-btn').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        S.modelId = btn.dataset.id;
+        S.modelSlug = btn.dataset.slug;
+        S.modelName = btn.dataset.name;
+        S.fuel = null; S.fuelName = '';
+        S.bodyType = null; S.bodyTypeName = '';
+        S.transmission = null; S.transmissionName = '';
+        S.engine = null; S.engineLabel = '';
+        S.pkg = null;
         updateSummary();
-        setTimeout(() => { loadYears(); goToStep(4); }, 250);
-      });
+        setTimeout(function() { loadFuelTypes(); goToStep(4); }, 200);
+      };
+    })
+    .catch(function() {
+      grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-8">Hata oluştu.</p>';
     });
-  } catch(e) {
-    grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-8">Hata oluştu, tekrar deneyin.</p>';
-  }
 }
 
-function loadYears() {
-  const grid = document.getElementById('yearGrid');
-  document.getElementById('yearSubtitle').textContent = state.brandName + ' ' + state.modelName + ' — yıl seçin';
-  const currentYear = new Date().getFullYear();
-  const years = [];
-  for (let y = currentYear + 1; y >= 1980; y--) years.push(y);
-  grid.innerHTML = years.map(y =>
-    '<button type="button" data-year="' + y + '" class="wiz-year-btn year-btn">' + y + '</button>'
-  ).join('');
-  grid.querySelectorAll('.year-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      grid.querySelectorAll('.year-btn').forEach(b => b.classList.remove('selected'));
-      this.classList.add('selected');
-      state.year = parseInt(this.dataset.year);
-      state.fuel = null; state.fuelName = '';
-      updateSummary();
-      setTimeout(() => { loadFuelTypes(); goToStep(5); }, 250);
-    });
-  });
-}
-
-// Step 5: Yakıt türü (dinamik yükleme)
-const FUEL_META = {
-  benzin:   { label: 'Benzin',   icon: 'local_gas_station', iconBg: 'bg-amber-50',  iconColor: 'text-amber-600' },
-  dizel:    { label: 'Dizel',    icon: 'oil_barrel',        iconBg: 'bg-slate-100', iconColor: 'text-slate-600' },
-  hibrit:   { label: 'Hibrit',   icon: 'eco',               iconBg: 'bg-green-50',  iconColor: 'text-green-600' },
-  elektrik: { label: 'Elektrik', icon: 'ev_station',         iconBg: 'bg-blue-50',   iconColor: 'text-blue-600' },
-  lpg:      { label: 'LPG',      icon: 'propane_tank',       iconBg: 'bg-orange-50', iconColor: 'text-orange-600' }
-};
-
-async function loadFuelTypes() {
-  const grid = document.getElementById('fuelGrid');
-  document.getElementById('fuelSubtitle').textContent = state.brandName + ' ' + state.modelName + ' — yakıt seçin';
+/* ═══════ STEP 4: YAKIT TİPİ ═══════ */
+function loadFuelTypes() {
+  var grid = document.getElementById('fuelGrid');
+  document.getElementById('fuelSubtitle').textContent = S.brandName + ' ' + S.modelName + ' — yakıt türleri';
   grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
 
-  let availableFuels = ['benzin', 'dizel', 'hibrit', 'elektrik', 'lpg'];
-  try {
-    const res = await fetch('/api/fuel-types/' + state.brandSlug + '/' + state.modelSlug);
-    if (res.ok) {
-      const data = await res.json();
-      if (data.fuelTypes && data.fuelTypes.length > 0) availableFuels = data.fuelTypes;
-    }
-  } catch(e) { /* fallback: tümünü göster */ }
+  // Önce variants endpoint, yoksa fuel-types endpoint
+  fetch('/api/variants/fuels/' + S.brandSlug + '/' + S.modelSlug)
+    .then(function(res) { return res.ok ? res.json() : null; })
+    .then(function(data) {
+      var availableFuels = [];
+      if (data && data.fuels && data.fuels.length > 0) {
+        availableFuels = data.fuels.map(function(f) { return f.key; });
+      }
+      // Fallback
+      if (availableFuels.length === 0) {
+        return fetch('/api/fuel-types/' + S.brandSlug + '/' + S.modelSlug)
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(d2) {
+            if (d2 && d2.fuelTypes && d2.fuelTypes.length > 0) return d2.fuelTypes;
+            return [];
+          });
+      }
+      return availableFuels;
+    })
+    .then(function(availableFuels) {
+      if (!availableFuels) availableFuels = [];
+      var allFuels = ['benzin', 'dizel', 'hibrit', 'elektrik', 'lpg'];
+      grid.innerHTML = allFuels.map(function(f) {
+        var meta = FUEL_META[f];
+        var available = availableFuels.length === 0 || availableFuels.indexOf(f) !== -1;
+        return '<button type="button" data-fuel="' + f + '" class="wiz-option-btn"' + (available ? '' : ' disabled') + '>' +
+          '<div class="wiz-opt-icon ' + meta.bg + '"><span class="material-symbols-outlined text-xl ' + meta.color + '">' + meta.icon + '</span></div>' +
+          '<span class="font-semibold text-sm text-slate-800">' + meta.label + '</span>' +
+          (available ? '' : '<span class="text-[10px] text-slate-400">Mevcut değil</span>') +
+          '</button>';
+      }).join('');
 
-  const allFuels = ['benzin', 'dizel', 'hibrit', 'elektrik', 'lpg'];
-  grid.innerHTML = allFuels.map(f => {
-    const meta = FUEL_META[f];
-    const isAvailable = availableFuels.includes(f);
-    const disabledClass = isAvailable ? '' : ' opacity-40 pointer-events-none';
-    const badge = isAvailable ? '' : '<span class="text-[10px] text-slate-400 font-medium mt-0.5">Mevcut değil</span>';
-    return '<button type="button" data-fuel="' + f + '" class="wiz-fuel-btn fuel-btn' + disabledClass + '"' + (isAvailable ? '' : ' disabled') + '>' +
-      '<div class="wiz-fuel-icon ' + meta.iconBg + '"><span class="material-symbols-outlined text-xl ' + meta.iconColor + '">' + meta.icon + '</span></div>' +
-      '<span class="font-semibold text-sm text-slate-800">' + meta.label + '</span>' + badge + '</button>';
-  }).join('');
-
-  grid.querySelectorAll('.fuel-btn:not([disabled])').forEach(btn => {
-    btn.addEventListener('click', function() {
-      grid.querySelectorAll('.fuel-btn').forEach(b => b.classList.remove('selected'));
-      this.classList.add('selected');
-      state.fuel = this.dataset.fuel;
-      state.fuelName = FUEL_META[this.dataset.fuel].label;
-      updateSummary();
-      setTimeout(() => {
-        window.location.href = '/arac/' + state.brandSlug + '/' + state.modelSlug + '?yil=' + state.year + '&yakit=' + state.fuel;
-      }, 400);
+      grid.onclick = function(e) {
+        var btn = e.target.closest('.wiz-option-btn:not([disabled])');
+        if (!btn) return;
+        grid.querySelectorAll('.wiz-option-btn').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        S.fuel = btn.dataset.fuel;
+        S.fuelName = FUEL_META[S.fuel].label;
+        S.bodyType = null; S.bodyTypeName = '';
+        S.transmission = null; S.transmissionName = '';
+        S.engine = null; S.engineLabel = '';
+        S.pkg = null;
+        updateSummary();
+        setTimeout(function() { loadBodyType(); }, 200);
+      };
+    })
+    .catch(function() {
+      grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-8">Hata oluştu.</p>';
     });
-  });
+}
+
+/* ═══════ STEP 5: KASA TİPİ ═══════ */
+function loadBodyType() {
+  var grid = document.getElementById('bodyGrid');
+  document.getElementById('bodySubtitle').textContent = S.brandName + ' ' + S.modelName + ' — kasa tipi';
+  grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
+
+  fetch('/api/variants/cascade/' + S.brandSlug + '/' + S.modelSlug + '?fuel=' + S.fuel)
+    .then(function(res) { return res.ok ? res.json() : null; })
+    .then(function(data) {
+      var bodyType = data && data.bodyType ? data.bodyType : '';
+
+      // Tek kasa tipi varsa otomatik seç ve atla
+      if (bodyType) {
+        var meta = BODY_META[bodyType] || { label: bodyType, icon: 'directions_car' };
+        S.bodyType = bodyType;
+        S.bodyTypeName = meta.label;
+        updateSummary();
+        // 5. adımı göstermeden 6'ya atla
+        loadTransmissions();
+        goToStep(6);
+        return;
+      }
+
+      // Birden fazla kasa tipi olabilir
+      var allBodyTypes = Object.keys(BODY_META);
+      grid.innerHTML = allBodyTypes.map(function(bt) {
+        var m = BODY_META[bt];
+        return '<button type="button" data-body="' + bt + '" class="wiz-option-btn">' +
+          '<div class="wiz-opt-icon bg-slate-50"><span class="material-symbols-outlined text-xl text-slate-500">' + m.icon + '</span></div>' +
+          '<span class="font-semibold text-sm text-slate-800">' + m.label + '</span></button>';
+      }).join('');
+
+      goToStep(5);
+
+      grid.onclick = function(e) {
+        var btn = e.target.closest('.wiz-option-btn');
+        if (!btn) return;
+        grid.querySelectorAll('.wiz-option-btn').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        S.bodyType = btn.dataset.body;
+        S.bodyTypeName = BODY_META[S.bodyType].label;
+        S.transmission = null; S.transmissionName = '';
+        S.engine = null; S.engineLabel = '';
+        S.pkg = null;
+        updateSummary();
+        setTimeout(function() { loadTransmissions(); goToStep(6); }, 200);
+      };
+    })
+    .catch(function() {
+      // Hata olursa direkt şanzımana atla
+      loadTransmissions();
+      goToStep(6);
+    });
+}
+
+/* ═══════ STEP 6: ŞANZIMAN ═══════ */
+function loadTransmissions() {
+  var grid = document.getElementById('transGrid');
+  document.getElementById('transSubtitle').textContent = S.brandName + ' ' + S.modelName + ' — şanzıman türleri';
+  grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
+
+  fetch('/api/variants/transmissions/' + S.brandSlug + '/' + S.modelSlug + '?fuel=' + S.fuel)
+    .then(function(res) { return res.ok ? res.json() : null; })
+    .then(function(data) {
+      var transmissions = data && data.transmissions ? data.transmissions : [];
+
+      if (transmissions.length === 0) {
+        transmissions = [{ key: 'otomatik', label: 'Otomatik' }, { key: 'manuel', label: 'Manuel' }];
+      }
+
+      // Tek seçenek varsa otomatik geç
+      if (transmissions.length === 1) {
+        S.transmission = transmissions[0].key;
+        S.transmissionName = transmissions[0].label;
+        updateSummary();
+        loadEngines();
+        goToStep(7);
+        return;
+      }
+
+      grid.innerHTML = transmissions.map(function(t) {
+        var m = TRANS_META[t.key] || { label: t.label, icon: 'settings' };
+        return '<button type="button" data-trans="' + t.key + '" class="wiz-option-btn">' +
+          '<div class="wiz-opt-icon bg-slate-50"><span class="material-symbols-outlined text-xl text-slate-500">' + m.icon + '</span></div>' +
+          '<span class="font-semibold text-sm text-slate-800">' + m.label + '</span></button>';
+      }).join('');
+
+      grid.onclick = function(e) {
+        var btn = e.target.closest('.wiz-option-btn');
+        if (!btn) return;
+        grid.querySelectorAll('.wiz-option-btn').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        S.transmission = btn.dataset.trans;
+        S.transmissionName = (TRANS_META[S.transmission] || { label: S.transmission }).label;
+        S.engine = null; S.engineLabel = '';
+        S.pkg = null;
+        updateSummary();
+        setTimeout(function() { loadEngines(); goToStep(7); }, 200);
+      };
+    })
+    .catch(function() {
+      grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-8">Hata oluştu.</p>';
+    });
+}
+
+/* ═══════ STEP 7: MOTOR ═══════ */
+function loadEngines() {
+  var grid = document.getElementById('engineGrid');
+  document.getElementById('engineSubtitle').textContent = S.brandName + ' ' + S.modelName + ' — motor seçenekleri';
+  grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
+
+  fetch('/api/variants/engines/' + S.brandSlug + '/' + S.modelSlug + '?fuel=' + S.fuel + '&transmission=' + S.transmission)
+    .then(function(res) { return res.ok ? res.json() : null; })
+    .then(function(data) {
+      var engines = data && data.engines ? data.engines : [];
+
+      if (engines.length === 0) {
+        grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Motor bilgisi bulunamadı.</p>' +
+          '<div class="col-span-full text-center mt-3"><button onclick="navigateToHub()" class="inline-flex items-center gap-2 text-sm font-bold text-white bg-slate-800 hover:bg-slate-900 px-6 py-3 rounded-xl transition-colors"><span class="material-symbols-outlined">arrow_forward</span> Devam Et</button></div>';
+        return;
+      }
+
+      // Tek motor varsa otomatik geç
+      if (engines.length === 1) {
+        S.engine = engines[0].engine;
+        S.engineLabel = engines[0].engine + (engines[0].hp ? ' (' + engines[0].hp + ' HP)' : '');
+        updateSummary();
+        loadPackages();
+        goToStep(8);
+        return;
+      }
+
+      grid.innerHTML = engines.map(function(eng) {
+        return '<button type="button" data-engine="' + eng.engine + '" class="wiz-engine-btn">' +
+          '<p class="font-semibold text-sm text-slate-800">' + eng.engine + '</p>' +
+          '<div class="flex items-center gap-3 mt-1">' +
+          (eng.hp ? '<span class="text-xs text-slate-500"><span class="font-bold text-slate-700">' + eng.hp + '</span> HP</span>' : '') +
+          (eng.cc ? '<span class="text-xs text-slate-500"><span class="font-bold text-slate-700">' + eng.cc + '</span> cc</span>' : '') +
+          '</div></button>';
+      }).join('');
+
+      grid.onclick = function(e) {
+        var btn = e.target.closest('.wiz-engine-btn');
+        if (!btn) return;
+        grid.querySelectorAll('.wiz-engine-btn').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        S.engine = btn.dataset.engine;
+        var eng = engines.find(function(en) { return en.engine === S.engine; });
+        S.engineLabel = S.engine + (eng && eng.hp ? ' (' + eng.hp + ' HP)' : '');
+        S.pkg = null;
+        updateSummary();
+        setTimeout(function() { loadPackages(); goToStep(8); }, 200);
+      };
+    })
+    .catch(function() {
+      grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-8">Hata oluştu.</p>';
+    });
+}
+
+/* ═══════ STEP 8: PAKET ═══════ */
+function loadPackages() {
+  var grid = document.getElementById('pkgGrid');
+  document.getElementById('pkgSubtitle').textContent = S.brandName + ' ' + S.modelName + ' — donanım paketleri';
+  grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
+
+  var qs = 'fuel=' + (S.fuel || '') + '&transmission=' + (S.transmission || '') + '&engine=' + encodeURIComponent(S.engine || '');
+  fetch('/api/variants/packages/' + S.brandSlug + '/' + S.modelSlug + '?' + qs)
+    .then(function(res) { return res.ok ? res.json() : null; })
+    .then(function(data) {
+      var packages = data && data.packages ? data.packages : [];
+
+      if (packages.length === 0) {
+        grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Paket bilgisi bulunamadı. Devam ediliyor...</p>';
+        setTimeout(function() { navigateToHub(); }, 1200);
+        return;
+      }
+
+      grid.innerHTML = packages.map(function(p) {
+        return '<button type="button" data-pkg="' + p + '" class="wiz-pkg-btn">' + p + '</button>';
+      }).join('');
+
+      grid.onclick = function(e) {
+        var btn = e.target.closest('.wiz-pkg-btn');
+        if (!btn) return;
+        grid.querySelectorAll('.wiz-pkg-btn').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        S.pkg = btn.dataset.pkg;
+        updateSummary();
+        setTimeout(function() { navigateToHub(); }, 400);
+      };
+    })
+    .catch(function() {
+      grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-8">Hata oluştu.</p>';
+    });
 }
 </script>

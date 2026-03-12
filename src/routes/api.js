@@ -67,11 +67,13 @@ router.get('/fuel-types/:brandSlug/:modelSlug', async (req, res) => {
   // Önce varyant veritabanından dene, yoksa hub generator'dan al
   const variantFuels = getFuelTypes(brand.slug, model.slug);
   if (variantFuels.length > 0) {
-    const FUEL_TR = { benzin: 'Benzin', dizel: 'Dizel', lpg: 'LPG', hibrit: 'Hibrit', elektrik: 'Elektrik' };
-    res.json({ fuelTypes: variantFuels.map(f => FUEL_TR[f] || f) });
+    // lowercase key döndür — frontend lowercase karşılaştırır
+    res.json({ fuelTypes: variantFuels });
   } else {
     const fuelTypes = getAvailableFuelTypes(brand.slug, model.body_type || 'sedan');
-    res.json({ fuelTypes });
+    // hub-generator Türkçe döndürüyorsa lowercase'e çevir
+    const TR_TO_KEY = { 'Benzin': 'benzin', 'Dizel': 'dizel', 'LPG': 'lpg', 'Hibrit': 'hibrit', 'Elektrik': 'elektrik' };
+    res.json({ fuelTypes: fuelTypes.map(f => TR_TO_KEY[f] || f.toLowerCase()) });
   }
 });
 
@@ -127,7 +129,8 @@ router.get('/variants/cascade/:brandSlug/:modelSlug', (req, res) => {
     fuels: result.fuels.map(f => ({ key: f, label: FUEL_TR[f] || f })),
     transmissions: result.transmissions.map(t => ({ key: t, label: TR_MAP[t] || t })),
     engines: result.engines,
-    packages: result.packages
+    packages: result.packages,
+    bodyType: result.bodyType || ''
   });
 });
 

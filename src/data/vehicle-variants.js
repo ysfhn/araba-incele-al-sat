@@ -130,6 +130,18 @@ function getFullCascade(brandSlug, modelSlug, options = {}) {
   return { years, fuels, transmissions, engines, packages, bodyType };
 }
 
+/**
+ * Bir marka-model için kasa tipini döndürür.
+ * @returns {string}
+ */
+function getBodyType(brandSlug, modelSlug) {
+  const brand = VARIANTS[brandSlug];
+  if (!brand) return '';
+  const model = brand[modelSlug];
+  if (!model) return '';
+  return model.bodyType || '';
+}
+
 module.exports = {
   VARIANTS,
   getYears,
@@ -138,4 +150,5 @@ module.exports = {
   getEngines,
   getPackages,
   getFullCascade,
+  getBodyType,
 };
