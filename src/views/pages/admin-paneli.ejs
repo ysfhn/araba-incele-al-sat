@@ -725,11 +725,15 @@
         </div>
         <div class="stat-card">
           <div class="stat-icon green"><span class="material-icons">reply</span></div>
-          <div class="stat-info"><h3><%= data.statusCounts?.responded || 0 %></h3><p>Yanıtlanan</p></div>
+          <div class="stat-info"><h3><%= data.statusCounts?.quoted || 0 %></h3><p>Yanıtlanan</p></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue"><span class="material-icons">check_circle</span></div>
+          <div class="stat-info"><h3><%= data.statusCounts?.accepted || 0 %></h3><p>Kabul Edilen</p></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon red"><span class="material-icons">close</span></div>
-          <div class="stat-info"><h3><%= data.statusCounts?.closed || 0 %></h3><p>Kapatılan</p></div>
+          <div class="stat-info"><h3><%= data.statusCounts?.rejected || 0 %></h3><p>Reddedilen</p></div>
         </div>
       </div>
 
@@ -739,8 +743,9 @@
           <select name="durum">
             <option value="">Tüm Durumlar</option>
             <option value="pending" <%= data.filters?.durum==='pending'?'selected':'' %>>Bekleyen</option>
-            <option value="responded" <%= data.filters?.durum==='responded'?'selected':'' %>>Yanıtlanan</option>
-            <option value="closed" <%= data.filters?.durum==='closed'?'selected':'' %>>Kapatılan</option>
+            <option value="quoted" <%= data.filters?.durum==='quoted'?'selected':'' %>>Yanıtlanan</option>
+            <option value="accepted" <%= data.filters?.durum==='accepted'?'selected':'' %>>Kabul Edilen</option>
+            <option value="rejected" <%= data.filters?.durum==='rejected'?'selected':'' %>>Reddedilen</option>
           </select>
           <button type="submit" class="btn-sm btn-primary"><span class="material-icons">search</span> Ara</button>
         </form>
@@ -749,7 +754,7 @@
           <table class="admin-table">
             <thead>
               <tr>
-                <th>ID</th><th>İşletme</th><th>Müşteri</th><th>Araç/Açıklama</th><th>Durum</th><th>Yanıt</th><th>Tarih</th>
+                <th>ID</th><th>İşletme</th><th>Müşteri</th><th>Araç/Açıklama</th><th>Durum</th><th>Teklif Tutar</th><th>Tarih</th>
               </tr>
             </thead>
             <tbody>
@@ -763,11 +768,11 @@
                   <small style="color:#666"><%= (q.description || '').substring(0, 80) %></small>
                 </td>
                 <td>
-                  <% const qStat = {pending:'Bekleyen',responded:'Yanıtlandı',closed:'Kapatıldı'}; %>
-                  <% const qBadge = {pending:'badge-warning',responded:'badge-success',closed:'badge-secondary'}; %>
+                  <% const qStat = {pending:'Bekleyen',quoted:'Yanıtlandı',accepted:'Kabul Edildi',rejected:'Reddedildi'}; %>
+                  <% const qBadge = {pending:'badge-warning',quoted:'badge-success',accepted:'badge-info',rejected:'badge-danger'}; %>
                   <span class="badge <%= qBadge[q.status] || 'badge-secondary' %>"><%= qStat[q.status] || q.status %></span>
                 </td>
-                <td style="max-width:180px;"><%= q.response ? q.response.substring(0, 60) + '...' : '-' %></td>
+                <td style="max-width:180px;"><%= q.quote_amount ? new Intl.NumberFormat('tr-TR').format(q.quote_amount) + ' ₺' : '-' %></td>
                 <td><%= timeAgo(q.created_at) %></td>
               </tr>
               <% }) %>

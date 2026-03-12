@@ -158,6 +158,7 @@ router.delete('/listings/:id', auth, async (req, res) => {
   await db.prepare('DELETE FROM listing_images WHERE listing_id = ?').run(req.params.id);
   await db.prepare('DELETE FROM listing_features WHERE listing_id = ?').run(req.params.id);
   await db.prepare('DELETE FROM favorites WHERE listing_id = ?').run(req.params.id);
+  await db.prepare("DELETE FROM moderation_queue WHERE type = 'listing' AND item_id = ?").run(req.params.id);
   await db.prepare('DELETE FROM listings WHERE id = ?').run(req.params.id);
   res.json({ success: true, message: 'İlan silindi' });
 });
@@ -514,7 +515,14 @@ router.delete('/forum/topics/:id', auth, async (req, res) => {
   if (!topic) return res.status(404).json({ error: 'Konu bulunamadı' });
   if (topic.user_id !== req.session.user.id && req.session.user.role !== 'admin') return res.status(403).json({ error: 'Yetkiniz yok' });
 
+  // Yanıtların moderasyon kayıtlarını temizle
+  const replies = await db.prepare('SELECT id FROM forum_replies WHERE topic_id = ?').all(topic.id);
+  for (const r of replies) {
+    await db.prepare("DELETE FROM moderation_queue WHERE type = 'forum_reply' AND item_id = ?").run(r.id);
+  }
+  await db.prepare('DELETE FROM forum_likes WHERE reply_id IN (SELECT id FROM forum_replies WHERE topic_id = ?)').run(topic.id);
   await db.prepare('DELETE FROM forum_replies WHERE topic_id = ?').run(topic.id);
+  await db.prepare("DELETE FROM moderation_queue WHERE type = 'forum_topic' AND item_id = ?").run(topic.id);
   await db.prepare('DELETE FROM forum_topics WHERE id = ?').run(topic.id);
   await db.prepare('UPDATE forum_categories SET topic_count = MAX(0, topic_count - 1) WHERE id = ?').run(topic.category_id);
   res.json({ success: true });
@@ -582,6 +590,8 @@ router.delete('/forum/replies/:id', auth, async (req, res) => {
   if (!reply) return res.status(404).json({ error: 'Yanıt bulunamadı' });
   if (reply.user_id !== req.session.user.id && req.session.user.role !== 'admin') return res.status(403).json({ error: 'Yetkiniz yok' });
 
+  await db.prepare('DELETE FROM forum_likes WHERE reply_id = ?').run(reply.id);
+  await db.prepare("DELETE FROM moderation_queue WHERE type = 'forum_reply' AND item_id = ?").run(reply.id);
   await db.prepare('DELETE FROM forum_replies WHERE id = ?').run(reply.id);
   await db.prepare('UPDATE forum_topics SET reply_count = MAX(0, reply_count - 1) WHERE id = ?').run(reply.topic_id);
   res.json({ success: true });
@@ -789,6 +799,7 @@ router.delete('/reviews/:id', auth, async (req, res) => {
   if (!review) return res.status(404).json({ error: 'Değerlendirme bulunamadı' });
   if (review.user_id !== req.session.user.id && req.session.user.role !== 'admin') return res.status(403).json({ error: 'Yetkiniz yok' });
 
+  await db.prepare("DELETE FROM moderation_queue WHERE type = 'review' AND item_id = ?").run(review.id);
   await db.prepare('DELETE FROM reviews WHERE id = ?').run(review.id);
 
   const avgRating = await db.prepare('SELECT AVG(rating) as avg, COUNT(*) as cnt FROM reviews WHERE business_id = ?').get(review.business_id);
@@ -1190,8 +1201,58 @@ router.patch('/admin/users/:id/verify', adminOnly, async (req, res) => {
 // Admin: Kullanıcı sil
 router.delete('/admin/users/:id', adminOnly, async (req, res) => {
   const db = getDb();
-  if (Number(req.params.id) === req.session.user.id) return res.status(400).json({ error: 'Kendinizi silemezsiniz' });
-  await db.prepare('DELETE FROM users WHERE id = ?').run(req.params.id);
+  const uid = Number(req.params.id);
+  if (uid === req.session.user.id) return res.status(400).json({ error: 'Kendinizi silemezsiniz' });
+  const user = await db.prepare('SELECT id FROM users WHERE id = ?').get(uid);
+  if (!user) return res.status(404).json({ error: 'Kullanıcı bulunamadı' });
+
+  // İlişkili verileri temizle
+  // 1. Kullanıcının ilanlarını ve bağlı verilerini sil
+  const userListings = await db.prepare('SELECT id FROM listings WHERE user_id = ?').all(uid);
+  for (const l of userListings) {
+    await db.prepare('DELETE FROM listing_images WHERE listing_id = ?').run(l.id);
+    await db.prepare('DELETE FROM listing_features WHERE listing_id = ?').run(l.id);
+    await db.prepare('DELETE FROM favorites WHERE listing_id = ?').run(l.id);
+    await db.prepare("DELETE FROM moderation_queue WHERE type = 'listing' AND item_id = ?").run(l.id);
+  }
+  await db.prepare('DELETE FROM listings WHERE user_id = ?').run(uid);
+
+  // 2. Kullanıcının işletmesini ve bağlı verileri sil
+  const userBusinesses = await db.prepare('SELECT id FROM businesses WHERE user_id = ?').all(uid);
+  for (const b of userBusinesses) {
+    await db.prepare('DELETE FROM reviews WHERE business_id = ?').run(b.id);
+    await db.prepare('DELETE FROM appointments WHERE business_id = ?').run(b.id);
+    await db.prepare('DELETE FROM quote_requests WHERE business_id = ?').run(b.id);
+    await db.prepare("DELETE FROM moderation_queue WHERE type = 'business' AND item_id = ?").run(b.id);
+  }
+  await db.prepare('DELETE FROM businesses WHERE user_id = ?').run(uid);
+
+  // 3. Forum verilerini sil
+  const userReplies = await db.prepare('SELECT id FROM forum_replies WHERE user_id = ?').all(uid);
+  for (const r of userReplies) {
+    await db.prepare('DELETE FROM forum_likes WHERE reply_id = ?').run(r.id);
+    await db.prepare("DELETE FROM moderation_queue WHERE type = 'forum_reply' AND item_id = ?").run(r.id);
+  }
+  await db.prepare('DELETE FROM forum_replies WHERE user_id = ?').run(uid);
+  const userTopics = await db.prepare('SELECT id FROM forum_topics WHERE user_id = ?').all(uid);
+  for (const t of userTopics) {
+    await db.prepare('DELETE FROM forum_likes WHERE reply_id IN (SELECT id FROM forum_replies WHERE topic_id = ?)').run(t.id);
+    await db.prepare('DELETE FROM forum_replies WHERE topic_id = ?').run(t.id);
+    await db.prepare("DELETE FROM moderation_queue WHERE type = 'forum_topic' AND item_id = ?").run(t.id);
+  }
+  await db.prepare('DELETE FROM forum_topics WHERE user_id = ?').run(uid);
+
+  // 4. Diğer ilişkili tabloları temizle
+  await db.prepare('DELETE FROM forum_likes WHERE user_id = ?').run(uid);
+  await db.prepare('DELETE FROM favorites WHERE user_id = ?').run(uid);
+  await db.prepare('DELETE FROM messages WHERE sender_id = ? OR receiver_id = ?').run(uid, uid);
+  await db.prepare('DELETE FROM notifications WHERE user_id = ?').run(uid);
+  await db.prepare('DELETE FROM appointments WHERE user_id = ?').run(uid);
+  await db.prepare('DELETE FROM quote_requests WHERE user_id = ?').run(uid);
+  await db.prepare('DELETE FROM moderation_queue WHERE reported_by = ?').run(uid);
+
+  // 5. Kullanıcıyı sil
+  await db.prepare('DELETE FROM users WHERE id = ?').run(uid);
   res.json({ success: true });
 });
 
@@ -1254,6 +1315,7 @@ router.delete('/admin/listings/:id', adminOnly, async (req, res) => {
   await db.prepare('DELETE FROM listing_images WHERE listing_id = ?').run(req.params.id);
   await db.prepare('DELETE FROM listing_features WHERE listing_id = ?').run(req.params.id);
   await db.prepare('DELETE FROM favorites WHERE listing_id = ?').run(req.params.id);
+  await db.prepare("DELETE FROM moderation_queue WHERE type = 'listing' AND item_id = ?").run(req.params.id);
   await db.prepare('DELETE FROM listings WHERE id = ?').run(req.params.id);
   res.json({ success: true });
 });
@@ -1298,6 +1360,7 @@ router.delete('/admin/businesses/:id', adminOnly, async (req, res) => {
   await db.prepare('DELETE FROM reviews WHERE business_id = ?').run(req.params.id);
   await db.prepare('DELETE FROM appointments WHERE business_id = ?').run(req.params.id);
   await db.prepare('DELETE FROM quote_requests WHERE business_id = ?').run(req.params.id);
+  await db.prepare("DELETE FROM moderation_queue WHERE type = 'business' AND item_id = ?").run(req.params.id);
   await db.prepare('DELETE FROM businesses WHERE id = ?').run(req.params.id);
   res.json({ success: true });
 });
@@ -1377,10 +1440,15 @@ router.patch('/admin/appointments/:id', adminOnly, async (req, res) => {
   const db = getDb();
   const { status } = req.body;
   if (!['confirmed', 'cancelled', 'completed'].includes(status)) return res.status(400).json({ error: 'Geçersiz durum' });
-  const appt = await db.prepare('SELECT * FROM appointments WHERE id = ?').get(req.params.id);
+  const appt = await db.prepare('SELECT a.*, b.name as business_name FROM appointments a JOIN businesses b ON a.business_id = b.id WHERE a.id = ?').get(req.params.id);
   if (!appt) return res.status(404).json({ error: 'Randevu bulunamadı' });
   await db.prepare('UPDATE appointments SET status = ? WHERE id = ?').run(status, req.params.id);
   const labels = { confirmed: 'onaylandı', cancelled: 'iptal edildi', completed: 'tamamlandı' };
+
+  // Kullanıcıya bildirim gönder
+  await db.prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'appointment', 'Randevu Güncellendi', ?, '/kullanici/randevular')")
+    .run(appt.user_id, `${appt.business_name} - ${appt.date} ${appt.time} randevunuz admin tarafından ${labels[status]}`);
+
   res.json({ success: true, message: `Randevu ${labels[status]}` });
 });
 
@@ -1586,8 +1654,14 @@ router.delete('/admin/models/:id', adminOnly, async (req, res) => {
 // Admin: Forum konusu sil
 router.delete('/admin/forum/topics/:id', adminOnly, async (req, res) => {
   const db = getDb();
+  // Yanıtlara ait moderasyon kayıtlarını temizle
+  const replies = await db.prepare('SELECT id FROM forum_replies WHERE topic_id = ?').all(req.params.id);
+  for (const r of replies) {
+    await db.prepare("DELETE FROM moderation_queue WHERE type = 'forum_reply' AND item_id = ?").run(r.id);
+  }
   await db.prepare('DELETE FROM forum_likes WHERE reply_id IN (SELECT id FROM forum_replies WHERE topic_id = ?)').run(req.params.id);
   await db.prepare('DELETE FROM forum_replies WHERE topic_id = ?').run(req.params.id);
+  await db.prepare("DELETE FROM moderation_queue WHERE type = 'forum_topic' AND item_id = ?").run(req.params.id);
   await db.prepare('DELETE FROM forum_topics WHERE id = ?').run(req.params.id);
   res.json({ success: true });
 });
@@ -1597,6 +1671,7 @@ router.delete('/admin/forum/replies/:id', adminOnly, async (req, res) => {
   const db = getDb();
   const reply = await db.prepare('SELECT topic_id FROM forum_replies WHERE id = ?').get(req.params.id);
   await db.prepare('DELETE FROM forum_likes WHERE reply_id = ?').run(req.params.id);
+  await db.prepare("DELETE FROM moderation_queue WHERE type = 'forum_reply' AND item_id = ?").run(req.params.id);
   await db.prepare('DELETE FROM forum_replies WHERE id = ?').run(req.params.id);
   if (reply) await db.prepare('UPDATE forum_topics SET reply_count = MAX(0, reply_count - 1) WHERE id = ?').run(reply.topic_id);
   res.json({ success: true });

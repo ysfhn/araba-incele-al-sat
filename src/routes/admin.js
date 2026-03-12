@@ -208,8 +208,9 @@ router.get('/teklifler', isAdmin, async (req, res) => {
 
   const statusCounts = {
     pending: (await db.prepare("SELECT COUNT(*) as c FROM quote_requests WHERE status='pending'").get()).c,
-    responded: (await db.prepare("SELECT COUNT(*) as c FROM quote_requests WHERE status='responded'").get()).c,
-    closed: (await db.prepare("SELECT COUNT(*) as c FROM quote_requests WHERE status='closed'").get()).c,
+    quoted: (await db.prepare("SELECT COUNT(*) as c FROM quote_requests WHERE status='quoted'").get()).c,
+    accepted: (await db.prepare("SELECT COUNT(*) as c FROM quote_requests WHERE status='accepted'").get()).c,
+    rejected: (await db.prepare("SELECT COUNT(*) as c FROM quote_requests WHERE status='rejected'").get()).c,
   };
 
   res.render('pages/admin-paneli', {
