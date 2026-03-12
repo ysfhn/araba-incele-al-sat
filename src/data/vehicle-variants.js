@@ -1,137 +1,141 @@
 /**
- * Araç Varyant Veritabanı — Birleştirici Index
- * 4 parça dosyayı tek VEHICLE_VARIANTS objesi altında toplar.
- *
- * Yapı:
- *   VEHICLE_VARIANTS[markaSluq][modelSlug] = {
- *     years: [2020, 2021, ...],
- *     variants: [
- *       { fuel, transmission, engine, hp, cc, packages: [...] }
- *     ]
- *   }
+ * Araç Varyant Veritabanı — Ana Modül
+ * 4 parçadan oluşan veriyi birleştirir ve yardımcı fonksiyonları dışa aktarır.
  */
 
-const VARIANTS_PART1 = require('./vehicle-variants-1');
-const VARIANTS_PART2 = require('./vehicle-variants-2');
-const VARIANTS_PART3 = require('./vehicle-variants-3');
-const VARIANTS_PART4 = require('./vehicle-variants-4');
+const part1 = require('./vehicle-variants-1');
+const part2 = require('./vehicle-variants-2');
+const part3 = require('./vehicle-variants-3');
+const part4 = require('./vehicle-variants-4');
 
-const VEHICLE_VARIANTS = Object.assign(
-  {},
-  VARIANTS_PART1,
-  VARIANTS_PART2,
-  VARIANTS_PART3,
-  VARIANTS_PART4
-);
+// Tüm varyantları tek bir obje altında birleştir
+const VARIANTS = Object.assign({}, part1, part2, part3, part4);
 
-// ── Helper: belirli marka-model-yıl için geçerli varyantları filtrele ──
-function getVariantsForModel(brandSlug, modelSlug, year) {
-  const brand = VEHICLE_VARIANTS[brandSlug];
+/* ─── Yardımcı Fonksiyonlar ─────────────────────────────── */
+
+/**
+ * Bir marka-model kombinasyonu için tanımlı yılları döndürür.
+ * @returns {number[]}
+ */
+function getYears(brandSlug, modelSlug) {
+  const brand = VARIANTS[brandSlug];
+  if (!brand) return [];
+  const model = brand[modelSlug];
+  if (!model) return [];
+  return model.years || [];
+}
+
+/**
+ * Bir marka-model için benzersiz yakıt tiplerini döndürür.
+ * @returns {string[]}  örn. ['benzin','dizel','hibrit']
+ */
+function getFuelTypes(brandSlug, modelSlug) {
+  const brand = VARIANTS[brandSlug];
+  if (!brand) return [];
+  const model = brand[modelSlug];
+  if (!model || !model.variants) return [];
+  const set = new Set(model.variants.map(v => v.fuel));
+  return [...set];
+}
+
+/**
+ * Yakıt tipine göre şanzıman çeşitlerini döndürür.
+ * @param {string} [fuel]  İsteğe bağlı yakıt filtresi
+ * @returns {string[]}
+ */
+function getTransmissions(brandSlug, modelSlug, fuel) {
+  const brand = VARIANTS[brandSlug];
+  if (!brand) return [];
+  const model = brand[modelSlug];
+  if (!model || !model.variants) return [];
+  let variants = model.variants;
+  if (fuel) variants = variants.filter(v => v.fuel === fuel);
+  const set = new Set(variants.map(v => v.transmission));
+  return [...set];
+}
+
+/**
+ * Yakıt + şanzıman filtresine göre motor seçeneklerini döndürür.
+ * @returns {Array<{engine:string, hp:number, cc:number}>}
+ */
+function getEngines(brandSlug, modelSlug, fuel, transmission) {
+  const brand = VARIANTS[brandSlug];
+  if (!brand) return [];
+  const model = brand[modelSlug];
+  if (!model || !model.variants) return [];
+  let variants = model.variants;
+  if (fuel) variants = variants.filter(v => v.fuel === fuel);
+  if (transmission) variants = variants.filter(v => v.transmission === transmission);
+  // Benzersiz motor isimleri
+  const seen = new Set();
+  const result = [];
+  for (const v of variants) {
+    if (!seen.has(v.engine)) {
+      seen.add(v.engine);
+      result.push({ engine: v.engine, hp: v.hp, cc: v.cc });
+    }
+  }
+  return result;
+}
+
+/**
+ * Tüm filtrelere göre paket listesini döndürür.
+ * @returns {string[]}
+ */
+function getPackages(brandSlug, modelSlug, fuel, transmission, engine) {
+  const brand = VARIANTS[brandSlug];
+  if (!brand) return [];
+  const model = brand[modelSlug];
+  if (!model || !model.variants) return [];
+  let variants = model.variants;
+  if (fuel) variants = variants.filter(v => v.fuel === fuel);
+  if (transmission) variants = variants.filter(v => v.transmission === transmission);
+  if (engine) variants = variants.filter(v => v.engine === engine);
+  const set = new Set();
+  for (const v of variants) {
+    if (v.packages) v.packages.forEach(p => set.add(p));
+  }
+  return [...set];
+}
+
+/**
+ * Tek istekte tüm cascade bilgisini döndürür.
+ * Verilen filtre aşamasına kadar uygulama yapar.
+ * @param {object} options  { fuel?, transmission?, engine? }
+ * @returns {object|null}   { years, fuels, transmissions, engines, packages, bodyType }
+ */
+function getFullCascade(brandSlug, modelSlug, options = {}) {
+  const brand = VARIANTS[brandSlug];
   if (!brand) return null;
   const model = brand[modelSlug];
   if (!model) return null;
 
-  // Yıl filtresi (isteğe bağlı)
-  if (year) {
-    const y = parseInt(year);
-    if (!model.years.includes(y)) return null;
-  }
+  const { fuel, transmission, engine } = options;
 
-  return model;
-}
+  const years = model.years || [];
+  const bodyType = model.bodyType || '';
 
-// ── Helper: Marka-model için yakıt tiplerini getir ──
-function getFuelTypes(brandSlug, modelSlug) {
-  const model = getVariantsForModel(brandSlug, modelSlug);
-  if (!model) return [];
-  const fuels = [...new Set(model.variants.map(v => v.fuel))];
-  return fuels;
-}
+  // Yakıtlar — filtre yok
+  const fuels = getFuelTypes(brandSlug, modelSlug);
 
-// ── Helper: Marka-model-yakıt için şanzıman tiplerini getir ──
-function getTransmissions(brandSlug, modelSlug, fuel) {
-  const model = getVariantsForModel(brandSlug, modelSlug);
-  if (!model) return [];
-  const filtered = fuel ? model.variants.filter(v => v.fuel === fuel) : model.variants;
-  return [...new Set(filtered.map(v => v.transmission))];
-}
+  // Şanzımanlar — yakıt filtresi varsa uygula
+  const transmissions = getTransmissions(brandSlug, modelSlug, fuel);
 
-// ── Helper: Marka-model-yakıt-şanzıman için motorları getir ──
-function getEngines(brandSlug, modelSlug, fuel, transmission) {
-  const model = getVariantsForModel(brandSlug, modelSlug);
-  if (!model) return [];
-  let filtered = model.variants;
-  if (fuel) filtered = filtered.filter(v => v.fuel === fuel);
-  if (transmission) filtered = filtered.filter(v => v.transmission === transmission);
-  // Unique engines
-  const engineMap = {};
-  filtered.forEach(v => {
-    if (!engineMap[v.engine]) {
-      engineMap[v.engine] = { ad: v.engine, hp: v.hp, cc: v.cc };
-    }
-  });
-  return Object.values(engineMap);
-}
+  // Motorlar — yakıt + şanzıman filtresi
+  const engines = getEngines(brandSlug, modelSlug, fuel, transmission);
 
-// ── Helper: Tüm filtreler sonrası paketleri getir ──
-function getPackages(brandSlug, modelSlug, fuel, transmission, engine) {
-  const model = getVariantsForModel(brandSlug, modelSlug);
-  if (!model) return [];
-  let filtered = model.variants;
-  if (fuel) filtered = filtered.filter(v => v.fuel === fuel);
-  if (transmission) filtered = filtered.filter(v => v.transmission === transmission);
-  if (engine) filtered = filtered.filter(v => v.engine === engine);
-  const pkgs = new Set();
-  filtered.forEach(v => v.packages.forEach(p => pkgs.add(p)));
-  return [...pkgs];
-}
+  // Paketler — yakıt + şanzıman + motor filtresi
+  const packages = getPackages(brandSlug, modelSlug, fuel, transmission, engine);
 
-// ── Helper: Marka-model için yılları getir ──
-function getYears(brandSlug, modelSlug) {
-  const model = getVariantsForModel(brandSlug, modelSlug);
-  if (!model) return [];
-  return model.years.slice().sort((a, b) => b - a); // Yeniden eskiye
-}
-
-// ── Helper: Tam cascade bilgisi (tek seferde) ──
-function getFullCascade(brandSlug, modelSlug, opts = {}) {
-  const model = getVariantsForModel(brandSlug, modelSlug);
-  if (!model) return null;
-
-  const { fuel, transmission, engine } = opts;
-
-  let filtered = model.variants;
-  if (fuel) filtered = filtered.filter(v => v.fuel === fuel);
-  if (transmission) filtered = filtered.filter(v => v.transmission === transmission);
-  if (engine) filtered = filtered.filter(v => v.engine === engine);
-
-  const fuels = [...new Set(model.variants.map(v => v.fuel))];
-  const transmissions = [...new Set(filtered.map(v => v.transmission))];
-
-  const engineMap = {};
-  filtered.forEach(v => {
-    if (!engineMap[v.engine]) engineMap[v.engine] = { ad: v.engine, hp: v.hp, cc: v.cc };
-  });
-
-  const pkgs = new Set();
-  filtered.forEach(v => v.packages.forEach(p => pkgs.add(p)));
-
-  return {
-    years: model.years.slice().sort((a, b) => b - a),
-    fuels,
-    transmissions,
-    engines: Object.values(engineMap),
-    packages: [...pkgs]
-  };
+  return { years, fuels, transmissions, engines, packages, bodyType };
 }
 
 module.exports = {
-  VEHICLE_VARIANTS,
-  getVariantsForModel,
+  VARIANTS,
+  getYears,
   getFuelTypes,
   getTransmissions,
   getEngines,
   getPackages,
-  getYears,
-  getFullCascade
+  getFullCascade,
 };
