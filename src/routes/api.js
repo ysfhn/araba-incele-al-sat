@@ -55,16 +55,80 @@ router.get('/models/:brandId', async (req, res) => {
   res.json(models);
 });
 
-// Marka + model için geçerli yakıt tipleri
+// Marka + model için geçerli yakıt tipleri (eski endpoint — uyumluluk için)
 router.get('/fuel-types/:brandSlug/:modelSlug', async (req, res) => {
   const { getAvailableFuelTypes } = require('../utils/hub-content-generator');
+  const { getFuelTypes } = require('../data/vehicle-variants');
   const db = getDb();
   const brand = await db.prepare('SELECT * FROM brands WHERE slug = ?').get(req.params.brandSlug);
   if (!brand) return res.status(404).json({ error: 'Marka bulunamadı' });
   const model = await db.prepare('SELECT * FROM models WHERE slug = ? AND brand_id = ?').get(req.params.modelSlug, brand.id);
   if (!model) return res.status(404).json({ error: 'Model bulunamadı' });
-  const fuelTypes = getAvailableFuelTypes(brand.slug, model.body_type || 'sedan');
-  res.json({ fuelTypes });
+  // Önce varyant veritabanından dene, yoksa hub generator'dan al
+  const variantFuels = getFuelTypes(brand.slug, model.slug);
+  if (variantFuels.length > 0) {
+    const FUEL_TR = { benzin: 'Benzin', dizel: 'Dizel', lpg: 'LPG', hibrit: 'Hibrit', elektrik: 'Elektrik' };
+    res.json({ fuelTypes: variantFuels.map(f => FUEL_TR[f] || f) });
+  } else {
+    const fuelTypes = getAvailableFuelTypes(brand.slug, model.body_type || 'sedan');
+    res.json({ fuelTypes });
+  }
+});
+
+// ═══════════════════════════════════════════════
+//  ARAÇ VARYANT CASCADE API
+// ═══════════════════════════════════════════════
+const variantHelpers = require('../data/vehicle-variants');
+
+// Marka-model için yıllar
+router.get('/variants/years/:brandSlug/:modelSlug', (req, res) => {
+  const years = variantHelpers.getYears(req.params.brandSlug, req.params.modelSlug);
+  res.json({ years });
+});
+
+// Marka-model için yakıt tipleri
+router.get('/variants/fuels/:brandSlug/:modelSlug', (req, res) => {
+  const fuels = variantHelpers.getFuelTypes(req.params.brandSlug, req.params.modelSlug);
+  const FUEL_TR = { benzin: 'Benzin', dizel: 'Dizel', lpg: 'LPG', hibrit: 'Hibrit', elektrik: 'Elektrik' };
+  res.json({ fuels: fuels.map(f => ({ key: f, label: FUEL_TR[f] || f })) });
+});
+
+// Şanzıman tipleri (yakıt filtreli)
+router.get('/variants/transmissions/:brandSlug/:modelSlug', (req, res) => {
+  const { fuel } = req.query;
+  const transmissions = variantHelpers.getTransmissions(req.params.brandSlug, req.params.modelSlug, fuel);
+  const TR_MAP = { otomatik: 'Otomatik', manuel: 'Manuel', 'yari-otomatik': 'Yarı Otomatik' };
+  res.json({ transmissions: transmissions.map(t => ({ key: t, label: TR_MAP[t] || t })) });
+});
+
+// Motor tipleri (yakıt + şanzıman filtreli)
+router.get('/variants/engines/:brandSlug/:modelSlug', (req, res) => {
+  const { fuel, transmission } = req.query;
+  const engines = variantHelpers.getEngines(req.params.brandSlug, req.params.modelSlug, fuel, transmission);
+  res.json({ engines });
+});
+
+// Paketler (tüm filtreler)
+router.get('/variants/packages/:brandSlug/:modelSlug', (req, res) => {
+  const { fuel, transmission, engine } = req.query;
+  const packages = variantHelpers.getPackages(req.params.brandSlug, req.params.modelSlug, fuel, transmission, engine);
+  res.json({ packages });
+});
+
+// Tam cascade bilgisi (tek istekte tüm seçenekler)
+router.get('/variants/cascade/:brandSlug/:modelSlug', (req, res) => {
+  const { fuel, transmission, engine } = req.query;
+  const result = variantHelpers.getFullCascade(req.params.brandSlug, req.params.modelSlug, { fuel, transmission, engine });
+  if (!result) return res.status(404).json({ error: 'Varyant verisi bulunamadı' });
+  const FUEL_TR = { benzin: 'Benzin', dizel: 'Dizel', lpg: 'LPG', hibrit: 'Hibrit', elektrik: 'Elektrik' };
+  const TR_MAP = { otomatik: 'Otomatik', manuel: 'Manuel', 'yari-otomatik': 'Yarı Otomatik' };
+  res.json({
+    years: result.years,
+    fuels: result.fuels.map(f => ({ key: f, label: FUEL_TR[f] || f })),
+    transmissions: result.transmissions.map(t => ({ key: t, label: TR_MAP[t] || t })),
+    engines: result.engines,
+    packages: result.packages
+  });
 });
 
 // ═══════════════════════════════════════════════

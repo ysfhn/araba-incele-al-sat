@@ -9,17 +9,17 @@
 
 <%- include('../partials/flash') %>
 
-<form action="/ilan/ver" method="POST" class="space-y-6">
+<form action="/ilan/ver" method="POST" class="space-y-6" id="ilanForm">
 
-<!-- ═══ BÖLÜM 1: Marka / Model ═══ -->
+<!-- ═══ BÖLÜM 1: Marka / Model / Yıl (Temel Cascade) ═══ -->
 <div style="background:#f8fafb;border-radius:12px;padding:1.25rem;border:1px solid #e8ecf0;">
 <h2 style="font-size:.95rem;font-weight:700;color:#1a1f36;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem;"><span class="material-symbols-outlined" style="font-size:1.1rem;color:#1a73e8;">directions_car</span> Araç Bilgileri</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 <div>
 <label class="block text-sm font-semibold text-slate-700 mb-1">Marka <span class="text-red-500">*</span></label>
 <select name="brand_id" id="brand_id" required class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
 <option value="">Marka seçin</option>
-<% brands.forEach(b => { %><option value="<%= b.id %>"><%= b.name %></option><% }) %>
+<% brands.forEach(b => { %><option value="<%= b.id %>" data-slug="<%= b.slug %>"><%= b.name %></option><% }) %>
 </select>
 </div>
 <div>
@@ -28,104 +28,92 @@
 <option value="">Önce marka seçin</option>
 </select>
 </div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
 <div>
 <label class="block text-sm font-semibold text-slate-700 mb-1">Model Yılı <span class="text-red-500">*</span></label>
-<select name="year" required class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
-<option value="">Seçin</option>
-<% for(let y=2026;y>=1970;y--){%><option value="<%=y%>"><%=y%></option><%}%>
+<select name="year" id="year_select" required class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<option value="">Önce model seçin</option>
 </select>
 </div>
+</div>
+</div>
+
+<!-- ═══ BÖLÜM 2: Teknik Cascade (Yakıt → Şanzıman → Motor → Paket) ═══ -->
+<div id="techSection" style="background:#f8fafb;border-radius:12px;padding:1.25rem;border:1px solid #e8ecf0;display:none;">
+<h2 style="font-size:.95rem;font-weight:700;color:#1a1f36;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem;"><span class="material-symbols-outlined" style="font-size:1.1rem;color:#e8710a;">build</span> Teknik Özellikler</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Yakıt Tipi <span class="text-red-500">*</span></label>
+<select name="fuel_type" id="fuel_select" required class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<option value="">Yükleniyor...</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Şanzıman <span class="text-red-500">*</span></label>
+<select name="transmission" id="transmission_select" required class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<option value="">Önce yakıt seçin</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Motor Tipi</label>
+<select name="engine_type" id="engine_select" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<option value="">Önce şanzıman seçin</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-semibold text-slate-700 mb-1">Paket / Donanım</label>
+<select name="package" id="package_select" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<option value="">Önce motor seçin</option>
+</select>
+</div>
+</div>
+<!-- Otomatik doldurulan gizli alanlar -->
+<input type="hidden" name="hp" id="hp_hidden"/>
+<input type="hidden" name="cc" id="cc_hidden"/>
+</div>
+
+<!-- ═══ BÖLÜM 3: Ek Bilgiler (Kasa, KM, Renk, Çekiş) ═══ -->
+<div id="extraSection" style="background:#f8fafb;border-radius:12px;padding:1.25rem;border:1px solid #e8ecf0;display:none;">
+<h2 style="font-size:.95rem;font-weight:700;color:#1a1f36;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem;"><span class="material-symbols-outlined" style="font-size:1.1rem;color:#7c3aed;">tune</span> Ek Bilgiler</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 <div>
 <label class="block text-sm font-semibold text-slate-700 mb-1">Gövde Tipi</label>
 <select name="body_type" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
 <option value="">Seçin</option>
-<option value="Sedan">Sedan</option>
-<option value="HB">Hatchback</option>
-<option value="SUV">SUV</option>
-<option value="Coupe">Coupe</option>
-<option value="Cabrio">Cabrio</option>
-<option value="Station Wagon">Station Wagon</option>
-<option value="MPV">MPV</option>
-<option value="Pick-up">Pick-up</option>
-<option value="Van">Van</option>
+<option value="Sedan">Sedan</option><option value="HB">Hatchback</option><option value="SUV">SUV</option>
+<option value="Coupe">Coupe</option><option value="Cabrio">Cabrio</option><option value="Station Wagon">Station Wagon</option>
+<option value="MPV">MPV</option><option value="Pick-up">Pick-up</option><option value="Van">Van</option>
 </select>
 </div>
 <div>
 <label class="block text-sm font-semibold text-slate-700 mb-1">Kilometre <span class="text-red-500">*</span></label>
 <input name="km" type="number" min="0" required placeholder="ör: 50000" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
 </div>
-</div>
-</div>
-
-<!-- ═══ BÖLÜM 2: Teknik Özellikler ═══ -->
-<div style="background:#f8fafb;border-radius:12px;padding:1.25rem;border:1px solid #e8ecf0;">
-<h2 style="font-size:.95rem;font-weight:700;color:#1a1f36;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem;"><span class="material-symbols-outlined" style="font-size:1.1rem;color:#e8710a;">build</span> Teknik Özellikler</h2>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 <div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Yakıt Tipi <span class="text-red-500">*</span></label>
-<select name="fuel_type" required class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<label class="block text-sm font-semibold text-slate-700 mb-1">Renk</label>
+<select name="color" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
 <option value="">Seçin</option>
-<option value="benzin">Benzin</option>
-<option value="dizel">Dizel</option>
-<option value="elektrik">Elektrik</option>
-<option value="hibrit">Hibrit</option>
-<option value="lpg">LPG</option>
-</select>
-</div>
-<div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Vites <span class="text-red-500">*</span></label>
-<select name="transmission" required class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
-<option value="">Seçin</option>
-<option value="otomatik">Otomatik</option>
-<option value="manuel">Manuel</option>
-<option value="yari_otomatik">Yarı Otomatik</option>
-</select>
-</div>
-<div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Çekiş Tipi</label>
-<select name="drive_type" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
-<option value="">Seçin</option>
-<option value="FWD">Önden Çekiş (FWD)</option>
-<option value="RWD">Arkadan İtiş (RWD)</option>
-<option value="AWD">4x4 (AWD)</option>
+<option value="Beyaz">⬜ Beyaz</option><option value="Siyah">⬛ Siyah</option><option value="Gri">🔲 Gri</option>
+<option value="Kırmızı">🟥 Kırmızı</option><option value="Mavi">🟦 Mavi</option><option value="Lacivert">🔵 Lacivert</option>
+<option value="Yeşil">🟩 Yeşil</option><option value="Sarı">🟨 Sarı</option><option value="Turuncu">🟧 Turuncu</option>
+<option value="Kahverengi">🟫 Kahverengi</option><option value="Bej">🏖️ Bej</option><option value="Gümüş">🪙 Gümüş</option>
+<option value="Bordo">🍷 Bordo</option><option value="Diğer">Diğer</option>
 </select>
 </div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
 <div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Motor Hacmi (cc)</label>
-<input name="cc" type="number" min="0" placeholder="ör: 1598" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
-</div>
-<div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Beygir Gücü (HP)</label>
-<input name="hp" type="number" min="0" placeholder="ör: 150" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
-</div>
-<div>
-<label class="block text-sm font-semibold text-slate-700 mb-1">Renk</label>
-<select name="color" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
+<label class="block text-sm font-semibold text-slate-700 mb-1">Çekiş Tipi</label>
+<select name="drive_type" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary">
 <option value="">Seçin</option>
-<option value="Beyaz">⬜ Beyaz</option>
-<option value="Siyah">⬛ Siyah</option>
-<option value="Gri">🔲 Gri</option>
-<option value="Kırmızı">🟥 Kırmızı</option>
-<option value="Mavi">🟦 Mavi</option>
-<option value="Lacivert">🔵 Lacivert</option>
-<option value="Yeşil">🟩 Yeşil</option>
-<option value="Sarı">🟨 Sarı</option>
-<option value="Turuncu">🟧 Turuncu</option>
-<option value="Kahverengi">🟫 Kahverengi</option>
-<option value="Bej">🏖️ Bej</option>
-<option value="Gümüş">🪙 Gümüş</option>
-<option value="Bordo">🍷 Bordo</option>
-<option value="Diğer">Diğer</option>
+<option value="FWD">Önden Çekiş (FWD)</option><option value="RWD">Arkadan İtiş (RWD)</option><option value="AWD">4x4 (AWD)</option>
 </select>
 </div>
 </div>
 </div>
 
-<!-- ═══ BÖLÜM 3: Durum & Konum ═══ -->
+<!-- ═══ BÖLÜM 4: Durum & Konum ═══ -->
 <div style="background:#f8fafb;border-radius:12px;padding:1.25rem;border:1px solid #e8ecf0;">
 <h2 style="font-size:.95rem;font-weight:700;color:#1a1f36;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem;"><span class="material-symbols-outlined" style="font-size:1.1rem;color:#1e8e3e;">location_on</span> Durum & Konum</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -163,22 +151,16 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
 <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
 <input type="checkbox" name="damage_free" value="1" checked class="w-5 h-5 rounded text-primary focus:ring-primary"/>
-<div>
-<span class="text-sm font-semibold text-slate-700">Boyasız / Hasarsız</span>
-<p class="text-xs text-slate-400 mt-0.5">Araç boyasız ve hasarsız durumda</p>
-</div>
+<div><span class="text-sm font-semibold text-slate-700">Boyasız / Hasarsız</span><p class="text-xs text-slate-400 mt-0.5">Araç boyasız ve hasarsız durumda</p></div>
 </label>
 <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
 <input type="checkbox" name="trade_in" value="1" class="w-5 h-5 rounded text-primary focus:ring-primary"/>
-<div>
-<span class="text-sm font-semibold text-slate-700">Takasa Açık</span>
-<p class="text-xs text-slate-400 mt-0.5">Takas tekliflerini değerlendiriyorum</p>
-</div>
+<div><span class="text-sm font-semibold text-slate-700">Takasa Açık</span><p class="text-xs text-slate-400 mt-0.5">Takas tekliflerini değerlendiriyorum</p></div>
 </label>
 </div>
 </div>
 
-<!-- ═══ BÖLÜM 4: Fiyat & İlan Bilgileri ═══ -->
+<!-- ═══ BÖLÜM 5: Fiyat & İlan Bilgileri ═══ -->
 <div style="background:#f8fafb;border-radius:12px;padding:1.25rem;border:1px solid #e8ecf0;">
 <h2 style="font-size:.95rem;font-weight:700;color:#1a1f36;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem;"><span class="material-symbols-outlined" style="font-size:1.1rem;color:#9334e6;">sell</span> Fiyat & Detaylar</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -189,12 +171,12 @@
 </div>
 <div>
 <label class="block text-sm font-semibold text-slate-700 mb-1">İlan Başlığı (opsiyonel)</label>
-<input name="title" type="text" placeholder="Otomatik oluşturulur (ör: 2020 BMW 320i)" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
+<input name="title" type="text" placeholder="Otomatik oluşturulur" class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"/>
 </div>
 </div>
 <div class="mt-4">
 <label class="block text-sm font-semibold text-slate-700 mb-1">Açıklama</label>
-<textarea name="description" rows="5" placeholder="Aracınız hakkında detaylı bilgi verin. Bakım durumu, lastik durumu, km garantisi, aksesuar ve ekstra donanımlar..." class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"></textarea>
+<textarea name="description" rows="5" placeholder="Aracınız hakkında detaylı bilgi verin..." class="w-full rounded-xl border-slate-200 focus:border-primary focus:ring-primary"></textarea>
 </div>
 </div>
 
@@ -215,26 +197,191 @@
 </main>
 
 <script>
-// Marka-Model cascade
-document.getElementById('brand_id').addEventListener('change', async function() {
-  const modelSelect = document.getElementById('model_id');
-  modelSelect.innerHTML = '<option value="">Yükleniyor...</option>';
-  if (!this.value) { modelSelect.innerHTML = '<option value="">Önce marka seçin</option>'; return; }
+// ═══════════════════════════════════════
+//  CASCADE SELECTİON ENGİNE
+// ═══════════════════════════════════════
+const $ = s => document.querySelector(s);
+const brandSel = $('#brand_id');
+const modelSel = $('#model_id');
+const yearSel  = $('#year_select');
+const fuelSel  = $('#fuel_select');
+const transSel = $('#transmission_select');
+const engineSel = $('#engine_select');
+const pkgSel   = $('#package_select');
+const techSec  = $('#techSection');
+const extraSec = $('#extraSection');
+
+let currentBrandSlug = '';
+let currentModelSlug = '';
+let cascadeData = null;   // cached /variants/cascade response
+let allEngines = [];      // full engine objects from cascade
+
+// ── Helper: populate select, auto-select if single option ──
+function fillSelect(sel, items, placeholder, valueFn, labelFn) {
+  sel.innerHTML = '';
+  if (!items || items.length === 0) {
+    sel.innerHTML = `<option value="">${placeholder}</option>`;
+    sel.disabled = true;
+    return;
+  }
+  sel.disabled = false;
+  if (items.length === 1) {
+    // Tek seçenek → otomatik seç
+    sel.innerHTML = `<option value="${valueFn(items[0])}">${labelFn(items[0])}</option>`;
+    sel.value = valueFn(items[0]);
+    sel.dispatchEvent(new Event('change'));
+    return;
+  }
+  sel.innerHTML = `<option value="">${placeholder}</option>` + items.map(i => `<option value="${valueFn(i)}">${labelFn(i)}</option>`).join('');
+}
+
+// ── 1) Marka değişince → Model yükle ──
+brandSel.addEventListener('change', async function() {
+  const opt = this.options[this.selectedIndex];
+  currentBrandSlug = opt?.dataset?.slug || '';
+  modelSel.innerHTML = '<option value="">Yükleniyor...</option>';
+  yearSel.innerHTML = '<option value="">Önce model seçin</option>';
+  techSec.style.display = 'none';
+  extraSec.style.display = 'none';
+  resetCascade();
+
+  if (!this.value) { modelSel.innerHTML = '<option value="">Önce marka seçin</option>'; return; }
   try {
     const res = await fetch('/api/models/' + this.value);
     const models = await res.json();
-    modelSelect.innerHTML = '<option value="">Model seçin</option>' + models.map(m => `<option value="${m.id}">${m.name}${m.body_type ? ' ('+m.body_type+')' : ''}</option>`).join('');
-  } catch(e) { modelSelect.innerHTML = '<option value="">Hata oluştu</option>'; }
+    modelSel.innerHTML = '<option value="">Model seçin</option>' + models.map(m =>
+      `<option value="${m.id}" data-slug="${m.slug}">${m.name}${m.body_type ? ' ('+m.body_type+')' : ''}</option>`
+    ).join('');
+  } catch(e) { modelSel.innerHTML = '<option value="">Hata oluştu</option>'; }
 });
+
+// ── 2) Model değişince → Yıl + Cascade yükle ──
+modelSel.addEventListener('change', async function() {
+  const opt = this.options[this.selectedIndex];
+  currentModelSlug = opt?.dataset?.slug || '';
+  yearSel.innerHTML = '<option value="">Yükleniyor...</option>';
+  techSec.style.display = 'none';
+  extraSec.style.display = 'none';
+  resetCascade();
+
+  if (!this.value || !currentBrandSlug || !currentModelSlug) {
+    yearSel.innerHTML = '<option value="">Önce model seçin</option>';
+    return;
+  }
+
+  try {
+    // Cascade endpoint'ten tüm veriyi çek
+    const res = await fetch(`/api/variants/cascade/${currentBrandSlug}/${currentModelSlug}`);
+    if (res.ok) {
+      cascadeData = await res.json();
+      // Yılları doldur
+      fillSelect(yearSel, cascadeData.years, 'Yıl seçin', y => y, y => y);
+    } else {
+      // Varyant verisi yoksa — statik yıl listesi göster
+      cascadeData = null;
+      const years = [];
+      for (let y = 2026; y >= 1980; y--) years.push(y);
+      fillSelect(yearSel, years, 'Yıl seçin', y => y, y => y);
+    }
+  } catch(e) {
+    cascadeData = null;
+    yearSel.innerHTML = '<option value="">Hata oluştu</option>';
+  }
+});
+
+// ── 3) Yıl değişince → Yakıt tiplerini göster ──
+yearSel.addEventListener('change', function() {
+  if (!this.value) { techSec.style.display = 'none'; extraSec.style.display = 'none'; return; }
+
+  if (cascadeData && cascadeData.fuels) {
+    fillSelect(fuelSel, cascadeData.fuels, 'Yakıt seçin', f => f.key, f => f.label);
+    techSec.style.display = 'block';
+    extraSec.style.display = 'block';
+  } else {
+    // Varyant verisi yoksa statik seçenekler göster
+    const staticFuels = [
+      {key:'benzin',label:'Benzin'},{key:'dizel',label:'Dizel'},{key:'elektrik',label:'Elektrik'},
+      {key:'hibrit',label:'Hibrit'},{key:'lpg',label:'LPG'}
+    ];
+    fillSelect(fuelSel, staticFuels, 'Yakıt seçin', f => f.key, f => f.label);
+    techSec.style.display = 'block';
+    extraSec.style.display = 'block';
+    // Statik modda şanzıman da hemen göster
+    const staticTrans = [{key:'otomatik',label:'Otomatik'},{key:'manuel',label:'Manuel'},{key:'yari-otomatik',label:'Yarı Otomatik'}];
+    fillSelect(transSel, staticTrans, 'Şanzıman seçin', t => t.key, t => t.label);
+    engineSel.innerHTML = '<option value="">-</option>';
+    pkgSel.innerHTML = '<option value="">-</option>';
+  }
+});
+
+// ── 4) Yakıt değişince → Şanzıman güncelle ──
+fuelSel.addEventListener('change', async function() {
+  if (!this.value || !cascadeData) {
+    if (!cascadeData) return; // statik mod
+    transSel.innerHTML = '<option value="">Önce yakıt seçin</option>';
+    return;
+  }
+  try {
+    const res = await fetch(`/api/variants/cascade/${currentBrandSlug}/${currentModelSlug}?fuel=${this.value}`);
+    const data = await res.json();
+    fillSelect(transSel, data.transmissions, 'Şanzıman seçin', t => t.key, t => t.label);
+    allEngines = data.engines || [];
+  } catch(e) { transSel.innerHTML = '<option value="">Hata</option>'; }
+});
+
+// ── 5) Şanzıman değişince → Motor güncelle ──
+transSel.addEventListener('change', async function() {
+  if (!this.value || !cascadeData) {
+    if (!cascadeData) return;
+    engineSel.innerHTML = '<option value="">Önce şanzıman seçin</option>';
+    return;
+  }
+  try {
+    const res = await fetch(`/api/variants/cascade/${currentBrandSlug}/${currentModelSlug}?fuel=${fuelSel.value}&transmission=${this.value}`);
+    const data = await res.json();
+    allEngines = data.engines || [];
+    fillSelect(engineSel, allEngines, 'Motor seçin', e => e.ad, e => `${e.ad}`);
+  } catch(e) { engineSel.innerHTML = '<option value="">Hata</option>'; }
+});
+
+// ── 6) Motor değişince → HP/CC otomatik doldur + Paket güncelle ──
+engineSel.addEventListener('change', async function() {
+  const selected = allEngines.find(e => e.ad === this.value);
+  if (selected) {
+    $('#hp_hidden').value = selected.hp || '';
+    $('#cc_hidden').value = selected.cc || '';
+  } else {
+    $('#hp_hidden').value = '';
+    $('#cc_hidden').value = '';
+  }
+
+  if (!this.value || !cascadeData) {
+    if (!cascadeData) return;
+    pkgSel.innerHTML = '<option value="">Önce motor seçin</option>';
+    return;
+  }
+  try {
+    const res = await fetch(`/api/variants/packages/${currentBrandSlug}/${currentModelSlug}?fuel=${fuelSel.value}&transmission=${transSel.value}&engine=${encodeURIComponent(this.value)}`);
+    const data = await res.json();
+    fillSelect(pkgSel, data.packages, 'Paket seçin', p => p, p => p);
+  } catch(e) { pkgSel.innerHTML = '<option value="">Hata</option>'; }
+});
+
+function resetCascade() {
+  fuelSel.innerHTML = '<option value="">Önce model seçin</option>';
+  transSel.innerHTML = '<option value="">Önce yakıt seçin</option>';
+  engineSel.innerHTML = '<option value="">Önce şanzıman seçin</option>';
+  pkgSel.innerHTML = '<option value="">Önce motor seçin</option>';
+  $('#hp_hidden').value = '';
+  $('#cc_hidden').value = '';
+  allEngines = [];
+  cascadeData = null;
+}
 
 // Fiyat formatlama
 function formatPriceDisplay(input) {
   const val = parseInt(input.value);
   const el = document.getElementById('priceFormatted');
-  if (val && val > 0) {
-    el.textContent = '≈ ' + val.toLocaleString('tr-TR') + ' ₺';
-  } else {
-    el.textContent = '';
-  }
+  if (val && val > 0) { el.textContent = '≈ ' + val.toLocaleString('tr-TR') + ' ₺'; } else { el.textContent = ''; }
 }
 </script>

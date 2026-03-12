@@ -70,7 +70,7 @@ router.get('/ver', isAuthenticated, async (req, res) => {
 // İlan Kaydet - POST /ilan/ver
 router.post('/ver', isAuthenticated, async (req, res) => {
   const db = getDb();
-  const { brand_id, model_id, year, km, fuel_type, transmission, hp, color, price, description, title } = req.body;
+  const { brand_id, model_id, year, km, fuel_type, transmission, hp, cc, color, price, description, title, engine_type, package: pkg, body_type, drive_type } = req.body;
 
   if (!brand_id || !model_id || !year || !price) {
     req.flash('error', 'Zorunlu alanları doldurunuz.');
@@ -80,7 +80,8 @@ router.post('/ver', isAuthenticated, async (req, res) => {
   const brand = await db.prepare('SELECT * FROM brands WHERE id = ?').get(brand_id);
   const model = await db.prepare('SELECT * FROM models WHERE id = ?').get(model_id);
 
-  const autoTitle = title || `${year} ${brand.name} ${model.name}`;
+  const engineSuffix = engine_type ? ` ${engine_type}` : '';
+  const autoTitle = title || `${year} ${brand.name} ${model.name}${engineSuffix}`;
   const slug = autoTitle.toLowerCase()
     .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ç/g, 'c').replace(/ğ/g, 'g')
     .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now().toString(36);
@@ -90,8 +91,17 @@ router.post('/ver', isAuthenticated, async (req, res) => {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
   `).run(req.session.user.id, brand_id, model_id, autoTitle, slug, year, km || 0, fuel_type, transmission, hp || null, color || null, price, description || null, req.body.city || null);
 
+  // Ek özellikler (motor tipi, paket, cc, body_type, drive_type) feature olarak kaydet
+  const listingId = result.lastInsertRowid;
+  const insertFeature = db.prepare('INSERT INTO listing_features (listing_id, feature) VALUES (?, ?)');
+  if (engine_type) await insertFeature.run(listingId, `Motor: ${engine_type}`);
+  if (pkg) await insertFeature.run(listingId, `Paket: ${pkg}`);
+  if (cc) await insertFeature.run(listingId, `Motor Hacmi: ${cc} cc`);
+  if (body_type) await insertFeature.run(listingId, `Kasa: ${body_type}`);
+  if (drive_type) await insertFeature.run(listingId, `Çekiş: ${drive_type}`);
+
   // Placeholder görsel ekle
-  await db.prepare('INSERT INTO listing_images (listing_id, url, is_primary) VALUES (?, ?, 1)').run(result.lastInsertRowid, '/images/car-placeholder.svg');
+  await db.prepare('INSERT INTO listing_images (listing_id, url, is_primary) VALUES (?, ?, 1)').run(listingId, '/images/car-placeholder.svg');
 
   req.flash('success', 'İlanınız başarıyla oluşturuldu!');
   res.redirect(`/ilan/${slug}`);
