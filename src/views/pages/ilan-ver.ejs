@@ -180,12 +180,31 @@
 </div>
 </div>
 
+<!-- ═══ BÖLÜM 6: Araç Fotoğrafları ═══ -->
+<div style="background:#f8fafb;border-radius:12px;padding:1.25rem;border:1px solid #e8ecf0;">
+<h2 style="font-size:.95rem;font-weight:700;color:#1a1f36;margin:0 0 1rem;display:flex;align-items:center;gap:.5rem;"><span class="material-symbols-outlined" style="font-size:1.1rem;color:#0891b2;">photo_camera</span> Araç Fotoğrafları</h2>
+<p style="margin:0 0 .75rem;font-size:.8rem;color:#64748b;">En fazla <strong>10</strong> fotoğraf yükleyebilirsiniz. İlk fotoğraf kapak görseli olarak kullanılır. Sürükle-bırak veya tıklayarak ekleyin.</p>
+
+<div id="imageUploadArea" style="border:2px dashed #cbd5e1;border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:all .2s;background:#fff;" ondragover="event.preventDefault();this.style.borderColor='#1a73e8';this.style.background='#eff6ff';" ondragleave="this.style.borderColor='#cbd5e1';this.style.background='#fff';" ondrop="handleDrop(event)" onclick="document.getElementById('imageFileInput').click()">
+<span class="material-symbols-outlined" style="font-size:3rem;color:#94a3b8;">cloud_upload</span>
+<p style="margin:.5rem 0 0;font-size:.9rem;color:#64748b;font-weight:600;">Fotoğrafları sürükleyin veya tıklayın</p>
+<p style="margin:.25rem 0 0;font-size:.75rem;color:#94a3b8;">JPG, PNG, WebP — Maks. 5 MB / fotoğraf</p>
+</div>
+<input type="file" id="imageFileInput" multiple accept="image/jpeg,image/png,image/webp" style="display:none" onchange="handleFiles(this.files)"/>
+
+<!-- Yüklenen fotoğraf önizlemeleri -->
+<div id="imagePreviewGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.75rem;margin-top:1rem;"></div>
+
+<!-- Gizli alanlar (base64 verileri) -->
+<div id="imageHiddenInputs"></div>
+</div>
+
 <!-- Bilgi Notu -->
 <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:1rem 1.25rem;display:flex;gap:.75rem;align-items:start;">
 <span class="material-symbols-outlined" style="color:#3b82f6;font-size:1.25rem;margin-top:2px;">info</span>
 <div>
 <p style="margin:0;font-size:.85rem;color:#1e40af;font-weight:600;">İlan Oluşturma Bilgisi</p>
-<p style="margin:.25rem 0 0;font-size:.8rem;color:#3b82f6;">İlanınız admin ekibimiz tarafından incelendikten sonra yayına alınacaktır. Fotoğraf ekleme özelliği yakında eklenecektir.</p>
+<p style="margin:.25rem 0 0;font-size:.8rem;color:#3b82f6;">İlanınız admin ekibimiz tarafından incelendikten sonra yayına alınacaktır.</p>
 </div>
 </div>
 
@@ -384,4 +403,142 @@ function formatPriceDisplay(input) {
   const el = document.getElementById('priceFormatted');
   if (val && val > 0) { el.textContent = '≈ ' + val.toLocaleString('tr-TR') + ' ₺'; } else { el.textContent = ''; }
 }
+
+// ═══════════════════════════════════════
+//  FOTOĞRAF YÜKLEME SİSTEMİ
+// ═══════════════════════════════════════
+const MAX_IMAGES = 10;
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_DIMENSION = 1200; // Resize büyük resimleri
+const JPEG_QUALITY = 0.7; // Sıkıştırma kalitesi
+let uploadedImages = []; // [{id, dataUrl}]
+
+function handleDrop(e) {
+  e.preventDefault();
+  const area = document.getElementById('imageUploadArea');
+  area.style.borderColor = '#cbd5e1';
+  area.style.background = '#fff';
+  if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+}
+
+function handleFiles(fileList) {
+  const files = Array.from(fileList);
+  for (const file of files) {
+    if (uploadedImages.length >= MAX_IMAGES) {
+      alert(`En fazla ${MAX_IMAGES} fotoğraf yükleyebilirsiniz.`);
+      break;
+    }
+    if (!['image/jpeg','image/png','image/webp'].includes(file.type)) {
+      alert(`"${file.name}" desteklenmeyen format. JPG, PNG veya WebP kullanın.`);
+      continue;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      alert(`"${file.name}" çok büyük (${(file.size/1024/1024).toFixed(1)} MB). Maks. 5 MB.`);
+      continue;
+    }
+    compressAndAdd(file);
+  }
+}
+
+function compressAndAdd(file) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      // Canvas ile resize + compress
+      const canvas = document.createElement('canvas');
+      let w = img.width, h = img.height;
+      if (w > MAX_DIMENSION || h > MAX_DIMENSION) {
+        if (w > h) { h = Math.round(h * MAX_DIMENSION / w); w = MAX_DIMENSION; }
+        else { w = Math.round(w * MAX_DIMENSION / h); h = MAX_DIMENSION; }
+      }
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      const dataUrl = canvas.toDataURL('image/jpeg', JPEG_QUALITY);
+      const id = 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2,6);
+      uploadedImages.push({ id, dataUrl });
+      renderPreviews();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderPreviews() {
+  const grid = document.getElementById('imagePreviewGrid');
+  const hiddens = document.getElementById('imageHiddenInputs');
+  grid.innerHTML = '';
+  hiddens.innerHTML = '';
+
+  uploadedImages.forEach((item, i) => {
+    // Hidden input
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'images';
+    input.value = item.dataUrl;
+    hiddens.appendChild(input);
+
+    // Preview card
+    const card = document.createElement('div');
+    card.style.cssText = 'position:relative;border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:#f1f5f9;border:2px solid ' + (i===0?'#1a73e8':'#e2e8f0') + ';';
+    card.innerHTML = `
+      <img src="${item.dataUrl}" style="width:100%;height:100%;object-fit:cover;"/>
+      ${i===0 ? '<span style="position:absolute;top:4px;left:4px;background:#1a73e8;color:#fff;font-size:.6rem;padding:2px 6px;border-radius:6px;font-weight:700;">KAPAK</span>' : ''}
+      <button type="button" onclick="removeImage('${item.id}')" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,.6);color:#fff;border:none;width:24px;height:24px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;">&times;</button>
+      ${i > 0 ? '<button type="button" onclick="moveImageToFirst(\''+item.id+'\')" style="position:absolute;bottom:4px;left:4px;background:rgba(0,0,0,.55);color:#fff;border:none;font-size:.55rem;padding:2px 6px;border-radius:6px;cursor:pointer;">Kapak Yap</button>' : ''}
+    `;
+    grid.appendChild(card);
+  });
+
+  // Yükleme alanı gizle/göster
+  const area = document.getElementById('imageUploadArea');
+  if (uploadedImages.length >= MAX_IMAGES) {
+    area.style.display = 'none';
+  } else {
+    area.style.display = 'block';
+  }
+}
+
+function removeImage(id) {
+  uploadedImages = uploadedImages.filter(img => img.id !== id);
+  renderPreviews();
+}
+
+function moveImageToFirst(id) {
+  const idx = uploadedImages.findIndex(img => img.id === id);
+  if (idx > 0) {
+    const [item] = uploadedImages.splice(idx, 1);
+    uploadedImages.unshift(item);
+    renderPreviews();
+  }
+}
+
+// Form gönderilmeden önce toplam boyut kontrolü
+document.getElementById('ilanForm').addEventListener('submit', function(e) {
+  if (uploadedImages.length > 0) {
+    const totalSize = uploadedImages.reduce((sum, img) => sum + img.dataUrl.length, 0);
+    // Vercel limit ~4.5MB, güvenli sınır 4MB
+    if (totalSize > 4 * 1024 * 1024) {
+      const sizeMB = (totalSize / 1024 / 1024).toFixed(1);
+      if (!confirm(`Toplam fotoğraf boyutu ${sizeMB} MB. Sunucu limiti nedeniyle bazı fotoğraflar kaldırılabilir. Daha az fotoğraf yüklemek ister misiniz?`)) {
+        e.preventDefault();
+        return;
+      }
+    }
+  }
+});
+
+// Düzenleme modunda mevcut resimleri yükle
+<% if (editMode && images && images.length > 0) { %>
+(function() {
+  const existingImages = <%- JSON.stringify(images.filter(img => img.url !== '/images/car-placeholder.svg').map(img => img.url)) %>;
+  existingImages.forEach((url, i) => {
+    const id = 'existing_' + i;
+    uploadedImages.push({ id, dataUrl: url });
+  });
+  if (uploadedImages.length > 0) renderPreviews();
+})();
+<% } %>
 </script>

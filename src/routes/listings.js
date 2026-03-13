@@ -100,8 +100,26 @@ router.post('/ver', isAuthenticated, async (req, res) => {
   if (body_type) await insertFeature.run(listingId, `Kasa: ${body_type}`);
   if (drive_type) await insertFeature.run(listingId, `Çekiş: ${drive_type}`);
 
-  // Placeholder görsel ekle
-  await db.prepare('INSERT INTO listing_images (listing_id, url, is_primary) VALUES (?, ?, 1)').run(listingId, '/images/car-placeholder.svg');
+  // Resimleri kaydet
+  const images = req.body.images;
+  if (images) {
+    const imgArr = Array.isArray(images) ? images : [images];
+    const insertImg = db.prepare('INSERT INTO listing_images (listing_id, url, is_primary, sort_order) VALUES (?, ?, ?, ?)');
+    for (let i = 0; i < Math.min(imgArr.length, 10); i++) {
+      const dataUrl = imgArr[i];
+      if (dataUrl && dataUrl.startsWith('data:image/')) {
+        await insertImg.run(listingId, dataUrl, i === 0 ? 1 : 0, i);
+      }
+    }
+    // Eğer hiç geçerli resim yoksa placeholder ekle
+    const imgCount = await db.prepare('SELECT COUNT(*) as cnt FROM listing_images WHERE listing_id = ?').get(listingId);
+    if (imgCount.cnt === 0) {
+      await db.prepare('INSERT INTO listing_images (listing_id, url, is_primary) VALUES (?, ?, 1)').run(listingId, '/images/car-placeholder.svg');
+    }
+  } else {
+    // Resim yüklenmemişse placeholder ekle
+    await db.prepare('INSERT INTO listing_images (listing_id, url, is_primary) VALUES (?, ?, 1)').run(listingId, '/images/car-placeholder.svg');
+  }
 
   req.flash('success', 'İlanınız başarıyla oluşturuldu!');
   res.redirect(`/ilan/${slug}`);
@@ -158,6 +176,21 @@ router.post('/:slug/duzenle', isAuthenticated, async (req, res) => {
     const featureArr = Array.isArray(features) ? features : [features];
     const insertFeature = db.prepare('INSERT INTO listing_features (listing_id, feature) VALUES (?, ?)');
     for (const f of featureArr) { if (f.trim()) await insertFeature.run(listing.id, f.trim()); }
+  }
+
+  // Resimleri güncelle (yeni resimler varsa)
+  const images = req.body.images;
+  if (images) {
+    const imgArr = Array.isArray(images) ? images : [images];
+    const validImages = imgArr.filter(img => img && img.startsWith('data:image/'));
+    if (validImages.length > 0) {
+      // Eski resimleri sil ve yenilerini ekle
+      await db.prepare('DELETE FROM listing_images WHERE listing_id = ?').run(listing.id);
+      const insertImg = db.prepare('INSERT INTO listing_images (listing_id, url, is_primary, sort_order) VALUES (?, ?, ?, ?)');
+      for (let i = 0; i < Math.min(validImages.length, 10); i++) {
+        await insertImg.run(listing.id, validImages[i], i === 0 ? 1 : 0, i);
+      }
+    }
   }
 
   req.flash('success', 'İlan güncellendi!');
