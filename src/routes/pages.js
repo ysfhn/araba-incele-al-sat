@@ -134,7 +134,25 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
   const hub = await db.prepare('SELECT * FROM vehicle_hubs WHERE brand_id = ? AND model_id = ?').get(brand.id, model.id);
 
   // Hub kaydı yoksa otomatik içerik üret — seçilen varyant bilgilerini de geçir
-  const variantOptions = { fuel: queryFuel, transmission: queryTransmission, engine: queryEngine, package: queryPackage, bodyType: queryBodyType };
+  // Varyant verisinden motor bilgisini çözümle (pages.js'de yapılıyor, hub-content-generator'a bağımlılık olmasın)
+  let resolvedEngine = null;
+  if (!hub && (queryEngine || queryFuel || queryTransmission)) {
+    try {
+      if (hasVariantData(brand.slug, model.slug)) {
+        const realEngines = getEngines(brand.slug, model.slug, queryFuel || null, queryTransmission || null);
+        if (queryEngine && realEngines.length > 0) {
+          resolvedEngine = realEngines.find(e => e.engine === queryEngine);
+          if (!resolvedEngine) {
+            resolvedEngine = realEngines.find(e => e.engine.toLowerCase().includes(queryEngine.toLowerCase()));
+          }
+        }
+        if (!resolvedEngine && realEngines.length > 0) {
+          resolvedEngine = realEngines[0];
+        }
+      }
+    } catch (e) { /* varyant verisi yoksa segment default kullanılır */ }
+  }
+  const variantOptions = { fuel: queryFuel, transmission: queryTransmission, engine: queryEngine, package: queryPackage, bodyType: queryBodyType, resolvedEngine };
   const effectiveHub = hub || generateHubContent(brand, model, variantOptions);
 
   // Build dynamic listing query with optional year/fuel/transmission/budget/engine filters

@@ -374,26 +374,8 @@ function generateHubContent(brand, model, variantOptions = {}) {
   const specs = SEGMENT_SPECS[segment] || SEGMENT_SPECS.mainstream;
   const bodyDefaults = BODY_DEFAULTS[bodyType] || BODY_DEFAULTS.sedan;
 
-  // Gerçek varyant verisinden motor bilgisi al (wizard seçimine göre)
-  let engineData = null;
-  try {
-    const { getEngines: _getEngines, hasVariantData: _hasVariantData } = require('../data/vehicle-variants');
-    if (_hasVariantData(brand.slug, model.slug)) {
-      const realEngines = _getEngines(brand.slug, model.slug, variantOptions.fuel || null, variantOptions.transmission || null);
-      if (variantOptions.engine && realEngines.length > 0) {
-        // Kullanıcının seçtiği motoru bul
-        engineData = realEngines.find(e => e.engine === variantOptions.engine);
-        // Tam eşleşme yoksa prefix eşleşme dene
-        if (!engineData) {
-          engineData = realEngines.find(e => e.engine.toLowerCase().includes(variantOptions.engine.toLowerCase()));
-        }
-      }
-      // Hala yoksa ve yakıt/şanzıman filtresi varsa ilk motoru al
-      if (!engineData && realEngines.length > 0 && (variantOptions.fuel || variantOptions.transmission)) {
-        engineData = realEngines[0];
-      }
-    }
-  } catch (e) { /* varyant verisi yoksa segment default'u kullanılır */ }
+  // Gerçek varyant verisinden motor bilgisi (pages.js'de çözümlendi, resolvedEngine olarak geçildi)
+  const engineData = variantOptions.resolvedEngine || null;
 
   // Eğer gerçek varyant verisi bulunduysa motor bilgisini oradan al, yoksa segment default'u kullan
   let finalEngine, finalHp, finalTorque, finalTransmission, finalFuelType;
