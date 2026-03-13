@@ -365,7 +365,7 @@ const REVIEW_TEMPLATES = {
 /**
  * @param {Object} brand - { id, name, slug, logo }
  * @param {Object} model - { id, brand_id, name, slug, body_type }
- * @param {Object} [variantOptions] - Wizard'dan gelen seçimler: { fuel, transmission, engine, package, bodyType }
+ * @param {Object} [variantOptions] - Wizard'dan gelen seçimler: { fuel, transmission, engine, package, bodyType, year }
  * @returns {Object} hub-benzeri veri nesnesi
  */
 function generateHubContent(brand, model, variantOptions = {}) {
@@ -373,6 +373,10 @@ function generateHubContent(brand, model, variantOptions = {}) {
   const bodyType = variantOptions.bodyType || model.body_type || 'sedan';
   const specs = SEGMENT_SPECS[segment] || SEGMENT_SPECS.mainstream;
   const bodyDefaults = BODY_DEFAULTS[bodyType] || BODY_DEFAULTS.sedan;
+
+  // Yıl — wizard'dan gelen yıl veya mevcut yıl
+  const currentYear = new Date().getFullYear();
+  const selectedYear = variantOptions.year || currentYear;
 
   // Gerçek varyant verisinden motor bilgisi (pages.js'de çözümlendi, resolvedEngine olarak geçildi)
   const engineData = variantOptions.resolvedEngine || null;
@@ -383,7 +387,8 @@ function generateHubContent(brand, model, variantOptions = {}) {
   if (engineData) {
     finalEngine = engineData.engine;
     finalHp = engineData.hp;
-    finalTorque = engineData.cc ? Math.round(engineData.cc * 0.1) + ' Nm' : '—';
+    // Torku gerçekçi hesapla: HP ve yakıt tipine dayalı formül (cc*0.1 yanlıştı)
+    finalTorque = estimateTorque(engineData, variantOptions.fuel, segment);
     // Wizard'dan gelen şanzıman varsa onu kullan
     if (variantOptions.transmission) {
       const trMap = { 'otomatik': 'Otomatik', 'manuel': 'Manuel', 'yari-otomatik': 'Yarı Otomatik' };
@@ -425,7 +430,19 @@ function generateHubContent(brand, model, variantOptions = {}) {
   const [minPrice, maxPrice] = specs.priceRange;
   const priceStep = 50000;
   const priceRange = maxPrice - minPrice;
-  const avgPrice = minPrice + Math.round((hash % priceRange) / priceStep) * priceStep;
+  let avgPrice = minPrice + Math.round((hash % priceRange) / priceStep) * priceStep;
+
+  // Yıla göre fiyat değer kaybı uygula
+  // Her yıl için ortalama %7 değer kaybı (2. el piyasa gerçeği)
+  const yearDiff = currentYear - selectedYear;
+  if (yearDiff > 0) {
+    const depreciationRate = getDepreciationRate(segment);
+    const depreciationMultiplier = Math.pow(1 - depreciationRate, yearDiff);
+    avgPrice = Math.round(avgPrice * depreciationMultiplier / priceStep) * priceStep;
+    // Minimum fiyat: segment alt limitinin %15'i
+    const floorPrice = Math.round(minPrice * 0.15 / priceStep) * priceStep;
+    avgPrice = Math.max(avgPrice, floorPrice || priceStep);
+  }
 
   // Rating — segment aralığında
   const [minRating, maxRating] = specs.rating;
@@ -451,10 +468,28 @@ function generateHubContent(brand, model, variantOptions = {}) {
   basePros.push(...bodyExtras.pros);
   baseCons.push(...bodyExtras.cons);
 
+  // Eski model yıl ise ek pro/con
+  if (yearDiff >= 5) {
+    basePros.push('İkinci el piyasada uygun fiyat');
+    baseCons.push('Güncel güvenlik teknolojileri eksik olabilir');
+  }
+
   // Elektrik ise tüketimi güncelle
   let fuelConsumption = bodyDefaults.fuel_consumption;
   if (finalFuelType === 'elektrik' || finalFuelType === 'Elektrik') {
     fuelConsumption = '0L/100km (' + (14 + (hash % 8)) + '.' + (hash % 10) + ' kWh)';
+  } else if (finalFuelType === 'dizel' || finalFuelType === 'Dizel') {
+    // Dizel genelde benzinden %15-20 daha ekonomik
+    const baseConsumption = parseFloat(bodyDefaults.fuel_consumption);
+    fuelConsumption = (baseConsumption * 0.82).toFixed(1) + 'L/100km';
+  } else if (finalFuelType === 'hibrit' || finalFuelType === 'Hibrit') {
+    // Hibrit benzinden %25-30 daha ekonomik
+    const baseConsumption = parseFloat(bodyDefaults.fuel_consumption);
+    fuelConsumption = (baseConsumption * 0.72).toFixed(1) + 'L/100km';
+  } else if (finalFuelType === 'lpg' || finalFuelType === 'LPG') {
+    // LPG tüketimi benzinden ~%15 fazla ama daha ucuz
+    const baseConsumption = parseFloat(bodyDefaults.fuel_consumption);
+    fuelConsumption = (baseConsumption * 1.15).toFixed(1) + 'L/100km (LPG)';
   }
 
   // Boyutlara hafif varyasyon
@@ -464,10 +499,16 @@ function generateHubContent(brand, model, variantOptions = {}) {
   const wheelbaseNum = parseInt(bodyDefaults.wheelbase) + (hash % 80) - 40;
   const weightNum = parseInt(bodyDefaults.weight) + (hash % 200) - 100;
 
+  // Bagaj hacmi (gövde tipine göre)
+  const trunkVolume = getTrunkVolume(bodyType, hash);
+
+  // Güvenlik puanı (segment ve yıla göre)
+  const safetyInfo = getSafetyInfo(segment, selectedYear, brand.slug);
+
   return {
     brand_id: brand.id,
     model_id: model.id,
-    year: 2024,
+    year: selectedYear,
     avg_price: avgPrice,
     fuel_type: finalFuelType,
     engine: finalEngine,
@@ -482,6 +523,9 @@ function generateHubContent(brand, model, variantOptions = {}) {
     height: heightNum + ' mm',
     wheelbase: wheelbaseNum + ' mm',
     weight: weightNum + ' kg',
+    trunk_volume: trunkVolume,
+    safety_rating: safetyInfo.rating,
+    safety_features: safetyInfo.features,
     editor_rating: editorRating,
     editor_review: editorReview,
     pros: JSON.stringify(basePros.slice(0, 5)),
@@ -490,7 +534,8 @@ function generateHubContent(brand, model, variantOptions = {}) {
     // Ek alanlar (view için)
     _generated: true,
     _segment: segment,
-    _bodyTypeTR: bodyTypeTR
+    _bodyTypeTR: bodyTypeTR,
+    _yearInfo: getYearInfo(selectedYear, currentYear)
   };
 }
 
@@ -539,6 +584,162 @@ function adjustTopSpeed(base, segment) {
   const mods = { super_premium: 50, premium: 20, electric: -10, mainstream: 0, value: -10, commercial: -20, city: -30 };
   const v = baseVal + (mods[segment] || 0);
   return Math.max(140, v) + ' km/s';
+}
+
+/**
+ * Gerçek varyant verisinden daha doğru tork tahmini
+ * Eski formül: cc * 0.1 (yanlış — 1998cc = 200 Nm, gerçekte BMW 320i = 320 Nm)
+ * Yeni: HP ve yakıt tipine göre gerçekçi tork/HP oranı kullanır
+ */
+function estimateTorque(engineData, fuelType, segment) {
+  if (!engineData || !engineData.hp) return '—';
+
+  const hp = engineData.hp;
+  const cc = engineData.cc || 0;
+  const fuel = (fuelType || '').toLowerCase();
+
+  // Yakıt tipine göre tork/HP oranı (Nm per HP)
+  // Dizel motorlar genelde daha yüksek tork üretir
+  let torqueRatio;
+  if (fuel === 'elektrik') {
+    torqueRatio = 2.5; // Elektrik motorlar çok yüksek tork
+  } else if (fuel === 'dizel') {
+    torqueRatio = 2.0; // Dizel = yüksek tork
+  } else if (fuel === 'hibrit') {
+    torqueRatio = 1.8; // Hibrit
+  } else {
+    // Benzin — turbo mu doğal emişli mi?
+    const engineName = (engineData.engine || '').toLowerCase();
+    if (engineName.includes('turbo') || engineName.includes('tsi') || engineName.includes('tfsi') || engineName.includes('ecoboost')) {
+      torqueRatio = 1.7; // Turbo benzin
+    } else if (cc > 2500) {
+      torqueRatio = 1.4; // Büyük doğal emişli
+    } else {
+      torqueRatio = 1.5; // Standart benzin
+    }
+  }
+
+  // Segment düzeltmesi
+  const segmentMod = {
+    super_premium: 1.15, premium: 1.1, electric: 1.0,
+    mainstream: 1.0, value: 0.95, commercial: 1.2, city: 0.9
+  };
+  torqueRatio *= (segmentMod[segment] || 1.0);
+
+  // CC bilgisi varsa doğrulama yap — tork en az cc * 0.12 Nm olmalı (fiziksel alt sınır)
+  let torque = Math.round(hp * torqueRatio);
+  if (cc > 0) {
+    const ccBasedMin = Math.round(cc * 0.12);
+    const ccBasedMax = Math.round(cc * 0.35); // turbo dizel üst sınır
+    torque = Math.max(torque, ccBasedMin);
+    torque = Math.min(torque, ccBasedMax);
+  }
+
+  // 5'in katına yuvarla (daha gerçekçi görünür)
+  torque = Math.round(torque / 5) * 5;
+
+  return torque + ' Nm';
+}
+
+/**
+ * Segment bazlı yıllık değer kaybı oranı
+ * Lüks araçlar daha hızlı, ekonomik araçlar daha yavaş değer kaybeder
+ */
+function getDepreciationRate(segment) {
+  const rates = {
+    super_premium: 0.10,  // %10/yıl — lüks araçlar hızlı değer kaybeder
+    premium: 0.08,        // %8/yıl
+    electric: 0.09,       // %9/yıl — batarya endişesi
+    mainstream: 0.07,     // %7/yıl — standart
+    value: 0.06,          // %6/yıl — zaten ucuz, daha yavaş
+    commercial: 0.05,     // %5/yıl — ticari araçlar yavaş kaybeder
+    city: 0.07            // %7/yıl
+  };
+  return rates[segment] || 0.07;
+}
+
+/**
+ * Gövde tipine göre bagaj hacmi (litre)
+ */
+function getTrunkVolume(bodyType, hash) {
+  const baseVolumes = {
+    sedan: { min: 420, max: 530 },
+    hatchback: { min: 300, max: 400 },
+    suv: { min: 450, max: 650 },
+    crossover: { min: 380, max: 520 },
+    coupe: { min: 350, max: 450 },
+    cabrio: { min: 200, max: 320 },
+    station_wagon: { min: 550, max: 700 },
+    minivan: { min: 600, max: 900 },
+    pickup: { min: 1000, max: 1500 }  // kasa hacmi
+  };
+  const vol = baseVolumes[bodyType] || baseVolumes.sedan;
+  const range = vol.max - vol.min;
+  const value = vol.min + (hash % range);
+  return value + ' lt';
+}
+
+/**
+ * Güvenlik bilgileri — segment ve yıla göre
+ */
+function getSafetyInfo(segment, year, brandSlug) {
+  // Yıla göre Euro NCAP tahmini (modern araçlar daha iyi)
+  let stars;
+  if (year >= 2020) {
+    stars = segment === 'super_premium' || segment === 'premium' ? 5 : (segment === 'value' || segment === 'city') ? 4 : 5;
+  } else if (year >= 2015) {
+    stars = segment === 'super_premium' || segment === 'premium' ? 5 : (segment === 'value' || segment === 'city') ? 3 : 4;
+  } else if (year >= 2010) {
+    stars = segment === 'super_premium' || segment === 'premium' ? 4 : 3;
+  } else {
+    stars = segment === 'premium' ? 3 : 2;
+  }
+
+  // Yıla ve segmente göre güvenlik özellikleri
+  const features = [];
+
+  // Temel — tüm yıllar
+  features.push('ABS', 'ESP/ESC');
+
+  if (year >= 2010) {
+    features.push('Çoklu Hava Yastığı');
+  }
+  if (year >= 2014) {
+    features.push('Geri Görüş Kamerası');
+    if (segment === 'premium' || segment === 'super_premium') {
+      features.push('Şerit Takip Sistemi', 'Kör Nokta Uyarısı');
+    }
+  }
+  if (year >= 2018) {
+    features.push('Otomatik Acil Fren');
+    if (segment !== 'value' && segment !== 'city') {
+      features.push('Şerit Takip Asistanı');
+    }
+    if (segment === 'premium' || segment === 'super_premium') {
+      features.push('Adaptif Hız Sabitleme', '360° Kamera');
+    }
+  }
+  if (year >= 2022 && (segment === 'premium' || segment === 'super_premium')) {
+    features.push('Yarı Otonom Sürüş (Level 2+)');
+  }
+
+  return {
+    rating: stars + '/5 Euro NCAP',
+    features: features
+  };
+}
+
+/**
+ * Yıl bilgisi meta verisi
+ */
+function getYearInfo(selectedYear, currentYear) {
+  const diff = currentYear - selectedYear;
+  if (diff === 0) return { label: 'Sıfır', category: 'new' };
+  if (diff <= 1) return { label: 'Yeni', category: 'new' };
+  if (diff <= 3) return { label: 'Az Kullanılmış', category: 'recent' };
+  if (diff <= 7) return { label: 'Orta Yaşlı', category: 'mid' };
+  if (diff <= 15) return { label: 'Eski', category: 'old' };
+  return { label: 'Klasik', category: 'classic' };
 }
 
 

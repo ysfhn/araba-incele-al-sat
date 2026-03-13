@@ -70,6 +70,7 @@ const selectedBodyType = typeof queryBodyType !== 'undefined' ? queryBodyType : 
     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3.5 mb-1">Sayfada</p>
     <a href="#genel-bakis" class="hub-sidebar-link active"><span class="material-symbols-outlined">dashboard</span> Genel Bakış</a>
     <a href="#teknik" class="hub-sidebar-link"><span class="material-symbols-outlined">build</span> Teknik Özellikler</a>
+    <a href="#guvenlik" class="hub-sidebar-link"><span class="material-symbols-outlined">shield</span> Güvenlik</a>
     <a href="#videolar" class="hub-sidebar-link"><span class="material-symbols-outlined">play_circle</span> Videolar</a>
     <a href="#editor" class="hub-sidebar-link"><span class="material-symbols-outlined">rate_review</span> Editör Notu</a>
     <a href="#ilanlar" class="hub-sidebar-link"><span class="material-symbols-outlined">sell</span> Satılık İlanlar</a>
@@ -171,6 +172,7 @@ const selectedBodyType = typeof queryBodyType !== 'undefined' ? queryBodyType : 
     <% } %>
     <div class="absolute bottom-4 right-4 flex gap-2 flex-wrap justify-end">
       <% if (listings && listings.length > 5) { %><span class="hub-badge bg-green-500/20 text-green-300 backdrop-blur-sm">Popüler</span><% } %>
+      <% if (hub && hub._yearInfo && hub._yearInfo.category === 'classic') { %><span class="hub-badge bg-amber-500/20 text-amber-300 backdrop-blur-sm">Klasik</span><% } %>
       <% if (selectedYear) { %><span class="hub-badge bg-white/10 text-white/70 backdrop-blur-sm"><%= selectedYear %> Model</span><% } %>
       <% if (selectedBodyType) { %><span class="hub-badge bg-white/10 text-white/70 backdrop-blur-sm"><%= typeof BODY_TYPE_TR !== 'undefined' && BODY_TYPE_TR[selectedBodyType] ? BODY_TYPE_TR[selectedBodyType] : selectedBodyType %></span><% } %>
       <% if (selectedFuel) { %><span class="hub-badge bg-white/10 text-white/70 backdrop-blur-sm capitalize"><%= selectedFuel %></span><% } %>
@@ -242,6 +244,7 @@ const selectedBodyType = typeof queryBodyType !== 'undefined' ? queryBodyType : 
         <% if (hub.height) { %><tr><td>Yükseklik</td><td><%= hub.height %></td></tr><% } %>
         <% if (hub.wheelbase) { %><tr><td>Dingil Mesafesi</td><td><%= hub.wheelbase %></td></tr><% } %>
         <% if (hub.weight) { %><tr><td>Ağırlık</td><td><%= hub.weight %></td></tr><% } %>
+        <% if (hub.trunk_volume) { %><tr><td>Bagaj Hacmi</td><td><%= hub.trunk_volume %></td></tr><% } %>
       </table>
     </div>
   </div>
@@ -269,6 +272,42 @@ const selectedBodyType = typeof queryBodyType !== 'undefined' ? queryBodyType : 
     </div>
   </div>
 </section>
+
+<!-- Güvenlik -->
+<% if (hub.safety_rating || (hub.safety_features && hub.safety_features.length > 0)) { %>
+<section id="guvenlik" class="hub-section">
+  <h2 class="hub-section-title"><span class="material-symbols-outlined">shield</span> Güvenlik</h2>
+  <div class="grid md:grid-cols-2 gap-8">
+    <% if (hub.safety_rating) { %>
+    <div>
+      <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Euro NCAP Puanı</h3>
+      <div class="flex items-center gap-3 mb-4">
+        <% const safetyStars = parseInt(hub.safety_rating) || 0; %>
+        <div class="flex gap-0.5">
+          <% for(let i = 0; i < 5; i++) { %>
+          <span class="material-symbols-outlined text-xl <%= i < safetyStars ? 'text-amber-400' : 'text-slate-200' %>" style="font-variation-settings:'FILL' 1">star</span>
+          <% } %>
+        </div>
+        <span class="text-sm font-bold text-slate-700"><%= hub.safety_rating %></span>
+      </div>
+      <p class="text-xs text-slate-400">* Tahmini güvenlik puanı, segment ve model yılına göre hesaplanmıştır.</p>
+    </div>
+    <% } %>
+    <% if (hub.safety_features && hub.safety_features.length > 0) { %>
+    <div>
+      <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Güvenlik Özellikleri</h3>
+      <div class="flex flex-wrap gap-2">
+        <% hub.safety_features.forEach(function(feature) { %>
+        <span class="inline-flex items-center gap-1.5 bg-green-50 text-green-700 text-xs font-medium px-3 py-1.5 rounded-lg border border-green-100">
+          <span class="material-symbols-outlined" style="font-size:14px">check_circle</span> <%= feature %>
+        </span>
+        <% }); %>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</section>
+<% } %>
 
 <!-- Editör Değerlendirmesi -->
 <% if (hub.editor_rating) { %>

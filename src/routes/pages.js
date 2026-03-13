@@ -152,7 +152,7 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
       }
     } catch (e) { /* varyant verisi yoksa segment default kullanılır */ }
   }
-  const variantOptions = { fuel: queryFuel, transmission: queryTransmission, engine: queryEngine, package: queryPackage, bodyType: queryBodyType, resolvedEngine };
+  const variantOptions = { fuel: queryFuel, transmission: queryTransmission, engine: queryEngine, package: queryPackage, bodyType: queryBodyType, resolvedEngine, year: queryYear };
   const effectiveHub = hub || generateHubContent(brand, model, variantOptions);
 
   // Build dynamic listing query with optional year/fuel/transmission/budget/engine filters
