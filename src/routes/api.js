@@ -1735,6 +1735,26 @@ router.get('/admin/hubs', adminOnly, async (req, res) => {
   res.json(hubs);
 });
 
+// Admin: Otomatik üretilen hub içeriğini getir (düzenleme için)
+router.get('/admin/hubs/generated/:brandId/:modelId', adminOnly, async (req, res) => {
+  try {
+    const db = getDb();
+    const brand = await db.prepare('SELECT * FROM brands WHERE id = ?').get(req.params.brandId);
+    const model = await db.prepare('SELECT * FROM models WHERE id = ?').get(req.params.modelId);
+    if (!brand || !model) return res.status(404).json({ error: 'Marka veya model bulunamadı' });
+    const { generateHubContent } = require('../utils/hub-content-generator');
+    const generated = generateHubContent(brand, model, {});
+    generated.brand_name = brand.name;
+    generated.model_name = model.name;
+    generated.brand_id = brand.id;
+    generated.model_id = model.id;
+    res.json(generated);
+  } catch (err) {
+    console.error('Generated hub getirme hatası:', err);
+    res.status(500).json({ error: 'İçerik üretilemedi' });
+  }
+});
+
 // Admin: Hub oluştur
 router.post('/admin/hubs', adminOnly, async (req, res) => {
   const db = getDb();

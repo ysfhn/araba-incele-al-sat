@@ -1024,7 +1024,10 @@
                       <span class="material-icons" style="font-size:.8rem;">delete</span>
                     </button>
                   <% } else { %>
-                    <button class="btn-sm btn-success" onclick="openHubModalForModel(<%= b.id %>, <%= m.id %>, '<%= m.name %>')" title="Manuel Hub Oluştur" style="padding:3px 8px;">
+                    <button class="btn-sm btn-primary" onclick="editGeneratedHub(<%= b.id %>, <%= m.id %>)" title="Otomatik İçeriği Düzenle" style="padding:3px 8px;">
+                      <span class="material-icons" style="font-size:.8rem;">edit</span>
+                    </button>
+                    <button class="btn-sm btn-success" onclick="openHubModalForModel(<%= b.id %>, <%= m.id %>, '<%= m.name %>')" title="Boş Manuel Hub Oluştur" style="padding:3px 8px;">
                       <span class="material-icons" style="font-size:.8rem;">add</span>
                     </button>
                   <% } %>
@@ -1649,6 +1652,39 @@ function openHubModalForModel(brandId, modelId, modelName) {
   document.getElementById('hub_brand_id').value = brandId;
   filterModels(brandId, document.getElementById('hub_model_id'), modelId);
   updateHubImagePreview('');
+}
+
+// Otomatik üretilen hub içeriğini API'den çekip modal'da düzenlemeye aç
+async function editGeneratedHub(brandId, modelId) {
+  try {
+    const res = await fetch('/api/admin/hubs/generated/' + brandId + '/' + modelId);
+    if (!res.ok) { alert('İçerik yüklenemedi'); return; }
+    const generated = await res.json();
+    const modal = document.getElementById('hubModal');
+    if (!modal) return;
+    modal.classList.add('show');
+    document.getElementById('hubModalTitle').textContent = '✏️ Otomatik Hub Düzenle: ' + (generated.brand_name || '') + ' ' + (generated.model_name || '');
+    document.getElementById('hubForm').reset();
+    document.getElementById('hub_id').value = ''; // Yeni kayıt olarak kaydedilecek (POST)
+    document.getElementById('hub_brand_id').value = brandId;
+    filterModels(brandId, document.getElementById('hub_model_id'), modelId);
+    // Alanları generated verisiyle doldur
+    const fields = ['year','avg_price','fuel_type','engine','hp','torque','transmission','acceleration','top_speed','fuel_consumption','length','width','height','wheelbase','weight','editor_rating','editor_review','pros','cons','image_url'];
+    fields.forEach(f => {
+      const el = document.getElementById('hub_' + f);
+      if (el && generated[f] != null) {
+        // pros/cons JSON array ise virgüllü string'e çevir
+        if ((f === 'pros' || f === 'cons') && typeof generated[f] === 'string') {
+          try { const arr = JSON.parse(generated[f]); if (Array.isArray(arr)) { el.value = arr.join(', '); return; } } catch(e) {}
+        }
+        el.value = generated[f];
+      }
+    });
+    updateHubImagePreview(generated.image_url || '');
+  } catch(err) {
+    console.error('Generated hub yükleme hatası:', err);
+    alert('Bağlantı hatası');
+  }
 }
 
 function updateHubImagePreview(url) {
