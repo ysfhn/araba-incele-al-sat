@@ -185,37 +185,86 @@ function hasVariantData(brandSlug, modelSlug) {
 
 /**
  * Bir modelin belirli bir yılda üretilip üretilmediğini kontrol eder.
- * Eğer varyant verisinde yıl bilgisi yoksa true döndürür (bilinmiyor = engelleme).
+ * Model seviyesinde yıl verisi güvenilirdir — modelin ilk üretim yılından
+ * önce veya son üretim yılından sonra false döndürür.
  * @returns {boolean}
  */
 function isModelAvailableInYear(brandSlug, modelSlug, year) {
   const brand = VARIANTS[brandSlug];
-  if (!brand) return true; // Varyant verisi yoksa engelleme
+  if (!brand) return true;
   const model = resolveModel(brand, modelSlug);
   if (!model) return true;
   const years = model.years || [];
-  if (years.length === 0) return true; // Yıl bilgisi yoksa engelleme
+  if (years.length === 0) return true;
+  // Model seviyesinde yıl verisi kesindir: ilk yıldan önce = yok, son yıldan sonra = yok
+  if (year < years[0] || year > years[years.length - 1]) return false;
   return years.includes(year);
 }
 
 /**
+ * Markaların Türkiye'de aktif satışa başladığı yaklaşık yıllar.
+ * Sadece varyant verisinin kapsam alanı dışındaki markalar için kullanılır.
+ * Köklü markalar (BMW, Audi vb.) zaten veri kapsamında olduğu için listelenmez.
+ * Bu map sayesinde: Tesla 1990'da mevcut değildi (2014+), Fiat 1960'tan beri var gibi
+ * kararlar verilebilir.
+ */
+const BRAND_TURKEY_SINCE = {
+  // Köklü markalar — varyant verisi kapsamı dışı yıllar için izin verilir
+  'alfa-romeo': 1972, 'audi': 1980, 'bmw': 1975, 'chevrolet': 1990, 'citroen': 1975,
+  'dacia': 2005, 'fiat': 1968, 'ford': 1960, 'honda': 1992, 'hyundai': 1997,
+  'jeep': 2000, 'kia': 2000, 'lada': 1975, 'mazda': 1995, 'mercedes-benz': 1968,
+  'mitsubishi': 1990, 'nissan': 1990, 'opel': 1975, 'peugeot': 1968, 'renault': 1968,
+  'seat': 2000, 'skoda': 2000, 'subaru': 1995, 'suzuki': 1995, 'toyota': 1990,
+  'volkswagen': 1968, 'volvo': 1980, 'porsche': 1990, 'land-rover': 1995,
+  'mini': 2002, 'ferrari': 1990, 'lamborghini': 1995, 'mclaren': 2010,
+  'maserati': 2005, 'jaguar': 1990, 'ssangyong': 2005, 'isuzu': 1990,
+  'iveco': 1985, 'lancia': 1975, 'infiniti': 2010, 'lincoln': 2018,
+  // Yeni markalar — kesin engelleme uygulanır
+  'tesla': 2014, 'togg': 2023, 'byd': 2022, 'changan': 2020, 'chery': 2020,
+  'cupra': 2020, 'dfsk': 2019, 'gac': 2022, 'geely': 2022, 'genesis': 2019,
+  'gwm': 2021, 'jac': 2020, 'lotus': 2022, 'lucid': 2023, 'maxus': 2019,
+  'mg': 2020, 'omoda': 2023, 'polestar': 2021, 'proton': 2022, 'ram': 2019,
+  'rivian': 2023, 'tata': 2019, 'wey': 2022,
+};
+
+/**
  * Bir markanın belirli bir yılda herhangi bir modelinin üretilip üretilmediğini kontrol eder.
+ * 
+ * 1. Varyant verisinde direkt eşleşme → true
+ * 2. Seçilen yıl, markanın en eski varyant yılından eskiyse:
+ *    a. BRAND_TURKEY_SINCE map'i varsa → markanın Türkiye'ye giriş yılı ≤ seçilen yıl → true, değilse false
+ *    b. Map'te yoksa → true (bilinmeyen marka, engelleme)
+ * 3. Varyant kapsamında ama hiçbir modelde eşleşme yok → false
  * @returns {boolean}
  */
 function isBrandAvailableInYear(brandSlug, year) {
   const brand = VARIANTS[brandSlug];
-  if (!brand) return true; // Varyant verisi yoksa engelleme
+  if (!brand) return true;
+  let oldestYearInBrand = Infinity;
   for (const key of Object.keys(brand)) {
     const model = brand[key];
     const years = model.years || [];
     if (years.length === 0) return true;
+    if (years[0] < oldestYearInBrand) oldestYearInBrand = years[0];
     if (years.includes(year)) return true;
+  }
+  // Seçilen yıl, bu markanın varyant verisindeki en eski yıldan eskiyse → kapsam dışı
+  if (year < oldestYearInBrand) {
+    // Markanın Türkiye'ye giriş yılını kontrol et
+    const turkeyYear = BRAND_TURKEY_SINCE[brandSlug];
+    if (turkeyYear) {
+      return year >= turkeyYear;
+    }
+    // Bilinmeyen marka → izin ver (engelleme)
+    return true;
   }
   return false;
 }
 
 /**
  * Belirli bir marka ve yıl için geçerli model slug'larını döndürür.
+ * Model seviyesinde: modelin years dizisinde yıl varsa VEYA years boşsa dahil et.
+ * Kapsam dışı yıllar (year < model.years[0]) dahil EDİLMEZ — model o yılda yoktu.
  * @param {string} brandSlug
  * @param {number} year
  * @param {string} [bodyType] İsteğe bağlı kasa tipi filtresi
@@ -232,6 +281,7 @@ function getModelsForYear(brandSlug, year, bodyType) {
     if (years.length === 0 || years.includes(year)) {
       result.push(key);
     }
+    // year < years[0] veya year > years[years.length-1] → dahil etme (model yoktu)
   }
   return result;
 }

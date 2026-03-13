@@ -148,7 +148,7 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
   // Hub kaydı yoksa otomatik içerik üret — seçilen varyant bilgilerini de geçir
   // Varyant verisinden motor bilgisini çözümle (pages.js'de yapılıyor, hub-content-generator'a bağımlılık olmasın)
   let resolvedEngine = null;
-  if (!hub && (queryEngine || queryFuel || queryTransmission)) {
+  if (queryEngine || queryFuel || queryTransmission) {
     try {
       if (hasVariantData(brand.slug, model.slug)) {
         const realEngines = getEngines(brand.slug, model.slug, queryFuel || null, queryTransmission || null);
@@ -165,7 +165,33 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
     } catch (e) { /* varyant verisi yoksa segment default kullanılır */ }
   }
   const variantOptions = { fuel: queryFuel, transmission: queryTransmission, engine: queryEngine, package: queryPackage, bodyType: queryBodyType, resolvedEngine, year: queryYear };
-  const effectiveHub = hub || generateHubContent(brand, model, variantOptions);
+  
+  // Her zaman generated content üret — DB hub'daki eksik alanları doldurmak için
+  const generated = generateHubContent(brand, model, variantOptions);
+  let effectiveHub;
+  if (hub) {
+    // DB hub varsa: generated content temel alınır, DB hub'dan sadece NULL olmayan alanlar alınır
+    effectiveHub = { ...generated };
+    
+    // Wizard parametreleri geldiyse, parametreye bağlı alanları GENERATED'dan koruyoruz
+    // (çünkü generated content parametrelere göre dinamik üretilir, DB hub statiktir)
+    const hasWizardParams = queryYear || queryFuel || queryTransmission || queryEngine || queryPackage;
+    const dynamicFields = hasWizardParams
+      ? new Set(['avg_price', 'fuel_type', 'engine', 'hp', 'torque', 'transmission',
+                 'fuel_consumption', 'acceleration', 'top_speed', 'description', 'pros', 'cons',
+                 'price_range', 'year', 'safety_rating', 'safety_features', 'trunk_volume'])
+      : new Set();
+    
+    for (const key of Object.keys(hub)) {
+      if (hub[key] !== null && hub[key] !== undefined && hub[key] !== '') {
+        // Wizard parametreleri varken dinamik alanları DB'den ALMA (generated daha güncel)
+        if (dynamicFields.has(key)) continue;
+        effectiveHub[key] = hub[key];
+      }
+    }
+  } else {
+    effectiveHub = generated;
+  }
 
   // Build dynamic listing query with optional year/fuel/transmission/budget/engine filters
   let listingWhere = "WHERE l.brand_id = ? AND l.model_id = ? AND l.status = 'active'";

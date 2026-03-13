@@ -6,7 +6,12 @@
  *
  * Marka segmenti, gövde tipi ve model adına göre gerçekçi varsayılan
  * teknik özellikler, editör yorumu, artı/eksi listesi üretir.
+ *
+ * CSV teknik verileri (boyut, ağırlık, bagaj, tork, hız) varsa
+ * BODY_DEFAULTS yerine gerçek veri kullanılır.
  */
+
+const { getRealDimensions } = require('../data/csv-tech-data');
 
 /* ═══════════════════════════════════════════════════════════════
    MARKA SEGMENTLERİ
@@ -463,16 +468,16 @@ function generateHubContent(brand, model, variantOptions = {}) {
   const basePros = [...(specs.prosCons.pros)];
   const baseCons = [...(specs.prosCons.cons)];
 
+  // Eski model yıl ise ek pro/con — başa ekle (slice'da kesilmesin)
+  if (yearDiff >= 5) {
+    basePros.unshift('İkinci el piyasada uygun fiyat');
+    baseCons.unshift('Güncel güvenlik teknolojileri eksik olabilir');
+  }
+
   // Gövde tipine özel eklemeler
   const bodyExtras = getBodyTypeExtras(bodyType);
   basePros.push(...bodyExtras.pros);
   baseCons.push(...bodyExtras.cons);
-
-  // Eski model yıl ise ek pro/con
-  if (yearDiff >= 5) {
-    basePros.push('İkinci el piyasada uygun fiyat');
-    baseCons.push('Güncel güvenlik teknolojileri eksik olabilir');
-  }
 
   // Elektrik ise tüketimi güncelle
   let fuelConsumption = bodyDefaults.fuel_consumption;
@@ -492,15 +497,35 @@ function generateHubContent(brand, model, variantOptions = {}) {
     fuelConsumption = (baseConsumption * 1.15).toFixed(1) + 'L/100km (LPG)';
   }
 
-  // Boyutlara hafif varyasyon
-  const lengthNum = parseInt(bodyDefaults.length) + (hash % 150) - 75;
-  const widthNum = parseInt(bodyDefaults.width) + (hash % 60) - 30;
-  const heightNum = parseInt(bodyDefaults.height) + (hash % 40) - 20;
-  const wheelbaseNum = parseInt(bodyDefaults.wheelbase) + (hash % 80) - 40;
-  const weightNum = parseInt(bodyDefaults.weight) + (hash % 200) - 100;
+  // Boyutlara hafif varyasyon — CSV gerçek verisi varsa onu kullan
+  const realDims = getRealDimensions(brand.slug, model.slug);
 
-  // Bagaj hacmi (gövde tipine göre)
-  const trunkVolume = getTrunkVolume(bodyType, hash);
+  let lengthNum, widthNum, heightNum, wheelbaseNum, weightNum, trunkVolume, topSpeed;
+
+  if (realDims) {
+    // CSV'den gerçek veri var!
+    lengthNum = realDims.length ? parseInt(realDims.length) : (parseInt(bodyDefaults.length) + (hash % 150) - 75);
+    widthNum = realDims.width ? parseInt(realDims.width) : (parseInt(bodyDefaults.width) + (hash % 60) - 30);
+    heightNum = realDims.height ? parseInt(realDims.height) : (parseInt(bodyDefaults.height) + (hash % 40) - 20);
+    wheelbaseNum = realDims.wheelbase ? parseInt(realDims.wheelbase) : (parseInt(bodyDefaults.wheelbase) + (hash % 80) - 40);
+    weightNum = realDims.weight ? parseInt(realDims.weight) : (parseInt(bodyDefaults.weight) + (hash % 200) - 100);
+    trunkVolume = realDims.trunk_volume || getTrunkVolume(bodyType, hash);
+    topSpeed = realDims.top_speed || adjustTopSpeed(bodyDefaults.top_speed, segment);
+
+    // Gerçek tork verisi varsa ve hesaplanan tork yoksa veya düşükse, CSV'den al
+    if (realDims.maxTork && (!finalTorque || finalTorque === '—')) {
+      finalTorque = realDims.maxTork + ' Nm';
+    }
+  } else {
+    // CSV verisi yok, eski davranış: body type defaults + hash varyasyon
+    lengthNum = parseInt(bodyDefaults.length) + (hash % 150) - 75;
+    widthNum = parseInt(bodyDefaults.width) + (hash % 60) - 30;
+    heightNum = parseInt(bodyDefaults.height) + (hash % 40) - 20;
+    wheelbaseNum = parseInt(bodyDefaults.wheelbase) + (hash % 80) - 40;
+    weightNum = parseInt(bodyDefaults.weight) + (hash % 200) - 100;
+    trunkVolume = getTrunkVolume(bodyType, hash);
+    topSpeed = adjustTopSpeed(bodyDefaults.top_speed, segment);
+  }
 
   // Güvenlik puanı (segment ve yıla göre)
   const safetyInfo = getSafetyInfo(segment, selectedYear, brand.slug);
@@ -516,7 +541,7 @@ function generateHubContent(brand, model, variantOptions = {}) {
     torque: finalTorque,
     transmission: finalTransmission,
     acceleration: adjustAcceleration(bodyDefaults.acceleration, segment, bodyType),
-    top_speed: adjustTopSpeed(bodyDefaults.top_speed, segment),
+    top_speed: topSpeed,
     fuel_consumption: fuelConsumption,
     length: lengthNum + ' mm',
     width: widthNum + ' mm',

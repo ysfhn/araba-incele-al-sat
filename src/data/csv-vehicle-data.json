@@ -1,0 +1,9794 @@
+{
+  "audi|s6": {
+    "brandSlug": "audi",
+    "modelSlug": "s6",
+    "years": [
+      2012,
+      2019
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1832,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1345,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 370,
+    "maxSpeed": 250
+  },
+  "audi|a3": {
+    "brandSlug": "audi",
+    "modelSlug": "a3",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2021,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4343,
+      "genislik": 1796,
+      "yukseklik": 1450,
+      "dingilMesafesi": 2636,
+      "agirlik": 1315,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 310,
+    "maxTork": 380,
+    "maxSpeed": 250
+  },
+  "audi|s4": {
+    "brandSlug": "audi",
+    "modelSlug": "s4",
+    "years": [
+      2012,
+      2014,
+      2015
+    ],
+    "dimensions": {
+      "uzunluk": 4180,
+      "genislik": 1832,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1254,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 370,
+    "maxSpeed": 250
+  },
+  "audi|a6": {
+    "brandSlug": "audi",
+    "modelSlug": "a6",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2023,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4939,
+      "genislik": 1886,
+      "yukseklik": 1457,
+      "dingilMesafesi": 2924,
+      "agirlik": 1673,
+      "bagajHacmi": 530
+    },
+    "variants": [],
+    "maxHp": 340,
+    "maxTork": 500,
+    "maxSpeed": 250
+  },
+  "audi|a8": {
+    "brandSlug": "audi",
+    "modelSlug": "a8",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1800,
+      "dingilMesafesi": 3100,
+      "agirlik": 1542,
+      "bagajHacmi": 900
+    },
+    "variants": [],
+    "maxHp": 330,
+    "maxTork": 750,
+    "maxSpeed": 250
+  },
+  "audi|a4": {
+    "brandSlug": "audi",
+    "modelSlug": "a4",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2019,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4762,
+      "genislik": 1842,
+      "yukseklik": 1427,
+      "dingilMesafesi": 2820,
+      "agirlik": 1487,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 400,
+    "maxSpeed": 250
+  },
+  "audi|a4-avant": {
+    "brandSlug": "audi",
+    "modelSlug": "a4-avant",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2019,
+      2020,
+      2021,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4762,
+      "genislik": 1842,
+      "yukseklik": 1427,
+      "dingilMesafesi": 2820,
+      "agirlik": 1490,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 400,
+    "maxSpeed": 250
+  },
+  "audi|q7": {
+    "brandSlug": "audi",
+    "modelSlug": "q7",
+    "years": [
+      2012,
+      2015,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1800,
+      "dingilMesafesi": 3100,
+      "agirlik": 1290,
+      "bagajHacmi": 900
+    },
+    "variants": [],
+    "maxHp": 330,
+    "maxTork": 750,
+    "maxSpeed": 250
+  },
+  "audi|a6-avant": {
+    "brandSlug": "audi",
+    "modelSlug": "a6-avant",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2017,
+      2019,
+      2020,
+      2023,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4939,
+      "genislik": 1886,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2924,
+      "agirlik": 1733,
+      "bagajHacmi": 530
+    },
+    "variants": [],
+    "maxHp": 340,
+    "maxTork": 500,
+    "maxSpeed": 250
+  },
+  "audi|a6-allroad": {
+    "brandSlug": "audi",
+    "modelSlug": "a6-allroad",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2017,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4939,
+      "genislik": 1886,
+      "yukseklik": 1457,
+      "dingilMesafesi": 2924,
+      "agirlik": 1704,
+      "bagajHacmi": 530
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 400,
+    "maxSpeed": 250
+  },
+  "audi|tt": {
+    "brandSlug": "audi",
+    "modelSlug": "tt",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016,
+      2017,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1414,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 370,
+    "maxSpeed": 250
+  },
+  "audi|r8": {
+    "brandSlug": "audi",
+    "modelSlug": "r8",
+    "years": [
+      2012,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 2100,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "audi|a5": {
+    "brandSlug": "audi",
+    "modelSlug": "a5",
+    "years": [
+      2012,
+      2014,
+      2016,
+      2017,
+      2019,
+      2020,
+      2021,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1520,
+      "dingilMesafesi": 3100,
+      "agirlik": 1400,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "audi|s5": {
+    "brandSlug": "audi",
+    "modelSlug": "s5",
+    "years": [
+      2012,
+      2014,
+      2017,
+      2020,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1520,
+      "dingilMesafesi": 2950,
+      "agirlik": 1342,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 550,
+    "maxSpeed": 250
+  },
+  "audi|q5": {
+    "brandSlug": "audi",
+    "modelSlug": "q5",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4663,
+      "genislik": 1893,
+      "yukseklik": 1664,
+      "dingilMesafesi": 2819,
+      "agirlik": 1842,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 252,
+    "maxTork": 400,
+    "maxSpeed": 250
+  },
+  "audi|s3": {
+    "brandSlug": "audi",
+    "modelSlug": "s3",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2016,
+      2017,
+      2019,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1367,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 370,
+    "maxSpeed": 250
+  },
+  "audi|a4-allroad": {
+    "brandSlug": "audi",
+    "modelSlug": "a4-allroad",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016,
+      2019,
+      2020,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4762,
+      "genislik": 1842,
+      "yukseklik": 1427,
+      "dingilMesafesi": 2820,
+      "agirlik": 1419,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 400,
+    "maxSpeed": 250
+  },
+  "audi|a5-cabriolet": {
+    "brandSlug": "audi",
+    "modelSlug": "a5-cabriolet",
+    "years": [
+      2012,
+      2014,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1520,
+      "dingilMesafesi": 2950,
+      "agirlik": 1400,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 250,
+    "maxTork": 550,
+    "maxSpeed": 250
+  },
+  "audi|a5-sportback": {
+    "brandSlug": "audi",
+    "modelSlug": "a5-sportback",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016,
+      2017,
+      2019,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1520,
+      "dingilMesafesi": 2950,
+      "agirlik": 1355,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 250,
+    "maxTork": 550,
+    "maxSpeed": 250
+  },
+  "audi|a1": {
+    "brandSlug": "audi",
+    "modelSlug": "a1",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1396,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "audi|a7": {
+    "brandSlug": "audi",
+    "modelSlug": "a7",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1520,
+      "dingilMesafesi": 2950,
+      "agirlik": 1405,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 250,
+    "maxTork": 550,
+    "maxSpeed": 250
+  },
+  "audi|rs3": {
+    "brandSlug": "audi",
+    "modelSlug": "rs3",
+    "years": [
+      2012,
+      2015,
+      2018,
+      2022,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4343,
+      "genislik": 1832,
+      "yukseklik": 1450,
+      "dingilMesafesi": 2636,
+      "agirlik": 1420,
+      "bagajHacmi": 330
+    },
+    "variants": [],
+    "maxHp": 400,
+    "maxTork": 500,
+    "maxSpeed": 290
+  },
+  "audi|rs5": {
+    "brandSlug": "audi",
+    "modelSlug": "rs5",
+    "years": [
+      2012,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1473,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "audi|q3": {
+    "brandSlug": "audi",
+    "modelSlug": "q3",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2017,
+      2019,
+      2020,
+      2021,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4452,
+      "genislik": 1831,
+      "yukseklik": 1608,
+      "dingilMesafesi": 2620,
+      "agirlik": 1500,
+      "bagajHacmi": 460
+    },
+    "variants": [],
+    "maxHp": 220,
+    "maxTork": 350,
+    "maxSpeed": 232
+  },
+  "audi|s7": {
+    "brandSlug": "audi",
+    "modelSlug": "s7",
+    "years": [
+      2012,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1520,
+      "dingilMesafesi": 2950,
+      "agirlik": 1623,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 250,
+    "maxTork": 550,
+    "maxSpeed": 250
+  },
+  "audi|s8": {
+    "brandSlug": "audi",
+    "modelSlug": "s8",
+    "years": [
+      2012,
+      2014,
+      2016,
+      2020,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4180,
+      "genislik": 1832,
+      "yukseklik": 1352,
+      "dingilMesafesi": 2505,
+      "agirlik": 1345,
+      "bagajHacmi": 290
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 370,
+    "maxSpeed": 250
+  },
+  "audi|rs4": {
+    "brandSlug": "audi",
+    "modelSlug": "rs4",
+    "years": [
+      2012,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "audi|rs6": {
+    "brandSlug": "audi",
+    "modelSlug": "rs6",
+    "years": [
+      2013,
+      2016,
+      2019,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4180,
+      "genislik": 1832,
+      "yukseklik": 1352,
+      "dingilMesafesi": 2505,
+      "agirlik": 1345,
+      "bagajHacmi": 290
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 370,
+    "maxSpeed": 250
+  },
+  "audi|rs7": {
+    "brandSlug": "audi",
+    "modelSlug": "rs7",
+    "years": [
+      2013,
+      2016,
+      2019,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1440,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "audi|a3-sedan": {
+    "brandSlug": "audi",
+    "modelSlug": "a3-sedan",
+    "years": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2019,
+      2021,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4343,
+      "genislik": 1796,
+      "yukseklik": 1450,
+      "dingilMesafesi": 2636,
+      "agirlik": 1333,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 310,
+    "maxTork": 380,
+    "maxSpeed": 250
+  },
+  "audi|q2": {
+    "brandSlug": "audi",
+    "modelSlug": "q2",
+    "years": [
+      2016,
+      2017,
+      2019,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1176,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "audi|q8": {
+    "brandSlug": "audi",
+    "modelSlug": "q8",
+    "years": [
+      2018,
+      2020,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1520,
+      "dingilMesafesi": 2950,
+      "agirlik": 1287,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 250,
+    "maxTork": 550,
+    "maxSpeed": 250
+  },
+  "audi|e-tron": {
+    "brandSlug": "audi",
+    "modelSlug": "e-tron",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "audi|rs-q8": {
+    "brandSlug": "audi",
+    "modelSlug": "rs-q8",
+    "years": [
+      2019,
+      2022,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4180,
+      "genislik": 1832,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1284,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 370,
+    "maxSpeed": 250
+  },
+  "audi|e-tron-sportback": {
+    "brandSlug": "audi",
+    "modelSlug": "e-tron-sportback",
+    "years": [
+      2020,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "audi|q3-sportback": {
+    "brandSlug": "audi",
+    "modelSlug": "q3-sportback",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4452,
+      "genislik": 1831,
+      "yukseklik": 1608,
+      "dingilMesafesi": 2603,
+      "agirlik": 1600,
+      "bagajHacmi": 460
+    },
+    "variants": [],
+    "maxHp": 220,
+    "maxTork": 350,
+    "maxSpeed": 232
+  },
+  "audi|e-tron-gt": {
+    "brandSlug": "audi",
+    "modelSlug": "e-tron-gt",
+    "years": [
+      2021,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "audi|q5-sportback": {
+    "brandSlug": "audi",
+    "modelSlug": "q5-sportback",
+    "years": [
+      2021,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4663,
+      "genislik": 1893,
+      "yukseklik": 1664,
+      "dingilMesafesi": 2819,
+      "agirlik": 1792,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 252,
+    "maxTork": 400,
+    "maxSpeed": 250
+  },
+  "audi|q8-e-tron": {
+    "brandSlug": "audi",
+    "modelSlug": "q8-e-tron",
+    "years": [
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "seat|ibiza": {
+    "brandSlug": "seat",
+    "modelSlug": "ibiza",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2020,
+      2021,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1187,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "seat|leon": {
+    "brandSlug": "seat",
+    "modelSlug": "leon",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2686,
+      "agirlik": 1343,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 215
+  },
+  "seat|toledo": {
+    "brandSlug": "seat",
+    "modelSlug": "toledo",
+    "years": [
+      2012,
+      2013,
+      2015
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1311,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "seat|alhambra": {
+    "brandSlug": "seat",
+    "modelSlug": "alhambra",
+    "years": [
+      2013
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1480,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "seat|ateca": {
+    "brandSlug": "seat",
+    "modelSlug": "ateca",
+    "years": [
+      2016,
+      2017,
+      2018,
+      2020,
+      2024,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1841,
+      "yukseklik": 1613,
+      "dingilMesafesi": 2750,
+      "agirlik": 1495,
+      "bagajHacmi": 510
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "seat|arona": {
+    "brandSlug": "seat",
+    "modelSlug": "arona",
+    "years": [
+      2017,
+      2018,
+      2020,
+      2021,
+      2023,
+      2024,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1552,
+      "dingilMesafesi": 2750,
+      "agirlik": 1319,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "seat|tarraco": {
+    "brandSlug": "seat",
+    "modelSlug": "tarraco",
+    "years": [
+      2021,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4735,
+      "genislik": 1839,
+      "yukseklik": 1673,
+      "dingilMesafesi": 2790,
+      "agirlik": 1750,
+      "bagajHacmi": 700
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 320,
+    "maxSpeed": 210
+  },
+  "bmw|m5": {
+    "brandSlug": "bmw",
+    "modelSlug": "m5",
+    "years": [
+      2012,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 2003,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "bmw|7-serisi": {
+    "brandSlug": "bmw",
+    "modelSlug": "7-serisi",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1216,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "bmw|m3": {
+    "brandSlug": "bmw",
+    "modelSlug": "m3",
+    "years": [
+      2012,
+      2016,
+      2017,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2950,
+      "agirlik": 1582,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "bmw|x5": {
+    "brandSlug": "bmw",
+    "modelSlug": "x5",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019
+    ],
+    "dimensions": {
+      "uzunluk": 4922,
+      "genislik": 2004,
+      "yukseklik": 1745,
+      "dingilMesafesi": 2975,
+      "agirlik": 2115,
+      "bagajHacmi": 650
+    },
+    "variants": [],
+    "maxHp": 340,
+    "maxTork": 450,
+    "maxSpeed": 250
+  },
+  "bmw|5-serisi": {
+    "brandSlug": "bmw",
+    "modelSlug": "5-serisi",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1269,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "bmw|1-serisi": {
+    "brandSlug": "bmw",
+    "modelSlug": "1-serisi",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1598,
+      "dingilMesafesi": 2800,
+      "agirlik": 1172,
+      "bagajHacmi": 505
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "bmw|3-serisi": {
+    "brandSlug": "bmw",
+    "modelSlug": "3-serisi",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4922,
+      "genislik": 2004,
+      "yukseklik": 1745,
+      "dingilMesafesi": 2975,
+      "agirlik": 1765,
+      "bagajHacmi": 650
+    },
+    "variants": [],
+    "maxHp": 340,
+    "maxTork": 450,
+    "maxSpeed": 250
+  },
+  "bmw|x6": {
+    "brandSlug": "bmw",
+    "modelSlug": "x6",
+    "years": [
+      2012,
+      2014,
+      2016,
+      2017,
+      2018
+    ],
+    "dimensions": {
+      "uzunluk": 4924,
+      "genislik": 2008,
+      "yukseklik": 1696,
+      "dingilMesafesi": 2975,
+      "agirlik": 2155,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 340,
+    "maxTork": 450,
+    "maxSpeed": 250
+  },
+  "bmw|x3": {
+    "brandSlug": "bmw",
+    "modelSlug": "x3",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2016,
+      2017,
+      2018,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4708,
+      "genislik": 1891,
+      "yukseklik": 1676,
+      "dingilMesafesi": 2864,
+      "agirlik": 1678,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 400,
+    "maxSpeed": 220
+  },
+  "bmw|z4": {
+    "brandSlug": "bmw",
+    "modelSlug": "z4",
+    "years": [
+      2012,
+      2016,
+      2019,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1243,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "bmw|x6-m": {
+    "brandSlug": "bmw",
+    "modelSlug": "x6-m",
+    "years": [
+      2012,
+      2014,
+      2016,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4924,
+      "genislik": 2008,
+      "yukseklik": 1696,
+      "dingilMesafesi": 2975,
+      "agirlik": 2155,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 340,
+    "maxTork": 450,
+    "maxSpeed": 250
+  },
+  "bmw|x1": {
+    "brandSlug": "bmw",
+    "modelSlug": "x1",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4500,
+      "genislik": 1821,
+      "yukseklik": 1598,
+      "dingilMesafesi": 2692,
+      "agirlik": 1585,
+      "bagajHacmi": 505
+    },
+    "variants": [],
+    "maxHp": 192,
+    "maxTork": 280,
+    "maxSpeed": 220
+  },
+  "bmw|4-serisi-gran-coupe": {
+    "brandSlug": "bmw",
+    "modelSlug": "4-serisi-gran-coupe",
+    "years": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2950,
+      "agirlik": 1402,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "bmw|2-serisi-coupe": {
+    "brandSlug": "bmw",
+    "modelSlug": "2-serisi-coupe",
+    "years": [
+      2013,
+      2018,
+      2020,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1195,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "bmw|m4": {
+    "brandSlug": "bmw",
+    "modelSlug": "m4",
+    "years": [
+      2014,
+      2016,
+      2017,
+      2020,
+      2021,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2950,
+      "agirlik": 1496,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "bmw|x4": {
+    "brandSlug": "bmw",
+    "modelSlug": "x4",
+    "years": [
+      2014,
+      2016,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1385,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "bmw|m4-cabrio": {
+    "brandSlug": "bmw",
+    "modelSlug": "m4-cabrio",
+    "years": [
+      2014,
+      2016,
+      2017,
+      2021,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2950,
+      "agirlik": 1582,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "bmw|i3": {
+    "brandSlug": "bmw",
+    "modelSlug": "i3",
+    "years": [
+      2014,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "bmw|x5-m": {
+    "brandSlug": "bmw",
+    "modelSlug": "x5-m",
+    "years": [
+      2013,
+      2015,
+      2016,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4922,
+      "genislik": 2004,
+      "yukseklik": 1745,
+      "dingilMesafesi": 2975,
+      "agirlik": 2115,
+      "bagajHacmi": 650
+    },
+    "variants": [],
+    "maxHp": 340,
+    "maxTork": 450,
+    "maxSpeed": 250
+  },
+  "bmw|m2": {
+    "brandSlug": "bmw",
+    "modelSlug": "m2",
+    "years": [
+      2016,
+      2018,
+      2020,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2950,
+      "agirlik": 1315,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "bmw|x2": {
+    "brandSlug": "bmw",
+    "modelSlug": "x2",
+    "years": [
+      2018,
+      2021,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2800,
+      "agirlik": 1174,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "bmw|x3-m": {
+    "brandSlug": "bmw",
+    "modelSlug": "x3-m",
+    "years": [
+      2018
+    ],
+    "dimensions": {
+      "uzunluk": 4708,
+      "genislik": 1891,
+      "yukseklik": 1676,
+      "dingilMesafesi": 2864,
+      "agirlik": 1770,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 184,
+    "maxTork": 300,
+    "maxSpeed": 210
+  },
+  "bmw|8-serisi-coupe": {
+    "brandSlug": "bmw",
+    "modelSlug": "8-serisi-coupe",
+    "years": [
+      2019,
+      2020,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "bmw|m8": {
+    "brandSlug": "bmw",
+    "modelSlug": "m8",
+    "years": [
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "bmw|ix3": {
+    "brandSlug": "bmw",
+    "modelSlug": "ix3",
+    "years": [
+      2020,
+      2021,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4708,
+      "genislik": 1891,
+      "yukseklik": 1676,
+      "dingilMesafesi": 2864,
+      "agirlik": 1770,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 184,
+    "maxTork": 300,
+    "maxSpeed": 210
+  },
+  "bmw|x7": {
+    "brandSlug": "bmw",
+    "modelSlug": "x7",
+    "years": [
+      2019,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "bmw|ix": {
+    "brandSlug": "bmw",
+    "modelSlug": "ix",
+    "years": [
+      2021,
+      2022,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "bmw|i4": {
+    "brandSlug": "bmw",
+    "modelSlug": "i4",
+    "years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "bmw|i7": {
+    "brandSlug": "bmw",
+    "modelSlug": "i7",
+    "years": [
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "bmw|ix1": {
+    "brandSlug": "bmw",
+    "modelSlug": "ix1",
+    "years": [
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4500,
+      "genislik": 1821,
+      "yukseklik": 1598,
+      "dingilMesafesi": 2692,
+      "agirlik": 1585,
+      "bagajHacmi": 505
+    },
+    "variants": [],
+    "maxHp": 192,
+    "maxTork": 280,
+    "maxSpeed": 220
+  },
+  "bmw|m3-touring": {
+    "brandSlug": "bmw",
+    "modelSlug": "m3-touring",
+    "years": [
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2950,
+      "agirlik": 1650,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "bmw|i5": {
+    "brandSlug": "bmw",
+    "modelSlug": "i5",
+    "years": [
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "bmw|xm": {
+    "brandSlug": "bmw",
+    "modelSlug": "xm",
+    "years": [
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "bmw|2-serisi-gran-coupe": {
+    "brandSlug": "bmw",
+    "modelSlug": "2-serisi-gran-coupe",
+    "years": [
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1310,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "citroen|jumpy": {
+    "brandSlug": "citroen",
+    "modelSlug": "jumpy",
+    "years": [
+      2012,
+      2017,
+      2019,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2870,
+      "agirlik": 1478,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "citroen|c1": {
+    "brandSlug": "citroen",
+    "modelSlug": "c1",
+    "years": [
+      2012,
+      2014
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "citroen|c4": {
+    "brandSlug": "citroen",
+    "modelSlug": "c4",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2017,
+      2018,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4360,
+      "genislik": 1800,
+      "yukseklik": 1520,
+      "dingilMesafesi": 2670,
+      "agirlik": 1320,
+      "bagajHacmi": 408
+    },
+    "variants": [],
+    "maxHp": 130,
+    "maxTork": 300,
+    "maxSpeed": 200
+  },
+  "citroen|nemo": {
+    "brandSlug": "citroen",
+    "modelSlug": "nemo",
+    "years": [
+      2012,
+      2013
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1300,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 95,
+    "maxTork": 220,
+    "maxSpeed": 175
+  },
+  "citroen|berlingo": {
+    "brandSlug": "citroen",
+    "modelSlug": "berlingo",
+    "years": [
+      2012,
+      2015,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4403,
+      "genislik": 1848,
+      "yukseklik": 1842,
+      "dingilMesafesi": 2785,
+      "agirlik": 1350,
+      "bagajHacmi": 775
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 250,
+    "maxSpeed": 195
+  },
+  "citroen|c5": {
+    "brandSlug": "citroen",
+    "modelSlug": "c5",
+    "years": [
+      2012,
+      2013,
+      2019,
+      2020,
+      2021,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4780,
+      "genislik": 1860,
+      "yukseklik": 1470,
+      "dingilMesafesi": 2815,
+      "agirlik": 1590,
+      "bagajHacmi": 483
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 215
+  },
+  "citroen|c3": {
+    "brandSlug": "citroen",
+    "modelSlug": "c3",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2016,
+      2017,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1157,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "citroen|ds3": {
+    "brandSlug": "citroen",
+    "modelSlug": "ds3",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1303,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "citroen|ds4": {
+    "brandSlug": "citroen",
+    "modelSlug": "ds4",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1460,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "citroen|ds5": {
+    "brandSlug": "citroen",
+    "modelSlug": "ds5",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2820,
+      "agirlik": 1495,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 218,
+    "maxTork": 340,
+    "maxSpeed": 230
+  },
+  "citroen|c-elysee": {
+    "brandSlug": "citroen",
+    "modelSlug": "c-elysee",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1395,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "citroen|c4-cactus": {
+    "brandSlug": "citroen",
+    "modelSlug": "c4-cactus",
+    "years": [
+      2014,
+      2015,
+      2016,
+      2018,
+      2019,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4360,
+      "genislik": 1800,
+      "yukseklik": 1520,
+      "dingilMesafesi": 2670,
+      "agirlik": 1320,
+      "bagajHacmi": 408
+    },
+    "variants": [],
+    "maxHp": 130,
+    "maxTork": 300,
+    "maxSpeed": 200
+  },
+  "citroen|spacetourer": {
+    "brandSlug": "citroen",
+    "modelSlug": "spacetourer",
+    "years": [
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1880,
+      "yukseklik": 1520,
+      "dingilMesafesi": 2900,
+      "agirlik": 1586,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 430,
+    "maxSpeed": 245
+  },
+  "citroen|c3-aircross": {
+    "brandSlug": "citroen",
+    "modelSlug": "c3-aircross",
+    "years": [
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1149,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "citroen|c5-aircross": {
+    "brandSlug": "citroen",
+    "modelSlug": "c5-aircross",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4780,
+      "genislik": 1860,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2815,
+      "agirlik": 1495,
+      "bagajHacmi": 483
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 215
+  },
+  "citroen|c4-x": {
+    "brandSlug": "citroen",
+    "modelSlug": "c4-x",
+    "years": [
+      2022,
+      2023,
+      2024,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4360,
+      "genislik": 1800,
+      "yukseklik": 1520,
+      "dingilMesafesi": 2670,
+      "agirlik": 1320,
+      "bagajHacmi": 408
+    },
+    "variants": [],
+    "maxHp": 130,
+    "maxTork": 300,
+    "maxSpeed": 200
+  },
+  "citroen|c5-x": {
+    "brandSlug": "citroen",
+    "modelSlug": "c5-x",
+    "years": [
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1310,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "fiat|panda": {
+    "brandSlug": "fiat",
+    "modelSlug": "panda",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2018,
+      2019,
+      2021,
+      2022,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1551,
+      "dingilMesafesi": 2700,
+      "agirlik": 1476,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 175
+  },
+  "fiat|bravo": {
+    "brandSlug": "fiat",
+    "modelSlug": "bravo",
+    "years": [
+      2012
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1303,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "fiat|500": {
+    "brandSlug": "fiat",
+    "modelSlug": "500",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1090,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 220,
+    "maxSpeed": 182
+  },
+  "fiat|punto": {
+    "brandSlug": "fiat",
+    "modelSlug": "punto",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4030,
+      "genislik": 1687,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2510,
+      "agirlik": 1120,
+      "bagajHacmi": 275
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 206,
+    "maxSpeed": 195
+  },
+  "fiat|freemont": {
+    "brandSlug": "fiat",
+    "modelSlug": "freemont",
+    "years": [
+      2012,
+      2014
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1550,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "fiat|500l": {
+    "brandSlug": "fiat",
+    "modelSlug": "500l",
+    "years": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2020,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1109,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "fiat|panda-cross": {
+    "brandSlug": "fiat",
+    "modelSlug": "panda-cross",
+    "years": [
+      2014,
+      2015,
+      2017,
+      2019,
+      2020,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1551,
+      "dingilMesafesi": 2620,
+      "agirlik": 1070,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 145,
+    "maxSpeed": 175
+  },
+  "fiat|500x": {
+    "brandSlug": "fiat",
+    "modelSlug": "500x",
+    "years": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1172,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 145,
+    "maxSpeed": 182
+  },
+  "fiat|124-spider": {
+    "brandSlug": "fiat",
+    "modelSlug": "124-spider",
+    "years": [
+      2016,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2600,
+      "agirlik": 1250,
+      "bagajHacmi": 360
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 200,
+    "maxSpeed": 195
+  },
+  "fiat|500e": {
+    "brandSlug": "fiat",
+    "modelSlug": "500e",
+    "years": [
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 3546,
+      "genislik": 1627,
+      "yukseklik": 1488,
+      "dingilMesafesi": 2300,
+      "agirlik": 1035,
+      "bagajHacmi": 185
+    },
+    "variants": [],
+    "maxHp": 85,
+    "maxTork": 145,
+    "maxSpeed": 182
+  },
+  "fiat|doblo": {
+    "brandSlug": "fiat",
+    "modelSlug": "doblo",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1845,
+      "dingilMesafesi": 2800,
+      "agirlik": 1257,
+      "bagajHacmi": 790
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "fiat|600e": {
+    "brandSlug": "fiat",
+    "modelSlug": "600e",
+    "years": [
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "ford|ranger": {
+    "brandSlug": "ford",
+    "modelSlug": "ranger",
+    "years": [
+      2012,
+      2015,
+      2016,
+      2018,
+      2019,
+      2021,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 5359,
+      "genislik": 2000,
+      "yukseklik": 1821,
+      "dingilMesafesi": 3220,
+      "agirlik": 1594,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "ford|focus": {
+    "brandSlug": "ford",
+    "modelSlug": "focus",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4358,
+      "genislik": 1823,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2648,
+      "agirlik": 1325,
+      "bagajHacmi": 375
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 215
+  },
+  "ford|transit": {
+    "brandSlug": "ford",
+    "modelSlug": "transit",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 5532,
+      "genislik": 2034,
+      "yukseklik": 2480,
+      "dingilMesafesi": 3300,
+      "agirlik": 1732,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 350,
+    "maxSpeed": 230
+  },
+  "ford|transit-connect": {
+    "brandSlug": "ford",
+    "modelSlug": "transit-connect",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 5532,
+      "genislik": 2034,
+      "yukseklik": 2480,
+      "dingilMesafesi": 3300,
+      "agirlik": 2088,
+      "bagajHacmi": null
+    },
+    "variants": [],
+    "maxHp": 130,
+    "maxTork": 350,
+    "maxSpeed": 150
+  },
+  "ford|mondeo": {
+    "brandSlug": "ford",
+    "modelSlug": "mondeo",
+    "years": [
+      2012,
+      2015,
+      2016,
+      2018,
+      2019
+    ],
+    "dimensions": {
+      "uzunluk": 4871,
+      "genislik": 1852,
+      "yukseklik": 1496,
+      "dingilMesafesi": 2850,
+      "agirlik": 1545,
+      "bagajHacmi": 541
+    },
+    "variants": [],
+    "maxHp": 165,
+    "maxTork": 370,
+    "maxSpeed": 220
+  },
+  "ford|galaxy": {
+    "brandSlug": "ford",
+    "modelSlug": "galaxy",
+    "years": [
+      2012,
+      2013,
+      2016,
+      2019,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2870,
+      "agirlik": 1475,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "ford|s-max": {
+    "brandSlug": "ford",
+    "modelSlug": "s-max",
+    "years": [
+      2012,
+      2013,
+      2016,
+      2019
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1472,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "ford|kuga": {
+    "brandSlug": "ford",
+    "modelSlug": "kuga",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4524,
+      "genislik": 1882,
+      "yukseklik": 1703,
+      "dingilMesafesi": 2690,
+      "agirlik": 1677,
+      "bagajHacmi": 456
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 197
+  },
+  "ford|fiesta": {
+    "brandSlug": "ford",
+    "modelSlug": "fiesta",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1175,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 215,
+    "maxSpeed": 191
+  },
+  "ford|c-max": {
+    "brandSlug": "ford",
+    "modelSlug": "c-max",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1248,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "ford|transit-custom": {
+    "brandSlug": "ford",
+    "modelSlug": "transit-custom",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2016,
+      2018,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "ford|tourneo-custom": {
+    "brandSlug": "ford",
+    "modelSlug": "tourneo-custom",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1185,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "ford|transit-courier": {
+    "brandSlug": "ford",
+    "modelSlug": "transit-courier",
+    "years": [
+      2014,
+      2016,
+      2018,
+      2019,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 5532,
+      "genislik": 2034,
+      "yukseklik": 2480,
+      "dingilMesafesi": 3300,
+      "agirlik": 1330,
+      "bagajHacmi": null
+    },
+    "variants": [],
+    "maxHp": 130,
+    "maxTork": 350,
+    "maxSpeed": 155
+  },
+  "ford|tourneo-courier": {
+    "brandSlug": "ford",
+    "modelSlug": "tourneo-courier",
+    "years": [
+      2014,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2750,
+      "agirlik": 1643,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "ford|tourneo-connect": {
+    "brandSlug": "ford",
+    "modelSlug": "tourneo-connect",
+    "years": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1422,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 340,
+    "maxSpeed": 230
+  },
+  "ford|b-max": {
+    "brandSlug": "ford",
+    "modelSlug": "b-max",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1169,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "ford|edge": {
+    "brandSlug": "ford",
+    "modelSlug": "edge",
+    "years": [
+      2016,
+      2018,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1550,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 340,
+    "maxSpeed": 230
+  },
+  "ford|ecosport": {
+    "brandSlug": "ford",
+    "modelSlug": "ecosport",
+    "years": [
+      2017,
+      2018,
+      2019
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1765,
+      "yukseklik": 1647,
+      "dingilMesafesi": 2600,
+      "agirlik": 1260,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 125,
+    "maxTork": 220,
+    "maxSpeed": 185
+  },
+  "ford|puma": {
+    "brandSlug": "ford",
+    "modelSlug": "puma",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4204,
+      "genislik": 1805,
+      "yukseklik": 1537,
+      "dingilMesafesi": 2620,
+      "agirlik": 1336,
+      "bagajHacmi": 456
+    },
+    "variants": [],
+    "maxHp": 125,
+    "maxTork": 210,
+    "maxSpeed": 195
+  },
+  "ford|bronco": {
+    "brandSlug": "ford",
+    "modelSlug": "bronco",
+    "years": [
+      2021,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1470,
+      "dingilMesafesi": 2870,
+      "agirlik": 1373,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "ford|explorer": {
+    "brandSlug": "ford",
+    "modelSlug": "explorer",
+    "years": [
+      2013,
+      2014,
+      2017,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1813,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "ford|e-transit": {
+    "brandSlug": "ford",
+    "modelSlug": "e-transit",
+    "years": [
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "honda|civic": {
+    "brandSlug": "honda",
+    "modelSlug": "civic",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4519,
+      "genislik": 1800,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2700,
+      "agirlik": 1340,
+      "bagajHacmi": 478
+    },
+    "variants": [],
+    "maxHp": 182,
+    "maxTork": 240,
+    "maxSpeed": 220
+  },
+  "honda|accord": {
+    "brandSlug": "honda",
+    "modelSlug": "accord",
+    "years": [
+      2012,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2800,
+      "agirlik": 1395,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "honda|cr-v": {
+    "brandSlug": "honda",
+    "modelSlug": "cr-v",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2018,
+      2019,
+      2020,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1880,
+      "yukseklik": 1679,
+      "dingilMesafesi": 2900,
+      "agirlik": 1603,
+      "bagajHacmi": 561
+    },
+    "variants": [],
+    "maxHp": 218,
+    "maxTork": 430,
+    "maxSpeed": 225
+  },
+  "honda|jazz": {
+    "brandSlug": "honda",
+    "modelSlug": "jazz",
+    "years": [
+      2012,
+      2015,
+      2017,
+      2018,
+      2021,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 3900,
+      "genislik": 1694,
+      "yukseklik": 1525,
+      "dingilMesafesi": 2530,
+      "agirlik": 1145,
+      "bagajHacmi": 354
+    },
+    "variants": [],
+    "maxHp": 109,
+    "maxTork": 127,
+    "maxSpeed": 180
+  },
+  "honda|city": {
+    "brandSlug": "honda",
+    "modelSlug": "city",
+    "years": [
+      2012,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1250,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "honda|hr-v": {
+    "brandSlug": "honda",
+    "modelSlug": "hr-v",
+    "years": [
+      2016,
+      2020,
+      2021,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4294,
+      "genislik": 1772,
+      "yukseklik": 1605,
+      "dingilMesafesi": 2620,
+      "agirlik": 1340,
+      "bagajHacmi": 393
+    },
+    "variants": [],
+    "maxHp": 130,
+    "maxTork": 155,
+    "maxSpeed": 180
+  },
+  "honda|zr-v": {
+    "brandSlug": "honda",
+    "modelSlug": "zr-v",
+    "years": [
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2820,
+      "agirlik": 1480,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 218,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "mazda|mazda2": {
+    "brandSlug": "mazda",
+    "modelSlug": "mazda2",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2018,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1470,
+      "dingilMesafesi": 2870,
+      "agirlik": 1393,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "mazda|mazda3": {
+    "brandSlug": "mazda",
+    "modelSlug": "mazda3",
+    "years": [
+      2012,
+      2016,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1409,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "mazda|cx-5": {
+    "brandSlug": "mazda",
+    "modelSlug": "cx-5",
+    "years": [
+      2012,
+      2017,
+      2019,
+      2021,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4550,
+      "genislik": 1840,
+      "yukseklik": 1680,
+      "dingilMesafesi": 2700,
+      "agirlik": 1595,
+      "bagajHacmi": 522
+    },
+    "variants": [],
+    "maxHp": 165,
+    "maxTork": 213,
+    "maxSpeed": 195
+  },
+  "mazda|mazda6": {
+    "brandSlug": "mazda",
+    "modelSlug": "mazda6",
+    "years": [
+      2012
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1310,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "mazda|cx-3": {
+    "brandSlug": "mazda",
+    "modelSlug": "cx-3",
+    "years": [
+      2015,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1310,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "mazda|mx-5": {
+    "brandSlug": "mazda",
+    "modelSlug": "mx-5",
+    "years": [
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2800,
+      "agirlik": 1395,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "mercedes-benz|slk": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "slk",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2800,
+      "agirlik": 1422,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "mercedes-benz|c-serisi": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "c-serisi",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1890,
+      "yukseklik": 1640,
+      "dingilMesafesi": 2873,
+      "agirlik": 1418,
+      "bagajHacmi": 620
+    },
+    "variants": [],
+    "maxHp": 258,
+    "maxTork": 400,
+    "maxSpeed": 250
+  },
+  "mercedes-benz|cls": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "cls",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2018,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1200,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 95,
+    "maxTork": 220,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|e-serisi": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "e-serisi",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1550,
+      "dingilMesafesi": 3100,
+      "agirlik": 1355,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "mercedes-benz|s-serisi": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "s-serisi",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1550,
+      "dingilMesafesi": 3100,
+      "agirlik": 1159,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "mercedes-benz|g-serisi": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "g-serisi",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016,
+      2018,
+      2019,
+      2020,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|b-serisi": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "b-serisi",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2018,
+      2019,
+      2021,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1880,
+      "yukseklik": 1500,
+      "dingilMesafesi": 2900,
+      "agirlik": 1314,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 430,
+    "maxSpeed": 225
+  },
+  "mercedes-benz|sl": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "sl",
+    "years": [
+      2012,
+      2014,
+      2016,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2950,
+      "agirlik": 1169,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "mercedes-benz|amg-e-63": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-e-63",
+    "years": [
+      2012,
+      2013,
+      2017,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1975,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "mercedes-benz|amg-s-63": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-s-63",
+    "years": [
+      2012,
+      2013,
+      2016,
+      2018,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|vito": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "vito",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4762,
+      "genislik": 1928,
+      "yukseklik": 1900,
+      "dingilMesafesi": 3200,
+      "agirlik": 1849,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 330,
+    "maxSpeed": 230
+  },
+  "mercedes-benz|x-serisi": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "x-serisi",
+    "years": [
+      2017,
+      2018
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|amg-a-45": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-a-45",
+    "years": [
+      2013,
+      2014,
+      2015,
+      2017,
+      2019,
+      2021,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4411,
+      "genislik": 1834,
+      "yukseklik": 1611,
+      "dingilMesafesi": 2729,
+      "agirlik": 1163,
+      "bagajHacmi": 421
+    },
+    "variants": [],
+    "maxHp": 224,
+    "maxTork": 350,
+    "maxSpeed": 235
+  },
+  "mercedes-benz|v-serisi": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "v-serisi",
+    "years": [
+      2020,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1195,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "mercedes-benz|a-serisi": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "a-serisi",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2021,
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2800,
+      "agirlik": 1595,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 340,
+    "maxSpeed": 230
+  },
+  "mercedes-benz|cla": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "cla",
+    "years": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2019,
+      2021,
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2800,
+      "agirlik": 1167,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "mercedes-benz|c-serisi-estate": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "c-serisi-estate",
+    "years": [
+      2013,
+      2015,
+      2020,
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2650,
+      "agirlik": 1178,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "mercedes-benz|amg-gt": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-gt",
+    "years": [
+      2013,
+      2015,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|gla": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "gla",
+    "years": [
+      2014,
+      2016,
+      2017,
+      2019,
+      2020,
+      2021,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4411,
+      "genislik": 1834,
+      "yukseklik": 1611,
+      "dingilMesafesi": 2729,
+      "agirlik": 1545,
+      "bagajHacmi": 421
+    },
+    "variants": [],
+    "maxHp": 224,
+    "maxTork": 350,
+    "maxSpeed": 235
+  },
+  "mercedes-benz|c-serisi-coupe": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "c-serisi-coupe",
+    "years": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1640,
+      "dingilMesafesi": 2950,
+      "agirlik": 1499,
+      "bagajHacmi": 620
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "mercedes-benz|c-serisi-cabriolet": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "c-serisi-cabriolet",
+    "years": [
+      2015,
+      2016,
+      2021,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1470,
+      "dingilMesafesi": 2870,
+      "agirlik": 1158,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "mercedes-benz|maybach-s-serisi": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "maybach-s-serisi",
+    "years": [
+      2015,
+      2017,
+      2018,
+      2021,
+      2022,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2820,
+      "agirlik": 1238,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 218,
+    "maxTork": 221,
+    "maxSpeed": 195
+  },
+  "mercedes-benz|amg-gle-63": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-gle-63",
+    "years": [
+      2015,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|gle": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "gle",
+    "years": [
+      2015,
+      2019,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|glc": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "glc",
+    "years": [
+      2015,
+      2019,
+      2020,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4716,
+      "genislik": 1890,
+      "yukseklik": 1640,
+      "dingilMesafesi": 2873,
+      "agirlik": 1795,
+      "bagajHacmi": 620
+    },
+    "variants": [],
+    "maxHp": 258,
+    "maxTork": 400,
+    "maxSpeed": 250
+  },
+  "mercedes-benz|gls": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "gls",
+    "years": [
+      2016,
+      2017,
+      2019,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|amg-c-63": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-c-63",
+    "years": [
+      2016,
+      2017,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|amg-c-43": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-c-43",
+    "years": [
+      2016,
+      2017,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|amg-g-63": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-g-63",
+    "years": [
+      2018,
+      2021,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|amg-a-35": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-a-35",
+    "years": [
+      2019,
+      2021,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1363,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|a-serisi-sedan": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "a-serisi-sedan",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2600,
+      "agirlik": 1175,
+      "bagajHacmi": 360
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 200,
+    "maxSpeed": 195
+  },
+  "mercedes-benz|eqc": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "eqc",
+    "years": [
+      2019,
+      2020,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "mercedes-benz|glb": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "glb",
+    "years": [
+      2020,
+      2021,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1328,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "mercedes-benz|eqs": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "eqs",
+    "years": [
+      2021,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "mercedes-benz|maybach-gls": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "maybach-gls",
+    "years": [
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|eqb": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "eqb",
+    "years": [
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "mercedes-benz|eqe": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "eqe",
+    "years": [
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "mercedes-benz|amg-e-53": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-e-53",
+    "years": [
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1188,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|e-serisi-estate": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "e-serisi-estate",
+    "years": [
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "mercedes-benz|amg-glc-43": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-glc-43",
+    "years": [
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4716,
+      "genislik": 1890,
+      "yukseklik": 1640,
+      "dingilMesafesi": 2873,
+      "agirlik": 1795,
+      "bagajHacmi": 620
+    },
+    "variants": [],
+    "maxHp": 258,
+    "maxTork": 400,
+    "maxSpeed": 250
+  },
+  "mercedes-benz|amg-glc-63": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "amg-glc-63",
+    "years": [
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4716,
+      "genislik": 1890,
+      "yukseklik": 1640,
+      "dingilMesafesi": 2873,
+      "agirlik": 1795,
+      "bagajHacmi": 620
+    },
+    "variants": [],
+    "maxHp": 258,
+    "maxTork": 400,
+    "maxSpeed": 250
+  },
+  "mercedes-benz|e-serisi-coupe": {
+    "brandSlug": "mercedes-benz",
+    "modelSlug": "e-serisi-coupe",
+    "years": [
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4716,
+      "genislik": 1890,
+      "yukseklik": 1640,
+      "dingilMesafesi": 2873,
+      "agirlik": 1795,
+      "bagajHacmi": 620
+    },
+    "variants": [],
+    "maxHp": 258,
+    "maxTork": 400,
+    "maxSpeed": 250
+  },
+  "fiat|linea": {
+    "brandSlug": "fiat",
+    "modelSlug": "linea",
+    "years": [
+      2012,
+      2014,
+      2015
+    ],
+    "dimensions": {
+      "uzunluk": 4560,
+      "genislik": 1750,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2615,
+      "agirlik": 1310,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 250,
+    "maxSpeed": 195
+  },
+  "fiat|fiorino": {
+    "brandSlug": "fiat",
+    "modelSlug": "fiorino",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1250,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 220,
+    "maxSpeed": 195
+  },
+  "fiat|egea-sedan": {
+    "brandSlug": "fiat",
+    "modelSlug": "egea-sedan",
+    "years": [
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4371,
+      "genislik": 1782,
+      "yukseklik": 1494,
+      "dingilMesafesi": 2636,
+      "agirlik": 1224,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 142,
+    "maxSpeed": 188
+  },
+  "fiat|egea-hatchback": {
+    "brandSlug": "fiat",
+    "modelSlug": "egea-hatchback",
+    "years": [
+      2016,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4371,
+      "genislik": 1782,
+      "yukseklik": 1494,
+      "dingilMesafesi": 2636,
+      "agirlik": 1165,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 95,
+    "maxTork": 128,
+    "maxSpeed": 188
+  },
+  "fiat|egea-station-wagon": {
+    "brandSlug": "fiat",
+    "modelSlug": "egea-station-wagon",
+    "years": [
+      2016,
+      2018,
+      2020,
+      2021,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4371,
+      "genislik": 1782,
+      "yukseklik": 1494,
+      "dingilMesafesi": 2636,
+      "agirlik": 1165,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 95,
+    "maxTork": 128,
+    "maxSpeed": 188
+  },
+  "fiat|egea-cross": {
+    "brandSlug": "fiat",
+    "modelSlug": "egea-cross",
+    "years": [
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4371,
+      "genislik": 1782,
+      "yukseklik": 1494,
+      "dingilMesafesi": 2636,
+      "agirlik": 1165,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 95,
+    "maxTork": 128,
+    "maxSpeed": 188
+  },
+  "nissan|navara": {
+    "brandSlug": "nissan",
+    "modelSlug": "navara",
+    "years": [
+      2012,
+      2015,
+      2016,
+      2018,
+      2019
+    ],
+    "dimensions": {
+      "uzunluk": 5255,
+      "genislik": 1850,
+      "yukseklik": 1796,
+      "dingilMesafesi": 3150,
+      "agirlik": 2000,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 450,
+    "maxSpeed": 175
+  },
+  "nissan|note": {
+    "brandSlug": "nissan",
+    "modelSlug": "note",
+    "years": [
+      2012,
+      2013
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2650,
+      "agirlik": 1250,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "nissan|qashqai": {
+    "brandSlug": "nissan",
+    "modelSlug": "qashqai",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4407,
+      "genislik": 1806,
+      "yukseklik": 1610,
+      "dingilMesafesi": 2646,
+      "agirlik": 1488,
+      "bagajHacmi": 430
+    },
+    "variants": [],
+    "maxHp": 115,
+    "maxTork": 260,
+    "maxSpeed": 185
+  },
+  "nissan|x-trail": {
+    "brandSlug": "nissan",
+    "modelSlug": "x-trail",
+    "years": [
+      2012,
+      2014,
+      2017,
+      2019,
+      2020,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4641,
+      "genislik": 1820,
+      "yukseklik": 1715,
+      "dingilMesafesi": 2705,
+      "agirlik": 1236,
+      "bagajHacmi": 565
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 320,
+    "maxSpeed": 210
+  },
+  "nissan|micra": {
+    "brandSlug": "nissan",
+    "modelSlug": "micra",
+    "years": [
+      2012,
+      2013,
+      2019,
+      2020,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 3999,
+      "genislik": 1743,
+      "yukseklik": 1488,
+      "dingilMesafesi": 2525,
+      "agirlik": 1060,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 92,
+    "maxTork": 140,
+    "maxSpeed": 175
+  },
+  "nissan|juke": {
+    "brandSlug": "nissan",
+    "modelSlug": "juke",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2019,
+      2020,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4210,
+      "genislik": 1800,
+      "yukseklik": 1595,
+      "dingilMesafesi": 2636,
+      "agirlik": 1210,
+      "bagajHacmi": 422
+    },
+    "variants": [],
+    "maxHp": 117,
+    "maxTork": 220,
+    "maxSpeed": 180
+  },
+  "nissan|pulsar": {
+    "brandSlug": "nissan",
+    "modelSlug": "pulsar",
+    "years": [
+      2015
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1250,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 220,
+    "maxSpeed": 195
+  },
+  "nissan|pathfinder": {
+    "brandSlug": "nissan",
+    "modelSlug": "pathfinder",
+    "years": [
+      2013,
+      2014
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1875,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "nissan|primastar": {
+    "brandSlug": "nissan",
+    "modelSlug": "primastar",
+    "years": [
+      2013
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1480,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "nissan|leaf": {
+    "brandSlug": "nissan",
+    "modelSlug": "leaf",
+    "years": [
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "opel|combo": {
+    "brandSlug": "opel",
+    "modelSlug": "combo",
+    "years": [
+      2012,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1242,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "opel|zafira": {
+    "brandSlug": "opel",
+    "modelSlug": "zafira",
+    "years": [
+      2012,
+      2013,
+      2017,
+      2019,
+      2021,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2870,
+      "agirlik": 1463,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "opel|corsa": {
+    "brandSlug": "opel",
+    "modelSlug": "corsa",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1765,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1349,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 205,
+    "maxSpeed": 195
+  },
+  "opel|astra": {
+    "brandSlug": "opel",
+    "modelSlug": "astra",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4370,
+      "genislik": 1865,
+      "yukseklik": 1479,
+      "dingilMesafesi": 2662,
+      "agirlik": 1330,
+      "bagajHacmi": 370
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 300,
+    "maxSpeed": 215
+  },
+  "opel|insignia": {
+    "brandSlug": "opel",
+    "modelSlug": "insignia",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4908,
+      "genislik": 1856,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2829,
+      "agirlik": 1567,
+      "bagajHacmi": 490
+    },
+    "variants": [],
+    "maxHp": 170,
+    "maxTork": 400,
+    "maxSpeed": 230
+  },
+  "opel|meriva": {
+    "brandSlug": "opel",
+    "modelSlug": "meriva",
+    "years": [
+      2012,
+      2013,
+      2014
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1372,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 340,
+    "maxSpeed": 230
+  },
+  "opel|mokka": {
+    "brandSlug": "opel",
+    "modelSlug": "mokka",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1626,
+      "dingilMesafesi": 2750,
+      "agirlik": 1460,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "opel|adam": {
+    "brandSlug": "opel",
+    "modelSlug": "adam",
+    "years": [
+      2013,
+      2015
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2600,
+      "agirlik": 1175,
+      "bagajHacmi": 360
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 200,
+    "maxSpeed": 195
+  },
+  "opel|cascada": {
+    "brandSlug": "opel",
+    "modelSlug": "cascada",
+    "years": [
+      2013
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1430,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "opel|crossland": {
+    "brandSlug": "opel",
+    "modelSlug": "crossland",
+    "years": [
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4212,
+      "genislik": 1765,
+      "yukseklik": 1605,
+      "dingilMesafesi": 2604,
+      "agirlik": 1290,
+      "bagajHacmi": 410
+    },
+    "variants": [],
+    "maxHp": 110,
+    "maxTork": 205,
+    "maxSpeed": 185
+  },
+  "opel|grandland": {
+    "brandSlug": "opel",
+    "modelSlug": "grandland",
+    "years": [
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4477,
+      "genislik": 1856,
+      "yukseklik": 1609,
+      "dingilMesafesi": 2675,
+      "agirlik": 1453,
+      "bagajHacmi": 514
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "opel|vivaro": {
+    "brandSlug": "opel",
+    "modelSlug": "vivaro",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1470,
+      "dingilMesafesi": 2870,
+      "agirlik": 1478,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "opel|movano": {
+    "brandSlug": "opel",
+    "modelSlug": "movano",
+    "years": [
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1470,
+      "dingilMesafesi": 2870,
+      "agirlik": 1560,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "peugeot|308": {
+    "brandSlug": "peugeot",
+    "modelSlug": "308",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2019,
+      2020,
+      2021,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4589,
+      "genislik": 1852,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2728,
+      "agirlik": 1335,
+      "bagajHacmi": 412
+    },
+    "variants": [],
+    "maxHp": 130,
+    "maxTork": 300,
+    "maxSpeed": 206
+  },
+  "peugeot|partner": {
+    "brandSlug": "peugeot",
+    "modelSlug": "partner",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1232,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "peugeot|3008": {
+    "brandSlug": "peugeot",
+    "modelSlug": "3008",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4447,
+      "genislik": 1841,
+      "yukseklik": 1630,
+      "dingilMesafesi": 2675,
+      "agirlik": 1490,
+      "bagajHacmi": 591
+    },
+    "variants": [],
+    "maxHp": 130,
+    "maxTork": 300,
+    "maxSpeed": 190
+  },
+  "peugeot|508": {
+    "brandSlug": "peugeot",
+    "modelSlug": "508",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1880,
+      "yukseklik": 1500,
+      "dingilMesafesi": 2900,
+      "agirlik": 1391,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 430,
+    "maxSpeed": 225
+  },
+  "peugeot|5008": {
+    "brandSlug": "peugeot",
+    "modelSlug": "5008",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2017,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4641,
+      "genislik": 1844,
+      "yukseklik": 1640,
+      "dingilMesafesi": 2840,
+      "agirlik": 1478,
+      "bagajHacmi": 702
+    },
+    "variants": [],
+    "maxHp": 165,
+    "maxTork": 370,
+    "maxSpeed": 210
+  },
+  "peugeot|208": {
+    "brandSlug": "peugeot",
+    "modelSlug": "208",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1305,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 254,
+    "maxSpeed": 188
+  },
+  "peugeot|301": {
+    "brandSlug": "peugeot",
+    "modelSlug": "301",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2018,
+      2019,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1395,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "peugeot|2008": {
+    "brandSlug": "peugeot",
+    "modelSlug": "2008",
+    "years": [
+      2013,
+      2014,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2750,
+      "agirlik": 1392,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "peugeot|expert": {
+    "brandSlug": "peugeot",
+    "modelSlug": "expert",
+    "years": [
+      2017,
+      2019,
+      2020,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1880,
+      "yukseklik": 1500,
+      "dingilMesafesi": 2900,
+      "agirlik": 1642,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 430,
+    "maxSpeed": 225
+  },
+  "peugeot|traveller": {
+    "brandSlug": "peugeot",
+    "modelSlug": "traveller",
+    "years": [
+      2017,
+      2019,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1880,
+      "yukseklik": 1500,
+      "dingilMesafesi": 2900,
+      "agirlik": 1579,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 430,
+    "maxSpeed": 225
+  },
+  "peugeot|rifter": {
+    "brandSlug": "peugeot",
+    "modelSlug": "rifter",
+    "years": [
+      2018,
+      2019,
+      2020,
+      2021,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1318,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "peugeot|e-2008": {
+    "brandSlug": "peugeot",
+    "modelSlug": "e-2008",
+    "years": [
+      2020,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4300,
+      "genislik": 1770,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2605,
+      "agirlik": 1350,
+      "bagajHacmi": 434
+    },
+    "variants": [],
+    "maxHp": 130,
+    "maxTork": 230,
+    "maxSpeed": 192
+  },
+  "peugeot|408": {
+    "brandSlug": "peugeot",
+    "modelSlug": "408",
+    "years": [
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1325,
+      "bagajHacmi": 360
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 200,
+    "maxSpeed": 195
+  },
+  "peugeot|e-308": {
+    "brandSlug": "peugeot",
+    "modelSlug": "e-308",
+    "years": [
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4589,
+      "genislik": 1852,
+      "yukseklik": 1441,
+      "dingilMesafesi": 2728,
+      "agirlik": 1335,
+      "bagajHacmi": 412
+    },
+    "variants": [],
+    "maxHp": 130,
+    "maxTork": 230,
+    "maxSpeed": 204
+  },
+  "peugeot|e-208": {
+    "brandSlug": "peugeot",
+    "modelSlug": "e-208",
+    "years": [
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4055,
+      "genislik": 1745,
+      "yukseklik": 1430,
+      "dingilMesafesi": 2540,
+      "agirlik": 1210,
+      "bagajHacmi": 311
+    },
+    "variants": [],
+    "maxHp": 100,
+    "maxTork": 205,
+    "maxSpeed": 188
+  },
+  "peugeot|e-3008": {
+    "brandSlug": "peugeot",
+    "modelSlug": "e-3008",
+    "years": [
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4447,
+      "genislik": 1841,
+      "yukseklik": 1630,
+      "dingilMesafesi": 2675,
+      "agirlik": 1490,
+      "bagajHacmi": 591
+    },
+    "variants": [],
+    "maxHp": 130,
+    "maxTork": 230,
+    "maxSpeed": 185
+  },
+  "peugeot|e-5008": {
+    "brandSlug": "peugeot",
+    "modelSlug": "e-5008",
+    "years": [
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4641,
+      "genislik": 1844,
+      "yukseklik": 1640,
+      "dingilMesafesi": 2840,
+      "agirlik": 1620,
+      "bagajHacmi": 702
+    },
+    "variants": [],
+    "maxHp": 165,
+    "maxTork": 240,
+    "maxSpeed": 210
+  },
+  "porsche|911": {
+    "brandSlug": "porsche",
+    "modelSlug": "911",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1973,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "porsche|cayenne": {
+    "brandSlug": "porsche",
+    "modelSlug": "cayenne",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2019,
+      2020,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4926,
+      "genislik": 1983,
+      "yukseklik": 1696,
+      "dingilMesafesi": 2895,
+      "agirlik": 1766,
+      "bagajHacmi": 770
+    },
+    "variants": [],
+    "maxHp": 340,
+    "maxTork": 580,
+    "maxSpeed": 243
+  },
+  "porsche|panamera": {
+    "brandSlug": "porsche",
+    "modelSlug": "panamera",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1800,
+      "dingilMesafesi": 3100,
+      "agirlik": 1931,
+      "bagajHacmi": 900
+    },
+    "variants": [],
+    "maxHp": 440,
+    "maxTork": 750,
+    "maxSpeed": 288
+  },
+  "porsche|macan": {
+    "brandSlug": "porsche",
+    "modelSlug": "macan",
+    "years": [
+      2014,
+      2015,
+      2016,
+      2021,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4681,
+      "genislik": 1923,
+      "yukseklik": 1624,
+      "dingilMesafesi": 2807,
+      "agirlik": 1910,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 252,
+    "maxTork": 370,
+    "maxSpeed": 229
+  },
+  "porsche|taycan": {
+    "brandSlug": "porsche",
+    "modelSlug": "taycan",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "porsche|718-cayman": {
+    "brandSlug": "porsche",
+    "modelSlug": "718-cayman",
+    "years": [
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1350,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "porsche|718-boxster": {
+    "brandSlug": "porsche",
+    "modelSlug": "718-boxster",
+    "years": [
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1790,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "renault|clio": {
+    "brandSlug": "renault",
+    "modelSlug": "clio",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2019,
+      2020,
+      2021,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2650,
+      "agirlik": 1192,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "renault|express": {
+    "brandSlug": "renault",
+    "modelSlug": "express",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2018,
+      2019,
+      2021,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4359,
+      "genislik": 1814,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2669,
+      "agirlik": 1311,
+      "bagajHacmi": 434
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 260,
+    "maxSpeed": 210
+  },
+  "renault|symbol": {
+    "brandSlug": "renault",
+    "modelSlug": "symbol",
+    "years": [
+      2012,
+      2013,
+      2016,
+      2017,
+      2019,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1168,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 220,
+    "maxSpeed": 195
+  },
+  "renault|fluence": {
+    "brandSlug": "renault",
+    "modelSlug": "fluence",
+    "years": [
+      2012,
+      2013
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1395,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "renault|megane": {
+    "brandSlug": "renault",
+    "modelSlug": "megane",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2750,
+      "agirlik": 1673,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "renault|master": {
+    "brandSlug": "renault",
+    "modelSlug": "master",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 1184,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "renault|trafic": {
+    "brandSlug": "renault",
+    "modelSlug": "trafic",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1479,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 340,
+    "maxSpeed": 230
+  },
+  "renault|laguna": {
+    "brandSlug": "renault",
+    "modelSlug": "laguna",
+    "years": [
+      2012
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1285,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 340,
+    "maxSpeed": 230
+  },
+  "renault|kangoo": {
+    "brandSlug": "renault",
+    "modelSlug": "kangoo",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2017,
+      2018,
+      2019,
+      2020,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1200,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 220,
+    "maxSpeed": 195
+  },
+  "renault|koleos": {
+    "brandSlug": "renault",
+    "modelSlug": "koleos",
+    "years": [
+      2012,
+      2016,
+      2017,
+      2020,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1400,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "renault|espace": {
+    "brandSlug": "renault",
+    "modelSlug": "espace",
+    "years": [
+      2012,
+      2013,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1550,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "renault|scenic": {
+    "brandSlug": "renault",
+    "modelSlug": "scenic",
+    "years": [
+      2012,
+      2013
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1200,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 95,
+    "maxTork": 220,
+    "maxSpeed": 175
+  },
+  "renault|latitude": {
+    "brandSlug": "renault",
+    "modelSlug": "latitude",
+    "years": [
+      2012,
+      2013
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2950,
+      "agirlik": 1518,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "renault|captur": {
+    "brandSlug": "renault",
+    "modelSlug": "captur",
+    "years": [
+      2013,
+      2014,
+      2017,
+      2018,
+      2020,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4227,
+      "genislik": 1797,
+      "yukseklik": 1576,
+      "dingilMesafesi": 2640,
+      "agirlik": 1348,
+      "bagajHacmi": 422
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 220,
+    "maxSpeed": 175
+  },
+  "renault|zoe": {
+    "brandSlug": "renault",
+    "modelSlug": "zoe",
+    "years": [
+      2014,
+      2016,
+      2017,
+      2020,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "renault|kadjar": {
+    "brandSlug": "renault",
+    "modelSlug": "kadjar",
+    "years": [
+      2015,
+      2016,
+      2017,
+      2018,
+      2019
+    ],
+    "dimensions": {
+      "uzunluk": 4449,
+      "genislik": 1836,
+      "yukseklik": 1612,
+      "dingilMesafesi": 2646,
+      "agirlik": 1510,
+      "bagajHacmi": 472
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 260,
+    "maxSpeed": 196
+  },
+  "renault|talisman": {
+    "brandSlug": "renault",
+    "modelSlug": "talisman",
+    "years": [
+      2015,
+      2016,
+      2019,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4849,
+      "genislik": 1871,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2811,
+      "agirlik": 1575,
+      "bagajHacmi": 608
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 260,
+    "maxSpeed": 213
+  },
+  "renault|taliant": {
+    "brandSlug": "renault",
+    "modelSlug": "taliant",
+    "years": [
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "renault|austral": {
+    "brandSlug": "renault",
+    "modelSlug": "austral",
+    "years": [
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1307,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "renault|rafale": {
+    "brandSlug": "renault",
+    "modelSlug": "rafale",
+    "years": [
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1250,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "suzuki|vitara": {
+    "brandSlug": "suzuki",
+    "modelSlug": "vitara",
+    "years": [
+      2012,
+      2015,
+      2016,
+      2017,
+      2019,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2870,
+      "agirlik": 1322,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "suzuki|jimny": {
+    "brandSlug": "suzuki",
+    "modelSlug": "jimny",
+    "years": [
+      2012,
+      2015,
+      2016,
+      2018
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1250,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "suzuki|swift": {
+    "brandSlug": "suzuki",
+    "modelSlug": "swift",
+    "years": [
+      2012,
+      2015,
+      2018,
+      2020,
+      2021,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2650,
+      "agirlik": 1310,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "suzuki|sx4": {
+    "brandSlug": "suzuki",
+    "modelSlug": "sx4",
+    "years": [
+      2012
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1310,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "suzuki|alto": {
+    "brandSlug": "suzuki",
+    "modelSlug": "alto",
+    "years": [
+      2012
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "suzuki|s-cross": {
+    "brandSlug": "suzuki",
+    "modelSlug": "s-cross",
+    "years": [
+      2013,
+      2020,
+      2021,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2650,
+      "agirlik": 1310,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "suzuki|baleno": {
+    "brandSlug": "suzuki",
+    "modelSlug": "baleno",
+    "years": [
+      2016,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2600,
+      "agirlik": 1250,
+      "bagajHacmi": 360
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 200,
+    "maxSpeed": 195
+  },
+  "suzuki|celerio": {
+    "brandSlug": "suzuki",
+    "modelSlug": "celerio",
+    "years": [
+      2015
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "suzuki|ignis": {
+    "brandSlug": "suzuki",
+    "modelSlug": "ignis",
+    "years": [
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2600,
+      "agirlik": 1250,
+      "bagajHacmi": 360
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 200,
+    "maxSpeed": 195
+  },
+  "suzuki|across": {
+    "brandSlug": "suzuki",
+    "modelSlug": "across",
+    "years": [
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1470,
+      "dingilMesafesi": 2870,
+      "agirlik": 1560,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "skoda|octavia": {
+    "brandSlug": "skoda",
+    "modelSlug": "octavia",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4689,
+      "genislik": 1829,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2686,
+      "agirlik": 1370,
+      "bagajHacmi": 590
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 222
+  },
+  "skoda|roomster": {
+    "brandSlug": "skoda",
+    "modelSlug": "roomster",
+    "years": [
+      2012
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1372,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "skoda|fabia": {
+    "brandSlug": "skoda",
+    "modelSlug": "fabia",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2020,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4108,
+      "genislik": 1732,
+      "yukseklik": 1467,
+      "dingilMesafesi": 2564,
+      "agirlik": 1130,
+      "bagajHacmi": 330
+    },
+    "variants": [],
+    "maxHp": 95,
+    "maxTork": 230,
+    "maxSpeed": 183
+  },
+  "skoda|superb": {
+    "brandSlug": "skoda",
+    "modelSlug": "superb",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4869,
+      "genislik": 1864,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2841,
+      "agirlik": 1425,
+      "bagajHacmi": 625
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 400,
+    "maxSpeed": 243
+  },
+  "skoda|yeti": {
+    "brandSlug": "skoda",
+    "modelSlug": "yeti",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1691,
+      "dingilMesafesi": 2750,
+      "agirlik": 1458,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "skoda|citigo": {
+    "brandSlug": "skoda",
+    "modelSlug": "citigo",
+    "years": [
+      2012
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "skoda|rapid": {
+    "brandSlug": "skoda",
+    "modelSlug": "rapid",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1242,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "skoda|kodiaq": {
+    "brandSlug": "skoda",
+    "modelSlug": "kodiaq",
+    "years": [
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4698,
+      "genislik": 1882,
+      "yukseklik": 1685,
+      "dingilMesafesi": 2791,
+      "agirlik": 1694,
+      "bagajHacmi": 720
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "skoda|karoq": {
+    "brandSlug": "skoda",
+    "modelSlug": "karoq",
+    "years": [
+      2017,
+      2018,
+      2020,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1841,
+      "yukseklik": 1605,
+      "dingilMesafesi": 2750,
+      "agirlik": 1508,
+      "bagajHacmi": 521
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "skoda|scala": {
+    "brandSlug": "skoda",
+    "modelSlug": "scala",
+    "years": [
+      2020,
+      2021,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1239,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "skoda|kamiq": {
+    "brandSlug": "skoda",
+    "modelSlug": "kamiq",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1240,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "skoda|enyaq": {
+    "brandSlug": "skoda",
+    "modelSlug": "enyaq",
+    "years": [
+      2022,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "subaru|impreza": {
+    "brandSlug": "subaru",
+    "modelSlug": "impreza",
+    "years": [
+      2012,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1470,
+      "dingilMesafesi": 2870,
+      "agirlik": 1467,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "subaru|forester": {
+    "brandSlug": "subaru",
+    "modelSlug": "forester",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4625,
+      "genislik": 1815,
+      "yukseklik": 1730,
+      "dingilMesafesi": 2670,
+      "agirlik": 1620,
+      "bagajHacmi": 505
+    },
+    "variants": [],
+    "maxHp": 156,
+    "maxTork": 196,
+    "maxSpeed": 188
+  },
+  "subaru|outback": {
+    "brandSlug": "subaru",
+    "modelSlug": "outback",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2017,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4815,
+      "genislik": 1840,
+      "yukseklik": 1605,
+      "dingilMesafesi": 2745,
+      "agirlik": 1650,
+      "bagajHacmi": 522
+    },
+    "variants": [],
+    "maxHp": 175,
+    "maxTork": 235,
+    "maxSpeed": 208
+  },
+  "subaru|xv": {
+    "brandSlug": "subaru",
+    "modelSlug": "xv",
+    "years": [
+      2012,
+      2017,
+      2018,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4465,
+      "genislik": 1800,
+      "yukseklik": 1615,
+      "dingilMesafesi": 2670,
+      "agirlik": 1490,
+      "bagajHacmi": 385
+    },
+    "variants": [],
+    "maxHp": 156,
+    "maxTork": 196,
+    "maxSpeed": 190
+  },
+  "subaru|brz": {
+    "brandSlug": "subaru",
+    "modelSlug": "brz",
+    "years": [
+      2012,
+      2015
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "subaru|levorg": {
+    "brandSlug": "subaru",
+    "modelSlug": "levorg",
+    "years": [
+      2015,
+      2016,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1205,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "subaru|solterra": {
+    "brandSlug": "subaru",
+    "modelSlug": "solterra",
+    "years": [
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "subaru|crosstrek": {
+    "brandSlug": "subaru",
+    "modelSlug": "crosstrek",
+    "years": [
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "toyota|land-cruiser-prado": {
+    "brandSlug": "toyota",
+    "modelSlug": "land-cruiser-prado",
+    "years": [
+      2012,
+      2016,
+      2017,
+      2020,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4950,
+      "genislik": 1980,
+      "yukseklik": 1890,
+      "dingilMesafesi": 2950,
+      "agirlik": 2277,
+      "bagajHacmi": 909
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 650,
+    "maxSpeed": 250
+  },
+  "toyota|hilux": {
+    "brandSlug": "toyota",
+    "modelSlug": "hilux",
+    "years": [
+      2012,
+      2015,
+      2016,
+      2017,
+      2018,
+      2020,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5335,
+      "genislik": 1900,
+      "yukseklik": 1795,
+      "dingilMesafesi": 3085,
+      "agirlik": 1843,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "toyota|camry": {
+    "brandSlug": "toyota",
+    "modelSlug": "camry",
+    "years": [
+      2012,
+      2013,
+      2016,
+      2019,
+      2020,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4885,
+      "genislik": 1840,
+      "yukseklik": 1445,
+      "dingilMesafesi": 2825,
+      "agirlik": 1590,
+      "bagajHacmi": 493
+    },
+    "variants": [],
+    "maxHp": 277,
+    "maxTork": 335,
+    "maxSpeed": 230
+  },
+  "toyota|corolla": {
+    "brandSlug": "toyota",
+    "modelSlug": "corolla",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2017,
+      2018,
+      2019,
+      2021,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4630,
+      "genislik": 1780,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2700,
+      "agirlik": 1345,
+      "bagajHacmi": 470
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 205,
+    "maxSpeed": 195
+  },
+  "toyota|auris": {
+    "brandSlug": "toyota",
+    "modelSlug": "auris",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4340,
+      "genislik": 1760,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1310,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 136,
+    "maxTork": 220,
+    "maxSpeed": 195
+  },
+  "toyota|land-cruiser": {
+    "brandSlug": "toyota",
+    "modelSlug": "land-cruiser",
+    "years": [
+      2012,
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1890,
+      "dingilMesafesi": 3100,
+      "agirlik": 1902,
+      "bagajHacmi": 909
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 650,
+    "maxSpeed": 250
+  },
+  "toyota|avensis": {
+    "brandSlug": "toyota",
+    "modelSlug": "avensis",
+    "years": [
+      2012,
+      2013,
+      2015
+    ],
+    "dimensions": {
+      "uzunluk": 4770,
+      "genislik": 1810,
+      "yukseklik": 1475,
+      "dingilMesafesi": 2700,
+      "agirlik": 1460,
+      "bagajHacmi": 508
+    },
+    "variants": [],
+    "maxHp": 152,
+    "maxTork": 310,
+    "maxSpeed": 210
+  },
+  "toyota|yaris": {
+    "brandSlug": "toyota",
+    "modelSlug": "yaris",
+    "years": [
+      2012,
+      2014,
+      2016,
+      2017,
+      2020,
+      2021,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1066,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 180
+  },
+  "toyota|verso": {
+    "brandSlug": "toyota",
+    "modelSlug": "verso",
+    "years": [
+      2012,
+      2014,
+      2016,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1472,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 340,
+    "maxSpeed": 230
+  },
+  "toyota|prius": {
+    "brandSlug": "toyota",
+    "modelSlug": "prius",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4575,
+      "genislik": 1760,
+      "yukseklik": 1470,
+      "dingilMesafesi": 2700,
+      "agirlik": 1415,
+      "bagajHacmi": 502
+    },
+    "variants": [],
+    "maxHp": 136,
+    "maxTork": 142,
+    "maxSpeed": 180
+  },
+  "toyota|rav4": {
+    "brandSlug": "toyota",
+    "modelSlug": "rav4",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1880,
+      "yukseklik": 1685,
+      "dingilMesafesi": 2900,
+      "agirlik": 1787,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 222,
+    "maxTork": 430,
+    "maxSpeed": 225
+  },
+  "toyota|c-hr": {
+    "brandSlug": "toyota",
+    "modelSlug": "c-hr",
+    "years": [
+      2016,
+      2019,
+      2020,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4360,
+      "genislik": 1795,
+      "yukseklik": 1565,
+      "dingilMesafesi": 2640,
+      "agirlik": 1323,
+      "bagajHacmi": 377
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 200,
+    "maxSpeed": 195
+  },
+  "toyota|corolla-hatchback": {
+    "brandSlug": "toyota",
+    "modelSlug": "corolla-hatchback",
+    "years": [
+      2020,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4630,
+      "genislik": 1780,
+      "yukseklik": 1455,
+      "dingilMesafesi": 2700,
+      "agirlik": 1345,
+      "bagajHacmi": 470
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 160,
+    "maxSpeed": 195
+  },
+  "toyota|supra": {
+    "brandSlug": "toyota",
+    "modelSlug": "supra",
+    "years": [
+      2019,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2950,
+      "agirlik": 1565,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "toyota|proace-city": {
+    "brandSlug": "toyota",
+    "modelSlug": "proace-city",
+    "years": [
+      2020,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1205,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "toyota|highlander": {
+    "brandSlug": "toyota",
+    "modelSlug": "highlander",
+    "years": [
+      2019,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2950,
+      "agirlik": 1650,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "toyota|yaris-cross": {
+    "brandSlug": "toyota",
+    "modelSlug": "yaris-cross",
+    "years": [
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 3940,
+      "genislik": 1745,
+      "yukseklik": 1530,
+      "dingilMesafesi": 2560,
+      "agirlik": 1065,
+      "bagajHacmi": 286
+    },
+    "variants": [],
+    "maxHp": 116,
+    "maxTork": 141,
+    "maxSpeed": 175
+  },
+  "toyota|corolla-cross": {
+    "brandSlug": "toyota",
+    "modelSlug": "corolla-cross",
+    "years": [
+      2022,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4630,
+      "genislik": 1780,
+      "yukseklik": 1455,
+      "dingilMesafesi": 2700,
+      "agirlik": 1430,
+      "bagajHacmi": 217
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 142,
+    "maxSpeed": 195
+  },
+  "toyota|corolla-touring-sports": {
+    "brandSlug": "toyota",
+    "modelSlug": "corolla-touring-sports",
+    "years": [
+      2019
+    ],
+    "dimensions": {
+      "uzunluk": 4630,
+      "genislik": 1780,
+      "yukseklik": 1455,
+      "dingilMesafesi": 2700,
+      "agirlik": 1430,
+      "bagajHacmi": 217
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 142,
+    "maxSpeed": 195
+  },
+  "toyota|proace-verso": {
+    "brandSlug": "toyota",
+    "modelSlug": "proace-verso",
+    "years": [
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1470,
+      "dingilMesafesi": 2870,
+      "agirlik": 1480,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "toyota|proace": {
+    "brandSlug": "toyota",
+    "modelSlug": "proace",
+    "years": [
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1195,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "volkswagen|tiguan": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "tiguan",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4702,
+      "genislik": 1839,
+      "yukseklik": 1686,
+      "dingilMesafesi": 2791,
+      "agirlik": 1740,
+      "bagajHacmi": 615
+    },
+    "variants": [],
+    "maxHp": 220,
+    "maxTork": 350,
+    "maxSpeed": 215
+  },
+  "volkswagen|jetta": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "jetta",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2019,
+      2020,
+      2021,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4702,
+      "genislik": 1799,
+      "yukseklik": 1452,
+      "dingilMesafesi": 2686,
+      "agirlik": 1360,
+      "bagajHacmi": 510
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 250,
+    "maxSpeed": 210
+  },
+  "volkswagen|polo": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "polo",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4053,
+      "genislik": 1751,
+      "yukseklik": 1461,
+      "dingilMesafesi": 2548,
+      "agirlik": 1200,
+      "bagajHacmi": 351
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 250,
+    "maxSpeed": 210
+  },
+  "volkswagen|golf": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "golf",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2650,
+      "agirlik": 1368,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 245,
+    "maxTork": 370,
+    "maxSpeed": 250
+  },
+  "volkswagen|scirocco": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "scirocco",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1347,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "volkswagen|caddy": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "caddy",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2020,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1473,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 340,
+    "maxSpeed": 230
+  },
+  "volkswagen|passat": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "passat",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2019,
+      2021,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4767,
+      "genislik": 1832,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2791,
+      "agirlik": 1480,
+      "bagajHacmi": 586
+    },
+    "variants": [],
+    "maxHp": 220,
+    "maxTork": 350,
+    "maxSpeed": 240
+  },
+  "volkswagen|passat-variant": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "passat-variant",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2016,
+      2017,
+      2019
+    ],
+    "dimensions": {
+      "uzunluk": 4767,
+      "genislik": 1832,
+      "yukseklik": 1456,
+      "dingilMesafesi": 2791,
+      "agirlik": 1560,
+      "bagajHacmi": 586
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 220
+  },
+  "volkswagen|eos": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "eos",
+    "years": [
+      2012
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2600,
+      "agirlik": 1250,
+      "bagajHacmi": 360
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 200,
+    "maxSpeed": 195
+  },
+  "volkswagen|golf-gti": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "golf-gti",
+    "years": [
+      2012,
+      2014,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4284,
+      "genislik": 1789,
+      "yukseklik": 1456,
+      "dingilMesafesi": 2620,
+      "agirlik": 1420,
+      "bagajHacmi": 374
+    },
+    "variants": [],
+    "maxHp": 245,
+    "maxTork": 370,
+    "maxSpeed": 250
+  },
+  "volkswagen|caravelle": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "caravelle",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2021,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5173,
+      "genislik": 1904,
+      "yukseklik": 1970,
+      "dingilMesafesi": 3000,
+      "agirlik": 2110,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 400,
+    "maxSpeed": 230
+  },
+  "volkswagen|transporter": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "transporter",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1365,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 340,
+    "maxSpeed": 230
+  },
+  "volkswagen|golf-r": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "golf-r",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2017,
+      2020,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4284,
+      "genislik": 1789,
+      "yukseklik": 1456,
+      "dingilMesafesi": 2620,
+      "agirlik": 1420,
+      "bagajHacmi": 374
+    },
+    "variants": [],
+    "maxHp": 245,
+    "maxTork": 370,
+    "maxSpeed": 250
+  },
+  "volkswagen|touareg": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "touareg",
+    "years": [
+      2012,
+      2015,
+      2016,
+      2018,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1702,
+      "dingilMesafesi": 3100,
+      "agirlik": 2000,
+      "bagajHacmi": 810
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "volkswagen|cc": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "cc",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1369,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 340,
+    "maxSpeed": 230
+  },
+  "volkswagen|beetle": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "beetle",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1325,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "volkswagen|touran": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "touran",
+    "years": [
+      2012,
+      2014,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1475,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "volkswagen|up": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "up",
+    "years": [
+      2016,
+      2018,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1213,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "volkswagen|multivan": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "multivan",
+    "years": [
+      2012,
+      2020,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5173,
+      "genislik": 1904,
+      "yukseklik": 1990,
+      "dingilMesafesi": 3000,
+      "agirlik": 1588,
+      "bagajHacmi": 2500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 195
+  },
+  "volkswagen|arteon": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "arteon",
+    "years": [
+      2017,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1370,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "volkswagen|tiguan-allspace": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "tiguan-allspace",
+    "years": [
+      2017,
+      2019,
+      2021,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4702,
+      "genislik": 1839,
+      "yukseklik": 1686,
+      "dingilMesafesi": 2791,
+      "agirlik": 1740,
+      "bagajHacmi": 615
+    },
+    "variants": [],
+    "maxHp": 220,
+    "maxTork": 350,
+    "maxSpeed": 215
+  },
+  "volkswagen|t-roc": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "t-roc",
+    "years": [
+      2019,
+      2022,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4234,
+      "genislik": 1819,
+      "yukseklik": 1573,
+      "dingilMesafesi": 2590,
+      "agirlik": 1385,
+      "bagajHacmi": 445
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 250,
+    "maxSpeed": 205
+  },
+  "volkswagen|id-3": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "id-3",
+    "years": [
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4261,
+      "genislik": 1809,
+      "yukseklik": 1568,
+      "dingilMesafesi": 2765,
+      "agirlik": 1752,
+      "bagajHacmi": 385
+    },
+    "variants": [],
+    "maxHp": 204,
+    "maxTork": 310,
+    "maxSpeed": 160
+  },
+  "volkswagen|t-cross": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "t-cross",
+    "years": [
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4107,
+      "genislik": 1760,
+      "yukseklik": 1578,
+      "dingilMesafesi": 2550,
+      "agirlik": 1290,
+      "bagajHacmi": 385
+    },
+    "variants": [],
+    "maxHp": 115,
+    "maxTork": 200,
+    "maxSpeed": 191
+  },
+  "volkswagen|taigo": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "taigo",
+    "years": [
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1179,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "volkswagen|sharan": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "sharan",
+    "years": [
+      2012,
+      2018
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1550,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "volkswagen|id-4": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "id-4",
+    "years": [
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4584,
+      "genislik": 1852,
+      "yukseklik": 1640,
+      "dingilMesafesi": 2766,
+      "agirlik": 2109,
+      "bagajHacmi": 543
+    },
+    "variants": [],
+    "maxHp": 204,
+    "maxTork": 310,
+    "maxSpeed": 160
+  },
+  "volkswagen|id-7": {
+    "brandSlug": "volkswagen",
+    "modelSlug": "id-7",
+    "years": [
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "volvo|xc60": {
+    "brandSlug": "volvo",
+    "modelSlug": "xc60",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4688,
+      "genislik": 1902,
+      "yukseklik": 1658,
+      "dingilMesafesi": 2865,
+      "agirlik": 1761,
+      "bagajHacmi": 505
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 300,
+    "maxSpeed": 210
+  },
+  "volvo|s60": {
+    "brandSlug": "volvo",
+    "modelSlug": "s60",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016,
+      2020,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4761,
+      "genislik": 1850,
+      "yukseklik": 1431,
+      "dingilMesafesi": 2872,
+      "agirlik": 1570,
+      "bagajHacmi": 442
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "volvo|v60": {
+    "brandSlug": "volvo",
+    "modelSlug": "v60",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016,
+      2019,
+      2020,
+      2022,
+      2023,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2870,
+      "agirlik": 1401,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "volvo|xc90": {
+    "brandSlug": "volvo",
+    "modelSlug": "xc90",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016,
+      2018,
+      2019,
+      2020,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4950,
+      "genislik": 1923,
+      "yukseklik": 1776,
+      "dingilMesafesi": 2984,
+      "agirlik": 1697,
+      "bagajHacmi": 721
+    },
+    "variants": [],
+    "maxHp": 320,
+    "maxTork": 400,
+    "maxSpeed": 230
+  },
+  "volvo|v40": {
+    "brandSlug": "volvo",
+    "modelSlug": "v40",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4369,
+      "genislik": 1802,
+      "yukseklik": 1420,
+      "dingilMesafesi": 2647,
+      "agirlik": 1360,
+      "bagajHacmi": 335
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 210,
+    "maxSpeed": 205
+  },
+  "volvo|s90": {
+    "brandSlug": "volvo",
+    "modelSlug": "s90",
+    "years": [
+      2016,
+      2017,
+      2020,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4963,
+      "genislik": 1879,
+      "yukseklik": 1443,
+      "dingilMesafesi": 2941,
+      "agirlik": 1735,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "volvo|v90": {
+    "brandSlug": "volvo",
+    "modelSlug": "v90",
+    "years": [
+      2016,
+      2020,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1480,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "volvo|xc40": {
+    "brandSlug": "volvo",
+    "modelSlug": "xc40",
+    "years": [
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4425,
+      "genislik": 1863,
+      "yukseklik": 1652,
+      "dingilMesafesi": 2702,
+      "agirlik": 1705,
+      "bagajHacmi": 460
+    },
+    "variants": [],
+    "maxHp": 156,
+    "maxTork": 265,
+    "maxSpeed": 210
+  },
+  "volvo|c40": {
+    "brandSlug": "volvo",
+    "modelSlug": "c40",
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "volvo|ex30": {
+    "brandSlug": "volvo",
+    "modelSlug": "ex30",
+    "years": [
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "ford|mustang": {
+    "brandSlug": "ford",
+    "modelSlug": "mustang",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2018,
+      2020,
+      2021,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1500,
+      "dingilMesafesi": 3100,
+      "agirlik": 2035,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "ford|mustang-mach-e": {
+    "brandSlug": "ford",
+    "modelSlug": "mustang-mach-e",
+    "years": [
+      2021,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "hyundai|accent": {
+    "brandSlug": "hyundai",
+    "modelSlug": "accent",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1491,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "hyundai|santa-fe": {
+    "brandSlug": "hyundai",
+    "modelSlug": "santa-fe",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2019,
+      2020,
+      2021,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1890,
+      "yukseklik": 1685,
+      "dingilMesafesi": 2870,
+      "agirlik": 1518,
+      "bagajHacmi": 625
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 440,
+    "maxSpeed": 245
+  },
+  "hyundai|i10": {
+    "brandSlug": "hyundai",
+    "modelSlug": "i10",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2020,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1175,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 220,
+    "maxSpeed": 195
+  },
+  "hyundai|tucson": {
+    "brandSlug": "hyundai",
+    "modelSlug": "tucson",
+    "years": [
+      2012,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2024,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4500,
+      "genislik": 1850,
+      "yukseklik": 1655,
+      "dingilMesafesi": 2670,
+      "agirlik": 1509,
+      "bagajHacmi": 539
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 400,
+    "maxSpeed": 200
+  },
+  "hyundai|i30": {
+    "brandSlug": "hyundai",
+    "modelSlug": "i30",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2017,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1400,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "hyundai|i20": {
+    "brandSlug": "hyundai",
+    "modelSlug": "i20",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1167,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 220,
+    "maxSpeed": 195
+  },
+  "hyundai|elantra": {
+    "brandSlug": "hyundai",
+    "modelSlug": "elantra",
+    "years": [
+      2012,
+      2014,
+      2015,
+      2016,
+      2017,
+      2019,
+      2021,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1391,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "hyundai|kona": {
+    "brandSlug": "hyundai",
+    "modelSlug": "kona",
+    "years": [
+      2018,
+      2019,
+      2020,
+      2021,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1243,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "hyundai|kona-electric": {
+    "brandSlug": "hyundai",
+    "modelSlug": "kona-electric",
+    "years": [
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "hyundai|bayon": {
+    "brandSlug": "hyundai",
+    "modelSlug": "bayon",
+    "years": [
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1194,
+      "bagajHacmi": 360
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 200,
+    "maxSpeed": 195
+  },
+  "hyundai|i20-n": {
+    "brandSlug": "hyundai",
+    "modelSlug": "i20-n",
+    "years": [
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1310,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "hyundai|staria": {
+    "brandSlug": "hyundai",
+    "modelSlug": "staria",
+    "years": [
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1880,
+      "yukseklik": 1500,
+      "dingilMesafesi": 2900,
+      "agirlik": 1550,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 190,
+    "maxTork": 430,
+    "maxSpeed": 225
+  },
+  "hyundai|ioniq-5": {
+    "brandSlug": "hyundai",
+    "modelSlug": "ioniq-5",
+    "years": [
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "hyundai|ioniq-6": {
+    "brandSlug": "hyundai",
+    "modelSlug": "ioniq-6",
+    "years": [
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4470,
+      "genislik": 1820,
+      "yukseklik": 1450,
+      "dingilMesafesi": 2700,
+      "agirlik": 1535,
+      "bagajHacmi": 357
+    },
+    "variants": [],
+    "maxHp": 136,
+    "maxTork": 295,
+    "maxSpeed": 165
+  },
+  "land-rover|freelander": {
+    "brandSlug": "land-rover",
+    "modelSlug": "freelander",
+    "years": [
+      2012
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1870,
+      "yukseklik": 1470,
+      "dingilMesafesi": 2870,
+      "agirlik": 1405,
+      "bagajHacmi": 520
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 350,
+    "maxSpeed": 245
+  },
+  "land-rover|discovery": {
+    "brandSlug": "land-rover",
+    "modelSlug": "discovery",
+    "years": [
+      2012,
+      2014,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4900,
+      "genislik": 1900,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2950,
+      "agirlik": 1565,
+      "bagajHacmi": 540
+    },
+    "variants": [],
+    "maxHp": 300,
+    "maxTork": 430,
+    "maxSpeed": 250
+  },
+  "land-rover|defender": {
+    "brandSlug": "land-rover",
+    "modelSlug": "defender",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 5100,
+      "genislik": 2000,
+      "yukseklik": 1550,
+      "dingilMesafesi": 3100,
+      "agirlik": 1722,
+      "bagajHacmi": 580
+    },
+    "variants": [],
+    "maxHp": 450,
+    "maxTork": 600,
+    "maxSpeed": 250
+  },
+  "land-rover|discovery-sport": {
+    "brandSlug": "land-rover",
+    "modelSlug": "discovery-sport",
+    "years": [
+      2015,
+      2019,
+      2020,
+      2021,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2800,
+      "agirlik": 1395,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "mini|cooper": {
+    "brandSlug": "mini",
+    "modelSlug": "cooper",
+    "years": [
+      2012,
+      2014,
+      2016,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2800,
+      "agirlik": 1420,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "mini|clubman": {
+    "brandSlug": "mini",
+    "modelSlug": "clubman",
+    "years": [
+      2012,
+      2015,
+      2016,
+      2018,
+      2019,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2800,
+      "agirlik": 1367,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "mini|countryman": {
+    "brandSlug": "mini",
+    "modelSlug": "countryman",
+    "years": [
+      2012,
+      2013,
+      2016,
+      2017,
+      2018,
+      2019,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1233,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "mini|john-cooper-works": {
+    "brandSlug": "mini",
+    "modelSlug": "john-cooper-works",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2800,
+      "agirlik": 1399,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "mini|paceman": {
+    "brandSlug": "mini",
+    "modelSlug": "paceman",
+    "years": [
+      2013
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1205,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "mini|cabrio": {
+    "brandSlug": "mini",
+    "modelSlug": "cabrio",
+    "years": [
+      2017,
+      2020,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2800,
+      "agirlik": 1480,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "dacia|logan": {
+    "brandSlug": "dacia",
+    "modelSlug": "logan",
+    "years": [
+      2012,
+      2013,
+      2016,
+      2017,
+      2019,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4490,
+      "genislik": 1800,
+      "yukseklik": 1519,
+      "dingilMesafesi": 2650,
+      "agirlik": 1215,
+      "bagajHacmi": 510
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "dacia|sandero": {
+    "brandSlug": "dacia",
+    "modelSlug": "sandero",
+    "years": [
+      2012,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1762,
+      "yukseklik": 1529,
+      "dingilMesafesi": 2600,
+      "agirlik": 1170,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 220,
+    "maxSpeed": 195
+  },
+  "dacia|duster": {
+    "brandSlug": "dacia",
+    "modelSlug": "duster",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1804,
+      "yukseklik": 1693,
+      "dingilMesafesi": 2673,
+      "agirlik": 1179,
+      "bagajHacmi": 478
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 260,
+    "maxSpeed": 210
+  },
+  "dacia|lodgy": {
+    "brandSlug": "dacia",
+    "modelSlug": "lodgy",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2018,
+      2019,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2650,
+      "agirlik": 1300,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "dacia|dokker": {
+    "brandSlug": "dacia",
+    "modelSlug": "dokker",
+    "years": [
+      2012,
+      2013,
+      2019,
+      2020
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2650,
+      "agirlik": 1153,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "dacia|jogger": {
+    "brandSlug": "dacia",
+    "modelSlug": "jogger",
+    "years": [
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1175,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "dacia|spring": {
+    "brandSlug": "dacia",
+    "modelSlug": "spring",
+    "years": [
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4400,
+      "genislik": 1800,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2700,
+      "agirlik": 1800,
+      "bagajHacmi": 400
+    },
+    "variants": [],
+    "maxHp": 200,
+    "maxTork": 300,
+    "maxSpeed": 160
+  },
+  "tesla|model-s": {
+    "brandSlug": "tesla",
+    "modelSlug": "model-s",
+    "years": [
+      2012,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "tesla|model-x": {
+    "brandSlug": "tesla",
+    "modelSlug": "model-x",
+    "years": [
+      2016,
+      2017,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "tesla|model-3": {
+    "brandSlug": "tesla",
+    "modelSlug": "model-3",
+    "years": [
+      2019
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "tesla|model-y": {
+    "brandSlug": "tesla",
+    "modelSlug": "model-y",
+    "years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "lexus|nx": {
+    "brandSlug": "lexus",
+    "modelSlug": "nx",
+    "years": [
+      2015,
+      2016,
+      2017,
+      2020,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1340,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "lexus|is": {
+    "brandSlug": "lexus",
+    "modelSlug": "is",
+    "years": [
+      2015,
+      2016,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1325,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "lexus|ux": {
+    "brandSlug": "lexus",
+    "modelSlug": "ux",
+    "years": [
+      2016,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "lexus|ls": {
+    "brandSlug": "lexus",
+    "modelSlug": "ls",
+    "years": [
+      2014,
+      2016,
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "lexus|rx": {
+    "brandSlug": "lexus",
+    "modelSlug": "rx",
+    "years": [
+      2014,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2022,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "lexus|ct": {
+    "brandSlug": "lexus",
+    "modelSlug": "ct",
+    "years": [
+      2017
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "lexus|es": {
+    "brandSlug": "lexus",
+    "modelSlug": "es",
+    "years": [
+      2017,
+      2018,
+      2019,
+      2020,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1157,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "lexus|lc": {
+    "brandSlug": "lexus",
+    "modelSlug": "lc",
+    "years": [
+      2019,
+      2021
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "lexus|lbx": {
+    "brandSlug": "lexus",
+    "modelSlug": "lbx",
+    "years": [
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2620,
+      "agirlik": 1400,
+      "bagajHacmi": 350
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 142,
+    "maxSpeed": 175
+  },
+  "lexus|rz": {
+    "brandSlug": "lexus",
+    "modelSlug": "rz",
+    "years": [
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "cupra|formentor": {
+    "brandSlug": "cupra",
+    "modelSlug": "formentor",
+    "years": [
+      2021,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1395,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "cupra|leon": {
+    "brandSlug": "cupra",
+    "modelSlug": "leon",
+    "years": [
+      2021,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2800,
+      "agirlik": 1400,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "cupra|ateca": {
+    "brandSlug": "cupra",
+    "modelSlug": "ateca",
+    "years": [
+      2021,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2800,
+      "agirlik": 1395,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "cupra|born": {
+    "brandSlug": "cupra",
+    "modelSlug": "born",
+    "years": [
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "kia|ceed": {
+    "brandSlug": "kia",
+    "modelSlug": "ceed",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2017,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1380,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "kia|rio": {
+    "brandSlug": "kia",
+    "modelSlug": "rio",
+    "years": [
+      2012,
+      2013,
+      2015,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2023
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1480,
+      "dingilMesafesi": 2600,
+      "agirlik": 1158,
+      "bagajHacmi": 380
+    },
+    "variants": [],
+    "maxHp": 100,
+    "maxTork": 220,
+    "maxSpeed": 185
+  },
+  "kia|cerato": {
+    "brandSlug": "kia",
+    "modelSlug": "cerato",
+    "years": [
+      2012,
+      2016,
+      2017,
+      2018,
+      2022
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1310,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "kia|sorento": {
+    "brandSlug": "kia",
+    "modelSlug": "sorento",
+    "years": [
+      2012,
+      2014,
+      2016,
+      2018,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4800,
+      "genislik": 1880,
+      "yukseklik": 1500,
+      "dingilMesafesi": 2900,
+      "agirlik": 1590,
+      "bagajHacmi": 550
+    },
+    "variants": [],
+    "maxHp": 230,
+    "maxTork": 430,
+    "maxSpeed": 245
+  },
+  "kia|venga": {
+    "brandSlug": "kia",
+    "modelSlug": "venga",
+    "years": [
+      2012
+    ],
+    "dimensions": {
+      "uzunluk": 4600,
+      "genislik": 1840,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2750,
+      "agirlik": 1458,
+      "bagajHacmi": 500
+    },
+    "variants": [],
+    "maxHp": 150,
+    "maxTork": 340,
+    "maxSpeed": 210
+  },
+  "kia|sportage": {
+    "brandSlug": "kia",
+    "modelSlug": "sportage",
+    "years": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "dimensions": {
+      "uzunluk": 4485,
+      "genislik": 1865,
+      "yukseklik": 1650,
+      "dingilMesafesi": 2670,
+      "agirlik": 1455,
+      "bagajHacmi": 503
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 400,
+    "maxSpeed": 210
+  },
+  "kia|picanto": {
+    "brandSlug": "kia",
+    "modelSlug": "picanto",
+    "years": [
+      2012,
+      2017,
+      2018,
+      2020,
+      2021,
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 3595,
+      "genislik": 1595,
+      "yukseklik": 1485,
+      "dingilMesafesi": 2400,
+      "agirlik": 870,
+      "bagajHacmi": 255
+    },
+    "variants": [],
+    "maxHp": 67,
+    "maxTork": 96,
+    "maxSpeed": 154
+  },
+  "kia|soul": {
+    "brandSlug": "kia",
+    "modelSlug": "soul",
+    "years": [
+      2012,
+      2015,
+      2018
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2650,
+      "agirlik": 1310,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "kia|optima": {
+    "brandSlug": "kia",
+    "modelSlug": "optima",
+    "years": [
+      2012,
+      2016
+    ],
+    "dimensions": {
+      "uzunluk": 4700,
+      "genislik": 1840,
+      "yukseklik": 1465,
+      "dingilMesafesi": 2800,
+      "agirlik": 1395,
+      "bagajHacmi": 480
+    },
+    "variants": [],
+    "maxHp": 185,
+    "maxTork": 300,
+    "maxSpeed": 230
+  },
+  "kia|niro": {
+    "brandSlug": "kia",
+    "modelSlug": "niro",
+    "years": [
+      2017,
+      2018,
+      2020,
+      2022,
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4350,
+      "genislik": 1800,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2650,
+      "agirlik": 1175,
+      "bagajHacmi": 390
+    },
+    "variants": [],
+    "maxHp": 140,
+    "maxTork": 230,
+    "maxSpeed": 210
+  },
+  "kia|stonic": {
+    "brandSlug": "kia",
+    "modelSlug": "stonic",
+    "years": [
+      2018,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4200,
+      "genislik": 1760,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2600,
+      "agirlik": 1175,
+      "bagajHacmi": 360
+    },
+    "variants": [],
+    "maxHp": 120,
+    "maxTork": 200,
+    "maxSpeed": 195
+  },
+  "kia|stinger": {
+    "brandSlug": "kia",
+    "modelSlug": "stinger",
+    "years": [
+      2018
+    ],
+    "dimensions": {
+      "uzunluk": 4830,
+      "genislik": 1870,
+      "yukseklik": 1400,
+      "dingilMesafesi": 2905,
+      "agirlik": 1700,
+      "bagajHacmi": 406
+    },
+    "variants": [],
+    "maxHp": 255,
+    "maxTork": 353,
+    "maxSpeed": 250
+  },
+  "kia|xceed": {
+    "brandSlug": "kia",
+    "modelSlug": "xceed",
+    "years": [
+      2019,
+      2020,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4310,
+      "genislik": 1800,
+      "yukseklik": 1490,
+      "dingilMesafesi": 2650,
+      "agirlik": 1348,
+      "bagajHacmi": 395
+    },
+    "variants": [],
+    "maxHp": 122,
+    "maxTork": 172,
+    "maxSpeed": 195
+  },
+  "kia|ev6": {
+    "brandSlug": "kia",
+    "modelSlug": "ev6",
+    "years": [
+      2022,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4695,
+      "genislik": 1890,
+      "yukseklik": 1550,
+      "dingilMesafesi": 2900,
+      "agirlik": 1960,
+      "bagajHacmi": 490
+    },
+    "variants": [],
+    "maxHp": 229,
+    "maxTork": 350,
+    "maxSpeed": 185
+  },
+  "kia|ev9": {
+    "brandSlug": "kia",
+    "modelSlug": "ev9",
+    "years": [
+      2023,
+      2024
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "togg|t10x": {
+    "brandSlug": "togg",
+    "modelSlug": "t10x",
+    "years": [
+      2023,
+      2024,
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  },
+  "togg|t10f": {
+    "brandSlug": "togg",
+    "modelSlug": "t10f",
+    "years": [
+      2025
+    ],
+    "dimensions": {
+      "uzunluk": 4000,
+      "genislik": 1720,
+      "yukseklik": 1460,
+      "dingilMesafesi": 2530,
+      "agirlik": 1100,
+      "bagajHacmi": 300
+    },
+    "variants": [],
+    "maxHp": 90,
+    "maxTork": 160,
+    "maxSpeed": 175
+  }
+}

@@ -101,10 +101,14 @@ router.get('/variants/check-models/:brandSlug', (req, res) => {
   for (const key of Object.keys(brand)) {
     const m = brand[key];
     if (body_type && m.bodyType !== body_type) continue;
-    // Yıl filtresi — seçilen yılda üretilmemiş modelleri işaretle
+    // Yıl filtresi — seçilen yılda üretilmemiş modelleri atla
+    // Model seviyesinde kesin: ilk yıldan önce veya son yıldan sonra → model yok
     if (yearNum) {
       const years = m.years || [];
-      if (years.length > 0 && !years.includes(yearNum)) continue; // Bu modeli sonuçlara dahil etme
+      if (years.length > 0) {
+        if (yearNum < years[0] || yearNum > years[years.length - 1]) continue;
+        if (!years.includes(yearNum)) continue;
+      }
     }
     result[key] = m.variants && m.variants.length > 0;
   }

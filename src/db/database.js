@@ -224,6 +224,7 @@ async function initializeDatabase() {
       top_speed TEXT, fuel_consumption TEXT,
       length TEXT, width TEXT, height TEXT, wheelbase TEXT, weight TEXT,
       editor_rating REAL, editor_review TEXT, pros TEXT, cons TEXT, image_url TEXT,
+      safety_rating TEXT, safety_features TEXT, trunk_volume TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -259,6 +260,16 @@ async function initializeDatabase() {
   } catch (e) {
     await db.exec("ALTER TABLE forum_replies ADD COLUMN is_solution INTEGER DEFAULT 0");
     console.log('✅ forum_replies tablosuna is_solution sütunu eklendi');
+  }
+
+  // vehicle_hubs tablosuna güvenlik ve bagaj sütunları ekle (yoksa)
+  try {
+    await db.prepare("SELECT safety_rating FROM vehicle_hubs LIMIT 1").get();
+  } catch (e) {
+    await db.exec("ALTER TABLE vehicle_hubs ADD COLUMN safety_rating TEXT");
+    await db.exec("ALTER TABLE vehicle_hubs ADD COLUMN safety_features TEXT");
+    await db.exec("ALTER TABLE vehicle_hubs ADD COLUMN trunk_volume TEXT");
+    console.log('✅ vehicle_hubs tablosuna safety_rating, safety_features, trunk_volume sütunları eklendi');
   }
 
   console.log('✅ Veritabanı tabloları oluşturuldu');

@@ -176,6 +176,7 @@ async function initializePostgres(pool) {
         top_speed TEXT, fuel_consumption TEXT,
         length TEXT, width TEXT, height TEXT, wheelbase TEXT, weight TEXT,
         editor_rating REAL, editor_review TEXT, pros TEXT, cons TEXT, image_url TEXT,
+        safety_rating TEXT, safety_features TEXT, trunk_volume TEXT,
         created_at TIMESTAMPTZ DEFAULT NOW()
       );
 
@@ -216,6 +217,19 @@ async function initializePostgres(pool) {
     `);
 
     console.log('✅ PostgreSQL tabloları oluşturuldu');
+
+    // Mevcut vehicle_hubs tablosuna yeni sütunları ekle (yoksa)
+    const safetyColCheck = await client.query(`
+      SELECT column_name FROM information_schema.columns 
+      WHERE table_name = 'vehicle_hubs' AND column_name = 'safety_rating'
+    `);
+    if (safetyColCheck.rows.length === 0) {
+      await client.query(`ALTER TABLE vehicle_hubs ADD COLUMN IF NOT EXISTS safety_rating TEXT`);
+      await client.query(`ALTER TABLE vehicle_hubs ADD COLUMN IF NOT EXISTS safety_features TEXT`);
+      await client.query(`ALTER TABLE vehicle_hubs ADD COLUMN IF NOT EXISTS trunk_volume TEXT`);
+      console.log('✅ vehicle_hubs: safety_rating, safety_features, trunk_volume sütunları eklendi');
+    }
+
   } finally {
     client.release();
   }

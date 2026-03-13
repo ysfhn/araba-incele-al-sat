@@ -9,3 +9,4 @@ src/db/sessions.sqlite
 cookies.txt
 .vercel
 .env.production
+arac-verileri.csv
