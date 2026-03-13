@@ -115,6 +115,24 @@ const selectedBodyType = typeof queryBodyType !== 'undefined' ? queryBodyType : 
   <span class="text-slate-700 font-medium"><%= model.name %></span>
 </nav>
 
+<% if (typeof yearWarning !== 'undefined' && yearWarning) { %>
+<div class="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+  <span class="material-symbols-outlined text-amber-500 mt-0.5" style="font-size:20px">warning</span>
+  <div>
+    <p class="text-sm font-semibold text-amber-800"><%= yearWarning %></p>
+    <% if (typeof modelYears !== 'undefined' && modelYears && modelYears.length > 0) { %>
+    <p class="text-xs text-amber-600 mt-1">Mevcut yıllar:
+      <% const minY = modelYears[0]; const maxY = modelYears[modelYears.length - 1]; %>
+      <% for (let y = maxY; y >= minY && y >= maxY - 5; y--) { %>
+        <a href="/arac/<%= brand.slug %>/<%= model.slug %>?yil=<%= y %>" class="inline-block font-bold text-amber-700 hover:text-amber-900 underline ml-1"><%= y %></a>
+      <% } %>
+      <% if (minY < maxY - 5) { %><span class="ml-1">... <%= minY %></span><% } %>
+    </p>
+    <% } %>
+  </div>
+</div>
+<% } %>
+
 <!-- Active Filters -->
 <% if (selectedYear || selectedFuel || selectedTransmission || selectedBudget || selectedEngine || selectedPackage || selectedBodyType) { %>
 <div class="flex items-center gap-2 flex-wrap bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5">

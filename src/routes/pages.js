@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getDb } = require('../db/database');
 const { generateHubContent, generateBrandSummary, BODY_TYPE_TR, getBrandCountry } = require('../utils/hub-content-generator');
-const { getEngines, getPackages, hasVariantData } = require('../data/vehicle-variants');
+const { getEngines, getPackages, hasVariantData, getYears } = require('../data/vehicle-variants');
 
 // Ana Sayfa
 router.get('/', async (req, res) => {
@@ -131,6 +131,18 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
   const queryPackage = req.query.paket || null;
   const queryBodyType = req.query.kasa || null;
 
+  // Yıl geçerlilik kontrolü — modelin üretim yılları arasında mı?
+  let yearWarning = null;
+  let modelYears = [];
+  try {
+    modelYears = getYears(brand.slug, model.slug);
+    if (queryYear && modelYears.length > 0 && !modelYears.includes(queryYear)) {
+      const minYear = modelYears[0];
+      const maxYear = modelYears[modelYears.length - 1];
+      yearWarning = `${brand.name} ${model.name} modeli ${minYear}-${maxYear} yılları arasında üretilmiştir. ${queryYear} yılı için bu model mevcut değildir.`;
+    }
+  } catch (e) { /* varyant verisi yoksa uyarı gösterme */ }
+
   const hub = await db.prepare('SELECT * FROM vehicle_hubs WHERE brand_id = ? AND model_id = ?').get(brand.id, model.id);
 
   // Hub kaydı yoksa otomatik içerik üret — seçilen varyant bilgilerini de geçir
@@ -205,7 +217,8 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
   res.render('pages/arac-hub', {
     title: `${brand.name} ${model.name}${queryYear ? ' ' + queryYear : ''} - Araba İncele Al Sat`,
     brand, model, hub: effectiveHub, listings, forumTopics, nearbyServices, priceStats,
-    queryYear, queryFuel, queryTransmission, queryBudget, queryEngine, queryPackage, queryBodyType, otherModels, BODY_TYPE_TR
+    queryYear, queryFuel, queryTransmission, queryBudget, queryEngine, queryPackage, queryBodyType, otherModels, BODY_TYPE_TR,
+    yearWarning, modelYears
   });
 });
 

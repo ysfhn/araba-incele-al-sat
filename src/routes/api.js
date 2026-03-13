@@ -51,36 +51,61 @@ router.get('/brands/:slug', async (req, res) => {
 // Marka'ya göre model listesi
 router.get('/models/:brandId', async (req, res) => {
   const db = getDb();
-  const { body_type } = req.query;
+  const { body_type, year } = req.query;
+  const yearNum = year ? parseInt(year) : null;
   let sql = 'SELECT * FROM models WHERE brand_id = ?';
   const params = [req.params.brandId];
   if (body_type) { sql += ' AND body_type = ?'; params.push(body_type); }
   sql += ' ORDER BY name';
-  const models = await db.prepare(sql).all(...params);
+  let models = await db.prepare(sql).all(...params);
+
+  // Yıl filtresi varsa — o yılda üretilmemiş modelleri filtrele
+  if (yearNum) {
+    // Marka slug'ını bul
+    const brand = await db.prepare('SELECT slug FROM brands WHERE id = ?').get(req.params.brandId);
+    if (brand) {
+      models = models.filter(m => variantHelpers.isModelAvailableInYear(brand.slug, m.slug, yearNum));
+    }
+  }
+
   res.json(models);
 });
 
 // Belirli kasa tipine sahip markaları listele
 router.get('/brands-by-body/:bodyType', async (req, res) => {
   const db = getDb();
+  const year = req.query.year ? parseInt(req.query.year) : null;
   const brands = await db.prepare(`
     SELECT DISTINCT b.* FROM brands b
     INNER JOIN models m ON m.brand_id = b.id
     WHERE m.body_type = ?
     ORDER BY b.name
   `).all(req.params.bodyType);
+
+  // Yıl filtresi varsa, o yılda modeli olmayan markaları filtrele
+  if (year) {
+    const filtered = brands.filter(b => variantHelpers.isBrandAvailableInYear(b.slug, year));
+    return res.json(filtered);
+  }
+
   res.json(brands);
 });
 
 // Bir markanın belirli kasa tipindeki modellerinin varyant verisi olup olmadığını toplu kontrol et
 router.get('/variants/check-models/:brandSlug', (req, res) => {
-  const { body_type } = req.query;
+  const { body_type, year } = req.query;
+  const yearNum = year ? parseInt(year) : null;
   const brand = variantHelpers.VARIANTS[req.params.brandSlug];
   if (!brand) return res.json({ models: {} });
   const result = {};
   for (const key of Object.keys(brand)) {
     const m = brand[key];
     if (body_type && m.bodyType !== body_type) continue;
+    // Yıl filtresi — seçilen yılda üretilmemiş modelleri işaretle
+    if (yearNum) {
+      const years = m.years || [];
+      if (years.length > 0 && !years.includes(yearNum)) continue; // Bu modeli sonuçlara dahil etme
+    }
     result[key] = m.variants && m.variants.length > 0;
   }
   res.json({ models: result });

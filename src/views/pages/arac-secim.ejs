@@ -436,8 +436,8 @@ function loadBrands() {
   document.getElementById('brandSubtitle').textContent = S.year + ' · ' + btLabel + ' — marka seçin';
   grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
 
-  // Seçilen kasa tipinde modeli olan markaları çek
-  fetch('/api/brands-by-body/' + S.bodyType)
+  // Seçilen kasa tipinde ve yılda modeli olan markaları çek
+  fetch('/api/brands-by-body/' + S.bodyType + (S.year ? '?year=' + S.year : ''))
     .then(function(res) { return res.json(); })
     .then(function(filteredBrands) {
       var brandsToShow = filteredBrands.length > 0 ? filteredBrands : allBrands;
@@ -497,17 +497,19 @@ function loadModels() {
   document.getElementById('modelSubtitle').textContent = S.brandName + ' · ' + btLabel + ' modelleri';
   grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
 
-  // Kasa tipine göre filtrelenmiş modelleri çek
-  fetch('/api/models/' + S.brandId + '?body_type=' + S.bodyType)
+  // Kasa tipine ve yıla göre filtrelenmiş modelleri çek
+  fetch('/api/models/' + S.brandId + '?body_type=' + S.bodyType + (S.year ? '&year=' + S.year : ''))
     .then(function(res) { return res.json(); })
     .then(function(models) {
       if (models.length === 0) {
-        grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Bu kasa tipinde model bulunamadı.</p>';
+        grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">' +
+          (S.year ? S.brandName + ' markasının ' + S.year + ' yılında bu kasa tipinde üretilen modeli bulunamadı.' : 'Bu kasa tipinde model bulunamadı.') +
+          '</p>';
         return;
       }
 
-      // Varyant verisi olan modelleri kontrol et
-      return fetch('/api/variants/check-models/' + S.brandSlug + '?body_type=' + S.bodyType)
+      // Varyant verisi olan modelleri kontrol et (yıl filtresi dahil)
+      return fetch('/api/variants/check-models/' + S.brandSlug + '?body_type=' + S.bodyType + (S.year ? '&year=' + S.year : ''))
         .then(function(r) { return r.json(); })
         .then(function(checkData) {
           var variantModels = checkData.models || {};

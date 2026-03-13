@@ -183,6 +183,59 @@ function hasVariantData(brandSlug, modelSlug) {
   return model !== null && model.variants && model.variants.length > 0;
 }
 
+/**
+ * Bir modelin belirli bir yılda üretilip üretilmediğini kontrol eder.
+ * Eğer varyant verisinde yıl bilgisi yoksa true döndürür (bilinmiyor = engelleme).
+ * @returns {boolean}
+ */
+function isModelAvailableInYear(brandSlug, modelSlug, year) {
+  const brand = VARIANTS[brandSlug];
+  if (!brand) return true; // Varyant verisi yoksa engelleme
+  const model = resolveModel(brand, modelSlug);
+  if (!model) return true;
+  const years = model.years || [];
+  if (years.length === 0) return true; // Yıl bilgisi yoksa engelleme
+  return years.includes(year);
+}
+
+/**
+ * Bir markanın belirli bir yılda herhangi bir modelinin üretilip üretilmediğini kontrol eder.
+ * @returns {boolean}
+ */
+function isBrandAvailableInYear(brandSlug, year) {
+  const brand = VARIANTS[brandSlug];
+  if (!brand) return true; // Varyant verisi yoksa engelleme
+  for (const key of Object.keys(brand)) {
+    const model = brand[key];
+    const years = model.years || [];
+    if (years.length === 0) return true;
+    if (years.includes(year)) return true;
+  }
+  return false;
+}
+
+/**
+ * Belirli bir marka ve yıl için geçerli model slug'larını döndürür.
+ * @param {string} brandSlug
+ * @param {number} year
+ * @param {string} [bodyType] İsteğe bağlı kasa tipi filtresi
+ * @returns {string[]} Model slug'ları
+ */
+function getModelsForYear(brandSlug, year, bodyType) {
+  const brand = VARIANTS[brandSlug];
+  if (!brand) return [];
+  const result = [];
+  for (const key of Object.keys(brand)) {
+    const model = brand[key];
+    if (bodyType && model.bodyType !== bodyType) continue;
+    const years = model.years || [];
+    if (years.length === 0 || years.includes(year)) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
 module.exports = {
   VARIANTS,
   getYears,
@@ -194,4 +247,7 @@ module.exports = {
   getBodyType,
   getModelsByBodyType,
   hasVariantData,
+  isModelAvailableInYear,
+  isBrandAvailableInYear,
+  getModelsForYear,
 };
