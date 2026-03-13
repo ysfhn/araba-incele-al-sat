@@ -13,6 +13,7 @@
 
 const { getRealDimensions } = require('../data/csv-tech-data');
 const { getNcapResult } = require('../data/euro-ncap-data');
+const { getVerifiedData } = require('../data/verified-model-data');
 
 /* ═══════════════════════════════════════════════════════════════
    MARKA SEGMENTLERİ
@@ -431,23 +432,68 @@ function generateHubContent(brand, model, variantOptions = {}) {
     }
   }
 
-  // Fiyat — segment range içinde deterministik (brand + model slug hashiyle)
+  // Fiyat — doğrulanmış veri varsa onu kullan, yoksa segment range
   const hash = simpleHash(brand.slug + model.slug);
-  const [minPrice, maxPrice] = specs.priceRange;
   const priceStep = 50000;
-  const priceRange = maxPrice - minPrice;
-  let avgPrice = minPrice + Math.round((hash % priceRange) / priceStep) * priceStep;
-
-  // Yıla göre fiyat değer kaybı uygula
-  // Her yıl için ortalama %7 değer kaybı (2. el piyasa gerçeği)
   const yearDiff = currentYear - selectedYear;
-  if (yearDiff > 0) {
-    const depreciationRate = getDepreciationRate(segment);
-    const depreciationMultiplier = Math.pow(1 - depreciationRate, yearDiff);
-    avgPrice = Math.round(avgPrice * depreciationMultiplier / priceStep) * priceStep;
-    // Minimum fiyat: segment alt limitinin %15'i
-    const floorPrice = Math.round(minPrice * 0.15 / priceStep) * priceStep;
-    avgPrice = Math.max(avgPrice, floorPrice || priceStep);
+
+  // Doğrulanmış model verisini al
+  const verifiedData = getVerifiedData(brand.slug, model.slug);
+
+  let avgPrice;
+  if (verifiedData) {
+    // Doğrulanmış gerçek fiyat verisini kullan
+    const priceKey2024 = 'price2024';
+    const basePrice = verifiedData[priceKey2024] || verifiedData.price2020 || null;
+    
+    if (basePrice && selectedYear >= 2024) {
+      avgPrice = basePrice;
+    } else if (verifiedData['price' + selectedYear]) {
+      avgPrice = verifiedData['price' + selectedYear];
+    } else if (basePrice) {
+      // Doğrulanmış fiyatlardan interpolasyon
+      const knownYears = [2024, 2020, 2015].filter(y => verifiedData['price' + y]);
+      const closestAbove = knownYears.find(y => y >= selectedYear);
+      const closestBelow = [...knownYears].reverse().find(y => y <= selectedYear);
+      
+      if (closestAbove && closestBelow && closestAbove !== closestBelow) {
+        // İki bilinen yıl arasında interpolasyon
+        const pAbove = verifiedData['price' + closestAbove];
+        const pBelow = verifiedData['price' + closestBelow];
+        const ratio = (selectedYear - closestBelow) / (closestAbove - closestBelow);
+        avgPrice = Math.round((pBelow + (pAbove - pBelow) * ratio) / priceStep) * priceStep;
+      } else if (closestAbove) {
+        // Daha eski yıl: depreciation uygula
+        const pAbove = verifiedData['price' + closestAbove];
+        const depRate = getDepreciationRate(segment);
+        const diff = closestAbove - selectedYear;
+        avgPrice = Math.round(pAbove * Math.pow(1 - depRate, diff) / priceStep) * priceStep;
+      } else if (closestBelow) {
+        // Daha yeni yıl: hafif artış (enflasyon)
+        const pBelow = verifiedData['price' + closestBelow];
+        const diff = selectedYear - closestBelow;
+        avgPrice = Math.round(pBelow * Math.pow(1.05, diff) / priceStep) * priceStep;
+      } else {
+        avgPrice = basePrice;
+      }
+    } else {
+      avgPrice = verifiedData.price2024 || 1000000;
+    }
+    // Floor price
+    avgPrice = Math.max(avgPrice, priceStep);
+  } else {
+    // Doğrulanmış veri yok — eski segment-based hesaplama
+    const [minPrice, maxPrice] = specs.priceRange;
+    const priceRange = maxPrice - minPrice;
+    avgPrice = minPrice + Math.round((hash % priceRange) / priceStep) * priceStep;
+
+    if (yearDiff > 0) {
+      const depreciationRate = getDepreciationRate(segment);
+      const depreciationMultiplier = Math.pow(1 - depreciationRate, yearDiff);
+      avgPrice = Math.round(avgPrice * depreciationMultiplier / priceStep) * priceStep;
+      const floorPrice = Math.round(minPrice * 0.15 / priceStep) * priceStep;
+      avgPrice = Math.max(avgPrice, floorPrice || priceStep);
+    }
   }
 
   // Rating — segment aralığında
@@ -498,34 +544,44 @@ function generateHubContent(brand, model, variantOptions = {}) {
     fuelConsumption = (baseConsumption * 1.15).toFixed(1) + 'L/100km (LPG)';
   }
 
-  // Boyutlara hafif varyasyon — CSV gerçek verisi varsa onu kullan
-  const realDims = getRealDimensions(brand.slug, model.slug);
-
+  // Boyutlar: Doğrulanmış veri > CSV > Body Defaults
   let lengthNum, widthNum, heightNum, wheelbaseNum, weightNum, trunkVolume, topSpeed;
 
-  if (realDims) {
-    // CSV'den gerçek veri var!
-    lengthNum = realDims.length ? parseInt(realDims.length) : (parseInt(bodyDefaults.length) + (hash % 150) - 75);
-    widthNum = realDims.width ? parseInt(realDims.width) : (parseInt(bodyDefaults.width) + (hash % 60) - 30);
-    heightNum = realDims.height ? parseInt(realDims.height) : (parseInt(bodyDefaults.height) + (hash % 40) - 20);
-    wheelbaseNum = realDims.wheelbase ? parseInt(realDims.wheelbase) : (parseInt(bodyDefaults.wheelbase) + (hash % 80) - 40);
-    weightNum = realDims.weight ? parseInt(realDims.weight) : (parseInt(bodyDefaults.weight) + (hash % 200) - 100);
-    trunkVolume = realDims.trunk_volume || getTrunkVolume(bodyType, hash);
-    topSpeed = realDims.top_speed || adjustTopSpeed(bodyDefaults.top_speed, segment);
-
-    // Gerçek tork verisi varsa ve hesaplanan tork yoksa veya düşükse, CSV'den al
-    if (realDims.maxTork && (!finalTorque || finalTorque === '—')) {
-      finalTorque = realDims.maxTork + ' Nm';
-    }
+  if (verifiedData) {
+    // Doğrulanmış gerçek boyut verisi — en güvenilir kaynak
+    lengthNum = verifiedData.length;
+    widthNum = verifiedData.width;
+    heightNum = verifiedData.height;
+    wheelbaseNum = verifiedData.wheelbase;
+    weightNum = verifiedData.weight;
+    trunkVolume = verifiedData.trunk !== null ? verifiedData.trunk + ' lt' : getTrunkVolume(bodyType, hash);
+    topSpeed = verifiedData.topSpeed || adjustTopSpeed(bodyDefaults.top_speed, segment);
   } else {
-    // CSV verisi yok, eski davranış: body type defaults + hash varyasyon
-    lengthNum = parseInt(bodyDefaults.length) + (hash % 150) - 75;
-    widthNum = parseInt(bodyDefaults.width) + (hash % 60) - 30;
-    heightNum = parseInt(bodyDefaults.height) + (hash % 40) - 20;
-    wheelbaseNum = parseInt(bodyDefaults.wheelbase) + (hash % 80) - 40;
-    weightNum = parseInt(bodyDefaults.weight) + (hash % 200) - 100;
-    trunkVolume = getTrunkVolume(bodyType, hash);
-    topSpeed = adjustTopSpeed(bodyDefaults.top_speed, segment);
+    // CSV verisi dene (dikkat: bazı CSV verileri yanlış olabilir)
+    const realDims = getRealDimensions(brand.slug, model.slug);
+
+    if (realDims) {
+      lengthNum = realDims.length ? parseInt(realDims.length) : (parseInt(bodyDefaults.length) + (hash % 150) - 75);
+      widthNum = realDims.width ? parseInt(realDims.width) : (parseInt(bodyDefaults.width) + (hash % 60) - 30);
+      heightNum = realDims.height ? parseInt(realDims.height) : (parseInt(bodyDefaults.height) + (hash % 40) - 20);
+      wheelbaseNum = realDims.wheelbase ? parseInt(realDims.wheelbase) : (parseInt(bodyDefaults.wheelbase) + (hash % 80) - 40);
+      weightNum = realDims.weight ? parseInt(realDims.weight) : (parseInt(bodyDefaults.weight) + (hash % 200) - 100);
+      trunkVolume = realDims.trunk_volume || getTrunkVolume(bodyType, hash);
+      topSpeed = realDims.top_speed || adjustTopSpeed(bodyDefaults.top_speed, segment);
+
+      if (realDims.maxTork && (!finalTorque || finalTorque === '—')) {
+        finalTorque = realDims.maxTork + ' Nm';
+      }
+    } else {
+      // CSV verisi yok — body type defaults + hash varyasyon
+      lengthNum = parseInt(bodyDefaults.length) + (hash % 150) - 75;
+      widthNum = parseInt(bodyDefaults.width) + (hash % 60) - 30;
+      heightNum = parseInt(bodyDefaults.height) + (hash % 40) - 20;
+      wheelbaseNum = parseInt(bodyDefaults.wheelbase) + (hash % 80) - 40;
+      weightNum = parseInt(bodyDefaults.weight) + (hash % 200) - 100;
+      trunkVolume = getTrunkVolume(bodyType, hash);
+      topSpeed = adjustTopSpeed(bodyDefaults.top_speed, segment);
+    }
   }
 
   // Güvenlik puanı (segment ve yıla göre, gerçek NCAP verisi varsa öncelikli)
