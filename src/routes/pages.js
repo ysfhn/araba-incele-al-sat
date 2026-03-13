@@ -162,7 +162,6 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
   if (queryFuel) { listingWhere += ' AND l.fuel_type = ?'; listingParams.push(queryFuel); }
   if (queryTransmission) { listingWhere += ' AND l.transmission = ?'; listingParams.push(queryTransmission); }
   if (queryBudget) { listingWhere += ' AND l.price <= ?'; listingParams.push(queryBudget); }
-  if (queryEngine) { listingWhere += ' AND l.engine LIKE ?'; listingParams.push('%' + queryEngine.split(' ')[0] + '%'); }
 
   const listings = await db.prepare(`
     SELECT l.*, b.name as brand_name, m.name as model_name,
