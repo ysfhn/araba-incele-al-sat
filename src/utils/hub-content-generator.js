@@ -365,16 +365,78 @@ const REVIEW_TEMPLATES = {
 /**
  * @param {Object} brand - { id, name, slug, logo }
  * @param {Object} model - { id, brand_id, name, slug, body_type }
+ * @param {Object} [variantOptions] - Wizard'dan gelen seçimler: { fuel, transmission, engine, package, bodyType }
  * @returns {Object} hub-benzeri veri nesnesi
  */
-function generateHubContent(brand, model) {
+function generateHubContent(brand, model, variantOptions = {}) {
   const segment = BRAND_SEGMENTS[brand.slug] || 'mainstream';
-  const bodyType = model.body_type || 'sedan';
+  const bodyType = variantOptions.bodyType || model.body_type || 'sedan';
   const specs = SEGMENT_SPECS[segment] || SEGMENT_SPECS.mainstream;
   const bodyDefaults = BODY_DEFAULTS[bodyType] || BODY_DEFAULTS.sedan;
 
-  // Motor & performans
-  const engineData = (specs.engines[bodyType]) || (specs.engines.sedan) || { engine: '1.5L', hp: 120, torque: '200 Nm', transmission: 'Otomatik', fuel_type: 'benzin' };
+  // Gerçek varyant verisinden motor bilgisi al (wizard seçimine göre)
+  let engineData = null;
+  try {
+    const { getEngines: _getEngines, hasVariantData: _hasVariantData } = require('../data/vehicle-variants');
+    if (_hasVariantData(brand.slug, model.slug)) {
+      const realEngines = _getEngines(brand.slug, model.slug, variantOptions.fuel || null, variantOptions.transmission || null);
+      if (variantOptions.engine && realEngines.length > 0) {
+        // Kullanıcının seçtiği motoru bul
+        engineData = realEngines.find(e => e.engine === variantOptions.engine);
+        // Tam eşleşme yoksa prefix eşleşme dene
+        if (!engineData) {
+          engineData = realEngines.find(e => e.engine.toLowerCase().includes(variantOptions.engine.toLowerCase()));
+        }
+      }
+      // Hala yoksa ve yakıt/şanzıman filtresi varsa ilk motoru al
+      if (!engineData && realEngines.length > 0 && (variantOptions.fuel || variantOptions.transmission)) {
+        engineData = realEngines[0];
+      }
+    }
+  } catch (e) { /* varyant verisi yoksa segment default'u kullanılır */ }
+
+  // Eğer gerçek varyant verisi bulunduysa motor bilgisini oradan al, yoksa segment default'u kullan
+  let finalEngine, finalHp, finalTorque, finalTransmission, finalFuelType;
+  
+  if (engineData) {
+    finalEngine = engineData.engine;
+    finalHp = engineData.hp;
+    finalTorque = engineData.cc ? Math.round(engineData.cc * 0.1) + ' Nm' : '—';
+    // Wizard'dan gelen şanzıman varsa onu kullan
+    if (variantOptions.transmission) {
+      const trMap = { 'otomatik': 'Otomatik', 'manuel': 'Manuel', 'yari-otomatik': 'Yarı Otomatik' };
+      finalTransmission = trMap[variantOptions.transmission] || variantOptions.transmission;
+    } else {
+      finalTransmission = (specs.engines[bodyType] || specs.engines.sedan || {}).transmission || 'Otomatik';
+    }
+    // Wizard'dan gelen yakıt varsa onu kullan
+    if (variantOptions.fuel) {
+      const fuelMap = { 'benzin': 'Benzin', 'dizel': 'Dizel', 'hibrit': 'Hibrit', 'elektrik': 'Elektrik', 'lpg': 'LPG' };
+      finalFuelType = fuelMap[variantOptions.fuel] || variantOptions.fuel;
+    } else {
+      finalFuelType = (specs.engines[bodyType] || specs.engines.sedan || {}).fuel_type || 'benzin';
+    }
+  } else {
+    // Segment default motor verisi
+    const defaultEngine = (specs.engines[bodyType]) || (specs.engines.sedan) || { engine: '1.5L', hp: 120, torque: '200 Nm', transmission: 'Otomatik', fuel_type: 'benzin' };
+    finalEngine = defaultEngine.engine;
+    finalHp = defaultEngine.hp;
+    finalTorque = defaultEngine.torque;
+    // Wizard'dan gelen şanzıman varsa onu kullan
+    if (variantOptions.transmission) {
+      const trMap = { 'otomatik': 'Otomatik', 'manuel': 'Manuel', 'yari-otomatik': 'Yarı Otomatik' };
+      finalTransmission = trMap[variantOptions.transmission] || variantOptions.transmission;
+    } else {
+      finalTransmission = defaultEngine.transmission;
+    }
+    // Wizard'dan gelen yakıt varsa onu kullan
+    if (variantOptions.fuel) {
+      const fuelMap = { 'benzin': 'Benzin', 'dizel': 'Dizel', 'hibrit': 'Hibrit', 'elektrik': 'Elektrik', 'lpg': 'LPG' };
+      finalFuelType = fuelMap[variantOptions.fuel] || variantOptions.fuel;
+    } else {
+      finalFuelType = defaultEngine.fuel_type;
+    }
+  }
 
   // Fiyat — segment range içinde deterministik (brand + model slug hashiyle)
   const hash = simpleHash(brand.slug + model.slug);
@@ -409,7 +471,7 @@ function generateHubContent(brand, model) {
 
   // Elektrik ise tüketimi güncelle
   let fuelConsumption = bodyDefaults.fuel_consumption;
-  if (engineData.fuel_type === 'elektrik') {
+  if (finalFuelType === 'elektrik' || finalFuelType === 'Elektrik') {
     fuelConsumption = '0L/100km (' + (14 + (hash % 8)) + '.' + (hash % 10) + ' kWh)';
   }
 
@@ -425,11 +487,11 @@ function generateHubContent(brand, model) {
     model_id: model.id,
     year: 2024,
     avg_price: avgPrice,
-    fuel_type: engineData.fuel_type,
-    engine: engineData.engine,
-    hp: engineData.hp + (hash % 30) - 15,
-    torque: engineData.torque,
-    transmission: engineData.transmission,
+    fuel_type: finalFuelType,
+    engine: finalEngine,
+    hp: engineData ? finalHp : finalHp + (hash % 30) - 15,
+    torque: finalTorque,
+    transmission: finalTransmission,
     acceleration: adjustAcceleration(bodyDefaults.acceleration, segment, bodyType),
     top_speed: adjustTopSpeed(bodyDefaults.top_speed, segment),
     fuel_consumption: fuelConsumption,

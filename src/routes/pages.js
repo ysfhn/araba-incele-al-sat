@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getDb } = require('../db/database');
 const { generateHubContent, generateBrandSummary, BODY_TYPE_TR, getBrandCountry } = require('../utils/hub-content-generator');
+const { getEngines, getPackages, hasVariantData } = require('../data/vehicle-variants');
 
 // Ana Sayfa
 router.get('/', async (req, res) => {
@@ -126,19 +127,24 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
   const queryFuel = req.query.yakit || null;
   const queryTransmission = req.query.vites || null;
   const queryBudget = req.query.butce ? parseInt(req.query.butce) : null;
+  const queryEngine = req.query.motor || null;
+  const queryPackage = req.query.paket || null;
+  const queryBodyType = req.query.kasa || null;
 
   const hub = await db.prepare('SELECT * FROM vehicle_hubs WHERE brand_id = ? AND model_id = ?').get(brand.id, model.id);
 
-  // Hub kaydı yoksa otomatik içerik üret
-  const effectiveHub = hub || generateHubContent(brand, model);
+  // Hub kaydı yoksa otomatik içerik üret — seçilen varyant bilgilerini de geçir
+  const variantOptions = { fuel: queryFuel, transmission: queryTransmission, engine: queryEngine, package: queryPackage, bodyType: queryBodyType };
+  const effectiveHub = hub || generateHubContent(brand, model, variantOptions);
 
-  // Build dynamic listing query with optional year/fuel/transmission/budget filters
+  // Build dynamic listing query with optional year/fuel/transmission/budget/engine filters
   let listingWhere = "WHERE l.brand_id = ? AND l.model_id = ? AND l.status = 'active'";
   const listingParams = [brand.id, model.id];
   if (queryYear) { listingWhere += ' AND l.year = ?'; listingParams.push(queryYear); }
   if (queryFuel) { listingWhere += ' AND l.fuel_type = ?'; listingParams.push(queryFuel); }
   if (queryTransmission) { listingWhere += ' AND l.transmission = ?'; listingParams.push(queryTransmission); }
   if (queryBudget) { listingWhere += ' AND l.price <= ?'; listingParams.push(queryBudget); }
+  if (queryEngine) { listingWhere += ' AND l.engine LIKE ?'; listingParams.push('%' + queryEngine.split(' ')[0] + '%'); }
 
   const listings = await db.prepare(`
     SELECT l.*, b.name as brand_name, m.name as model_name,
@@ -182,7 +188,7 @@ router.get('/arac/:brandSlug/:modelSlug', async (req, res) => {
   res.render('pages/arac-hub', {
     title: `${brand.name} ${model.name}${queryYear ? ' ' + queryYear : ''} - Araba İncele Al Sat`,
     brand, model, hub: effectiveHub, listings, forumTopics, nearbyServices, priceStats,
-    queryYear, queryFuel, queryTransmission, queryBudget, otherModels, BODY_TYPE_TR
+    queryYear, queryFuel, queryTransmission, queryBudget, queryEngine, queryPackage, queryBodyType, otherModels, BODY_TYPE_TR
   });
 });
 

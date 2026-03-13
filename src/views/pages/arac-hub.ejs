@@ -12,6 +12,9 @@ const selectedYear = typeof queryYear !== 'undefined' ? queryYear : (hub ? hub.y
 const selectedFuel = typeof queryFuel !== 'undefined' ? queryFuel : (hub ? hub.fuel_type : null);
 const selectedTransmission = typeof queryTransmission !== 'undefined' ? queryTransmission : null;
 const selectedBudget = typeof queryBudget !== 'undefined' ? queryBudget : null;
+const selectedEngine = typeof queryEngine !== 'undefined' ? queryEngine : null;
+const selectedPackage = typeof queryPackage !== 'undefined' ? queryPackage : null;
+const selectedBodyType = typeof queryBodyType !== 'undefined' ? queryBodyType : null;
 %>
 
 <style>
@@ -112,12 +115,17 @@ const selectedBudget = typeof queryBudget !== 'undefined' ? queryBudget : null;
 </nav>
 
 <!-- Active Filters -->
-<% if (selectedYear || selectedFuel || selectedTransmission || selectedBudget) { %>
+<% if (selectedYear || selectedFuel || selectedTransmission || selectedBudget || selectedEngine || selectedPackage || selectedBodyType) { %>
 <div class="flex items-center gap-2 flex-wrap bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5">
   <span class="text-xs font-semibold text-slate-500 flex items-center gap-1"><span class="material-symbols-outlined" style="font-size:16px">filter_alt</span> Filtreler:</span>
   <% if (selectedYear) { %>
     <span class="inline-flex items-center gap-1 bg-white border border-slate-200 text-xs font-medium text-slate-700 px-2.5 py-1 rounded-lg">
       <span class="material-symbols-outlined" style="font-size:14px">calendar_today</span> <%= selectedYear %>
+    </span>
+  <% } %>
+  <% if (selectedBodyType) { %>
+    <span class="inline-flex items-center gap-1 bg-white border border-slate-200 text-xs font-medium text-slate-700 px-2.5 py-1 rounded-lg">
+      <span class="material-symbols-outlined" style="font-size:14px">directions_car</span> <%= typeof BODY_TYPE_TR !== 'undefined' && BODY_TYPE_TR[selectedBodyType] ? BODY_TYPE_TR[selectedBodyType] : selectedBodyType %>
     </span>
   <% } %>
   <% if (selectedFuel) { %>
@@ -128,6 +136,16 @@ const selectedBudget = typeof queryBudget !== 'undefined' ? queryBudget : null;
   <% if (selectedTransmission) { %>
     <span class="inline-flex items-center gap-1 bg-white border border-slate-200 text-xs font-medium text-slate-700 px-2.5 py-1 rounded-lg">
       <span class="material-symbols-outlined" style="font-size:14px">settings</span> <%= selectedTransmission === 'otomatik' ? 'Otomatik' : selectedTransmission === 'manuel' ? 'Manuel' : 'Y. Otomatik' %>
+    </span>
+  <% } %>
+  <% if (selectedEngine) { %>
+    <span class="inline-flex items-center gap-1 bg-white border border-slate-200 text-xs font-medium text-slate-700 px-2.5 py-1 rounded-lg">
+      <span class="material-symbols-outlined" style="font-size:14px">speed</span> <%= selectedEngine %>
+    </span>
+  <% } %>
+  <% if (selectedPackage) { %>
+    <span class="inline-flex items-center gap-1 bg-white border border-slate-200 text-xs font-medium text-slate-700 px-2.5 py-1 rounded-lg">
+      <span class="material-symbols-outlined" style="font-size:14px">inventory_2</span> <%= selectedPackage %>
     </span>
   <% } %>
   <% if (selectedBudget) { %>
@@ -154,10 +172,13 @@ const selectedBudget = typeof queryBudget !== 'undefined' ? queryBudget : null;
     <div class="absolute bottom-4 right-4 flex gap-2 flex-wrap justify-end">
       <% if (listings && listings.length > 5) { %><span class="hub-badge bg-green-500/20 text-green-300 backdrop-blur-sm">Popüler</span><% } %>
       <% if (selectedYear) { %><span class="hub-badge bg-white/10 text-white/70 backdrop-blur-sm"><%= selectedYear %> Model</span><% } %>
+      <% if (selectedBodyType) { %><span class="hub-badge bg-white/10 text-white/70 backdrop-blur-sm"><%= typeof BODY_TYPE_TR !== 'undefined' && BODY_TYPE_TR[selectedBodyType] ? BODY_TYPE_TR[selectedBodyType] : selectedBodyType %></span><% } %>
       <% if (selectedFuel) { %><span class="hub-badge bg-white/10 text-white/70 backdrop-blur-sm capitalize"><%= selectedFuel %></span><% } %>
       <% if (selectedTransmission) { %>
         <span class="hub-badge bg-white/10 text-white/70 backdrop-blur-sm"><%= selectedTransmission === 'otomatik' ? 'Otomatik' : selectedTransmission === 'manuel' ? 'Manuel' : 'Y. Otomatik' %></span>
       <% } %>
+      <% if (selectedEngine) { %><span class="hub-badge bg-white/10 text-white/70 backdrop-blur-sm"><%= selectedEngine %></span><% } %>
+      <% if (selectedPackage) { %><span class="hub-badge bg-white/10 text-white/70 backdrop-blur-sm"><%= selectedPackage %></span><% } %>
       <% if (selectedBudget) { %>
         <span class="hub-badge bg-white/10 text-white/70 backdrop-blur-sm">≤ <%= new Intl.NumberFormat('tr-TR').format(selectedBudget) %> ₺</span>
       <% } %>
