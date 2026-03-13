@@ -315,7 +315,11 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
     <% featuredListings.forEach(l => { %>
     <a href="/ilan/<%= l.slug %>" class="group bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 hover:border-primary/20 hover:-translate-y-1">
       <div class="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center relative overflow-hidden">
+        <% if (l.image && l.image !== '/images/car-placeholder.svg') { %>
+        <img src="<%= l.image %>" alt="<%= l.brand_name %> <%= l.model_name %>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+        <% } else { %>
         <span class="material-symbols-outlined text-3xl sm:text-5xl text-slate-300/80 group-hover:scale-110 transition-transform duration-500">directions_car</span>
+        <% } %>
         <div class="absolute top-1.5 left-1.5 sm:top-3 sm:left-3">
           <span class="bg-amber-500 text-white text-[8px] sm:text-[10px] px-1.5 py-0.5 rounded font-bold">⭐ ÖNE ÇIKAN</span>
         </div>
@@ -365,7 +369,11 @@ const hubBrands = ['bmw','mercedes','audi','toyota','volkswagen','tesla','porsch
       <% latestListings.forEach(l => { %>
       <a href="/ilan/<%= l.slug %>" class="group w-[44%] sm:w-[260px] md:w-[280px] bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-100 hover:border-primary/20 flex-shrink-0">
         <div class="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center relative overflow-hidden">
+          <% if (l.image && l.image !== '/images/car-placeholder.svg') { %>
+          <img src="<%= l.image %>" alt="<%= l.brand_name %> <%= l.model_name %>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+          <% } else { %>
           <span class="material-symbols-outlined text-3xl sm:text-5xl text-slate-300/70 group-hover:scale-110 transition-transform duration-500">directions_car</span>
+          <% } %>
           <div class="absolute bottom-1.5 left-1.5 sm:bottom-2.5 sm:left-3 flex gap-1">
             <span class="bg-white/95 text-slate-700 text-[8px] sm:text-[10px] font-semibold px-1 sm:px-2 py-0.5 rounded"><%= l.year %></span>
             <span class="bg-white/95 text-slate-700 text-[8px] sm:text-[10px] font-semibold px-1 sm:px-2 py-0.5 rounded"><%= fuelLabel(l.fuel_type) %></span>

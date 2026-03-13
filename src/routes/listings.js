@@ -88,7 +88,7 @@ router.post('/ver', isAuthenticated, async (req, res) => {
 
   const result = await db.prepare(`
     INSERT INTO listings (user_id, brand_id, model_id, title, slug, year, km, fuel_type, transmission, hp, color, price, description, city, status)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
   `).run(req.session.user.id, brand_id, model_id, autoTitle, slug, year, km || 0, fuel_type, transmission, hp || null, color || null, price, description || null, req.body.city || null);
 
   // Ek özellikler (motor tipi, paket, cc, body_type, drive_type) feature olarak kaydet
@@ -121,8 +121,8 @@ router.post('/ver', isAuthenticated, async (req, res) => {
     await db.prepare('INSERT INTO listing_images (listing_id, url, is_primary) VALUES (?, ?, 1)').run(listingId, '/images/car-placeholder.svg');
   }
 
-  req.flash('success', 'İlanınız başarıyla oluşturuldu!');
-  res.redirect(`/ilan/${slug}`);
+  req.flash('success', 'İlanınız başarıyla oluşturuldu! Admin onayından sonra yayına alınacaktır.');
+  res.redirect('/kullanici/paneli');
 });
 
 // İlan Düzenle Form - GET /ilan/:slug/duzenle
