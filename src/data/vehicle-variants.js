@@ -14,13 +14,33 @@ const VARIANTS = Object.assign({}, part1, part2, part3, part4);
 /* ─── Yardımcı Fonksiyonlar ─────────────────────────────── */
 
 /**
+ * Model slug'ını çözümle — önce birebir eşleşme, yoksa prefix eşleşme dene.
+ * Örn: "corolla" → brand'de yoksa "corolla-sedan" veya ilk "corolla-*" eşleşmesini bul.
+ */
+function resolveModel(brand, modelSlug) {
+  if (!brand) return null;
+  // Birebir eşleşme
+  if (brand[modelSlug]) return brand[modelSlug];
+  // Prefix eşleşme: modelSlug + "-" ile başlayan ilk key (sedan > hatchback > diğer)
+  const prefixKeys = Object.keys(brand).filter(k => k.startsWith(modelSlug + '-'));
+  if (prefixKeys.length === 0) return null;
+  // Sedan, hatchback, suv sıralamasıyla tercih et
+  const priority = ['-sedan', '-hatchback', '-suv', '-coupe', '-cross'];
+  for (const suffix of priority) {
+    const match = prefixKeys.find(k => k === modelSlug + suffix);
+    if (match) return brand[match];
+  }
+  return brand[prefixKeys[0]];
+}
+
+/**
  * Bir marka-model kombinasyonu için tanımlı yılları döndürür.
  * @returns {number[]}
  */
 function getYears(brandSlug, modelSlug) {
   const brand = VARIANTS[brandSlug];
   if (!brand) return [];
-  const model = brand[modelSlug];
+  const model = resolveModel(brand, modelSlug);
   if (!model) return [];
   return model.years || [];
 }
@@ -32,7 +52,7 @@ function getYears(brandSlug, modelSlug) {
 function getFuelTypes(brandSlug, modelSlug) {
   const brand = VARIANTS[brandSlug];
   if (!brand) return [];
-  const model = brand[modelSlug];
+  const model = resolveModel(brand, modelSlug);
   if (!model || !model.variants) return [];
   const set = new Set(model.variants.map(v => v.fuel));
   return [...set];
@@ -46,7 +66,7 @@ function getFuelTypes(brandSlug, modelSlug) {
 function getTransmissions(brandSlug, modelSlug, fuel) {
   const brand = VARIANTS[brandSlug];
   if (!brand) return [];
-  const model = brand[modelSlug];
+  const model = resolveModel(brand, modelSlug);
   if (!model || !model.variants) return [];
   let variants = model.variants;
   if (fuel) variants = variants.filter(v => v.fuel === fuel);
@@ -61,7 +81,7 @@ function getTransmissions(brandSlug, modelSlug, fuel) {
 function getEngines(brandSlug, modelSlug, fuel, transmission) {
   const brand = VARIANTS[brandSlug];
   if (!brand) return [];
-  const model = brand[modelSlug];
+  const model = resolveModel(brand, modelSlug);
   if (!model || !model.variants) return [];
   let variants = model.variants;
   if (fuel) variants = variants.filter(v => v.fuel === fuel);
@@ -85,7 +105,7 @@ function getEngines(brandSlug, modelSlug, fuel, transmission) {
 function getPackages(brandSlug, modelSlug, fuel, transmission, engine) {
   const brand = VARIANTS[brandSlug];
   if (!brand) return [];
-  const model = brand[modelSlug];
+  const model = resolveModel(brand, modelSlug);
   if (!model || !model.variants) return [];
   let variants = model.variants;
   if (fuel) variants = variants.filter(v => v.fuel === fuel);
@@ -107,7 +127,7 @@ function getPackages(brandSlug, modelSlug, fuel, transmission, engine) {
 function getFullCascade(brandSlug, modelSlug, options = {}) {
   const brand = VARIANTS[brandSlug];
   if (!brand) return null;
-  const model = brand[modelSlug];
+  const model = resolveModel(brand, modelSlug);
   if (!model) return null;
 
   const { fuel, transmission, engine } = options;
@@ -137,7 +157,7 @@ function getFullCascade(brandSlug, modelSlug, options = {}) {
 function getBodyType(brandSlug, modelSlug) {
   const brand = VARIANTS[brandSlug];
   if (!brand) return '';
-  const model = brand[modelSlug];
+  const model = resolveModel(brand, modelSlug);
   if (!model) return '';
   return model.bodyType || '';
 }

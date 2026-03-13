@@ -340,13 +340,13 @@ transSel.addEventListener('change', async function() {
     const res = await fetch(`/api/variants/cascade/${currentBrandSlug}/${currentModelSlug}?fuel=${fuelSel.value}&transmission=${this.value}`);
     const data = await res.json();
     allEngines = data.engines || [];
-    fillSelect(engineSel, allEngines, 'Motor seçin', e => e.ad, e => `${e.ad}`);
+    fillSelect(engineSel, allEngines, 'Motor seçin', e => e.engine, e => e.engine + (e.hp ? ' (' + e.hp + ' HP)' : ''));
   } catch(e) { engineSel.innerHTML = '<option value="">Hata</option>'; }
 });
 
 // ── 6) Motor değişince → HP/CC otomatik doldur + Paket güncelle ──
 engineSel.addEventListener('change', async function() {
-  const selected = allEngines.find(e => e.ad === this.value);
+  const selected = allEngines.find(e => e.engine === this.value);
   if (selected) {
     $('#hp_hidden').value = selected.hp || '';
     $('#cc_hidden').value = selected.cc || '';
