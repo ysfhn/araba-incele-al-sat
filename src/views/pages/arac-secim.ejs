@@ -99,7 +99,7 @@
 
 <!-- Progress Bar -->
 <div class="flex items-center justify-center gap-0.5 sm:gap-1 mb-8 flex-wrap" id="progressBar">
-  <% const stepLabels = ['Yıl','Marka','Model','Yakıt','Kasa','Şanzıman','Motor','Paket']; %>
+  <% const stepLabels = ['Yıl','Kasa','Marka','Model','Yakıt','Şanzıman','Motor','Paket']; %>
   <% stepLabels.forEach((label, i) => { %>
     <% if (i > 0) { %><div class="wiz-progress-line bg-slate-200" data-line="<%= i %>"></div><% } %>
     <div class="wiz-progress-step" data-step="<%= i+1 %>">
@@ -118,15 +118,31 @@
   </div>
 </div>
 
-<!-- Step 2: MARKA -->
+<!-- Step 2: KASA TİPİ -->
 <div id="step2" class="step-panel hidden">
+  <div class="wiz-card p-6 sm:p-8">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 mb-1">Kasa Tipini Seçin</h2>
+        <p class="text-sm text-slate-500" id="bodySubtitle">Araç kasa tipi</p>
+      </div>
+      <button onclick="goToStep(1)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3" id="bodyGrid">
+      <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Step 3: MARKA -->
+<div id="step3" class="step-panel hidden">
   <div class="wiz-card p-6 sm:p-8">
     <div class="flex items-center justify-between mb-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 mb-1">Marka Seçin</h2>
         <p class="text-sm text-slate-500" id="brandSubtitle">Tüm markalar</p>
       </div>
-      <button onclick="goToStep(1)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
+      <button onclick="goToStep(2)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
     </div>
     <div class="wiz-search-box mb-5">
       <span class="material-symbols-outlined text-slate-400 text-xl">search</span>
@@ -138,15 +154,15 @@
   </div>
 </div>
 
-<!-- Step 3: MODEL -->
-<div id="step3" class="step-panel hidden">
+<!-- Step 4: MODEL -->
+<div id="step4" class="step-panel hidden">
   <div class="wiz-card p-6 sm:p-8">
     <div class="flex items-center justify-between mb-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 mb-1">Model Seçin</h2>
         <p class="text-sm text-slate-500" id="modelSubtitle">Modeller listeleniyor</p>
       </div>
-      <button onclick="goToStep(2)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
+      <button onclick="goToStep(3)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="modelGrid">
       <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
@@ -154,33 +170,17 @@
   </div>
 </div>
 
-<!-- Step 4: YAKIT TİPİ -->
-<div id="step4" class="step-panel hidden">
+<!-- Step 5: YAKIT TİPİ -->
+<div id="step5" class="step-panel hidden">
   <div class="wiz-card p-6 sm:p-8">
     <div class="flex items-center justify-between mb-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 mb-1">Yakıt Türünü Seçin</h2>
         <p class="text-sm text-slate-500" id="fuelSubtitle">Mevcut yakıt seçenekleri</p>
       </div>
-      <button onclick="goToStep(3)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3" id="fuelGrid">
-      <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
-    </div>
-  </div>
-</div>
-
-<!-- Step 5: KASA TİPİ -->
-<div id="step5" class="step-panel hidden">
-  <div class="wiz-card p-6 sm:p-8">
-    <div class="flex items-center justify-between mb-5">
-      <div>
-        <h2 class="text-lg font-bold text-slate-900 mb-1">Kasa Tipini Seçin</h2>
-        <p class="text-sm text-slate-500" id="bodySubtitle">Araç kasa tipi</p>
-      </div>
       <button onclick="goToStep(4)" class="wiz-back-btn"><span class="material-symbols-outlined text-sm">arrow_back</span> Geri</button>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="bodyGrid">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3" id="fuelGrid">
       <p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>
     </div>
   </div>
@@ -264,10 +264,10 @@
 /* ─── State ─── */
 const S = {
   year: null,
+  bodyType: null, bodyTypeName: '',
   brandId: null, brandSlug: '', brandName: '',
   modelId: null, modelSlug: '', modelName: '',
   fuel: null, fuelName: '',
-  bodyType: null, bodyTypeName: '',
   transmission: null, transmissionName: '',
   engine: null, engineLabel: '',
   pkg: null
@@ -287,12 +287,12 @@ const FUEL_META = {
 
 const BODY_META = {
   sedan:         { label:'Sedan',         icon:'directions_car' },
-  suv:           { label:'SUV',           icon:'airport_shuttle' },
   hatchback:     { label:'Hatchback',     icon:'electric_car' },
+  suv:           { label:'SUV',           icon:'airport_shuttle' },
   crossover:     { label:'Crossover',     icon:'drive_eta' },
-  station_wagon: { label:'Station Wagon', icon:'local_shipping' },
-  coupe:         { label:'Coupe',         icon:'sports_motorsports' },
+  coupe:         { label:'Coupé',         icon:'sports_motorsports' },
   cabrio:        { label:'Cabrio',        icon:'wb_sunny' },
+  station_wagon: { label:'Station Wagon', icon:'local_shipping' },
   minivan:       { label:'Minivan',       icon:'rv_hookup' },
   pickup:        { label:'Pickup',        icon:'fire_truck' },
   van:           { label:'Van',           icon:'local_shipping' }
@@ -306,18 +306,18 @@ const TRANS_META = {
 
 /* ─── Navigation ─── */
 function goToStep(n) {
-  document.querySelectorAll('.step-panel').forEach(p => p.classList.add('hidden'));
+  document.querySelectorAll('.step-panel').forEach(function(p) { p.classList.add('hidden'); });
   document.getElementById('step' + n).classList.remove('hidden');
   updateProgress(n);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function updateProgress(current) {
-  for (let s = 1; s <= TOTAL_STEPS; s++) {
-    const step = document.querySelector('[data-step="' + s + '"]');
+  for (var s = 1; s <= TOTAL_STEPS; s++) {
+    var step = document.querySelector('[data-step="' + s + '"]');
     if (!step) continue;
-    const num = step.querySelector('.wiz-progress-num');
-    const label = step.querySelector('span:last-child');
+    var num = step.querySelector('.wiz-progress-num');
+    var label = step.querySelector('span:last-child');
     if (s < current) {
       num.className = 'wiz-progress-num done';
       num.innerHTML = '<span class="material-symbols-outlined" style="font-size:14px">check</span>';
@@ -330,23 +330,23 @@ function updateProgress(current) {
       if (label) label.className = 'hidden md:inline text-xs font-medium text-slate-400';
     }
   }
-  for (let l = 1; l < TOTAL_STEPS; l++) {
-    const line = document.querySelector('[data-line="' + l + '"]');
+  for (var l = 1; l < TOTAL_STEPS; l++) {
+    var line = document.querySelector('[data-line="' + l + '"]');
     if (line) line.className = 'wiz-progress-line ' + (l < current ? 'bg-green-400' : 'bg-slate-200');
   }
 }
 
 function updateSummary() {
-  const tags = [];
+  var tags = [];
   if (S.year) tags.push({ label: S.year + ' Model', icon: 'calendar_today' });
+  if (S.bodyTypeName) tags.push({ label: S.bodyTypeName, icon: 'directions_car' });
   if (S.brandName) tags.push({ label: S.brandName, icon: 'star' });
   if (S.modelName) tags.push({ label: S.modelName, icon: 'commute' });
   if (S.fuelName) tags.push({ label: S.fuelName, icon: 'local_gas_station' });
-  if (S.bodyTypeName) tags.push({ label: S.bodyTypeName, icon: 'directions_car' });
   if (S.transmissionName) tags.push({ label: S.transmissionName, icon: 'settings' });
   if (S.engineLabel) tags.push({ label: S.engineLabel, icon: 'speed' });
   if (S.pkg) tags.push({ label: S.pkg, icon: 'inventory_2' });
-  const c = document.getElementById('selectionTags');
+  var c = document.getElementById('selectionTags');
   c.innerHTML = tags.length === 0
     ? '<span class="text-sm text-slate-400">Henüz seçim yapılmadı</span>'
     : tags.map(function(t) { return '<span class="wiz-summary-tag"><span class="material-symbols-outlined">' + t.icon + '</span>' + t.label + '</span>'; }).join('');
@@ -380,116 +380,186 @@ function navigateToHub() {
     grid.querySelectorAll('.wiz-year-btn').forEach(function(b) { b.classList.remove('selected'); });
     btn.classList.add('selected');
     S.year = parseInt(btn.dataset.year);
+    S.bodyType = null; S.bodyTypeName = '';
     S.brandId = null; S.brandSlug = ''; S.brandName = '';
     S.modelId = null; S.modelSlug = ''; S.modelName = '';
     S.fuel = null; S.fuelName = '';
-    S.bodyType = null; S.bodyTypeName = '';
     S.transmission = null; S.transmissionName = '';
     S.engine = null; S.engineLabel = '';
     S.pkg = null;
     updateSummary();
-    setTimeout(function() { loadBrands(); goToStep(2); }, 200);
+    setTimeout(function() { loadBodyTypes(); goToStep(2); }, 200);
   });
 })();
 
-/* ═══════ STEP 2: MARKA ═══════ */
-function loadBrands() {
-  var grid = document.getElementById('brandGrid');
-  document.getElementById('brandSubtitle').textContent = S.year + ' model araçlar için marka seçin';
+/* ═══════ STEP 2: KASA TİPİ ═══════ */
+function loadBodyTypes() {
+  var grid = document.getElementById('bodyGrid');
+  document.getElementById('bodySubtitle').textContent = S.year + ' model araçlar için kasa tipi seçin';
 
-  function renderBrands(list) {
-    if (list.length === 0) {
-      grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Marka bulunamadı.</p>';
-      return;
-    }
-    grid.innerHTML = list.map(function(b) {
-      var logo = b.logo
-        ? '<img src="' + b.logo + '" alt="' + b.name + '" class="w-8 h-8 object-contain" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"/><span class="material-symbols-outlined text-lg text-slate-400" style="display:none">directions_car</span>'
-        : '<span class="material-symbols-outlined text-lg text-slate-400">directions_car</span>';
-      return '<button type="button" data-id="' + b.id + '" data-slug="' + b.slug + '" data-name="' + b.name + '" class="wiz-brand-btn">' +
-        '<div class="w-10 h-10 flex items-center justify-center">' + logo + '</div>' +
-        '<span class="font-semibold text-xs text-slate-700 text-center leading-tight">' + b.name + '</span></button>';
-    }).join('');
-  }
-
-  renderBrands(allBrands);
-
-  grid.onclick = function(e) {
-    var btn = e.target.closest('.wiz-brand-btn');
-    if (!btn) return;
-    grid.querySelectorAll('.wiz-brand-btn').forEach(function(b) { b.classList.remove('selected'); });
-    btn.classList.add('selected');
-    S.brandId = btn.dataset.id;
-    S.brandSlug = btn.dataset.slug;
-    S.brandName = btn.dataset.name;
-    S.modelId = null; S.modelSlug = ''; S.modelName = '';
-    S.fuel = null; S.fuelName = '';
-    S.bodyType = null; S.bodyTypeName = '';
-    S.transmission = null; S.transmissionName = '';
-    S.engine = null; S.engineLabel = '';
-    S.pkg = null;
-    updateSummary();
-    setTimeout(function() { loadModels(); goToStep(3); }, 200);
-  };
-
-  var searchInput = document.getElementById('brandSearch');
-  if (searchInput) {
-    searchInput.value = '';
-    searchInput.oninput = function() {
-      var q = this.value.toLowerCase().trim();
-      renderBrands(q ? allBrands.filter(function(b) { return b.name.toLowerCase().indexOf(q) !== -1; }) : allBrands);
-    };
-  }
-}
-
-/* ═══════ STEP 3: MODEL ═══════ */
-function loadModels() {
-  var grid = document.getElementById('modelGrid');
-  document.getElementById('modelSubtitle').textContent = S.brandName + ' modelleri';
-  grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
-  fetch('/api/models/' + S.brandId)
-    .then(function(res) { return res.json(); })
-    .then(function(models) {
-      if (models.length === 0) {
-        grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Model bulunamadı.</p>';
-        return;
-      }
-      grid.innerHTML = models.map(function(m) {
-        var btLabel = m.body_type && BODY_META[m.body_type] ? BODY_META[m.body_type].label : (m.body_type || '');
-        return '<button type="button" data-id="' + m.id + '" data-slug="' + m.slug + '" data-name="' + m.name + '" data-bt="' + (m.body_type || '') + '" class="wiz-model-btn">' +
-          '<p class="font-semibold text-sm text-slate-800">' + m.name + '</p>' +
-          (btLabel ? '<p class="text-xs text-slate-400 mt-0.5">' + btLabel + '</p>' : '') +
-          '</button>';
+  // DB'den hangi kasa tiplerinde model var kontrol et
+  fetch('/api/brands')
+    .then(function(r) { return r.json(); })
+    .then(function() {
+      // Tüm kasa tiplerini göster — DB'de modeli olan kasa tiplerini aktif yap
+      var allBodyTypes = Object.keys(BODY_META);
+      grid.innerHTML = allBodyTypes.map(function(bt) {
+        var m = BODY_META[bt];
+        return '<button type="button" data-body="' + bt + '" class="wiz-option-btn">' +
+          '<div class="wiz-opt-icon bg-slate-50"><span class="material-symbols-outlined text-xl text-slate-500">' + m.icon + '</span></div>' +
+          '<span class="font-semibold text-sm text-slate-800">' + m.label + '</span></button>';
       }).join('');
+
       grid.onclick = function(e) {
-        var btn = e.target.closest('.wiz-model-btn');
+        var btn = e.target.closest('.wiz-option-btn:not([disabled])');
         if (!btn) return;
-        grid.querySelectorAll('.wiz-model-btn').forEach(function(b) { b.classList.remove('selected'); });
+        grid.querySelectorAll('.wiz-option-btn').forEach(function(b) { b.classList.remove('selected'); });
         btn.classList.add('selected');
-        S.modelId = btn.dataset.id;
-        S.modelSlug = btn.dataset.slug;
-        S.modelName = btn.dataset.name;
+        S.bodyType = btn.dataset.body;
+        S.bodyTypeName = BODY_META[S.bodyType].label;
+        S.brandId = null; S.brandSlug = ''; S.brandName = '';
+        S.modelId = null; S.modelSlug = ''; S.modelName = '';
         S.fuel = null; S.fuelName = '';
-        S.bodyType = null; S.bodyTypeName = '';
         S.transmission = null; S.transmissionName = '';
         S.engine = null; S.engineLabel = '';
         S.pkg = null;
         updateSummary();
-        setTimeout(function() { loadFuelTypes(); goToStep(4); }, 200);
+        setTimeout(function() { loadBrands(); goToStep(3); }, 200);
       };
+    });
+}
+
+/* ═══════ STEP 3: MARKA ═══════ */
+function loadBrands() {
+  var grid = document.getElementById('brandGrid');
+  var btLabel = BODY_META[S.bodyType] ? BODY_META[S.bodyType].label : S.bodyType;
+  document.getElementById('brandSubtitle').textContent = S.year + ' · ' + btLabel + ' — marka seçin';
+  grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
+
+  // Seçilen kasa tipinde modeli olan markaları çek
+  fetch('/api/brands-by-body/' + S.bodyType)
+    .then(function(res) { return res.json(); })
+    .then(function(filteredBrands) {
+      var brandsToShow = filteredBrands.length > 0 ? filteredBrands : allBrands;
+
+      function renderBrands(list) {
+        if (list.length === 0) {
+          grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Bu kriterlere uygun marka bulunamadı.</p>';
+          return;
+        }
+        grid.innerHTML = list.map(function(b) {
+          var logo = b.logo
+            ? '<img src="' + b.logo + '" alt="' + b.name + '" class="w-8 h-8 object-contain" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"/><span class="material-symbols-outlined text-lg text-slate-400" style="display:none">directions_car</span>'
+            : '<span class="material-symbols-outlined text-lg text-slate-400">directions_car</span>';
+          return '<button type="button" data-id="' + b.id + '" data-slug="' + b.slug + '" data-name="' + b.name + '" class="wiz-brand-btn">' +
+            '<div class="w-10 h-10 flex items-center justify-center">' + logo + '</div>' +
+            '<span class="font-semibold text-xs text-slate-700 text-center leading-tight">' + b.name + '</span></button>';
+        }).join('');
+      }
+
+      renderBrands(brandsToShow);
+
+      grid.onclick = function(e) {
+        var btn = e.target.closest('.wiz-brand-btn');
+        if (!btn) return;
+        grid.querySelectorAll('.wiz-brand-btn').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        S.brandId = btn.dataset.id;
+        S.brandSlug = btn.dataset.slug;
+        S.brandName = btn.dataset.name;
+        S.modelId = null; S.modelSlug = ''; S.modelName = '';
+        S.fuel = null; S.fuelName = '';
+        S.transmission = null; S.transmissionName = '';
+        S.engine = null; S.engineLabel = '';
+        S.pkg = null;
+        updateSummary();
+        setTimeout(function() { loadModels(); goToStep(4); }, 200);
+      };
+
+      var searchInput = document.getElementById('brandSearch');
+      if (searchInput) {
+        searchInput.value = '';
+        searchInput.oninput = function() {
+          var q = this.value.toLowerCase().trim();
+          renderBrands(q ? brandsToShow.filter(function(b) { return b.name.toLowerCase().indexOf(q) !== -1; }) : brandsToShow);
+        };
+      }
     })
     .catch(function() {
       grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-8">Hata oluştu.</p>';
     });
 }
 
-/* ═══════ STEP 4: YAKIT TİPİ ═══════ */
+/* ═══════ STEP 4: MODEL ═══════ */
+function loadModels() {
+  var grid = document.getElementById('modelGrid');
+  var btLabel = BODY_META[S.bodyType] ? BODY_META[S.bodyType].label : S.bodyType;
+  document.getElementById('modelSubtitle').textContent = S.brandName + ' · ' + btLabel + ' modelleri';
+  grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
+
+  // Kasa tipine göre filtrelenmiş modelleri çek
+  fetch('/api/models/' + S.brandId + '?body_type=' + S.bodyType)
+    .then(function(res) { return res.json(); })
+    .then(function(models) {
+      if (models.length === 0) {
+        grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Bu kasa tipinde model bulunamadı.</p>';
+        return;
+      }
+
+      // Varyant verisi olan modelleri kontrol et
+      return fetch('/api/variants/check-models/' + S.brandSlug + '?body_type=' + S.bodyType)
+        .then(function(r) { return r.json(); })
+        .then(function(checkData) {
+          var variantModels = checkData.models || {};
+
+          // Tek model varsa otomatik seç
+          if (models.length === 1) {
+            var m = models[0];
+            S.modelId = m.id;
+            S.modelSlug = m.slug;
+            S.modelName = m.name;
+            updateSummary();
+            loadFuelTypes();
+            goToStep(5);
+            return;
+          }
+
+          grid.innerHTML = models.map(function(m) {
+            var hasVariants = variantModels[m.slug] === true;
+            return '<button type="button" data-id="' + m.id + '" data-slug="' + m.slug + '" data-name="' + m.name + '" class="wiz-model-btn' + (hasVariants ? '' : ' opacity-50') + '"' + (hasVariants ? '' : ' title="Bu model için detaylı varyant verisi bulunamadı"') + '>' +
+              '<p class="font-semibold text-sm text-slate-800">' + m.name + '</p>' +
+              (hasVariants ? '<p class="text-xs text-green-500 mt-0.5">✓ Detaylı veri mevcut</p>' : '<p class="text-xs text-slate-400 mt-0.5">Sınırlı veri</p>') +
+              '</button>';
+          }).join('');
+
+          grid.onclick = function(e) {
+            var btn = e.target.closest('.wiz-model-btn');
+            if (!btn) return;
+            grid.querySelectorAll('.wiz-model-btn').forEach(function(b) { b.classList.remove('selected'); });
+            btn.classList.add('selected');
+            S.modelId = btn.dataset.id;
+            S.modelSlug = btn.dataset.slug;
+            S.modelName = btn.dataset.name;
+            S.fuel = null; S.fuelName = '';
+            S.transmission = null; S.transmissionName = '';
+            S.engine = null; S.engineLabel = '';
+            S.pkg = null;
+            updateSummary();
+            setTimeout(function() { loadFuelTypes(); goToStep(5); }, 200);
+          };
+        });
+    })
+    .catch(function() {
+      grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-8">Hata oluştu.</p>';
+    });
+}
+
+/* ═══════ STEP 5: YAKIT TİPİ ═══════ */
 function loadFuelTypes() {
   var grid = document.getElementById('fuelGrid');
   document.getElementById('fuelSubtitle').textContent = S.brandName + ' ' + S.modelName + ' — yakıt türleri';
   grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
 
-  // Önce variants endpoint, yoksa fuel-types endpoint
   fetch('/api/variants/fuels/' + S.brandSlug + '/' + S.modelSlug)
     .then(function(res) { return res.ok ? res.json() : null; })
     .then(function(data) {
@@ -497,7 +567,6 @@ function loadFuelTypes() {
       if (data && data.fuels && data.fuels.length > 0) {
         availableFuels = data.fuels.map(function(f) { return f.key; });
       }
-      // Fallback
       if (availableFuels.length === 0) {
         return fetch('/api/fuel-types/' + S.brandSlug + '/' + S.modelSlug)
           .then(function(r) { return r.ok ? r.json() : null; })
@@ -510,14 +579,45 @@ function loadFuelTypes() {
     })
     .then(function(availableFuels) {
       if (!availableFuels) availableFuels = [];
+
+      // Sadece mevcut yakıt tiplerini göster, yoksa tümünü ama disable et
       var allFuels = ['benzin', 'dizel', 'hibrit', 'elektrik', 'lpg'];
-      grid.innerHTML = allFuels.map(function(f) {
-        var meta = FUEL_META[f];
-        var available = availableFuels.length === 0 || availableFuels.indexOf(f) !== -1;
-        return '<button type="button" data-fuel="' + f + '" class="wiz-option-btn"' + (available ? '' : ' disabled') + '>' +
+
+      // Her yakıt tipinin sonraki adımda data döndürüp döndürmediğini kontrol et
+      var fuelPromises = allFuels.map(function(f) {
+        var isAvailable = availableFuels.length === 0 || availableFuels.indexOf(f) !== -1;
+        if (!isAvailable) return Promise.resolve({ fuel: f, available: false, hasNext: false });
+        // Bu yakıt tipi için şanzıman var mı kontrol et
+        return fetch('/api/variants/transmissions/' + S.brandSlug + '/' + S.modelSlug + '?fuel=' + f)
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(d) {
+            var hasTransmissions = d && d.transmissions && d.transmissions.length > 0;
+            return { fuel: f, available: isAvailable, hasNext: hasTransmissions };
+          })
+          .catch(function() { return { fuel: f, available: isAvailable, hasNext: isAvailable }; });
+      });
+
+      return Promise.all(fuelPromises);
+    })
+    .then(function(fuelResults) {
+      // Tek mevcut yakıt varsa otomatik seç
+      var enabledFuels = fuelResults.filter(function(f) { return f.available; });
+      if (enabledFuels.length === 1) {
+        S.fuel = enabledFuels[0].fuel;
+        S.fuelName = FUEL_META[S.fuel].label;
+        updateSummary();
+        loadTransmissions();
+        goToStep(6);
+        return;
+      }
+
+      grid.innerHTML = fuelResults.map(function(fr) {
+        var meta = FUEL_META[fr.fuel];
+        var enabled = fr.available && fr.hasNext;
+        return '<button type="button" data-fuel="' + fr.fuel + '" class="wiz-option-btn"' + (enabled ? '' : ' disabled') + '>' +
           '<div class="wiz-opt-icon ' + meta.bg + '"><span class="material-symbols-outlined text-xl ' + meta.color + '">' + meta.icon + '</span></div>' +
           '<span class="font-semibold text-sm text-slate-800">' + meta.label + '</span>' +
-          (available ? '' : '<span class="text-[10px] text-slate-400">Mevcut değil</span>') +
+          (enabled ? '' : '<span class="text-[10px] text-slate-400">Mevcut değil</span>') +
           '</button>';
       }).join('');
 
@@ -528,60 +628,6 @@ function loadFuelTypes() {
         btn.classList.add('selected');
         S.fuel = btn.dataset.fuel;
         S.fuelName = FUEL_META[S.fuel].label;
-        S.bodyType = null; S.bodyTypeName = '';
-        S.transmission = null; S.transmissionName = '';
-        S.engine = null; S.engineLabel = '';
-        S.pkg = null;
-        updateSummary();
-        setTimeout(function() { loadBodyType(); }, 200);
-      };
-    })
-    .catch(function() {
-      grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-8">Hata oluştu.</p>';
-    });
-}
-
-/* ═══════ STEP 5: KASA TİPİ ═══════ */
-function loadBodyType() {
-  var grid = document.getElementById('bodyGrid');
-  document.getElementById('bodySubtitle').textContent = S.brandName + ' ' + S.modelName + ' — kasa tipi';
-  grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-8">Yükleniyor...</p>';
-
-  fetch('/api/variants/cascade/' + S.brandSlug + '/' + S.modelSlug + '?fuel=' + S.fuel)
-    .then(function(res) { return res.ok ? res.json() : null; })
-    .then(function(data) {
-      var bodyType = data && data.bodyType ? data.bodyType : '';
-
-      // Tek kasa tipi varsa otomatik seç ve atla
-      if (bodyType) {
-        var meta = BODY_META[bodyType] || { label: bodyType, icon: 'directions_car' };
-        S.bodyType = bodyType;
-        S.bodyTypeName = meta.label;
-        updateSummary();
-        // 5. adımı göstermeden 6'ya atla
-        loadTransmissions();
-        goToStep(6);
-        return;
-      }
-
-      // Birden fazla kasa tipi olabilir
-      var allBodyTypes = Object.keys(BODY_META);
-      grid.innerHTML = allBodyTypes.map(function(bt) {
-        var m = BODY_META[bt];
-        return '<button type="button" data-body="' + bt + '" class="wiz-option-btn">' +
-          '<div class="wiz-opt-icon bg-slate-50"><span class="material-symbols-outlined text-xl text-slate-500">' + m.icon + '</span></div>' +
-          '<span class="font-semibold text-sm text-slate-800">' + m.label + '</span></button>';
-      }).join('');
-
-      goToStep(5);
-
-      grid.onclick = function(e) {
-        var btn = e.target.closest('.wiz-option-btn');
-        if (!btn) return;
-        grid.querySelectorAll('.wiz-option-btn').forEach(function(b) { b.classList.remove('selected'); });
-        btn.classList.add('selected');
-        S.bodyType = btn.dataset.body;
-        S.bodyTypeName = BODY_META[S.bodyType].label;
         S.transmission = null; S.transmissionName = '';
         S.engine = null; S.engineLabel = '';
         S.pkg = null;
@@ -590,9 +636,7 @@ function loadBodyType() {
       };
     })
     .catch(function() {
-      // Hata olursa direkt şanzımana atla
-      loadTransmissions();
-      goToStep(6);
+      grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-8">Hata oluştu.</p>';
     });
 }
 
@@ -611,25 +655,44 @@ function loadTransmissions() {
         transmissions = [{ key: 'otomatik', label: 'Otomatik' }, { key: 'manuel', label: 'Manuel' }];
       }
 
+      // Her şanzıman için sonraki adımda motor var mı kontrol et
+      var transPromises = transmissions.map(function(t) {
+        return fetch('/api/variants/engines/' + S.brandSlug + '/' + S.modelSlug + '?fuel=' + S.fuel + '&transmission=' + t.key)
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(d) {
+            var hasEngines = d && d.engines && d.engines.length > 0;
+            return { key: t.key, label: t.label, hasNext: hasEngines };
+          })
+          .catch(function() { return { key: t.key, label: t.label, hasNext: true }; });
+      });
+
+      return Promise.all(transPromises);
+    })
+    .then(function(transResults) {
+      // Sadece motor verisi olanları aktif yap
+      var enabled = transResults.filter(function(t) { return t.hasNext; });
+
       // Tek seçenek varsa otomatik geç
-      if (transmissions.length === 1) {
-        S.transmission = transmissions[0].key;
-        S.transmissionName = transmissions[0].label;
+      if (enabled.length === 1) {
+        S.transmission = enabled[0].key;
+        S.transmissionName = enabled[0].label;
         updateSummary();
         loadEngines();
         goToStep(7);
         return;
       }
 
-      grid.innerHTML = transmissions.map(function(t) {
+      grid.innerHTML = transResults.map(function(t) {
         var m = TRANS_META[t.key] || { label: t.label, icon: 'settings' };
-        return '<button type="button" data-trans="' + t.key + '" class="wiz-option-btn">' +
+        return '<button type="button" data-trans="' + t.key + '" class="wiz-option-btn"' + (t.hasNext ? '' : ' disabled') + '>' +
           '<div class="wiz-opt-icon bg-slate-50"><span class="material-symbols-outlined text-xl text-slate-500">' + m.icon + '</span></div>' +
-          '<span class="font-semibold text-sm text-slate-800">' + m.label + '</span></button>';
+          '<span class="font-semibold text-sm text-slate-800">' + m.label + '</span>' +
+          (t.hasNext ? '' : '<span class="text-[10px] text-slate-400">Mevcut değil</span>') +
+          '</button>';
       }).join('');
 
       grid.onclick = function(e) {
-        var btn = e.target.closest('.wiz-option-btn');
+        var btn = e.target.closest('.wiz-option-btn:not([disabled])');
         if (!btn) return;
         grid.querySelectorAll('.wiz-option-btn').forEach(function(b) { b.classList.remove('selected'); });
         btn.classList.add('selected');

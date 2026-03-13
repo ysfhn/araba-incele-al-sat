@@ -51,8 +51,39 @@ router.get('/brands/:slug', async (req, res) => {
 // Marka'ya göre model listesi
 router.get('/models/:brandId', async (req, res) => {
   const db = getDb();
-  const models = await db.prepare('SELECT * FROM models WHERE brand_id = ? ORDER BY name').all(req.params.brandId);
+  const { body_type } = req.query;
+  let sql = 'SELECT * FROM models WHERE brand_id = ?';
+  const params = [req.params.brandId];
+  if (body_type) { sql += ' AND body_type = ?'; params.push(body_type); }
+  sql += ' ORDER BY name';
+  const models = await db.prepare(sql).all(...params);
   res.json(models);
+});
+
+// Belirli kasa tipine sahip markaları listele
+router.get('/brands-by-body/:bodyType', async (req, res) => {
+  const db = getDb();
+  const brands = await db.prepare(`
+    SELECT DISTINCT b.* FROM brands b
+    INNER JOIN models m ON m.brand_id = b.id
+    WHERE m.body_type = ?
+    ORDER BY b.name
+  `).all(req.params.bodyType);
+  res.json(brands);
+});
+
+// Bir markanın belirli kasa tipindeki modellerinin varyant verisi olup olmadığını toplu kontrol et
+router.get('/variants/check-models/:brandSlug', (req, res) => {
+  const { body_type } = req.query;
+  const brand = variantHelpers.VARIANTS[req.params.brandSlug];
+  if (!brand) return res.json({ models: {} });
+  const result = {};
+  for (const key of Object.keys(brand)) {
+    const m = brand[key];
+    if (body_type && m.bodyType !== body_type) continue;
+    result[key] = m.variants && m.variants.length > 0;
+  }
+  res.json({ models: result });
 });
 
 // Marka + model için geçerli yakıt tipleri (eski endpoint — uyumluluk için)

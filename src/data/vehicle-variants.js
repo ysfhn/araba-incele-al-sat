@@ -162,6 +162,27 @@ function getBodyType(brandSlug, modelSlug) {
   return model.bodyType || '';
 }
 
+/**
+ * Bir marka için belirli kasa tipine sahip modellerin slug listesini döndürür.
+ * @returns {string[]}
+ */
+function getModelsByBodyType(brandSlug, bodyType) {
+  const brand = VARIANTS[brandSlug];
+  if (!brand) return [];
+  return Object.keys(brand).filter(k => brand[k].bodyType === bodyType);
+}
+
+/**
+ * Belirli bir marka + model + yakıt kombinasyonunun geçerli olup olmadığını kontrol eder.
+ * @returns {boolean}
+ */
+function hasVariantData(brandSlug, modelSlug) {
+  const brand = VARIANTS[brandSlug];
+  if (!brand) return false;
+  const model = resolveModel(brand, modelSlug);
+  return model !== null && model.variants && model.variants.length > 0;
+}
+
 module.exports = {
   VARIANTS,
   getYears,
@@ -171,4 +192,6 @@ module.exports = {
   getPackages,
   getFullCascade,
   getBodyType,
+  getModelsByBodyType,
+  hasVariantData,
 };
