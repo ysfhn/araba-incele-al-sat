@@ -308,7 +308,53 @@ const selectedBodyType = typeof queryBodyType !== 'undefined' ? queryBodyType : 
         </div>
         <span class="text-sm font-bold text-slate-700"><%= hub.safety_rating %></span>
       </div>
+      <% if (hub.ncap_data && hub.ncap_data.isReal) { %>
+      <!-- Gerçek Euro NCAP Detaylı Sonuçlar -->
+      <div class="space-y-3 mt-4">
+        <div>
+          <div class="flex justify-between text-xs mb-1">
+            <span class="font-medium text-slate-600">🧑 Yetişkin Koruma</span>
+            <span class="font-bold text-slate-700"><%= hub.ncap_data.adult %>%</span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-2.5">
+            <div class="h-2.5 rounded-full transition-all duration-500 <%= hub.ncap_data.adult >= 85 ? 'bg-green-500' : hub.ncap_data.adult >= 70 ? 'bg-amber-400' : 'bg-red-400' %>" style="width: <%= hub.ncap_data.adult %>%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between text-xs mb-1">
+            <span class="font-medium text-slate-600">👶 Çocuk Koruma</span>
+            <span class="font-bold text-slate-700"><%= hub.ncap_data.child %>%</span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-2.5">
+            <div class="h-2.5 rounded-full transition-all duration-500 <%= hub.ncap_data.child >= 85 ? 'bg-green-500' : hub.ncap_data.child >= 70 ? 'bg-amber-400' : 'bg-red-400' %>" style="width: <%= hub.ncap_data.child %>%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between text-xs mb-1">
+            <span class="font-medium text-slate-600">🚶 Yaya Koruma</span>
+            <span class="font-bold text-slate-700"><%= hub.ncap_data.pedestrian %>%</span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-2.5">
+            <div class="h-2.5 rounded-full transition-all duration-500 <%= hub.ncap_data.pedestrian >= 70 ? 'bg-green-500' : hub.ncap_data.pedestrian >= 55 ? 'bg-amber-400' : 'bg-red-400' %>" style="width: <%= hub.ncap_data.pedestrian %>%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between text-xs mb-1">
+            <span class="font-medium text-slate-600">🤖 Güvenlik Asistanı</span>
+            <span class="font-bold text-slate-700"><%= hub.ncap_data.safetyAssist %>%</span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-2.5">
+            <div class="h-2.5 rounded-full transition-all duration-500 <%= hub.ncap_data.safetyAssist >= 80 ? 'bg-green-500' : hub.ncap_data.safetyAssist >= 60 ? 'bg-amber-400' : 'bg-red-400' %>" style="width: <%= hub.ncap_data.safetyAssist %>%"></div>
+          </div>
+        </div>
+      </div>
+      <p class="text-xs text-emerald-600 mt-3 flex items-center gap-1">
+        <span class="material-symbols-outlined" style="font-size:14px">verified</span>
+        Euro NCAP <%= hub.ncap_data.testYear %> resmi test sonucu
+      </p>
+      <% } else { %>
       <p class="text-xs text-slate-400">* Tahmini güvenlik puanı, segment ve model yılına göre hesaplanmıştır.</p>
+      <% } %>
     </div>
     <% } %>
     <% if (hub.safety_features && hub.safety_features.length > 0) { %>

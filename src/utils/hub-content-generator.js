@@ -12,6 +12,7 @@
  */
 
 const { getRealDimensions } = require('../data/csv-tech-data');
+const { getNcapResult } = require('../data/euro-ncap-data');
 
 /* ═══════════════════════════════════════════════════════════════
    MARKA SEGMENTLERİ
@@ -527,8 +528,8 @@ function generateHubContent(brand, model, variantOptions = {}) {
     topSpeed = adjustTopSpeed(bodyDefaults.top_speed, segment);
   }
 
-  // Güvenlik puanı (segment ve yıla göre)
-  const safetyInfo = getSafetyInfo(segment, selectedYear, brand.slug);
+  // Güvenlik puanı (segment ve yıla göre, gerçek NCAP verisi varsa öncelikli)
+  const safetyInfo = getSafetyInfo(segment, selectedYear, brand.slug, model.slug);
 
   return {
     brand_id: brand.id,
@@ -551,6 +552,7 @@ function generateHubContent(brand, model, variantOptions = {}) {
     trunk_volume: trunkVolume,
     safety_rating: safetyInfo.rating,
     safety_features: safetyInfo.features,
+    ncap_data: safetyInfo.ncapData || null,
     editor_rating: editorRating,
     editor_review: editorReview,
     pros: JSON.stringify(basePros.slice(0, 5)),
@@ -705,10 +707,56 @@ function getTrunkVolume(bodyType, hash) {
 }
 
 /**
- * Güvenlik bilgileri — segment ve yıla göre
+ * Güvenlik bilgileri — önce gerçek Euro NCAP verisi, yoksa segment/yıl tahmini
  */
-function getSafetyInfo(segment, year, brandSlug) {
-  // Yıla göre Euro NCAP tahmini (modern araçlar daha iyi)
+function getSafetyInfo(segment, year, brandSlug, modelSlug) {
+  // Gerçek Euro NCAP verisi ara
+  const ncap = getNcapResult(brandSlug, modelSlug);
+
+  if (ncap) {
+    // Gerçek NCAP verisi bulundu
+    const features = [];
+
+    // Temel güvenlik (her zaman mevcut)
+    features.push('ABS', 'ESP/ESC', 'Çoklu Hava Yastığı');
+
+    // NCAP puanlarına göre dinamik özellik ekleme
+    if (ncap.safetyAssist >= 70) {
+      features.push('Otomatik Acil Fren', 'Şerit Takip Asistanı');
+    }
+    if (ncap.safetyAssist >= 80) {
+      features.push('Adaptif Hız Sabitleme', 'Şerit Takip Sistemi');
+    }
+    if (ncap.safetyAssist >= 85) {
+      features.push('Kör Nokta Uyarısı');
+    }
+    if (ncap.safetyAssist >= 90) {
+      features.push('360° Kamera');
+    }
+    if (ncap.pedestrian >= 70) {
+      features.push('Yaya Algılama');
+    }
+    if (ncap.stars >= 5 && ncap.safetyAssist >= 85) {
+      features.push('Yarı Otonom Sürüş (Level 2+)');
+    }
+    if (year >= 2014) features.push('Geri Görüş Kamerası');
+
+    return {
+      rating: ncap.stars + '/5 Euro NCAP',
+      features: features,
+      ncapData: {
+        stars: ncap.stars,
+        testYear: ncap.testYear,
+        adult: ncap.adult,
+        child: ncap.child,
+        pedestrian: ncap.pedestrian,
+        safetyAssist: ncap.safetyAssist,
+        isReal: true
+      }
+    };
+  }
+
+  // Gerçek veri bulunamadı — segment ve yıla göre tahmin
   let stars;
   if (year >= 2020) {
     stars = segment === 'super_premium' || segment === 'premium' ? 5 : (segment === 'value' || segment === 'city') ? 4 : 5;
@@ -750,7 +798,8 @@ function getSafetyInfo(segment, year, brandSlug) {
 
   return {
     rating: stars + '/5 Euro NCAP',
-    features: features
+    features: features,
+    ncapData: null
   };
 }
 
