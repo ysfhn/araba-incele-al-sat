@@ -14,6 +14,7 @@
 const { getRealDimensions } = require('../data/csv-tech-data');
 const { getNcapResult } = require('../data/euro-ncap-data');
 const { getVerifiedData } = require('../data/verified-model-data');
+const { getVehicleDocuments } = require('../data/vehicle-documents');
 
 /* ═══════════════════════════════════════════════════════════════
    MARKA SEGMENTLERİ
@@ -587,6 +588,9 @@ function generateHubContent(brand, model, variantOptions = {}) {
   // Güvenlik puanı (segment ve yıla göre, gerçek NCAP verisi varsa öncelikli)
   const safetyInfo = getSafetyInfo(segment, selectedYear, brand.slug, model.slug);
 
+  // Belgeler & doküman linkleri
+  const documents = getVehicleDocuments(brand.slug);
+
   return {
     brand_id: brand.id,
     model_id: model.id,
@@ -618,7 +622,8 @@ function generateHubContent(brand, model, variantOptions = {}) {
     _generated: true,
     _segment: segment,
     _bodyTypeTR: bodyTypeTR,
-    _yearInfo: getYearInfo(selectedYear, currentYear)
+    _yearInfo: getYearInfo(selectedYear, currentYear),
+    _documents: documents,
   };
 }
 

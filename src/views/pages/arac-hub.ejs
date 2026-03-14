@@ -542,28 +542,44 @@ const selectedBodyType = typeof queryBodyType !== 'undefined' ? queryBodyType : 
 <!-- Belgeler -->
 <section id="belgeler" class="hub-section">
   <h2 class="hub-section-title"><span class="material-symbols-outlined">description</span> Belgeler & Kaynaklar</h2>
+  <% const docs = hub._documents; %>
+  <% if (docs && docs.hasDocuments) { %>
   <div class="grid md:grid-cols-2 gap-3">
-    <a href="#" class="hub-doc-link">
-      <div class="w-9 h-9 bg-red-50 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-red-400" style="font-size:18px">picture_as_pdf</span></div>
-      <div class="flex-1 min-w-0"><p class="font-semibold text-sm text-slate-800">Kullanım Kılavuzu</p><p class="text-xs text-slate-400">PDF · 12.4 MB</p></div>
-      <span class="material-symbols-outlined text-slate-300" style="font-size:18px">download</span>
+    <% if (docs.ownersManual) { %>
+    <a href="<%= docs.ownersManual %>" target="_blank" rel="noopener noreferrer" class="hub-doc-link">
+      <div class="w-9 h-9 bg-red-50 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-red-400" style="font-size:18px">menu_book</span></div>
+      <div class="flex-1 min-w-0"><p class="font-semibold text-sm text-slate-800">Kullanım Kılavuzu</p><p class="text-xs text-slate-400"><%= docs.brandName %> Resmi Sahipler Portalı</p></div>
+      <span class="material-symbols-outlined text-slate-300" style="font-size:18px">open_in_new</span>
     </a>
-    <a href="#" class="hub-doc-link">
-      <div class="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-blue-400" style="font-size:18px">picture_as_pdf</span></div>
-      <div class="flex-1 min-w-0"><p class="font-semibold text-sm text-slate-800">Teknik Şartname</p><p class="text-xs text-slate-400">PDF · 3.8 MB</p></div>
-      <span class="material-symbols-outlined text-slate-300" style="font-size:18px">download</span>
+    <% } %>
+    <% if (docs.techSpecs) { %>
+    <a href="<%= docs.techSpecs %>" target="_blank" rel="noopener noreferrer" class="hub-doc-link">
+      <div class="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-blue-400" style="font-size:18px">engineering</span></div>
+      <div class="flex-1 min-w-0"><p class="font-semibold text-sm text-slate-800">Teknik Şartname</p><p class="text-xs text-slate-400"><%= docs.brandName %> Resmi Model Sayfası</p></div>
+      <span class="material-symbols-outlined text-slate-300" style="font-size:18px">open_in_new</span>
     </a>
-    <a href="#" class="hub-doc-link">
-      <div class="w-9 h-9 bg-green-50 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-green-400" style="font-size:18px">picture_as_pdf</span></div>
-      <div class="flex-1 min-w-0"><p class="font-semibold text-sm text-slate-800">Garanti Koşulları</p><p class="text-xs text-slate-400">PDF · 1.2 MB</p></div>
-      <span class="material-symbols-outlined text-slate-300" style="font-size:18px">download</span>
+    <% } %>
+    <% if (docs.warranty) { %>
+    <a href="<%= docs.warranty %>" target="_blank" rel="noopener noreferrer" class="hub-doc-link">
+      <div class="w-9 h-9 bg-green-50 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-green-400" style="font-size:18px">verified_user</span></div>
+      <div class="flex-1 min-w-0"><p class="font-semibold text-sm text-slate-800">Garanti Koşulları</p><p class="text-xs text-slate-400"><%= docs.brandName %> Resmi Garanti Bilgisi</p></div>
+      <span class="material-symbols-outlined text-slate-300" style="font-size:18px">open_in_new</span>
     </a>
-    <a href="#" class="hub-doc-link">
-      <div class="w-9 h-9 bg-amber-50 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-amber-400" style="font-size:18px">picture_as_pdf</span></div>
-      <div class="flex-1 min-w-0"><p class="font-semibold text-sm text-slate-800">Bakım Planı</p><p class="text-xs text-slate-400">PDF · 2.1 MB</p></div>
-      <span class="material-symbols-outlined text-slate-300" style="font-size:18px">download</span>
+    <% } %>
+    <% if (docs.maintenance) { %>
+    <a href="<%= docs.maintenance %>" target="_blank" rel="noopener noreferrer" class="hub-doc-link">
+      <div class="w-9 h-9 bg-amber-50 rounded-lg flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-amber-400" style="font-size:18px">build_circle</span></div>
+      <div class="flex-1 min-w-0"><p class="font-semibold text-sm text-slate-800">Bakım Planı</p><p class="text-xs text-slate-400"><%= docs.brandName %> Resmi Servis & Bakım</p></div>
+      <span class="material-symbols-outlined text-slate-300" style="font-size:18px">open_in_new</span>
     </a>
+    <% } %>
   </div>
+  <% } else { %>
+  <div class="text-center py-6 text-slate-400">
+    <span class="material-symbols-outlined text-3xl mb-2">folder_off</span>
+    <p class="text-sm">Bu marka için resmi doküman linki henüz mevcut değil.</p>
+  </div>
+  <% } %>
 </section>
 
 </main>
